@@ -1,0 +1,200 @@
+{
+  "subjects": [
+    {
+      "id": "hesaban",
+      "name": "حسابان",
+      "shortName": "حسابان ۱",
+      "icon": "📐",
+      "description": "حسابان ۱ پایه یازدهم رشته ریاضی و فیزیک",
+      "color": "green",
+
+      "categories": {
+        "book": {
+          "title": "سؤالات کتاب",
+          "description": "سؤالات و تمرین‌های مرتبط با کتاب درسی"
+        },
+        "custom": {
+          "title": "تمرین‌های یازدهم‌پلاس",
+          "description": "سؤالات تألیفی و تمرین‌های بیشتر"
+        },
+        "exams": {
+          "title": "آزمون‌ها",
+          "description": "آزمون‌های فصل و جامع"
+        }
+      },
+
+      "chapters": [
+        {
+          "id": "hesaban-chapter-1",
+          "number": 1,
+          "title": "جبر و معادله",
+          "description": "دنباله‌ها، معادلات، قدر مطلق و هندسه تحلیلی",
+          "progress": 0,
+          "lessons": []
+        },
+        {
+          "id": "hesaban-chapter-2",
+          "number": 2,
+          "title": "تابع",
+          "description": "آشنایی بیشتر با تابع، انواع تابع، وارون و اعمال روی توابع",
+          "progress": 0,
+          "lessons": []
+        },
+        {
+          "id": "hesaban-chapter-3",
+          "number": 3,
+          "title": "توابع نمایی و لگاریتمی",
+          "description": "تابع نمایی، لگاریتم و معادلات لگاریتمی",
+          "progress": 0,
+          "lessons": []
+        },
+        {
+          "id": "hesaban-chapter-4",
+          "number": 4,
+          "title": "مثلثات",
+          "description": "رادیان، نسبت‌های مثلثاتی و روابط مثلثاتی",
+          "progress": 0,
+          "lessons": []
+        },
+        {
+          "id": "hesaban-chapter-5",
+          "number": 5,
+          "title": "حد و پیوستگی",
+          "description": "مفهوم حد، قضایای حد، محاسبه حد و پیوستگی",
+          "progress": 0,
+          "lessons": []
+        }
+      ]
+    },
+
+    {
+      "id": "geometry",
+      "name": "هندسه",
+      "shortName": "هندسه ۲",
+      "icon": "📏",
+      "description": "هندسه پایه یازدهم رشته ریاضی و فیزیک",
+      "color": "blue",
+
+      "categories": {
+        "book": {
+          "title": "سؤالات کتاب",
+          "description": "سؤالات و تمرین‌های کتاب درسی"
+        },
+        "custom": {
+          "title": "تمرین‌های یازدهم‌پلاس",
+          "description": "تمرین‌های تألیفی"
+        },
+        "exams": {
+          "title": "آزمون‌ها",
+          "description": "آزمون‌های هندسه"
+        }
+      },
+
+      "chapters": []
+    },
+
+    {
+      "id": "discrete",
+      "name": "گسسته",
+      "shortName": "گسسته",
+      "icon": "🧩",
+      "description": "ریاضیات گسسته پایه یازدهم رشته ریاضی",
+      "color": "purple",
+
+      "categories": {
+        "book": {
+          "title": "سؤالات کتاب",
+          "description": "سؤالات و تمرین‌های کتاب درسی"
+        },
+        "custom": {
+          "title": "تمرین‌های یازدهم‌پلاس",
+          "description": "تمرین‌های تألیفی"
+        },
+        "exams": {
+          "title": "آزمون‌ها",
+          "description": "آزمون‌های گسسته"
+        }
+      },
+
+      "chapters": []
+    },
+
+    {
+      "id": "physics",
+      "name": "فیزیک",
+      "shortName": "فیزیک ۲",
+      "icon": "⚡",
+      "description": "فیزیک پایه یازدهم رشته ریاضی و فیزیک",
+      "color": "orange",
+
+      "categories": {
+        "book": {
+          "title": "سؤالات کتاب",
+          "description": "سؤالات و تمرین‌های کتاب درسی"
+        },
+        "custom": {
+          "title": "تمرین‌های یازدهم‌پلاس",
+          "description": "سؤالات تألیفی"
+        },
+        "exams": {
+          "title": "آزمون‌ها",
+          "description": "آزمون‌های فیزیک"
+        }
+      },
+
+      "chapters": []
+    },
+
+    {
+      "id": "chemistry",
+      "name": "شیمی",
+      "shortName": "شیمی ۲",
+      "icon": "⚗️",
+      "description": "شیمی پایه یازدهم",
+      "color": "red",
+
+      "categories": {
+        "book": {
+          "title": "سؤالات کتاب",
+          "description": "سؤالات و تمرین‌های کتاب درسی"
+        },
+        "custom": {
+          "title": "تمرین‌های یازدهم‌پلاس",
+          "description": "سؤالات تألیفی"
+        },
+        "exams": {
+          "title": "آزمون‌ها",
+          "description": "آزمون‌های شیمی"
+        }
+      },
+
+      "chapters": []
+    },
+
+    {
+      "id": "math",
+      "name": "ریاضی",
+      "shortName": "ریاضی",
+      "icon": "∑",
+      "description": "مباحث تکمیلی ریاضی یازدهم",
+      "color": "yellow",
+
+      "categories": {
+        "book": {
+          "title": "سؤالات کتاب",
+          "description": "سؤالات و تمرین‌های کتاب درسی"
+        },
+        "custom": {
+          "title": "تمرین‌های یازدهم‌پلاس",
+          "description": "سؤالات تألیفی"
+        },
+        "exams": {
+          "title": "آزمون‌ها",
+          "description": "آزمون‌های ریاضی"
+        }
+      },
+
+      "chapters": []
+    }
+  ]
+}
