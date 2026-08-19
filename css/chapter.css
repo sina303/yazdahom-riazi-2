@@ -1,26 +1,4 @@
 /* =========================================
-   CHAPTER PAGE
-   Yazdahom Riazi
-========================================= */
-
-:root {
-    --background: #080a09;
-    --secondary: #0d100e;
-    --card: #131714;
-    --card-hover: #181e1a;
-
-    --green: #107c10;
-    --green-light: #35d35a;
-
-    --text: #e8ebe9;
-    --muted: #8d958f;
-
-    --border: #242a26;
-    --red: #e05252;
-}
-
-
-/* =========================================
    RESET
 ========================================= */
 
@@ -32,21 +10,42 @@
 
 
 /* =========================================
+   ROOT
+========================================= */
+
+:root {
+    --bg: #080a09;
+    --surface: #0e1210;
+    --card: #141916;
+    --card-hover: #181e1a;
+
+    --border: #222a24;
+
+    --green: #35d35a;
+    --green-dark: #107c10;
+
+    --text: #eef2ef;
+    --muted: #8d9690;
+
+    --red: #e05252;
+}
+
+
+/* =========================================
    BODY
 ========================================= */
 
 body {
     min-height: 100vh;
 
-    background: var(--background);
+    background: var(--bg);
+
     color: var(--text);
 
     font-family:
         Tahoma,
         Arial,
         sans-serif;
-
-    direction: rtl;
 }
 
 
@@ -60,75 +59,82 @@ body {
     padding: 0 6%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
+    border-bottom: 1px solid var(--border);
+
     background:
-        rgba(8, 10, 9, 0.95);
-
-    border-bottom:
-        1px solid var(--border);
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
+        rgba(8, 10, 9, 0.96);
 }
 
 
-/* =========================================
-   LOGO
-========================================= */
-
-.chapter-logo {
-    color: var(--green-light);
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    text-decoration: none;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================
-   NAV
-========================================= */
-
-.chapter-nav {
+.header-right {
     display: flex;
 
     align-items: center;
 
-    gap: 28px;
+    gap: 22px;
 }
 
-.chapter-nav a {
+
+.header-title {
+    color: var(--green);
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+
+.back-button {
+    padding: 9px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: var(--surface);
+
     color: var(--muted);
 
     text-decoration: none;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    transition: 0.2s ease;
-}
-
-.chapter-nav a:hover {
-    color: var(--green-light);
+    transition: 0.2s;
 }
 
 
-/* =========================================
-   USER
-========================================= */
+.back-button:hover {
+    color: var(--green);
 
-.chapter-user {
+    border-color: var(--green);
+}
+
+
+.header-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
     color: var(--muted);
 
-    font-size: 13px;
+    font-size: 12px;
+}
 
-    white-space: nowrap;
+
+.header-user strong {
+    color: var(--green);
+}
+
+
+.header-separator {
+    color: var(--border);
 }
 
 
@@ -136,10 +142,10 @@ body {
    MAIN
 ========================================= */
 
-.chapter-main {
+.chapter-container {
     width: min(1100px, 90%);
 
-    margin: 0 auto;
+    margin: auto;
 
     padding-bottom: 80px;
 }
@@ -163,20 +169,18 @@ body {
     font-size: 12px;
 }
 
+
 .breadcrumb a {
     color: var(--muted);
 
     text-decoration: none;
 
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
+
 
 .breadcrumb a:hover {
-    color: var(--green-light);
-}
-
-.breadcrumb-separator {
-    color: var(--border);
+    color: var(--green);
 }
 
 
@@ -189,107 +193,131 @@ body {
 
     overflow: hidden;
 
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
     padding: 45px;
 
     background:
         radial-gradient(
             circle at 85% 20%,
-            rgba(53, 211, 90, 0.11),
-            transparent 38%
+            rgba(53, 211, 90, 0.12),
+            transparent 40%
         ),
         var(--card);
 
-    border:
-        1px solid var(--border);
+    border: 1px solid var(--border);
 
     border-radius: 20px;
 }
 
-.chapter-hero::before {
+
+.chapter-hero::after {
     content: "";
 
     position: absolute;
 
-    width: 220px;
-    height: 220px;
+    width: 240px;
+    height: 240px;
 
-    left: -110px;
-    bottom: -130px;
+    left: -120px;
+    bottom: -150px;
 
     border-radius: 50%;
 
     background:
-        rgba(53, 211, 90, 0.035);
-}
-
-.chapter-label {
-    position: relative;
-
-    color: var(--green-light);
-
-    font-size: 13px;
-}
-
-.chapter-hero h1 {
-    position: relative;
-
-    margin-top: 12px;
-
-    font-size: 42px;
-
-    line-height: 1.4;
-}
-
-.chapter-hero p {
-    position: relative;
-
-    max-width: 750px;
-
-    margin-top: 14px;
-
-    color: var(--muted);
-
-    font-size: 14px;
-
-    line-height: 2;
+        rgba(53, 211, 90, 0.04);
 }
 
 
 /* =========================================
-   CHAPTER META
+   CHAPTER NUMBER
 ========================================= */
 
-.chapter-meta {
+.chapter-number-box {
     position: relative;
 
-    margin-top: 28px;
+    z-index: 1;
+
+    width: 110px;
+    height: 110px;
+
+    flex-shrink: 0;
 
     display: flex;
 
-    flex-wrap: wrap;
+    flex-direction: column;
 
-    gap: 10px;
-}
+    align-items: center;
 
-.meta-item {
-    padding: 9px 14px;
+    justify-content: center;
 
-    background: var(--secondary);
+    border-radius: 20px;
+
+    background:
+        rgba(53, 211, 90, 0.08);
 
     border:
-        1px solid var(--border);
+        1px solid rgba(53, 211, 90, 0.25);
+}
 
-    border-radius: 9px;
 
+.chapter-number-box span {
     color: var(--muted);
 
     font-size: 11px;
 }
 
-.meta-item span {
-    color: var(--green-light);
 
-    font-weight: bold;
+.chapter-number-box strong {
+    margin-top: 5px;
+
+    color: var(--green);
+
+    font-size: 38px;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   CHAPTER INFO
+========================================= */
+
+.chapter-info {
+    position: relative;
+
+    z-index: 1;
+}
+
+
+.chapter-label {
+    color: var(--green);
+
+    font-size: 12px;
+}
+
+
+.chapter-info h1 {
+    margin-top: 10px;
+
+    font-size: 38px;
+}
+
+
+.chapter-info p {
+    max-width: 700px;
+
+    margin-top: 14px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 2;
 }
 
 
@@ -297,69 +325,76 @@ body {
    PROGRESS
 ========================================= */
 
-.chapter-progress-box {
-    margin-top: 30px;
+.progress-card {
+    margin-top: 20px;
 
-    padding: 22px;
+    padding: 22px 25px;
 
-    background: var(--secondary);
+    background: var(--card);
 
-    border:
-        1px solid var(--border);
+    border: 1px solid var(--border);
 
     border-radius: 14px;
 }
 
-.progress-top {
+
+.progress-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.progress-header > div {
+    width: 100%;
+
     display: flex;
 
     align-items: center;
 
     justify-content: space-between;
+}
 
-    gap: 15px;
 
+.progress-label {
     color: var(--muted);
 
     font-size: 12px;
 }
 
-.progress-value {
-    color: var(--green-light);
 
-    font-weight: bold;
+#progressText {
+    color: var(--green);
+
+    font-size: 13px;
 }
+
 
 .progress-bar {
     width: 100%;
 
-    height: 8px;
+    height: 7px;
 
-    margin-top: 12px;
+    margin-top: 14px;
 
     overflow: hidden;
 
-    border-radius: 20px;
+    background: var(--surface);
 
-    background: var(--background);
+    border-radius: 20px;
 }
 
-.progress-fill {
-    width: 0%;
 
+.progress-fill {
     height: 100%;
 
-    border-radius: 20px;
+    background: var(--green);
 
-    background:
-        linear-gradient(
-            90deg,
-            var(--green),
-            var(--green-light)
-        );
+    border-radius: inherit;
 
-    transition:
-        width 0.5s ease;
+    transition: width 0.4s ease;
 }
 
 
@@ -368,8 +403,9 @@ body {
 ========================================= */
 
 .lessons-section {
-    margin-top: 40px;
+    margin-top: 45px;
 }
+
 
 .section-header {
     display: flex;
@@ -378,19 +414,18 @@ body {
 
     justify-content: space-between;
 
-    gap: 20px;
-
     padding-bottom: 18px;
 
-    border-bottom:
-        1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
-.section-header-label {
-    color: var(--green-light);
+
+.section-header span {
+    color: var(--green);
 
     font-size: 12px;
 }
+
 
 .section-header h2 {
     margin-top: 7px;
@@ -398,29 +433,29 @@ body {
     font-size: 25px;
 }
 
+
 .section-header p {
-    margin-top: 8px;
+    margin-top: 7px;
 
     color: var(--muted);
 
     font-size: 12px;
 }
 
-.section-count {
+
+.lesson-count {
     padding: 8px 13px;
-
-    border-radius: 20px;
-
-    background: var(--secondary);
 
     border:
         1px solid var(--border);
 
+    border-radius: 20px;
+
+    background: var(--surface);
+
     color: var(--muted);
 
     font-size: 11px;
-
-    white-space: nowrap;
 }
 
 
@@ -434,7 +469,7 @@ body {
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        repeat(2, minmax(0, 1fr));
 
     gap: 16px;
 }
@@ -445,30 +480,28 @@ body {
 ========================================= */
 
 .lesson-card {
-    position: relative;
+    min-height: 155px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 17px;
-
-    min-height: 145px;
+    gap: 18px;
 
     padding: 22px;
 
     background: var(--card);
 
-    border:
-        1px solid var(--border);
+    border: 1px solid var(--border);
 
-    border-radius: 16px;
+    border-radius: 15px;
 
     transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
+        transform 0.2s,
+        background 0.2s,
+        border-color 0.2s;
 }
+
 
 .lesson-card:hover {
     transform: translateY(-3px);
@@ -476,7 +509,7 @@ body {
     background: var(--card-hover);
 
     border-color:
-        rgba(53, 211, 90, 0.3);
+        rgba(53, 211, 90, 0.35);
 }
 
 
@@ -484,15 +517,16 @@ body {
    LESSON NUMBER
 ========================================= */
 
-.lesson-number {
-    width: 52px;
-    height: 52px;
+.lesson-icon {
+    width: 55px;
+    height: 55px;
 
     flex-shrink: 0;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     border-radius: 13px;
@@ -501,12 +535,11 @@ body {
         rgba(53, 211, 90, 0.08);
 
     border:
-        1px solid
-        rgba(53, 211, 90, 0.18);
+        1px solid rgba(53, 211, 90, 0.20);
 
-    color: var(--green-light);
+    color: var(--green);
 
-    font-size: 16px;
+    font-size: 17px;
 
     font-weight: bold;
 }
@@ -516,19 +549,19 @@ body {
    LESSON CONTENT
 ========================================= */
 
-.lesson-content {
+.lesson-card > div:nth-child(2) {
     flex: 1;
-
-    min-width: 0;
 }
 
-.lesson-content h3 {
+
+.lesson-card h3 {
     font-size: 16px;
 
     line-height: 1.7;
 }
 
-.lesson-content p {
+
+.lesson-card p {
     margin-top: 7px;
 
     color: var(--muted);
@@ -543,17 +576,17 @@ body {
    LESSON BUTTON
 ========================================= */
 
-.lesson-button {
+.lesson-card button {
     flex-shrink: 0;
 
-    padding: 10px 14px;
+    padding: 10px 15px;
 
     border:
         1px solid var(--border);
 
     border-radius: 8px;
 
-    background: var(--secondary);
+    background: var(--surface);
 
     color: var(--text);
 
@@ -561,17 +594,16 @@ body {
 
     font-size: 11px;
 
-    text-decoration: none;
-
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
-.lesson-button:hover {
-    border-color: var(--green-light);
 
-    color: var(--green-light);
+.lesson-card button:hover {
+    color: var(--green);
+
+    border-color: var(--green);
 
     background:
         rgba(53, 211, 90, 0.05);
@@ -579,51 +611,13 @@ body {
 
 
 /* =========================================
-   LESSON STATUS
+   LOADING
 ========================================= */
 
-.lesson-status {
-    margin-top: 10px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    color: var(--muted);
-
-    font-size: 10px;
-}
-
-.lesson-status-dot {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: var(--border);
-}
-
-.lesson-status.completed {
-    color: var(--green-light);
-}
-
-.lesson-status.completed .lesson-status-dot {
-    background: var(--green-light);
-}
-
-
-/* =========================================
-   EMPTY / LOADING
-========================================= */
-
-.chapter-loading,
-.chapter-empty,
-.chapter-error {
+.loading {
     grid-column: 1 / -1;
 
-    padding: 40px 25px;
+    padding: 45px 25px;
 
     text-align: center;
 
@@ -636,79 +630,7 @@ body {
 
     color: var(--muted);
 
-    font-size: 13px;
-
-    line-height: 2;
-}
-
-.chapter-error {
-    color: var(--red);
-}
-
-
-/* =========================================
-   BACK BUTTON
-========================================= */
-
-.back-section {
-    margin-top: 30px;
-}
-
-.back-button {
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 11px 16px;
-
-    background: var(--card);
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 9px;
-
-    color: var(--muted);
-
-    text-decoration: none;
-
     font-size: 12px;
-
-    transition: 0.2s ease;
-}
-
-.back-button:hover {
-    color: var(--green-light);
-
-    border-color:
-        rgba(53, 211, 90, 0.35);
-}
-
-
-/* =========================================
-   ANIMATION
-========================================= */
-
-.lesson-card {
-    animation: lessonAppear 0.3s ease both;
-}
-
-@keyframes lessonAppear {
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
 }
 
 
@@ -716,7 +638,7 @@ body {
    MOBILE
 ========================================= */
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
 
     .lesson-grid {
         grid-template-columns: 1fr;
@@ -725,101 +647,75 @@ body {
 }
 
 
-/* =========================================
-   MOBILE SMALL
-========================================= */
-
 @media (max-width: 600px) {
 
     .chapter-header {
-        padding: 0 20px;
+        padding: 0 5%;
     }
 
-    .chapter-nav {
+
+    .header-user {
         display: none;
     }
 
-    .chapter-main {
+
+    .chapter-container {
         width: 92%;
     }
 
+
     .chapter-hero {
-        padding: 30px 24px;
-    }
+        padding: 28px 22px;
 
-    .chapter-hero h1 {
-        font-size: 31px;
-    }
-
-    .chapter-hero p {
-        font-size: 13px;
-    }
-
-    .chapter-meta {
         flex-direction: column;
-        align-items: stretch;
+
+        align-items: flex-start;
+
+        gap: 20px;
     }
 
-    .meta-item {
-        text-align: center;
+
+    .chapter-number-box {
+        width: 85px;
+        height: 85px;
     }
+
+
+    .chapter-number-box strong {
+        font-size: 30px;
+    }
+
+
+    .chapter-info h1 {
+        font-size: 28px;
+    }
+
 
     .section-header {
         align-items: flex-start;
 
         flex-direction: column;
+
+        gap: 15px;
     }
+
 
     .lesson-card {
         align-items: flex-start;
 
         flex-wrap: wrap;
-
-        padding: 20px;
     }
 
-    .lesson-content {
-        width: calc(100% - 70px);
+
+    .lesson-card > div:nth-child(2) {
+        min-width: 0;
     }
 
-    .lesson-button {
+
+    .lesson-card button {
         width: 100%;
 
-        margin-top: 5px;
-
         text-align: center;
-    }
-
-}
-
-
-/* =========================================
-   VERY SMALL MOBILE
-========================================= */
-
-@media (max-width: 400px) {
-
-    .chapter-hero {
-        padding: 25px 18px;
-    }
-
-    .chapter-hero h1 {
-        font-size: 27px;
-    }
-
-    .lesson-card {
-        gap: 12px;
-    }
-
-    .lesson-number {
-        width: 45px;
-        height: 45px;
-
-        font-size: 14px;
-    }
-
-    .lesson-content {
-        width: calc(100% - 60px);
     }
 
 }
