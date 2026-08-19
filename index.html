@@ -2,269 +2,272 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="پلتفرم آموزشی یازدهم ریاضی"
+    >
 
     <title>یازدهم ریاضی</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- HEADER -->
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
     <header class="topbar">
 
-        <div class="logo">
+        <a
+            href="index.html"
+            class="logo"
+        >
             یازدهم ریاضی
-        </div>
+        </a>
 
-        <nav>
-            <a href="index.html">خانه</a>
-            <a href="hesaban.html">حسابان</a>
-            <a href="profile.html">پروفایل</a>
+
+        <nav class="main-nav">
+
+            <a
+                href="index.html"
+                class="active"
+            >
+                خانه
+            </a>
+
+            <a href="hesaban.html">
+                حسابان
+            </a>
+
+            <a href="profile.html">
+                پروفایل
+            </a>
+
         </nav>
 
-        <div class="profile">
-            کاربر
-        </div>
+
+        <a
+            href="profile.html"
+            class="profile-link"
+        >
+            <span class="profile-icon">
+                👤
+            </span>
+
+            <span>
+                پروفایل
+            </span>
+        </a>
 
     </header>
 
 
-    <!-- HERO -->
-    <section class="hero">
 
-        <div class="hero-content">
+    <!-- =========================================
+         HERO
+    ========================================== -->
 
-            <span class="hero-label">
-                پلتفرم آموزشی یازدهم ریاضی
-            </span>
+    <main>
 
-            <h1>
-                یاد بگیر،
-                <span>تمرین کن</span>،
-                پیشرفت کن.
-            </h1>
+        <section class="hero">
 
-            <p>
-                همه چیز برای مطالعه و تمرین درس‌های یازدهم
-                رشته ریاضی، در یک محیط ساده و مرتب.
-            </p>
+            <div class="hero-content">
 
-            <div class="hero-buttons">
+                <span class="hero-label">
+                    پلتفرم آموزشی یازدهم ریاضی
+                </span>
 
-                <button onclick="openSubject('hesaban')">
-                    شروع یادگیری
-                </button>
 
-                <button
-                    class="secondary-btn"
-                    onclick="scrollToSubjects()">
-                    مشاهده درس‌ها
-                </button>
+                <h1>
+
+                    یاد بگیر،
+                    <span>تمرین کن</span>،
+                    پیشرفت کن.
+
+                </h1>
+
+
+                <p>
+
+                    یک محیط ساده و منظم برای مطالعه،
+                    تمرین و پیشرفت در درس‌های
+                    یازدهم رشته ریاضی.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="startLearningButton"
+                    >
+                        شروع یادگیری
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="viewSubjectsButton"
+                    >
+                        مشاهده درس‌ها
+                    </button>
+
+                </div>
 
             </div>
 
-        </div>
 
-    </section>
+            <div class="hero-decoration">
 
+                <div class="hero-circle hero-circle-one"></div>
 
-    <!-- SUBJECTS -->
-    <section
-        class="subjects-section"
-        id="subjects">
+                <div class="hero-circle hero-circle-two"></div>
 
-        <div class="section-title">
-
-            <span>
-                درس‌های یازدهم
-            </span>
-
-            <h2>
-                از کجا شروع کنیم؟
-            </h2>
-
-        </div>
-
-
-        <div class="subjects-grid">
-
-            <!-- HESABAN -->
-            <article
-                class="subject-card"
-                onclick="openSubject('hesaban')">
-
-                <div class="subject-icon">
-                    📐
-                </div>
-
-                <h3>
-                    حسابان
-                </h3>
-
-                <p>
-                    تابع، مثلثات، حد، پیوستگی
-                    و مباحث مهم حسابان یازدهم.
-                </p>
-
-                <span class="subject-status">
-                    شروع یادگیری →
-                </span>
-
-            </article>
-
-
-            <!-- GEOMETRY -->
-            <article class="subject-card">
-
-                <div class="subject-icon">
-                    📏
-                </div>
-
-                <h3>
-                    هندسه
-                </h3>
-
-                <p>
-                    مباحث هندسه یازدهم
-                    و تمرین‌های مرتبط.
-                </p>
-
-                <span class="subject-status">
-                    به‌زودی
-                </span>
-
-            </article>
-
-
-            <!-- DISCRETE -->
-            <article class="subject-card">
-
-                <div class="subject-icon">
-                    🧩
-                </div>
-
-                <h3>
-                    گسسته
-                </h3>
-
-                <p>
-                    مباحث گسسته و تمرین‌های
-                    مخصوص یازدهم ریاضی.
-                </p>
-
-                <span class="subject-status">
-                    به‌زودی
-                </span>
-
-            </article>
-
-
-            <!-- PHYSICS -->
-            <article class="subject-card">
-
-                <div class="subject-icon">
-                    ⚡
-                </div>
-
-                <h3>
-                    فیزیک
-                </h3>
-
-                <p>
-                    درس‌نامه، سوال و تمرین
-                    فیزیک یازدهم.
-                </p>
-
-                <span class="subject-status">
-                    به‌زودی
-                </span>
-
-            </article>
-
-
-            <!-- CHEMISTRY -->
-            <article class="subject-card">
-
-                <div class="subject-icon">
-                    ⚗️
-                </div>
-
-                <h3>
-                    شیمی
-                </h3>
-
-                <p>
-                    مفاهیم، تمرین‌ها و
-                    سوالات شیمی یازدهم.
-                </p>
-
-                <span class="subject-status">
-                    به‌زودی
-                </span>
-
-            </article>
-
-
-            <!-- MATH -->
-            <article class="subject-card">
-
-                <div class="subject-icon">
+                <div class="hero-math">
                     ∑
                 </div>
 
-                <h3>
-                    ریاضی
-                </h3>
+            </div>
 
-                <p>
-                    تمرین‌ها و مباحث تکمیلی
-                    ریاضی یازدهم.
-                </p>
-
-                <span class="subject-status">
-                    به‌زودی
-                </span>
-
-            </article>
-
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- PROGRESS -->
-    <section class="progress-section">
 
-        <div class="progress-card">
+        <!-- =========================================
+             SUBJECTS
+        ========================================== -->
 
-            <div>
+        <section
+            class="subjects-section"
+            id="subjects"
+        >
 
-                <span>
-                    پیشرفت شما
-                </span>
+            <div class="section-heading">
 
-                <h2>
-                    هنوز شروع نکرده‌ای!
-                </h2>
+                <div>
 
-                <p>
-                    اولین درس خودت را شروع کن
-                    و مسیر پیشرفتت را بساز.
-                </p>
+                    <span class="section-label">
+                        درس‌های یازدهم
+                    </span>
+
+                    <h2>
+                        از کجا شروع کنیم؟
+                    </h2>
+
+                </div>
 
             </div>
 
-            <div class="progress-circle">
-                0%
+
+            <div
+                class="subjects-grid"
+                id="subjectsGrid"
+            >
+
+                <div class="loading-card">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        در حال بارگذاری درس‌ها...
+                    </p>
+
+                </div>
+
             </div>
 
-        </div>
+        </section>
 
-    </section>
 
+
+        <!-- =========================================
+             PROGRESS
+        ========================================== -->
+
+        <section class="progress-section">
+
+            <div class="progress-card">
+
+
+                <div class="progress-information">
+
+                    <span class="section-label">
+                        مسیر یادگیری
+                    </span>
+
+                    <h2>
+                        آماده‌ای شروع کنیم؟
+                    </h2>
+
+                    <p>
+                        اولین درس خودت را شروع کن
+                        و مسیر پیشرفتت را بساز.
+                    </p>
+
+                </div>
+
+
+                <div class="progress-visual">
+
+                    <div class="progress-circle">
+
+                        <span>
+                            0%
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="footer">
+
+        <p>
+            یازدهم ریاضی
+        </p>
+
+        <span>
+            پلتفرم مطالعه و تمرین
+        </span>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
     <script src="js/script.js"></script>
 
