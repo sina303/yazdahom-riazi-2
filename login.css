@@ -1,0 +1,339 @@
+```css
+/* =========================================
+   LOGIN PAGE
+   Yazdahom Riazi
+========================================= */
+
+.login-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 20px;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(53, 211, 90, 0.08),
+            transparent 35%
+        );
+}
+
+
+/* =========================================
+   LOGIN CARD
+========================================= */
+
+.login-card {
+    width: min(440px, 100%);
+
+    padding: 42px 35px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.login-logo {
+    width: 78px;
+    height: 78px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+        rgba(53, 211, 90, 0.08);
+
+    border:
+        1px solid rgba(53, 211, 90, 0.22);
+
+    color: var(--green-light);
+
+    font-size: 36px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 0 35px rgba(53, 211, 90, 0.06);
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.login-label {
+    display: block;
+
+    color: var(--green-light);
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.login-card h1 {
+    margin-top: 10px;
+
+    color: var(--text);
+
+    font-size: 30px;
+
+    line-height: 1.4;
+}
+
+
+.login-description {
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 2;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+#loginForm {
+    margin-top: 30px;
+
+    text-align: right;
+}
+
+
+.input-group {
+    width: 100%;
+}
+
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+.input-group input {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    background: var(--secondary);
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    direction: rtl;
+
+    text-align: right;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+}
+
+
+.input-group input::placeholder {
+    color: #626a65;
+}
+
+
+.input-group input:focus {
+    border-color: var(--green-light);
+
+    background: var(--card);
+
+    box-shadow:
+        0 0 0 3px rgba(53, 211, 90, 0.07);
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.login-error {
+    min-height: 18px;
+
+    margin-top: 9px;
+
+    color: var(--red);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.login-button {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 14px 18px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: var(--green-light);
+
+    color: #071008;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+}
+
+
+.login-button:hover {
+    transform: translateY(-2px);
+
+    background: #43df68;
+
+    box-shadow:
+        0 8px 25px rgba(53, 211, 90, 0.15);
+}
+
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   NOTE
+========================================= */
+
+.login-note {
+    margin-top: 25px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    line-height: 1.9;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+    .login-page {
+        padding: 20px 15px;
+    }
+
+    .login-card {
+        padding: 32px 22px;
+
+        border-radius: 18px;
+    }
+
+    .login-logo {
+        width: 68px;
+        height: 68px;
+
+        font-size: 31px;
+    }
+
+    .login-card h1 {
+        font-size: 25px;
+    }
+
+    .login-description {
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL HEIGHT SCREENS
+========================================= */
+
+@media (max-height: 650px) {
+
+    .login-page {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .login-card {
+        padding-top: 28px;
+        padding-bottom: 28px;
+    }
+
+    .login-logo {
+        margin-bottom: 12px;
+    }
+
+    #loginForm {
+        margin-top: 20px;
+    }
+
+    .login-note {
+        margin-top: 18px;
+    }
+
+}
+```
