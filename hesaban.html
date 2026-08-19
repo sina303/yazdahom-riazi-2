@@ -1,0 +1,231 @@
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>حسابان | یازدهم ریاضی</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="hesaban.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="site-header">
+
+        <a
+            href="index.html"
+            class="site-logo"
+        >
+            یازدهم ریاضی
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                خانه
+            </a>
+
+            <a
+                href="hesaban.html"
+                class="active"
+            >
+                حسابان
+            </a>
+
+            <a href="profile.html">
+                پروفایل
+            </a>
+
+        </nav>
+
+
+        <div class="header-user">
+
+            <span id="headerUsername">
+                کاربر
+            </span>
+
+            <span class="header-xp">
+                XP
+                <strong id="headerXP">
+                    0
+                </strong>
+            </span>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="hesaban-main">
+
+
+        <!-- =====================================
+             HERO
+        ====================================== -->
+
+        <section class="hesaban-hero">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    پایه یازدهم · رشته ریاضی
+                </span>
+
+                <h1>
+                    حسابان
+                </h1>
+
+                <p>
+                    فصل‌ها، درس‌ها، تمرین‌ها و آزمون‌های
+                    حسابان یازدهم را از اینجا دنبال کن.
+                </p>
+
+            </div>
+
+
+            <div class="hero-icon">
+                📐
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             OVERVIEW
+        ====================================== -->
+
+        <section class="hesaban-overview">
+
+            <div class="overview-card">
+
+                <span>
+                    تعداد فصل‌ها
+                </span>
+
+                <strong id="chapterCount">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="overview-card">
+
+                <span>
+                    درس‌های تکمیل‌شده
+                </span>
+
+                <strong id="completedLessons">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="overview-card">
+
+                <span>
+                    پیشرفت کلی
+                </span>
+
+                <strong id="overallProgress">
+                    0%
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             CHAPTERS
+        ====================================== -->
+
+        <section
+            class="chapters-section"
+            id="chapters"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>
+                        حسابان ۱
+                    </span>
+
+                    <h2>
+                        فصل‌ها
+                    </h2>
+
+                    <p>
+                        فصل موردنظر خودت را انتخاب کن.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="chaptersGrid"
+                class="chapters-grid"
+            >
+
+                <div class="loading">
+                    در حال بارگذاری فصل‌ها...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="user.js"></script>
+
+    <script src="hesaban.js"></script>
+
+</body>
+
+</html>
+```
