@@ -10,12 +10,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="فصل‌های حسابان یازدهم | یازدهم‌پلاس"
-    >
+    <title>AXIS | فصل</title>
 
-    <title>فصل حسابان | یازدهم‌پلاس</title>
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
     <link
         rel="stylesheet"
@@ -27,86 +27,137 @@
 
 <body>
 
-    <!-- =====================================
+
+    <!-- =========================================
          HEADER
-    ====================================== -->
+    ========================================== -->
 
-    <header class="chapter-header">
+    <header class="site-header">
 
-        <a
-            href="index.html"
-            class="chapter-logo"
-        >
-            یازدهم‌پلاس
-        </a>
-
-
-        <div class="chapter-header-actions">
-
-            <a
-                href="hesaban.html"
-                class="back-button"
-            >
-                حسابان
-                <span>←</span>
-            </a>
+        <div class="header-inner">
 
 
             <a
-                href="profile.html"
-                class="header-profile"
-                id="headerUsername"
+                href="index.html"
+                class="brand"
             >
-                کاربر
+
+                <span class="brand-mark">
+                    A
+                </span>
+
+                <div>
+
+                    <strong>
+                        AXIS
+                    </strong>
+
+                    <small>
+                        یازدهم ریاضی
+                    </small>
+
+                </div>
+
             </a>
+
+
+            <nav class="main-nav">
+
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    خانه
+                </a>
+
+
+                <a
+                    href="hesaban.html"
+                    class="nav-link active"
+                >
+                    حسابان
+                </a>
+
+
+                <a
+                    href="profile.html"
+                    class="nav-profile"
+                >
+
+                    <span class="profile-dot">
+                        ●
+                    </span>
+
+                    پروفایل
+
+                </a>
+
+
+            </nav>
+
 
         </div>
 
     </header>
 
 
-    <!-- =====================================
+
+    <!-- =========================================
          MAIN
-    ====================================== -->
+    ========================================== -->
 
-    <main class="chapter-page">
+    <main class="page-main">
 
 
-        <!-- =================================
+        <!-- =====================================
              BREADCRUMB
-        ================================== -->
+        ====================================== -->
 
-        <nav class="breadcrumb">
+        <div class="breadcrumb">
+
 
             <a href="index.html">
                 خانه
             </a>
 
-            <span>/</span>
+
+            <span>
+                ←
+            </span>
+
 
             <a href="hesaban.html">
                 حسابان
             </a>
 
-            <span>/</span>
 
-            <strong id="breadcrumbChapter">
+            <span>
+                ←
+            </span>
+
+
+            <span id="breadcrumbChapter">
                 فصل
-            </strong>
-
-        </nav>
+            </span>
 
 
-        <!-- =================================
-             HERO
-        ================================== -->
+        </div>
+
+
+
+        <!-- =====================================
+             CHAPTER HERO
+        ====================================== -->
 
         <section class="chapter-hero">
 
-            <div class="chapter-hero-content">
 
-                <span class="chapter-label">
-                    حسابان یازدهم
+            <div>
+
+
+                <span class="section-label">
+                    حسابان
                 </span>
 
 
@@ -116,126 +167,141 @@
 
 
                 <p id="chapterDescription">
-                    اطلاعات فصل در حال دریافت است.
+                    محتوای فصل در حال بارگذاری است.
                 </p>
 
-
-                <div class="chapter-meta">
-
-                    <div>
-
-                        <span>
-                            تعداد درس
-                        </span>
-
-                        <strong id="lessonCount">
-                            0
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            وضعیت
-                        </span>
-
-                        <strong>
-                            آماده مطالعه
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="chapter-symbol">
-                ∫
-            </div>
-
-        </section>
-
-
-        <!-- =================================
-             LESSONS
-        ================================== -->
-
-        <section class="lessons-section">
-
-            <div class="section-title">
-
-                <div>
-
-                    <span>
-                        محتوای فصل
-                    </span>
-
-                    <h2>
-                        درس‌ها
-                    </h2>
-
-                </div>
 
             </div>
 
 
             <div
-                id="lessonsContainer"
-                class="lessons-grid"
+                class="chapter-number-large"
             >
-
-                <div class="loading-state">
-
-                    در حال بارگذاری درس‌ها...
-
-                </div>
-
+                01
             </div>
+
 
         </section>
 
 
-        <!-- =================================
-             ERROR
-        ================================== -->
 
-        <div
-            id="chapterError"
-            class="chapter-error"
-            role="alert"
-        ></div>
+        <!-- =====================================
+             LESSONS
+        ====================================== -->
+
+        <section class="lessons-section">
+
+
+            <div class="section-heading">
+
+
+                <div>
+
+
+                    <span class="section-label">
+                        مسیر یادگیری
+                    </span>
+
+
+                    <h2>
+                        درس‌های فصل
+                    </h2>
+
+
+                </div>
+
+
+                <span class="section-count">
+                    درس‌ها
+                </span>
+
+
+            </div>
+
+
+
+            <div
+                id="lessons"
+                class="lessons-list"
+            >
+
+
+                <div class="lesson-card">
+
+
+                    <div class="lesson-number">
+                        01
+                    </div>
+
+
+                    <div class="lesson-card-content">
+
+
+                        <h3>
+                            در حال بارگذاری...
+                        </h3>
+
+
+                        <p>
+                            درس‌ها در حال بارگذاری هستند.
+                        </p>
+
+
+                    </div>
+
+
+                    <div class="lesson-card-status">
+                        ...
+                    </div>
+
+
+                    <div class="lesson-card-arrow">
+                        ←
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
 
 
     </main>
 
 
-    <!-- =====================================
+
+    <!-- =========================================
          FOOTER
-    ====================================== -->
+    ========================================== -->
 
-    <footer class="chapter-footer">
+    <footer class="site-footer">
 
-        <span>
-            یازدهم‌پلاس
-        </span>
 
         <span>
-            حسابان یازدهم
+            AXIS
         </span>
+
+
+        <span>
+            Learn beyond the formula
+        </span>
+
 
     </footer>
 
 
-    <!-- =====================================
-         SCRIPTS
-    ====================================== -->
+
+    <!-- =========================================
+         JS
+    ========================================== -->
 
     <script src="js/user.js"></script>
 
     <script src="js/chapter.js"></script>
+
 
 </body>
 
