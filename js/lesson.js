@@ -1,19 +1,31 @@
 /* =========================================
    LESSON PAGE
+   Yazdahom Plus
 ========================================= */
 
+let currentLesson = null;
+let currentChapter = null;
+let currentUser = null;
+
 document.addEventListener("DOMContentLoaded", () => {
-    loadLesson();
+    initializeLesson();
 });
 
 
 /* =========================================
-   LOAD LESSON
+   INITIALIZE
 ========================================= */
 
-async function loadLesson() {
+async function initializeLesson() {
 
     try {
+
+        /*
+         * Get lesson ID from URL
+         *
+         * Example:
+         * lesson.html?lesson=lesson-1
+         */
 
         const params =
             new URLSearchParams(
@@ -25,16 +37,30 @@ async function loadLesson() {
 
 
         if (!lessonId) {
-            throw new Error("Lesson ID not found");
+
+            throw new Error(
+                "شناسه درس پیدا نشد."
+            );
+
         }
 
 
+        /* -----------------------------
+           Load data
+        ----------------------------- */
+
         const response =
-            await fetch("data/subjects.json");
+            await fetch(
+                "data/subjects.json"
+            );
 
 
         if (!response.ok) {
-            throw new Error("Could not load subjects.json");
+
+            throw new Error(
+                "فایل اطلاعات دروس قابل دریافت نیست."
+            );
+
         }
 
 
@@ -46,9 +72,17 @@ async function loadLesson() {
             !data ||
             !Array.isArray(data.subjects)
         ) {
-            throw new Error("Invalid subjects data");
+
+            throw new Error(
+                "ساختار subjects.json صحیح نیست."
+            );
+
         }
 
+
+        /* -----------------------------
+           Find Hesaban
+        ----------------------------- */
 
         const hesaban =
             data.subjects.find(
@@ -58,22 +92,44 @@ async function loadLesson() {
 
 
         if (!hesaban) {
-            throw new Error("Hesaban not found");
+
+            throw new Error(
+                "درس حسابان پیدا نشد."
+            );
+
         }
-
-
-        let foundLesson = null;
-        let foundChapter = null;
 
 
         /* -----------------------------
            Find lesson
         ----------------------------- */
 
-        for (const chapter of hesaban.chapters || []) {
+        let foundLesson = null;
+        let foundChapter = null;
+
+
+        const chapters =
+            Array.isArray(
+                hesaban.chapters
+            )
+                ? hesaban.chapters
+                : [];
+
+
+        for (
+            const chapter of chapters
+        ) {
+
+            const lessons =
+                Array.isArray(
+                    chapter.lessons
+                )
+                    ? chapter.lessons
+                    : [];
+
 
             const lesson =
-                (chapter.lessons || []).find(
+                lessons.find(
                     item =>
                         item.id === lessonId
                 );
@@ -81,39 +137,81 @@ async function loadLesson() {
 
             if (lesson) {
 
-                foundLesson = lesson;
-                foundChapter = chapter;
+                foundLesson =
+                    lesson;
+
+                foundChapter =
+                    chapter;
 
                 break;
+
             }
 
         }
 
 
         if (!foundLesson) {
-            throw new Error("Lesson not found");
+
+            throw new Error(
+                "درس موردنظر پیدا نشد."
+            );
+
         }
 
 
         /* -----------------------------
-           Render lesson
+           Save current data
+        ----------------------------- */
+
+        currentLesson =
+            foundLesson;
+
+        currentChapter =
+            foundChapter;
+
+
+        /* -----------------------------
+           User
+        ----------------------------- */
+
+        if (
+            typeof getUser === "function"
+        ) {
+
+            currentUser =
+                getUser();
+
+        }
+
+
+        /* -----------------------------
+           Render
         ----------------------------- */
 
         renderLesson(
-            foundLesson,
-            foundChapter
+            currentLesson,
+            currentChapter
         );
+
+
+        /* -----------------------------
+           Events
+        ----------------------------- */
+
+        setupLessonEvents();
 
 
     } catch (error) {
 
         console.error(
-            "Lesson loading error:",
+            "Lesson error:",
             error
         );
 
 
-        showLessonError(error.message);
+        showLessonError(
+            error.message
+        );
 
     }
 
@@ -129,144 +227,156 @@ function renderLesson(
     chapter
 ) {
 
+    /* ---------------------------------
+       Title
+    --------------------------------- */
+
     const title =
         document.getElementById(
             "lessonTitle"
         );
+
+
+    if (title) {
+
+        title.textContent =
+            lesson.title ||
+            "درس حسابان";
+
+    }
+
+
+    /* ---------------------------------
+       Description
+    --------------------------------- */
 
     const description =
         document.getElementById(
             "lessonDescription"
         );
 
-    const infoTitle =
-        document.getElementById(
-            "lessonInfoTitle"
-        );
-
-    const infoDescription =
-        document.getElementById(
-            "lessonInfoDescription"
-        );
-
-    const breadcrumbChapter =
-        document.getElementById(
-            "breadcrumbChapter"
-        );
-
-    const breadcrumbLesson =
-        document.getElementById(
-            "breadcrumbLesson"
-        );
-
-
-    /* -----------------------------
-       Title
-    ----------------------------- */
-
-    if (title) {
-
-        title.textContent =
-            lesson.title || "درس";
-
-    }
-
-
-    /* -----------------------------
-       Description
-    ----------------------------- */
 
     if (description) {
 
         description.textContent =
-            lesson.description || "";
+            lesson.description ||
+            "محتوای این درس را مطالعه کن.";
 
     }
 
 
-    if (infoTitle) {
+    /* ---------------------------------
+       Lesson number
+    --------------------------------- */
 
-        infoTitle.textContent =
-            lesson.title || "درس";
+    const number =
+        document.getElementById(
+            "lessonNumber"
+        );
+
+
+    if (number) {
+
+        number.textContent =
+            lesson.number
+                ? `درس ${lesson.number}`
+                : "درس";
 
     }
 
 
-    if (infoDescription) {
-
-        infoDescription.textContent =
-            lesson.description || "";
-
-    }
-
-
-    /* -----------------------------
+    /* ---------------------------------
        Breadcrumb
-    ----------------------------- */
+    --------------------------------- */
 
-    if (breadcrumbChapter) {
+    const breadcrumb =
+        document.getElementById(
+            "lessonBreadcrumb"
+        );
 
-        breadcrumbChapter.textContent =
-            chapter.title || "فصل";
+
+    if (breadcrumb) {
+
+        breadcrumb.textContent =
+            lesson.title ||
+            "درس";
 
     }
 
 
-    if (breadcrumbLesson) {
+    /* ---------------------------------
+       Chapter link
+    --------------------------------- */
 
-        breadcrumbLesson.textContent =
-            lesson.title || "درس";
+    const chapterLink =
+        document.getElementById(
+            "chapterLink"
+        );
+
+
+    if (chapterLink) {
+
+        chapterLink.textContent =
+            chapter.title ||
+            "فصل";
+
+
+        chapterLink.href =
+            `chapter.html?chapter=${encodeURIComponent(
+                chapter.id
+            )}`;
 
     }
 
 
-    /* -----------------------------
+    /* ---------------------------------
        Page title
-    ----------------------------- */
+    --------------------------------- */
 
     document.title =
-        `${lesson.title} | یازدهم‌پلاس`;
+        `${lesson.title || "درس"} | یازدهم‌پلاس`;
 
 
-    /* -----------------------------
-       Questions
-    ----------------------------- */
+    /* ---------------------------------
+       Content
+    --------------------------------- */
 
-    renderBookQuestions(
-        lesson.bookQuestions || []
+    renderLessonContent(
+        lesson
     );
 
 
-    renderCustomQuestions(
-        lesson.customQuestions || []
+    /* ---------------------------------
+       Exercises
+    --------------------------------- */
+
+    renderExercises(
+        lesson.exercises
     );
 
 
-    /* -----------------------------
-       Section buttons
-    ----------------------------- */
+    /* ---------------------------------
+       Progress
+    --------------------------------- */
 
-    setupSectionButtons();
+    updateLessonProgress(
+        lesson.id
+    );
 
 }
 
 
 /* =========================================
-   BOOK QUESTIONS
+   LESSON CONTENT
 ========================================= */
 
-function renderBookQuestions(
-    questions
+function renderLessonContent(
+    lesson
 ) {
 
     const container =
         document.getElementById(
-            "bookQuestions"
-        );
-
-    const count =
-        document.getElementById(
-            "bookCount"
+            "lessonContent"
         );
 
 
@@ -275,75 +385,170 @@ function renderBookQuestions(
     }
 
 
-    if (count) {
+    /*
+     * Support both:
+     *
+     * lesson.content
+     *
+     * lesson.sections
+     */
 
-        count.textContent =
-            `${questions.length} سؤال`;
+    if (
+        Array.isArray(
+            lesson.sections
+        ) &&
+        lesson.sections.length > 0
+    ) {
+
+        container.innerHTML = "";
+
+
+        lesson.sections.forEach(
+            section => {
+
+                const element =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                element.className =
+                    "content-block";
+
+
+                if (section.title) {
+
+                    const heading =
+                        document.createElement(
+                            "h3"
+                        );
+
+
+                    heading.textContent =
+                        section.title;
+
+
+                    element.appendChild(
+                        heading
+                    );
+
+                }
+
+
+                if (section.text) {
+
+                    const paragraph =
+                        document.createElement(
+                            "p"
+                        );
+
+
+                    paragraph.textContent =
+                        section.text;
+
+
+                    element.appendChild(
+                        paragraph
+                    );
+
+                }
+
+
+                container.appendChild(
+                    element
+                );
+
+            }
+        );
+
+
+        return;
 
     }
 
 
     if (
-        !Array.isArray(questions) ||
-        questions.length === 0
+        lesson.content &&
+        typeof lesson.content === "string"
     ) {
 
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <div style="font-size:32px;">
-                    📖
-                </div>
-
-                <p style="margin-top:10px;">
-                    هنوز سؤال کتابی برای این درس
-                    اضافه نشده است.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    questions.forEach(
-        (question, index) => {
-
-            container.appendChild(
-                createQuestionCard(
-                    question,
-                    index + 1
-                )
+        container.innerHTML =
+            formatLessonText(
+                lesson.content
             );
 
-        }
-    );
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📖
+            </div>
+
+            <h3>
+                محتوای این درس هنوز آماده نیست
+            </h3>
+
+            <p>
+                محتوای آموزشی این درس به‌زودی اضافه می‌شود.
+            </p>
+
+        </div>
+
+    `;
 
 }
 
 
 /* =========================================
-   CUSTOM QUESTIONS
+   FORMAT TEXT
 ========================================= */
 
-function renderCustomQuestions(
-    questions
+function formatLessonText(
+    text
+) {
+
+    return escapeHTML(text)
+
+        .replace(
+            /\n\n/g,
+            "</p><p>"
+        )
+
+        .replace(
+            /\n/g,
+            "<br>"
+        )
+
+        .replace(
+            /^/,
+            "<p>"
+        )
+
+        .replace(
+            /$/,
+            "</p>"
+        );
+
+}
+
+
+/* =========================================
+   EXERCISES
+========================================= */
+
+function renderExercises(
+    exercises
 ) {
 
     const container =
         document.getElementById(
-            "customQuestions"
-        );
-
-    const count =
-        document.getElementById(
-            "customCount"
+            "exercisesContainer"
         );
 
 
@@ -352,30 +557,28 @@ function renderCustomQuestions(
     }
 
 
-    if (count) {
-
-        count.textContent =
-            `${questions.length} سؤال`;
-
-    }
+    const list =
+        Array.isArray(exercises)
+            ? exercises
+            : [];
 
 
-    if (
-        !Array.isArray(questions) ||
-        questions.length === 0
-    ) {
+    if (list.length === 0) {
 
         container.innerHTML = `
 
             <div class="empty-state">
 
-                <div style="font-size:32px;">
+                <div class="empty-icon">
                     ✏️
                 </div>
 
-                <p style="margin-top:10px;">
-                    هنوز تمرین تألیفی برای این درس
-                    اضافه نشده است.
+                <h3>
+                    هنوز تمرینی برای این درس ثبت نشده
+                </h3>
+
+                <p>
+                    تمرین‌های این درس به‌زودی اضافه می‌شوند.
                 </p>
 
             </div>
@@ -383,20 +586,25 @@ function renderCustomQuestions(
         `;
 
         return;
+
     }
 
 
     container.innerHTML = "";
 
 
-    questions.forEach(
-        (question, index) => {
+    list.forEach(
+        (exercise, index) => {
+
+            const card =
+                createExerciseCard(
+                    exercise,
+                    index + 1
+                );
+
 
             container.appendChild(
-                createQuestionCard(
-                    question,
-                    index + 1
-                )
+                card
             );
 
         }
@@ -406,177 +614,347 @@ function renderCustomQuestions(
 
 
 /* =========================================
-   QUESTION CARD
+   EXERCISE CARD
 ========================================= */
 
-function createQuestionCard(
-    question,
+function createExerciseCard(
+    exercise,
     number
 ) {
 
-    const card =
+    const article =
         document.createElement(
             "article"
         );
 
 
-    card.className =
-        "question-card";
+    article.className =
+        "exercise-card";
 
 
-    const questionText =
-        question.question ||
-        question.text ||
-        question.title ||
-        "متن سؤال ثبت نشده است";
+    const question =
+        exercise.question ||
+        `تمرین ${number}`;
 
 
-    const answer =
-        question.answer ||
-        question.solution ||
-        "";
+    article.innerHTML = `
 
+        <div class="exercise-number">
 
-    card.innerHTML = `
-
-        <div class="question-number">
-
-            سؤال ${number}
+            تمرین ${number}
 
         </div>
 
 
-        <div class="question-text">
+        <div class="exercise-question">
 
-            ${escapeHTML(questionText)}
+            ${escapeHTML(question)}
 
         </div>
 
     `;
 
 
-    if (answer) {
+    if (
+        exercise.answer
+    ) {
 
-        const answerBox =
+        const answerButton =
+            document.createElement(
+                "button"
+            );
+
+
+        answerButton.type =
+            "button";
+
+
+        answerButton.className =
+            "answer-button";
+
+
+        answerButton.textContent =
+            "نمایش پاسخ";
+
+
+        const answer =
             document.createElement(
                 "div"
             );
 
 
-        answerBox.className =
-            "question-answer";
+        answer.className =
+            "exercise-answer";
 
 
-        answerBox.innerHTML = `
-
-            <strong>
-                پاسخ:
-            </strong>
-
-            <span>
-                ${escapeHTML(answer)}
-            </span>
-
-        `;
+        answer.hidden =
+            true;
 
 
-        card.appendChild(
-            answerBox
+        answer.textContent =
+            exercise.answer;
+
+
+        answerButton.addEventListener(
+            "click",
+            () => {
+
+                const isHidden =
+                    answer.hidden;
+
+
+                answer.hidden =
+                    !isHidden;
+
+
+                answerButton.textContent =
+                    isHidden
+                        ? "پنهان کردن پاسخ"
+                        : "نمایش پاسخ";
+
+            }
+        );
+
+
+        article.appendChild(
+            answerButton
+        );
+
+
+        article.appendChild(
+            answer
         );
 
     }
 
 
-    return card;
+    return article;
 
 }
 
 
 /* =========================================
-   SECTION BUTTONS
+   PROGRESS
 ========================================= */
 
-function setupSectionButtons() {
+function updateLessonProgress(
+    lessonId
+) {
 
-    const buttons =
-        document.querySelectorAll(
-            ".content-type"
+    let completed = false;
+
+
+    if (
+        currentUser &&
+        currentUser.progress &&
+        Array.isArray(
+            currentUser.progress.completedLessons
+        )
+    ) {
+
+        completed =
+            currentUser.progress.completedLessons
+                .includes(
+                    lessonId
+                );
+
+    }
+
+
+    const percent =
+        completed
+            ? 100
+            : 0;
+
+
+    const progressPercent =
+        document.getElementById(
+            "progressPercent"
         );
 
 
-    const sections = {
-
-        book:
-            document.getElementById(
-                "bookSection"
-            ),
-
-        custom:
-            document.getElementById(
-                "customSection"
-            ),
-
-        exam:
-            document.getElementById(
-                "examSection"
-            )
-
-    };
+    const progressFill =
+        document.getElementById(
+            "progressFill"
+        );
 
 
-    buttons.forEach(button => {
+    if (progressPercent) {
+
+        progressPercent.textContent =
+            `${percent}%`;
+
+    }
+
+
+    if (progressFill) {
+
+        progressFill.style.width =
+            `${percent}%`;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "completeLessonButton"
+        );
+
+
+    if (button) {
+
+        if (completed) {
+
+            button.textContent =
+                "درس تکمیل شده ✓";
+
+
+            button.classList.add(
+                "completed"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   EVENTS
+========================================= */
+
+function setupLessonEvents() {
+
+    const button =
+        document.getElementById(
+            "completeLessonButton"
+        );
+
+
+    if (button) {
 
         button.addEventListener(
             "click",
-            () => {
-
-                const section =
-                    button.dataset.section;
-
-
-                buttons.forEach(
-                    item => {
-                        item.classList.remove(
-                            "active"
-                        );
-                    }
-                );
-
-
-                button.classList.add(
-                    "active"
-                );
-
-
-                Object.values(sections)
-                    .forEach(element => {
-
-                        if (element) {
-
-                            element.classList.add(
-                                "hidden"
-                            );
-
-                        }
-
-                    });
-
-
-                if (
-                    sections[section]
-                ) {
-
-                    sections[section]
-                        .classList.remove(
-                            "hidden"
-                        );
-
-                }
-
-            }
+            completeCurrentLesson
         );
 
-    });
+    }
+
+}
+
+
+/* =========================================
+   COMPLETE LESSON
+========================================= */
+
+function completeCurrentLesson() {
+
+    if (!currentLesson) {
+        return;
+    }
+
+
+    if (
+        typeof getUser !== "function" ||
+        typeof saveUser !== "function"
+    ) {
+
+        console.warn(
+            "User system is not available."
+        );
+
+        return;
+
+    }
+
+
+    let user =
+        getUser();
+
+
+    if (!user) {
+
+        return;
+
+    }
+
+
+    if (!user.progress) {
+
+        user.progress = {
+
+            completedLessons: []
+
+        };
+
+    }
+
+
+    if (
+        !Array.isArray(
+            user.progress.completedLessons
+        )
+    ) {
+
+        user.progress.completedLessons =
+            [];
+
+    }
+
+
+    const lessonId =
+        currentLesson.id;
+
+
+    const alreadyCompleted =
+        user.progress.completedLessons
+            .includes(
+                lessonId
+            );
+
+
+    if (!alreadyCompleted) {
+
+        user.progress.completedLessons.push(
+            lessonId
+        );
+
+
+        /*
+         * XP reward
+         */
+
+        const reward =
+            Number(
+                currentLesson.xp || 20
+            );
+
+
+        user.xp =
+            Number(
+                user.xp || 0
+            ) + reward;
+
+
+        /*
+         * Save
+         */
+
+        saveUser(
+            user
+        );
+
+
+        currentUser =
+            user;
+
+    }
+
+
+    updateLessonProgress(
+        lessonId
+    );
 
 }
 
@@ -589,70 +967,68 @@ function showLessonError(
     message
 ) {
 
-    const title =
+    const content =
         document.getElementById(
-            "lessonTitle"
-        );
-
-    const description =
-        document.getElementById(
-            "lessonDescription"
+            "lessonContent"
         );
 
 
-    if (title) {
+    const exercises =
+        document.getElementById(
+            "exercisesContainer"
+        );
 
-        title.textContent =
-            "خطا در بارگذاری درس";
+
+    const error =
+        document.getElementById(
+            "lessonError"
+        );
+
+
+    if (content) {
+
+        content.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    خطا در بارگذاری درس
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        message ||
+                        "مشکلی رخ داد."
+                    )}
+                </p>
+
+            </div>
+
+        `;
 
     }
 
 
-    if (description) {
+    if (exercises) {
 
-        description.textContent =
-            message ||
-            "مشکلی در دریافت اطلاعات درس رخ داد.";
+        exercises.innerHTML = "";
 
     }
 
 
-    const containers = [
+    if (error) {
 
-        document.getElementById(
-            "bookQuestions"
-        ),
+        error.textContent =
+            message || "";
 
-        document.getElementById(
-            "customQuestions"
-        )
+        error.style.display =
+            "block";
 
-    ];
-
-
-    containers.forEach(
-        container => {
-
-            if (container) {
-
-                container.innerHTML = `
-
-                    <div class="empty-state">
-
-                        ⚠️
-
-                        <p style="margin-top:10px;">
-                            اطلاعات درس قابل دریافت نیست.
-                        </p>
-
-                    </div>
-
-                `;
-
-            }
-
-        }
-    );
+    }
 
 }
 
@@ -661,7 +1037,9 @@ function showLessonError(
    ESCAPE HTML
 ========================================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
     return String(value)
 
