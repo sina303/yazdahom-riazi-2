@@ -1,296 +1,67 @@
 /* =========================================
-   AI ASSISTANT
+   USER SYSTEM
+   Yazdahom Plus
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-    setupAI();
-});
+const USER_STORAGE_KEY = "yazdahom_user";
 
 
 /* =========================================
-   CONFIG
+   DEFAULT USER
 ========================================= */
 
-const AI_BACKEND_URL =
-    "https://yazdahom-riazi-production.up.railway.app";
+const DEFAULT_USER = {
+    username: "",
+    xp: 0,
+    level: 1,
+    createdAt: null
+};
 
 
 /* =========================================
-   STATE
+   GET USER
 ========================================= */
 
-let selectedAIImage = null;
-
-
-/* =========================================
-   SETUP
-========================================= */
-
-function setupAI() {
-
-    const sendButton =
-        document.getElementById(
-            "aiSendButton"
-        );
-
-    const imageInput =
-        document.getElementById(
-            "aiImageInput"
-        );
-
-    const removeImageButton =
-        document.getElementById(
-            "removeAiImage"
-        );
-
-
-    if (sendButton) {
-
-        sendButton.addEventListener(
-            "click",
-            sendAIQuestion
-        );
-
-    }
-
-
-    if (imageInput) {
-
-        imageInput.addEventListener(
-            "change",
-            handleAIImage
-        );
-
-    }
-
-
-    if (removeImageButton) {
-
-        removeImageButton.addEventListener(
-            "click",
-            removeAIImage
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   SEND QUESTION
-========================================= */
-
-async function sendAIQuestion() {
-
-    const questionInput =
-        document.getElementById(
-            "aiQuestion"
-        );
-
-    const sendButton =
-        document.getElementById(
-            "aiSendButton"
-        );
-
-    const responseBox =
-        document.getElementById(
-            "aiResponse"
-        );
-
-    const responseContent =
-        document.getElementById(
-            "aiResponseContent"
-        );
-
-
-    if (!questionInput) {
-        return;
-    }
-
-
-    const question =
-        questionInput.value.trim();
-
-
-    /* -----------------------------------------
-       Validate
-    ----------------------------------------- */
-
-    if (!question && !selectedAIImage) {
-
-        showAIResponse(
-            "لطفاً سؤال خودت را بنویس یا یک تصویر ارسال کن.",
-            true
-        );
-
-        return;
-    }
-
-
-    /* -----------------------------------------
-       Loading
-    ----------------------------------------- */
-
-    if (sendButton) {
-
-        sendButton.disabled = true;
-
-        sendButton.textContent =
-            "در حال فکر کردن...";
-
-    }
-
-
-    if (responseBox) {
-
-        responseBox.classList.remove(
-            "hidden"
-        );
-
-    }
-
-
-    if (responseContent) {
-
-        responseContent.textContent =
-            "در حال بررسی سؤال...";
-
-    }
-
+function getUser() {
 
     try {
 
-        /* -------------------------------------
-           Build request
-        ------------------------------------- */
-
-        const formData =
-            new FormData();
-
-
-        if (question) {
-
-            formData.append(
-                "question",
-                question
+        const savedUser =
+            localStorage.getItem(
+                USER_STORAGE_KEY
             );
+
+
+        if (!savedUser) {
+
+            return {
+                ...DEFAULT_USER
+            };
 
         }
 
 
-        if (selectedAIImage) {
-
-            formData.append(
-                "image",
-                selectedAIImage
-            );
-
-        }
+        const user =
+            JSON.parse(savedUser);
 
 
-        /* -------------------------------------
-           Send to Railway
-        ------------------------------------- */
-
-        const response =
-            await fetch(
-                `${AI_BACKEND_URL}/api/ai`,
-                {
-                    method: "POST",
-                    body: formData
-                }
-            );
-
-
-        /* -------------------------------------
-           Read response
-        ------------------------------------- */
-
-        let data;
-
-        try {
-
-            data =
-                await response.json();
-
-        } catch {
-
-            throw new Error(
-                "پاسخ نامعتبر از سرور دریافت شد."
-            );
-
-        }
-
-
-        /* -------------------------------------
-           HTTP error
-        ------------------------------------- */
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message ||
-                data.error ||
-                "خطایی در ارتباط با سرور رخ داد."
-            );
-
-        }
-
-
-        /* -------------------------------------
-           Extract AI answer
-        ------------------------------------- */
-
-        const answer =
-            data.answer ||
-            data.response ||
-            data.message ||
-            data.text;
-
-
-        if (!answer) {
-
-            throw new Error(
-                "پاسخ هوش مصنوعی خالی است."
-            );
-
-        }
-
-
-        /* -------------------------------------
-           Show answer
-        ------------------------------------- */
-
-        showAIResponse(
-            answer,
-            false
-        );
+        return {
+            ...DEFAULT_USER,
+            ...user
+        };
 
 
     } catch (error) {
 
         console.error(
-            "AI Error:",
+            "Could not read user:",
             error
         );
 
 
-        showAIResponse(
-            getAIErrorMessage(error),
-            true
-        );
-
-
-    } finally {
-
-        if (sendButton) {
-
-            sendButton.disabled = false;
-
-            sendButton.textContent =
-                "ارسال سؤال →";
-
-        }
+        return {
+            ...DEFAULT_USER
+        };
 
     }
 
@@ -298,48 +69,30 @@ async function sendAIQuestion() {
 
 
 /* =========================================
-   SHOW RESPONSE
+   SAVE USER
 ========================================= */
 
-function showAIResponse(
-    message,
-    isError = false
-) {
+function saveUser(user) {
 
-    const responseBox =
-        document.getElementById(
-            "aiResponse"
-        );
+    try {
 
-    const responseContent =
-        document.getElementById(
-            "aiResponseContent"
+        localStorage.setItem(
+            USER_STORAGE_KEY,
+            JSON.stringify(user)
         );
 
 
-    if (!responseBox || !responseContent) {
-        return;
-    }
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Could not save user:",
+            error
+        );
 
 
-    responseBox.classList.remove(
-        "hidden"
-    );
-
-
-    responseContent.textContent =
-        message;
-
-
-    if (isError) {
-
-        responseContent.style.color =
-            "#e05252";
-
-    } else {
-
-        responseContent.style.color =
-            "";
+        return false;
 
     }
 
@@ -347,160 +100,263 @@ function showAIResponse(
 
 
 /* =========================================
-   IMAGE SELECT
+   CREATE USER
 ========================================= */
 
-function handleAIImage(event) {
+function createUser(username) {
 
-    const file =
-        event.target.files &&
-        event.target.files[0];
+    const cleanUsername =
+        String(username || "").trim();
 
 
-    if (!file) {
-        return;
+    if (!cleanUsername) {
+
+        return false;
+
     }
 
 
-    /* -----------------------------------------
-       Validate image
-    ----------------------------------------- */
+    const user = {
 
-    if (!file.type.startsWith("image/")) {
+        username: cleanUsername,
 
-        alert(
-            "لطفاً یک فایل تصویری انتخاب کن."
-        );
+        xp: 0,
 
-        event.target.value = "";
+        level: 1,
 
-        return;
-    }
-
-
-    /* -----------------------------------------
-       Size limit
-    ----------------------------------------- */
-
-    const maxSize =
-        10 * 1024 * 1024;
-
-
-    if (file.size > maxSize) {
-
-        alert(
-            "حجم تصویر نباید بیشتر از ۱۰ مگابایت باشد."
-        );
-
-        event.target.value = "";
-
-        return;
-    }
-
-
-    selectedAIImage =
-        file;
-
-
-    showAIImagePreview(
-        file
-    );
-
-}
-
-
-/* =========================================
-   IMAGE PREVIEW
-========================================= */
-
-function showAIImagePreview(
-    file
-) {
-
-    const preview =
-        document.getElementById(
-            "aiImagePreview"
-        );
-
-    const image =
-        document.getElementById(
-            "aiPreviewImage"
-        );
-
-
-    if (!preview || !image) {
-        return;
-    }
-
-
-    const reader =
-        new FileReader();
-
-
-    reader.onload = () => {
-
-        image.src =
-            reader.result;
-
-        preview.classList.remove(
-            "hidden"
-        );
+        createdAt:
+            new Date().toISOString()
 
     };
 
 
-    reader.readAsDataURL(
-        file
+    return saveUser(user);
+
+}
+
+
+/* =========================================
+   UPDATE USER
+========================================= */
+
+function updateUser(changes) {
+
+    const currentUser =
+        getUser();
+
+
+    const updatedUser = {
+
+        ...currentUser,
+
+        ...changes
+
+    };
+
+
+    saveUser(updatedUser);
+
+
+    return updatedUser;
+
+}
+
+
+/* =========================================
+   ADD XP
+========================================= */
+
+function addXP(amount) {
+
+    const xpAmount =
+        Number(amount);
+
+
+    if (
+        !Number.isFinite(xpAmount) ||
+        xpAmount <= 0
+    ) {
+
+        return getUser();
+
+    }
+
+
+    const user =
+        getUser();
+
+
+    const newXP =
+        user.xp + xpAmount;
+
+
+    const newLevel =
+        getLevel(newXP);
+
+
+    return updateUser({
+
+        xp: newXP,
+
+        level: newLevel
+
+    });
+
+}
+
+
+/* =========================================
+   GET LEVEL
+========================================= */
+
+function getLevel(xp) {
+
+    const value =
+        Math.max(
+            0,
+            Number(xp) || 0
+        );
+
+
+    /*
+        هر 100 XP یک Level
+        فعلاً سیستم ساده است.
+    */
+
+    return Math.floor(
+        value / 100
+    ) + 1;
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        USER_STORAGE_KEY
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================
+   IS LOGGED IN
+========================================= */
+
+function isLoggedIn() {
+
+    const user =
+        getUser();
+
+
+    return Boolean(
+        user.username &&
+        user.username.trim()
     );
 
 }
 
 
 /* =========================================
-   REMOVE IMAGE
+   CHECK USER ACCESS
 ========================================= */
 
-function removeAIImage() {
+function checkUserAccess() {
 
-    selectedAIImage =
-        null;
-
-
-    const input =
-        document.getElementById(
-            "aiImageInput"
-        );
-
-    const preview =
-        document.getElementById(
-            "aiImagePreview"
-        );
-
-    const image =
-        document.getElementById(
-            "aiPreviewImage"
-        );
+    const isLoginPage =
+        window.location.pathname
+            .toLowerCase()
+            .endsWith("login.html");
 
 
-    if (input) {
+    /*
+        Login page برای کاربر
+        بدون ورود آزاد است.
+    */
 
-        input.value = "";
+    if (isLoginPage) {
+
+        return true;
 
     }
 
 
-    if (image) {
+    /*
+        سایر صفحات نیاز به Login دارند.
+    */
 
-        image.src = "";
+    if (!isLoggedIn()) {
+
+        window.location.href =
+            "login.html";
+
+
+        return false;
 
     }
 
 
-    if (preview) {
+    return true;
 
-        preview.classList.add(
-            "hidden"
+}
+
+
+/* =========================================
+   UPDATE HEADER
+========================================= */
+
+function updateUserInfo() {
+
+    const user =
+        getUser();
+
+
+    const usernameElement =
+        document.getElementById(
+            "headerUsername"
         );
+
+
+    const xpElement =
+        document.getElementById(
+            "headerXP"
+        );
+
+
+    const levelElement =
+        document.getElementById(
+            "headerLevel"
+        );
+
+
+    if (usernameElement) {
+
+        usernameElement.textContent =
+            user.username || "کاربر";
+
+    }
+
+
+    if (xpElement) {
+
+        xpElement.textContent =
+            user.xp;
+
+    }
+
+
+    if (levelElement) {
+
+        levelElement.textContent =
+            user.level;
 
     }
 
@@ -508,50 +364,16 @@ function removeAIImage() {
 
 
 /* =========================================
-   ERROR MESSAGES
+   AUTO ACCESS CHECK
 ========================================= */
 
-function getAIErrorMessage(
-    error
-) {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const message =
-        error?.message || "";
+        checkUserAccess();
 
-
-    if (
-        message.includes(
-            "Failed to fetch"
-        )
-    ) {
-
-        return `
-ارتباط با سرور هوش مصنوعی برقرار نشد.
-
-ممکن است بک‌اند Railway خاموش باشد
-یا آدرس API تغییر کرده باشد.
-        `.trim();
+        updateUserInfo();
 
     }
-
-
-    if (
-        message.includes(
-            "NetworkError"
-        )
-    ) {
-
-        return `
-خطای شبکه رخ داد.
-اتصال اینترنت و وضعیت سرور را بررسی کن.
-        `.trim();
-
-    }
-
-
-    return (
-        message ||
-        "یک خطای ناشناخته در هوش مصنوعی رخ داد."
-    );
-
-}
+);
