@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,209 +10,228 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>فصل | یازدهم‌پلاس</title>
+    <meta
+        name="description"
+        content="فصل‌های حسابان یازدهم | یازدهم‌پلاس"
+    >
+
+    <title>فصل حسابان | یازدهم‌پلاس</title>
 
     <link
         rel="stylesheet"
         href="css/chapter.css"
     >
+
 </head>
+
 
 <body>
 
-    <!-- ================================
+    <!-- =====================================
          HEADER
-    ================================= -->
+    ====================================== -->
 
     <header class="chapter-header">
 
-        <div class="header-right">
+        <a
+            href="index.html"
+            class="chapter-logo"
+        >
+            یازدهم‌پلاس
+        </a>
+
+
+        <div class="chapter-header-actions">
 
             <a
                 href="hesaban.html"
                 class="back-button"
             >
-                ← بازگشت
+                حسابان
+                <span>←</span>
             </a>
 
-            <div class="header-title">
-                یازدهم‌پلاس
-            </div>
 
-        </div>
-
-
-        <div class="header-user">
-
-            <span id="headerUsername">
+            <a
+                href="profile.html"
+                class="header-profile"
+                id="headerUsername"
+            >
                 کاربر
-            </span>
-
-            <span class="header-separator">
-                |
-            </span>
-
-            <span>
-                XP:
-                <strong id="headerXP">0</strong>
-            </span>
+            </a>
 
         </div>
 
     </header>
 
 
-    <!-- ================================
+    <!-- =====================================
          MAIN
-    ================================= -->
+    ====================================== -->
 
-    <main class="chapter-container">
+    <main class="chapter-page">
 
-        <!-- Breadcrumb -->
 
-        <div class="breadcrumb">
+        <!-- =================================
+             BREADCRUMB
+        ================================== -->
+
+        <nav class="breadcrumb">
 
             <a href="index.html">
                 خانه
             </a>
 
-            <span>←</span>
+            <span>/</span>
 
             <a href="hesaban.html">
                 حسابان
             </a>
 
-            <span>←</span>
+            <span>/</span>
 
-            <span id="breadcrumbChapter">
+            <strong id="breadcrumbChapter">
                 فصل
-            </span>
+            </strong>
 
-        </div>
+        </nav>
 
 
-        <!-- Chapter Hero -->
+        <!-- =================================
+             HERO
+        ================================== -->
 
         <section class="chapter-hero">
 
-            <div class="chapter-number-box">
-
-                <span>
-                    فصل
-                </span>
-
-                <strong id="chapterNumber">
-                    01
-                </strong>
-
-            </div>
-
-
-            <div class="chapter-info">
+            <div class="chapter-hero-content">
 
                 <span class="chapter-label">
-                    حسابان ۱
+                    حسابان یازدهم
                 </span>
+
 
                 <h1 id="chapterTitle">
                     در حال بارگذاری...
                 </h1>
 
+
                 <p id="chapterDescription">
-                    اطلاعات فصل در حال بارگذاری است.
+                    اطلاعات فصل در حال دریافت است.
                 </p>
 
-            </div>
 
-        </section>
+                <div class="chapter-meta">
+
+                    <div>
+
+                        <span>
+                            تعداد درس
+                        </span>
+
+                        <strong id="lessonCount">
+                            0
+                        </strong>
+
+                    </div>
 
 
-        <!-- Progress -->
+                    <div>
 
-        <section class="progress-card">
+                        <span>
+                            وضعیت
+                        </span>
 
-            <div class="progress-header">
+                        <strong>
+                            آماده مطالعه
+                        </strong>
 
-                <div>
-
-                    <span class="progress-label">
-                        پیشرفت فصل
-                    </span>
-
-                    <strong id="progressText">
-                        0%
-                    </strong>
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <div class="progress-bar">
-
-                <div
-                    id="progressFill"
-                    class="progress-fill"
-                    style="width: 0%;"
-                ></div>
-
+            <div class="chapter-symbol">
+                ∫
             </div>
 
         </section>
 
 
-        <!-- Lessons -->
+        <!-- =================================
+             LESSONS
+        ================================== -->
 
         <section class="lessons-section">
 
-            <div class="section-header">
+            <div class="section-title">
 
                 <div>
 
                     <span>
-                        مطالب فصل
+                        محتوای فصل
                     </span>
 
                     <h2>
                         درس‌ها
                     </h2>
 
-                    <p>
-                        برای ورود به هر درس، آن را انتخاب کنید.
-                    </p>
-
-                </div>
-
-
-                <div
-                    id="lessonCount"
-                    class="lesson-count"
-                >
-                    0 درس
                 </div>
 
             </div>
 
 
             <div
-                id="lessonGrid"
-                class="lesson-grid"
+                id="lessonsContainer"
+                class="lessons-grid"
             >
 
-                <div class="loading">
+                <div class="loading-state">
+
                     در حال بارگذاری درس‌ها...
+
                 </div>
 
             </div>
 
         </section>
 
+
+        <!-- =================================
+             ERROR
+        ================================== -->
+
+        <div
+            id="chapterError"
+            class="chapter-error"
+            role="alert"
+        ></div>
+
+
     </main>
 
 
-    <!-- ================================
-         JAVASCRIPT
-    ================================= -->
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="chapter-footer">
+
+        <span>
+            یازدهم‌پلاس
+        </span>
+
+        <span>
+            حسابان یازدهم
+        </span>
+
+    </footer>
+
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
 
     <script src="js/user.js"></script>
 
