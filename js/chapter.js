@@ -1,11 +1,31 @@
 /* =========================================
-   CHAPTER PAGE
-   Yazdahom Plus
+   AXIS — CHAPTER PAGE
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadChapter();
-});
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadChapter();
+
+    }
+);
+
+
+/* =========================================
+   GET CHAPTER ID
+========================================= */
+
+function getChapterId() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return params.get("id");
+
+}
 
 
 /* =========================================
@@ -16,100 +36,136 @@ async function loadChapter() {
 
     try {
 
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
         const chapterId =
-            params.get("chapter");
+            getChapterId();
 
 
         if (!chapterId) {
 
-            showChapterError(
+            throw new Error(
                 "شناسه فصل پیدا نشد."
             );
-
-            return;
 
         }
 
 
         const response =
             await fetch(
-                "data/subjects.json"
+                "data/subjects.json",
+                {
+                    cache: "no-store"
+                }
             );
 
 
         if (!response.ok) {
 
             throw new Error(
-                "فایل اطلاعات دروس قابل دریافت نیست."
+                `HTTP ${response.status}`
             );
 
         }
 
 
-        const data =
-            await response.json();
+        const rawText =
+            await response.text();
+
+
+        const cleanedText =
+            cleanJSON(
+                rawText
+            );
+
+
+        let data;
+
+
+        try {
+
+            data =
+                JSON.parse(
+                    cleanedText
+                );
+
+        } catch (error) {
+
+            console.error(
+                "JSON ERROR:",
+                error
+            );
+
+            console.error(
+                "RAW JSON:",
+                rawText
+            );
+
+            throw new Error(
+                "ساختار subjects.json معتبر نیست."
+            );
+
+        }
 
 
         if (
-            !data ||
-            !Array.isArray(data.subjects)
+            !Array.isArray(
+                data.subjects
+            )
         ) {
 
             throw new Error(
-                "ساختار subjects.json صحیح نیست."
+                "subjects در فایل JSON پیدا نشد."
             );
 
         }
 
 
-        /* -----------------------------
-           Find Hesaban
-        ----------------------------- */
+        /*
+         * پیدا کردن حسابان
+         */
 
         const hesaban =
             data.subjects.find(
                 subject =>
-                    subject.id === "hesaban"
+                    subject.id ===
+                    "hesaban"
             );
 
 
         if (!hesaban) {
 
             throw new Error(
-                "درس حسابان پیدا نشد."
+                "حسابان در subjects.json پیدا نشد."
             );
 
         }
 
 
-        /* -----------------------------
-           Find Chapter
-        ----------------------------- */
+        /*
+         * پیدا کردن فصل
+         */
 
         const chapter =
             hesaban.chapters?.find(
                 item =>
-                    item.id === chapterId
+                    item.id ===
+                    chapterId
             );
 
 
         if (!chapter) {
 
             throw new Error(
-                "فصل موردنظر پیدا نشد."
+                "فصل مورد نظر پیدا نشد."
             );
 
         }
 
 
-        /* -----------------------------
-           Render
-        ----------------------------- */
+        console.log(
+            "Chapter loaded:",
+            chapter
+        );
+
 
         renderChapter(
             chapter
@@ -142,71 +198,89 @@ function renderChapter(
 ) {
 
     const title =
-        document.getElementById(
-            "chapterTitle"
-        );
+        chapter.title ||
+        "فصل";
 
 
     const description =
-        document.getElementById(
-            "chapterDescription"
+        chapter.description ||
+        "درس‌های این فصل";
+
+
+    /*
+     * Title
+     */
+
+    setText(
+        "chapterTitle",
+        title
+    );
+
+
+    /*
+     * Description
+     */
+
+    setText(
+        "chapterDescription",
+        description
+    );
+
+
+    /*
+     * Breadcrumb
+     */
+
+    setText(
+        "breadcrumbChapter",
+        title
+    );
+
+
+    /*
+     * Chapter number
+     */
+
+    const numberElement =
+        document.querySelector(
+            ".chapter-number-large"
         );
 
 
-    const count =
-        document.getElementById(
-            "lessonCount"
-        );
+    if (numberElement) {
 
-
-    const breadcrumb =
-        document.getElementById(
-            "breadcrumbChapter"
-        );
-
-
-    /* -----------------------------
-       Title
-    ----------------------------- */
-
-    if (title) {
-
-        title.textContent =
-            chapter.title ||
-            "فصل حسابان";
+        numberElement.textContent =
+            getChapterNumber(
+                chapter
+            );
 
     }
 
 
-    /* -----------------------------
-       Description
-    ----------------------------- */
+    /*
+     * Lessons
+     */
 
-    if (description) {
-
-        description.textContent =
-            chapter.description ||
-            "محتوای این فصل را مطالعه کن.";
-
-    }
+    const container =
+        document.getElementById(
+            "lessons"
+        );
 
 
-    /* -----------------------------
-       Breadcrumb
-    ----------------------------- */
+    if (!container) {
 
-    if (breadcrumb) {
+        console.warn(
+            "lessons container پیدا نشد."
+        );
 
-        breadcrumb.textContent =
-            chapter.title ||
-            "فصل";
+        return;
 
     }
 
 
-    /* -----------------------------
-       Lessons
-    ----------------------------- */
+    container.innerHTML =
+        "";
+
 
     const lessons =
         Array.isArray(
@@ -216,69 +290,15 @@ function renderChapter(
             : [];
 
 
-    if (count) {
-
-        count.textContent =
-            lessons.length;
-
-    }
-
-
-    renderLessons(
-        lessons
-    );
-
-
-    /* -----------------------------
-       Page title
-    ----------------------------- */
-
-    document.title =
-        `${chapter.title || "فصل حسابان"} | یازدهم‌پلاس`;
-
-}
-
-
-/* =========================================
-   RENDER LESSONS
-========================================= */
-
-function renderLessons(
-    lessons
-) {
-
-    const container =
-        document.getElementById(
-            "lessonsContainer"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    /* -----------------------------
-       Empty
-    ----------------------------- */
-
-    if (lessons.length === 0) {
+    if (
+        lessons.length === 0
+    ) {
 
         container.innerHTML = `
 
             <div class="empty-state">
 
-                <div class="empty-icon">
-                    📚
-                </div>
-
-                <h3>
-                    هنوز درسی اضافه نشده
-                </h3>
-
-                <p>
-                    محتوای این فصل به‌زودی اضافه می‌شود.
-                </p>
+                هنوز درسی برای این فصل اضافه نشده است.
 
             </div>
 
@@ -289,20 +309,13 @@ function renderLessons(
     }
 
 
-    container.innerHTML = "";
-
-
-    /* -----------------------------
-       Create lesson cards
-    ----------------------------- */
-
     lessons.forEach(
         (lesson, index) => {
 
             const card =
                 createLessonCard(
                     lesson,
-                    index + 1
+                    index
                 );
 
 
@@ -317,12 +330,12 @@ function renderLessons(
 
 
 /* =========================================
-   LESSON CARD
+   CREATE LESSON CARD
 ========================================= */
 
 function createLessonCard(
     lesson,
-    number
+    index
 ) {
 
     const link =
@@ -336,55 +349,86 @@ function createLessonCard(
 
 
     link.href =
-        `lesson.html?lesson=${encodeURIComponent(
+        `lesson.html?id=${encodeURIComponent(
             lesson.id
         )}`;
 
 
-    const title =
-        lesson.title ||
-        `درس ${number}`;
+    /*
+     * وضعیت فعلی کاربر
+     */
+
+    const completed =
+        isLessonCompleted(
+            lesson.id
+        );
 
 
-    const description =
-        lesson.description ||
-        "مشاهده محتوای درس";
+    if (completed) {
+
+        link.classList.add(
+            "completed"
+        );
+
+    }
+
+
+    const number =
+        String(
+            index + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const statusText =
+        completed
+            ? "کامل شده"
+            : "شروع نشده";
 
 
     link.innerHTML = `
 
         <div class="lesson-number">
 
-            ${String(number).padStart(2, "0")}
+            ${number}
 
         </div>
 
 
-        <div class="lesson-icon">
-
-            ∫
-
-        </div>
-
-
-        <div class="lesson-content">
-
-            <span>
-                درس ${number}
-            </span>
+        <div class="lesson-card-content">
 
             <h3>
-                ${escapeHTML(title)}
+
+                ${escapeHTML(
+                    lesson.title ||
+                    `درس ${index + 1}`
+                )}
+
             </h3>
 
+
             <p>
-                ${escapeHTML(description)}
+
+                ${escapeHTML(
+                    lesson.description ||
+                    "آموزش و مطالب این درس"
+                )}
+
             </p>
 
         </div>
 
 
-        <div class="lesson-arrow">
+        <div class="lesson-card-status">
+
+            ${statusText}
+
+        </div>
+
+
+        <div class="lesson-card-arrow">
 
             ←
 
@@ -399,6 +443,170 @@ function createLessonCard(
 
 
 /* =========================================
+   CHECK COMPLETION
+========================================= */
+
+function isLessonCompleted(
+    lessonId
+) {
+
+    try {
+
+        const progress =
+            JSON.parse(
+                localStorage.getItem(
+                    "axis_progress"
+                )
+            );
+
+
+        if (
+            !progress ||
+            !Array.isArray(
+                progress.completedLessons
+            )
+        ) {
+
+            return false;
+
+        }
+
+
+        return progress.completedLessons.includes(
+            lessonId
+        );
+
+
+    } catch {
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================
+   CHAPTER NUMBER
+========================================= */
+
+function getChapterNumber(
+    chapter
+) {
+
+    /*
+     * اگر JSON شماره فصل داشته باشد
+     */
+
+    if (
+        chapter.number !== undefined
+    ) {
+
+        return String(
+            chapter.number
+        ).padStart(
+            2,
+            "0"
+        );
+
+    }
+
+
+    /*
+     * تلاش از ID
+     */
+
+    const match =
+        String(
+            chapter.id
+        ).match(
+            /\d+/
+        );
+
+
+    if (match) {
+
+        return String(
+            match[0]
+        ).padStart(
+            2,
+            "0"
+        );
+
+    }
+
+
+    return "01";
+
+}
+
+
+/* =========================================
+   CLEAN JSON
+========================================= */
+
+function cleanJSON(
+    text
+) {
+
+    if (
+        typeof text !== "string"
+    ) {
+
+        return "";
+
+    }
+
+
+    let result =
+        text.trim();
+
+
+    result =
+        result.replace(
+            /^```json\s*/i,
+            ""
+        );
+
+
+    result =
+        result.replace(
+            /\s*```$/i,
+            ""
+        );
+
+
+    return result.trim();
+
+}
+
+
+/* =========================================
+   SET TEXT
+========================================= */
+
+function setText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (element) {
+
+        element.textContent =
+            value ?? "";
+
+    }
+
+}
+
+
+/* =========================================
    ERROR
 ========================================= */
 
@@ -408,53 +616,35 @@ function showChapterError(
 
     const container =
         document.getElementById(
-            "lessonsContainer"
+            "lessons"
         );
 
 
-    const error =
-        document.getElementById(
-            "chapterError"
-        );
+    if (!container) {
 
-
-    if (container) {
-
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    ⚠️
-                </div>
-
-                <h3>
-                    خطا در بارگذاری فصل
-                </h3>
-
-                <p>
-                    ${escapeHTML(
-                        message ||
-                        "مشکلی رخ داد."
-                    )}
-                </p>
-
-            </div>
-
-        `;
+        return;
 
     }
 
 
-    if (error) {
+    container.innerHTML = `
 
-        error.textContent =
-            message || "";
+        <div class="error-state">
 
-        error.style.display =
-            "block";
+            <h3>
+                خطا در بارگذاری فصل
+            </h3>
 
-    }
+            <p>
+                ${escapeHTML(
+                    message ||
+                    "خطای ناشناخته"
+                )}
+            </p>
+
+        </div>
+
+    `;
 
 }
 
@@ -467,7 +657,9 @@ function escapeHTML(
     value
 ) {
 
-    return String(value)
+    return String(
+        value ?? ""
+    )
 
         .replace(
             /&/g,
