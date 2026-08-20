@@ -1,104 +1,98 @@
-```javascript
 /* =========================================
    USER SYSTEM
-   Yazdahom Riazi
+   YAZDAHOM PLUS
 ========================================= */
 
-const DEFAULT_USER = {
-    username: "",
-    xp: 0,
-    level: 1,
 
-    stats: {
-        questionsSolved: 0,
-        correctAnswers: 0,
-        lessonsCompleted: 0
-    },
+/*
+ * نام کلیدهای LocalStorage
+ */
 
-    progress: {
-        hesaban: {
-            chapters: {}
-        }
-    }
-};
+const CURRENT_USER_KEY =
+    "yazdahom_current_user";
+
+const USERS_KEY =
+    "yazdahom_users";
 
 
 /* =========================================
-   GET USER
+   GET ALL USERS
 ========================================= */
 
-function getUser() {
-
-    const savedUser = localStorage.getItem("yazdahom_user");
-
-    if (!savedUser) {
-        return createDefaultUser();
-    }
+function getAllUsers() {
 
     try {
 
-        const user = JSON.parse(savedUser);
+        const users =
+            localStorage.getItem(
+                USERS_KEY
+            );
 
-        return {
-            ...DEFAULT_USER,
-            ...user,
 
-            stats: {
-                ...DEFAULT_USER.stats,
-                ...(user.stats || {})
-            },
+        if (!users) {
 
-            progress: {
-                ...DEFAULT_USER.progress,
-                ...(user.progress || {})
-            }
-        };
+            return {};
+
+        }
+
+
+        const parsed =
+            JSON.parse(users);
+
+
+        if (
+            typeof parsed !== "object" ||
+            parsed === null
+        ) {
+
+            return {};
+
+        }
+
+
+        return parsed;
 
     } catch (error) {
 
-        console.error("Error reading user:", error);
+        console.error(
+            "Error reading users:",
+            error
+        );
 
-        return createDefaultUser();
+        return {};
+
     }
+
 }
 
 
 /* =========================================
-   DEFAULT USER
+   SAVE ALL USERS
 ========================================= */
 
-function createDefaultUser() {
+function saveAllUsers(
+    users
+) {
 
-    return {
-        username: "",
-        xp: 0,
-        level: 1,
+    try {
 
-        stats: {
-            questionsSolved: 0,
-            correctAnswers: 0,
-            lessonsCompleted: 0
-        },
+        localStorage.setItem(
+            USERS_KEY,
+            JSON.stringify(users)
+        );
 
-        progress: {
-            hesaban: {
-                chapters: {}
-            }
-        }
-    };
-}
+        return true;
 
+    } catch (error) {
 
-/* =========================================
-   SAVE USER
-========================================= */
+        console.error(
+            "Error saving users:",
+            error
+        );
 
-function saveUser(user) {
+        return false;
 
-    localStorage.setItem(
-        "yazdahom_user",
-        JSON.stringify(user)
-    );
+    }
 
 }
 
@@ -107,18 +101,705 @@ function saveUser(user) {
    CREATE USER
 ========================================= */
 
-function createUser(username) {
+function createUser(
+    username
+) {
 
-    const oldUser = getUser();
+    username =
+        String(
+            username || ""
+        ).trim();
+
+
+    if (!username) {
+
+        return {
+            success: false,
+            message:
+                "نام کاربری نمی‌تواند خالی باشد."
+        };
+
+    }
+
+
+    if (
+        username.length < 3
+    ) {
+
+        return {
+            success: false,
+            message:
+                "نام کاربری باید حداقل ۳ کاراکتر باشد."
+        };
+
+    }
+
+
+    if (
+        username.length > 30
+    ) {
+
+        return {
+            success: false,
+            message:
+                "نام کاربری نباید بیشتر از ۳۰ کاراکتر باشد."
+        };
+
+    }
+
+
+    const users =
+        getAllUsers();
+
+
+    /*
+     * نام کاربری را برای مقایسه
+     * به حروف کوچک تبدیل می‌کنیم.
+     */
+
+    const normalizedUsername =
+        username.toLowerCase();
+
+
+    /*
+     * جلوگیری از ساخت دو حساب
+     * با نام یکسان
+     */
+
+    for (
+        const key in users
+    ) {
+
+        if (
+            key.toLowerCase() ===
+            normalizedUsername
+        ) {
+
+            /*
+             * همان کاربر را وارد می‌کنیم
+             */
+
+            setCurrentUser(
+                users[key]
+            );
+
+
+            return {
+                success: true,
+                existing: true,
+                user:
+                    users[key]
+            };
+
+        }
+
+    }
+
+
+    /*
+     * ساخت کاربر جدید
+     */
+
+    const now =
+        new Date().toISOString();
+
 
     const user = {
-        ...oldUser,
-        username: username.trim()
+
+        id:
+            generateUserId(),
+
+        username:
+            username,
+
+        xp:
+            0,
+
+        progress: {
+
+            completedLessons: []
+
+        },
+
+        createdAt:
+            now,
+
+        lastLogin:
+            now
+
     };
 
-    saveUser(user);
 
-    return user;
+    users[username] =
+        user;
+
+
+    const saved =
+        saveAllUsers(
+            users
+        );
+
+
+    if (!saved) {
+
+        return {
+            success: false,
+            message:
+                "ذخیره اطلاعات کاربر انجام نشد."
+        };
+
+    }
+
+
+    setCurrentUser(
+        user
+    );
+
+
+    return {
+
+        success: true,
+
+        existing: false,
+
+        user:
+            user
+
+    };
+
+}
+
+
+/* =========================================
+   GET CURRENT USER
+========================================= */
+
+function getUser() {
+
+    try {
+
+        const user =
+            localStorage.getItem(
+                CURRENT_USER_KEY
+            );
+
+
+        if (!user) {
+
+            return null;
+
+        }
+
+
+        const parsed =
+            JSON.parse(user);
+
+
+        if (
+            !parsed ||
+            typeof parsed !== "object"
+        ) {
+
+            return null;
+
+        }
+
+
+        return parsed;
+
+    } catch (error) {
+
+        console.error(
+            "Error reading current user:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================
+   SET CURRENT USER
+========================================= */
+
+function setCurrentUser(
+    user
+) {
+
+    if (!user) {
+
+        return false;
+
+    }
+
+
+    try {
+
+        /*
+         * زمان آخرین ورود
+         */
+
+        user.lastLogin =
+            new Date().toISOString();
+
+
+        localStorage.setItem(
+            CURRENT_USER_KEY,
+            JSON.stringify(user)
+        );
+
+
+        /*
+         * همزمان نسخه اصلی کاربر
+         * را هم آپدیت می‌کنیم.
+         */
+
+        const users =
+            getAllUsers();
+
+
+        if (user.username) {
+
+            users[user.username] =
+                user;
+
+            saveAllUsers(
+                users
+            );
+
+        }
+
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Error setting current user:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE CURRENT USER
+========================================= */
+
+function updateCurrentUser(
+    updates
+) {
+
+    const currentUser =
+        getUser();
+
+
+    if (!currentUser) {
+
+        return null;
+
+    }
+
+
+    const updatedUser = {
+
+        ...currentUser,
+
+        ...updates
+
+    };
+
+
+    /*
+     * Progress نباید از بین برود
+     */
+
+    if (
+        !updatedUser.progress
+    ) {
+
+        updatedUser.progress = {
+
+            completedLessons: []
+
+        };
+
+    }
+
+
+    if (
+        !Array.isArray(
+            updatedUser
+                .progress
+                .completedLessons
+        )
+    ) {
+
+        updatedUser.progress.completedLessons =
+            [];
+
+    }
+
+
+    setCurrentUser(
+        updatedUser
+    );
+
+
+    return updatedUser;
+
+}
+
+
+/* =========================================
+   ADD XP
+========================================= */
+
+function addXP(
+    amount
+) {
+
+    const currentUser =
+        getUser();
+
+
+    if (!currentUser) {
+
+        return null;
+
+    }
+
+
+    amount =
+        Number(
+            amount
+        );
+
+
+    if (
+        !Number.isFinite(
+            amount
+        )
+    ) {
+
+        return currentUser;
+
+    }
+
+
+    if (
+        amount <= 0
+    ) {
+
+        return currentUser;
+
+    }
+
+
+    const oldXP =
+        Number(
+            currentUser.xp || 0
+        );
+
+
+    const newXP =
+        oldXP +
+        amount;
+
+
+    currentUser.xp =
+        newXP;
+
+
+    setCurrentUser(
+        currentUser
+    );
+
+
+    return currentUser;
+
+}
+
+
+/* =========================================
+   GET XP
+========================================= */
+
+function getUserXP() {
+
+    const user =
+        getUser();
+
+
+    if (!user) {
+
+        return 0;
+
+    }
+
+
+    return Number(
+        user.xp || 0
+    );
+
+}
+
+
+/* =========================================
+   COMPLETE LESSON
+========================================= */
+
+function completeLesson(
+    lessonId,
+    xpReward = 20
+) {
+
+    const currentUser =
+        getUser();
+
+
+    if (!currentUser) {
+
+        return {
+
+            success: false,
+
+            message:
+                "کاربری وارد نشده است."
+
+        };
+
+    }
+
+
+    if (!lessonId) {
+
+        return {
+
+            success: false,
+
+            message:
+                "شناسه درس مشخص نیست."
+
+        };
+
+    }
+
+
+    /*
+     * اطمینان از وجود progress
+     */
+
+    if (
+        !currentUser.progress
+    ) {
+
+        currentUser.progress = {
+
+            completedLessons: []
+
+        };
+
+    }
+
+
+    if (
+        !Array.isArray(
+            currentUser
+                .progress
+                .completedLessons
+        )
+    ) {
+
+        currentUser
+            .progress
+            .completedLessons = [];
+
+    }
+
+
+    const completed =
+        currentUser
+            .progress
+            .completedLessons;
+
+
+    /*
+     * اگر قبلاً کامل شده،
+     * دوباره XP نده.
+     */
+
+    if (
+        completed.includes(
+            lessonId
+        )
+    ) {
+
+        return {
+
+            success: true,
+
+            alreadyCompleted:
+                true,
+
+            user:
+                currentUser
+
+        };
+
+    }
+
+
+    /*
+     * ثبت درس
+     */
+
+    completed.push(
+        lessonId
+    );
+
+
+    /*
+     * XP
+     */
+
+    xpReward =
+        Number(
+            xpReward
+        );
+
+
+    if (
+        !Number.isFinite(
+            xpReward
+        ) ||
+        xpReward < 0
+    ) {
+
+        xpReward = 20;
+
+    }
+
+
+    currentUser.xp =
+        Number(
+            currentUser.xp || 0
+        ) +
+        xpReward;
+
+
+    /*
+     * ذخیره
+     */
+
+    setCurrentUser(
+        currentUser
+    );
+
+
+    return {
+
+        success: true,
+
+        alreadyCompleted:
+            false,
+
+        xpAdded:
+            xpReward,
+
+        user:
+            currentUser
+
+    };
+
+}
+
+
+/* =========================================
+   IS LESSON COMPLETED
+========================================= */
+
+function isLessonCompleted(
+    lessonId
+) {
+
+    const user =
+        getUser();
+
+
+    if (
+        !user ||
+        !user.progress ||
+        !Array.isArray(
+            user.progress
+                .completedLessons
+        )
+    ) {
+
+        return false;
+
+    }
+
+
+    return user
+        .progress
+        .completedLessons
+        .includes(
+            lessonId
+        );
+
+}
+
+
+/* =========================================
+   GET COMPLETED LESSONS
+========================================= */
+
+function getCompletedLessonIds() {
+
+    const user =
+        getUser();
+
+
+    if (
+        !user ||
+        !user.progress ||
+        !Array.isArray(
+            user.progress
+                .completedLessons
+        )
+    ) {
+
+        return [];
+
+    }
+
+
+    return [
+        ...user
+            .progress
+            .completedLessons
+    ];
+
+}
+
+
+/* =========================================
+   GET COMPLETED COUNT
+========================================= */
+
+function getCompletedLessonCount() {
+
+    return getCompletedLessonIds()
+        .length;
+
 }
 
 
@@ -128,48 +809,41 @@ function createUser(username) {
 
 function logoutUser() {
 
-    localStorage.removeItem("yazdahom_user");
+    localStorage.removeItem(
+        CURRENT_USER_KEY
+    );
 
-    window.location.href = "login.html";
 }
 
 
 /* =========================================
-   LOGIN CHECK
+   IS LOGGED IN
 ========================================= */
 
 function isLoggedIn() {
 
-    const user = getUser();
+    return (
+        getUser() !== null
+    );
 
-    return Boolean(user.username);
 }
 
 
 /* =========================================
-   XP
+   USER ID
 ========================================= */
 
-function addXP(amount) {
+function generateUserId() {
 
-    const user = getUser();
+    return (
+        "user_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .substring(2, 9)
+    );
 
-    const xpAmount = Number(amount);
-
-    if (
-        !Number.isFinite(xpAmount) ||
-        xpAmount <= 0
-    ) {
-        return user;
-    }
-
-    user.xp += xpAmount;
-
-    user.level = getLevel(user.xp);
-
-    saveUser(user);
-
-    return user;
 }
 
 
@@ -177,41 +851,18 @@ function addXP(amount) {
    LEVEL
 ========================================= */
 
-function getLevel(xp) {
+function getUserLevel() {
 
-    const value = Number(xp) || 0;
-
-    return Math.floor(value / 100) + 1;
-}
+    const xp =
+        getUserXP();
 
 
-/* =========================================
-   NEXT LEVEL XP
-========================================= */
-
-function getNextLevelXP(xp) {
-
-    const level = getLevel(xp);
-
-    return level * 100;
-}
-
-
-/* =========================================
-   CURRENT LEVEL XP
-========================================= */
-
-function getCurrentLevelXP(xp) {
-
-    const level = getLevel(xp);
-
-    const previousLevelXP =
-        (level - 1) * 100;
-
-    return Math.max(
-        0,
-        xp - previousLevelXP
+    return (
+        Math.floor(
+            xp / 100
+        ) + 1
     );
+
 }
 
 
@@ -219,147 +870,213 @@ function getCurrentLevelXP(xp) {
    LEVEL PROGRESS
 ========================================= */
 
-function getLevelProgress(xp) {
+function getLevelProgress() {
 
-    const currentXP =
-        getCurrentLevelXP(xp);
+    const xp =
+        getUserXP();
+
+
+    const level =
+        getUserLevel();
+
+
+    const currentLevelXP =
+        (level - 1) * 100;
+
+
+    const insideLevelXP =
+        xp -
+        currentLevelXP;
+
 
     return Math.min(
         100,
-        Math.round(
-            (currentXP / 100) * 100
+        Math.max(
+            0,
+            insideLevelXP
         )
     );
+
 }
 
 
 /* =========================================
-   QUESTION RESULT
+   UPDATE USERNAME
 ========================================= */
 
-function addQuestionResult(isCorrect) {
-
-    const user = getUser();
-
-    user.stats.questionsSolved++;
-
-    if (isCorrect) {
-        user.stats.correctAnswers++;
-    }
-
-    saveUser(user);
-
-    return user;
-}
-
-
-/* =========================================
-   LESSON COMPLETED
-========================================= */
-
-function completeLesson(
-    subjectId,
-    chapterId,
-    lessonId
+function updateUsername(
+    newUsername
 ) {
 
-    const user = getUser();
+    const user =
+        getUser();
 
-    if (!user.progress[subjectId]) {
 
-        user.progress[subjectId] = {
-            chapters: {}
+    if (!user) {
+
+        return {
+
+            success: false,
+
+            message:
+                "کاربری وارد نشده است."
+
         };
+
     }
 
 
+    newUsername =
+        String(
+            newUsername || ""
+        ).trim();
+
+
     if (
-        !user.progress[subjectId]
-            .chapters[chapterId]
+        newUsername.length < 3
     ) {
 
-        user.progress[subjectId]
-            .chapters[chapterId] = {
-                lessons: {}
+        return {
+
+            success: false,
+
+            message:
+                "نام کاربری باید حداقل ۳ کاراکتر باشد."
+
+        };
+
+    }
+
+
+    const users =
+        getAllUsers();
+
+
+    /*
+     * جلوگیری از تکراری بودن
+     */
+
+    for (
+        const key in users
+    ) {
+
+        if (
+            key.toLowerCase() ===
+            newUsername.toLowerCase() &&
+            key !== user.username
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "این نام کاربری قبلاً استفاده شده است."
+
             };
+
+        }
+
     }
+
+
+    /*
+     * حذف کلید قدیمی
+     */
+
+    if (
+        user.username &&
+        users[user.username]
+    ) {
+
+        delete users[
+            user.username
+        ];
+
+    }
+
+
+    user.username =
+        newUsername;
+
+
+    users[newUsername] =
+        user;
+
+
+    saveAllUsers(
+        users
+    );
+
+
+    localStorage.setItem(
+        CURRENT_USER_KEY,
+        JSON.stringify(user)
+    );
+
+
+    return {
+
+        success: true,
+
+        user:
+            user
+
+    };
+
+}
+
+
+/* =========================================
+   AUTO SYNC
+========================================= */
+
+function syncCurrentUser() {
+
+    const currentUser =
+        getUser();
+
+
+    if (!currentUser) {
+
+        return null;
+
+    }
+
+
+    const users =
+        getAllUsers();
 
 
     if (
-        !user.progress[subjectId]
-            .chapters[chapterId]
-            .lessons
+        currentUser.username &&
+        users[currentUser.username]
     ) {
 
-        user.progress[subjectId]
-            .chapters[chapterId]
-            .lessons = {};
+        const storedUser =
+            users[
+                currentUser.username
+            ];
+
+
+        /*
+         * نسخه ذخیره‌شده را
+         * روی current user اعمال کن.
+         */
+
+        localStorage.setItem(
+            CURRENT_USER_KEY,
+            JSON.stringify(
+                storedUser
+            )
+        );
+
+
+        return storedUser;
+
     }
 
 
-    const lessons =
-        user.progress[subjectId]
-            .chapters[chapterId]
-            .lessons;
+    return currentUser;
 
-
-    if (!lessons[lessonId]) {
-
-        lessons[lessonId] = true;
-
-        user.stats.lessonsCompleted++;
-
-    }
-
-
-    saveUser(user);
-
-    return user;
 }
-
-
-/* =========================================
-   CHECK LESSON
-========================================= */
-
-function isLessonCompleted(
-    subjectId,
-    chapterId,
-    lessonId
-) {
-
-    const user = getUser();
-
-    return Boolean(
-        user.progress?.[subjectId]
-            ?.chapters?.[chapterId]
-            ?.lessons?.[lessonId]
-    );
-}
-
-
-/* =========================================
-   ACCURACY
-========================================= */
-
-function getAccuracy() {
-
-    const user = getUser();
-
-    const solved =
-        Number(user.stats.questionsSolved) || 0;
-
-    const correct =
-        Number(user.stats.correctAnswers) || 0;
-
-
-    if (solved === 0) {
-        return 0;
-    }
-
-
-    return Math.round(
-        (correct / solved) * 100
-    );
-}
-```
