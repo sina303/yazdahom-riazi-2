@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -10,12 +11,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="مطالعه درس حسابان | یازدهم‌پلاس"
-    >
+    <title>AXIS | درس</title>
 
-    <title>درس | یازدهم‌پلاس</title>
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
     <link
         rel="stylesheet"
@@ -27,430 +28,327 @@
 
 <body>
 
-    <!-- =====================================
+
+    <!-- =========================================
          HEADER
-    ====================================== -->
+    ========================================== -->
 
-    <header class="lesson-header">
+    <header class="site-header">
 
-        <a
-            href="index.html"
-            class="lesson-logo"
-        >
-            یازدهم‌پلاس
-        </a>
-
-
-        <div class="lesson-header-right">
-
-            <a
-                href="hesaban.html"
-                class="back-link"
-            >
-                حسابان
-                <span>←</span>
-            </a>
+        <div class="header-inner">
 
 
             <a
-                href="profile.html"
-                class="lesson-user"
-                id="headerUsername"
+                href="index.html"
+                class="brand"
             >
-                کاربر
+
+                <span class="brand-mark">
+                    A
+                </span>
+
+                <div>
+
+                    <strong>
+                        AXIS
+                    </strong>
+
+                    <small>
+                        یازدهم ریاضی
+                    </small>
+
+                </div>
+
             </a>
+
+
+            <nav class="main-nav">
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    خانه
+                </a>
+
+
+                <a
+                    href="hesaban.html"
+                    class="nav-link"
+                >
+                    حسابان
+                </a>
+
+
+                <a
+                    href="profile.html"
+                    class="nav-profile"
+                >
+
+                    <span class="profile-dot">
+                        ●
+                    </span>
+
+                    پروفایل
+
+                </a>
+
+            </nav>
+
 
         </div>
 
     </header>
 
 
-    <!-- =====================================
+
+    <!-- =========================================
          MAIN
-    ====================================== -->
+    ========================================== -->
 
     <main class="lesson-page">
 
 
-        <!-- =================================
-             BREADCRUMB
-        ================================== -->
+        <!-- =====================================
+             TOP
+        ====================================== -->
 
-        <nav class="breadcrumb">
-
-            <a href="index.html">
-                خانه
-            </a>
-
-            <span>/</span>
-
-            <a href="hesaban.html">
-                حسابان
-            </a>
-
-            <span>/</span>
-
-            <a
-                href="#"
-                id="chapterLink"
-            >
-                فصل
-            </a>
-
-            <span>/</span>
-
-            <strong id="lessonBreadcrumb">
-                درس
-            </strong>
-
-        </nav>
+        <div class="lesson-top">
 
 
-        <!-- =================================
-             LESSON HERO
-        ================================== -->
+            <div class="breadcrumb">
 
-        <section class="lesson-hero">
 
-            <div class="lesson-hero-content">
+                <a href="index.html">
+                    خانه
+                </a>
 
-                <span
-                    class="lesson-label"
-                    id="lessonNumber"
-                >
+
+                <span>
+                    ←
+                </span>
+
+
+                <a href="hesaban.html">
+                    حسابان
+                </a>
+
+
+                <span>
+                    ←
+                </span>
+
+
+                <span id="breadcrumbChapter">
+                    فصل
+                </span>
+
+
+                <span>
+                    ←
+                </span>
+
+
+                <span id="breadcrumbLesson">
                     درس
                 </span>
 
 
-                <h1 id="lessonTitle">
-                    در حال بارگذاری...
-                </h1>
+            </div>
 
 
-                <p id="lessonDescription">
-                    محتوای درس در حال بارگذاری است.
+            <div
+                id="lessonStatus"
+                class="lesson-status"
+            >
+                در حال یادگیری
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             LESSON HEADER
+        ====================================== -->
+
+        <section class="lesson-header">
+
+
+            <span class="section-label">
+                درس
+            </span>
+
+
+            <h1 id="lessonTitle">
+                در حال بارگذاری...
+            </h1>
+
+
+            <p id="lessonDescription">
+                محتوای درس در حال بارگذاری است.
+            </p>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             LESSON CONTENT
+        ====================================== -->
+
+        <section
+            id="lessonContent"
+            class="lesson-content"
+        >
+
+
+            <div class="content-block">
+
+
+                <h2>
+                    در حال بارگذاری
+                </h2>
+
+
+                <p>
+                    لطفاً کمی صبر کنید...
                 </p>
 
+
             </div>
 
-
-            <div class="lesson-symbol">
-                ∫
-            </div>
 
         </section>
 
 
-        <!-- =================================
-             PROGRESS
-        ================================== -->
 
-        <section class="lesson-progress">
+        <!-- =====================================
+             AI
+        ====================================== -->
 
-            <div class="progress-top">
+        <section class="lesson-ai-box">
+
+
+            <div class="ai-box-content">
+
 
                 <span>
-                    پیشرفت درس
+                    AXIS AI
                 </span>
 
-                <strong id="progressPercent">
-                    0%
-                </strong>
+
+                <h3>
+                    چیزی برات مبهمه؟
+                </h3>
+
+
+                <p>
+                    از دستیار هوشمند AXIS درباره این درس سؤال بپرس.
+                </p>
+
 
             </div>
 
 
-            <div class="progress-bar">
-
-                <div
-                    id="progressFill"
-                    class="progress-fill"
-                    style="width: 0%"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================
-             CONTENT
-        ================================== -->
-
-        <section class="lesson-content-area">
-
-
-            <!-- THEORY -->
-
-            <article class="lesson-section">
-
-                <div class="section-heading">
-
-                    <span>
-                        آموزش
-                    </span>
-
-                    <h2>
-                        درس را یاد بگیر
-                    </h2>
-
-                </div>
-
-
-                <div
-                    id="lessonContent"
-                    class="lesson-text"
-                >
-
-                    <div class="loading-state">
-
-                        در حال بارگذاری محتوای درس...
-
-                    </div>
-
-                </div>
-
-            </article>
-
-
-            <!-- EXERCISES -->
-
-            <article class="lesson-section">
-
-                <div class="section-heading">
-
-                    <span>
-                        تمرین
-                    </span>
-
-                    <h2>
-                        خودت را امتحان کن
-                    </h2>
-
-                </div>
-
-
-                <div
-                    id="exercisesContainer"
-                    class="exercises-container"
-                >
-
-                    <div class="loading-state">
-
-                        در حال بارگذاری تمرین‌ها...
-
-                    </div>
-
-                </div>
-
-            </article>
-
-
-            <!-- COMPLETE -->
-
-            <section class="complete-section">
-
-                <div>
-
-                    <span>
-                        پایان درس
-                    </span>
-
-
-                    <h2>
-                        این درس را تمام کردی؟
-                    </h2>
-
-
-                    <p>
-                        با تکمیل درس، پیشرفتت ذخیره می‌شود
-                        و XP دریافت می‌کنی.
-                    </p>
-
-                </div>
-
-
-                <button
-                    id="completeLessonButton"
-                    class="complete-button"
-                    type="button"
-                >
-                    تکمیل درس
-                    <span>✓</span>
-                </button>
-
-            </section>
-
-
-            <!-- AI -->
-
-            <section class="lesson-ai">
-
-                <div>
-
-                    <span>
-                        دستیار هوشمند
-                    </span>
-
-
-                    <h2>
-                        هنوز یه قسمتش رو نفهمیدی؟
-                    </h2>
-
-
-                    <p>
-                        سؤال خودت رو بپرس یا از صورت سؤال
-                        عکس بفرست تا کمکت کنم.
-                    </p>
-
-                </div>
-
-
-                <button
-                    id="openAIButton"
-                    class="ai-button"
-                    type="button"
-                >
-                    پرسیدن از AI
-                    <span>✦</span>
-                </button>
-
-            </section>
+            <a
+                href="ai.html"
+                class="secondary-button"
+            >
+                پرسیدن سؤال
+            </a>
 
 
         </section>
 
 
-        <!-- =================================
-             ERROR
-        ================================== -->
 
-        <div
-            id="lessonError"
-            class="lesson-error"
-            role="alert"
-        ></div>
+        <!-- =====================================
+             COMPLETE
+        ====================================== -->
+
+        <section class="lesson-complete-section">
+
+
+            <div>
+
+
+                <span class="complete-label">
+                    پیشرفت شما
+                </span>
+
+
+                <h2>
+                    این درس رو یاد گرفتی؟
+                </h2>
+
+
+                <p>
+                    با ثبت یادگیری، پیشرفتت در AXIS ذخیره می‌شود.
+                </p>
+
+
+            </div>
+
+
+            <button
+                id="completeLesson"
+                class="complete-button"
+                type="button"
+            >
+                یاد گرفتم
+            </button>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             NEXT LESSON
+        ====================================== -->
+
+        <section
+            id="nextLessonContainer"
+            class="next-lesson-container"
+        ></section>
+
 
     </main>
 
 
-    <!-- =====================================
-         AI MODAL
-    ====================================== -->
 
-    <div
-        id="aiModal"
-        class="ai-modal"
-        aria-hidden="true"
-    >
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
 
-        <div class="ai-modal-overlay"></div>
+    <footer class="site-footer">
 
 
-        <div
-            class="ai-modal-box"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="aiModalTitle"
-        >
-
-            <button
-                id="closeAIButton"
-                class="ai-close"
-                type="button"
-                aria-label="بستن"
-            >
-                ×
-            </button>
+        <span>
+            AXIS
+        </span>
 
 
-            <div class="ai-modal-header">
-
-                <span>
-                    ✦
-                </span>
-
-                <div>
-
-                    <h2 id="aiModalTitle">
-                        دستیار هوشمند
-                    </h2>
-
-                    <p>
-                        سؤالت رو بپرس.
-                    </p>
-
-                </div>
-
-            </div>
+        <span>
+            Learn beyond the formula
+        </span>
 
 
-            <form
-                id="aiForm"
-                class="ai-form"
-            >
-
-                <textarea
-                    id="aiQuestion"
-                    placeholder="مثلاً: مشتق این تابع را چطور به دست بیاورم؟"
-                    rows="5"
-                ></textarea>
+    </footer>
 
 
-                <div class="ai-form-bottom">
 
-                    <label
-                        for="aiImage"
-                        class="image-upload"
-                    >
-                        📷
-                        <span>
-                            عکس سؤال
-                        </span>
-                    </label>
-
-
-                    <input
-                        id="aiImage"
-                        type="file"
-                        accept="image/*"
-                        hidden
-                    >
-
-
-                    <button
-                        type="submit"
-                        class="ai-submit"
-                        id="aiSubmitButton"
-                    >
-                        ارسال سؤال
-                        <span>→</span>
-                    </button>
-
-                </div>
-
-            </form>
-
-
-            <div
-                id="aiResult"
-                class="ai-result"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================
-         SCRIPTS
-    ====================================== -->
+    <!-- =========================================
+         JS
+    ========================================== -->
 
     <script src="js/user.js"></script>
 
     <script src="js/lesson.js"></script>
 
-    <script src="js/ai.js"></script>
 
 </body>
 
