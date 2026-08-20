@@ -10,12 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="یازدهم‌پلاس؛ پلتفرم یادگیری یازدهم رشته ریاضی"
-    >
-
-    <title>یازدهم‌پلاس</title>
+    <title>AXIS | یازدهم ریاضی</title>
 
     <link
         rel="stylesheet"
@@ -27,96 +22,118 @@
 
 <body>
 
-    <!-- =====================================
-         HEADER
-    ====================================== -->
+
+    <!-- BACKGROUND -->
+
+    <div class="space-background">
+
+        <div class="stars stars-one"></div>
+
+        <div class="stars stars-two"></div>
+
+        <div class="stars stars-three"></div>
+
+        <div class="space-glow"></div>
+
+    </div>
+
+
+
+    <!-- HEADER -->
 
     <header class="site-header">
 
-        <a
-            href="index.html"
-            class="logo"
-        >
-            یازدهم‌پلاس
-        </a>
+        <div class="header-inner">
 
-
-        <nav class="main-nav">
 
             <a
                 href="index.html"
-                class="active"
+                class="brand"
             >
-                خانه
-            </a>
 
-            <a href="hesaban.html">
-                حسابان
-            </a>
-
-            <a href="#">
-                گسسته
-            </a>
-
-            <a href="#">
-                هندسه
-            </a>
-
-        </nav>
-
-
-        <div class="header-user">
-
-            <div class="user-level">
-
-                <span>
-                    سطح
+                <span class="brand-mark">
+                    A
                 </span>
 
-                <strong id="headerLevel">
-                    1
-                </strong>
 
-            </div>
+                <div class="brand-text">
 
+                    <strong>
+                        AXIS
+                    </strong>
 
-            <div class="user-xp">
+                    <small>
+                        یازدهم ریاضی
+                    </small>
 
-                <span>
-                    XP
-                </span>
+                </div>
 
-                <strong id="headerXP">
-                    0
-                </strong>
-
-            </div>
-
-
-            <a
-                href="profile.html"
-                class="username"
-                id="headerUsername"
-            >
-                کاربر
             </a>
+
+
+
+            <nav class="main-nav">
+
+
+                <a
+                    href="index.html"
+                    class="nav-link active"
+                >
+                    خانه
+                </a>
+
+
+                <a
+                    href="hesaban.html"
+                    class="nav-link"
+                >
+                    حسابان
+                </a>
+
+
+                <a
+                    href="#subjects"
+                    class="nav-link"
+                >
+                    دروس
+                </a>
+
+
+                <a
+                    href="profile.html"
+                    class="nav-profile"
+                >
+
+                    <span class="profile-dot">
+                        ●
+                    </span>
+
+                    پروفایل
+
+                </a>
+
+
+            </nav>
+
 
         </div>
 
     </header>
 
 
-    <!-- =====================================
-         MAIN
-    ====================================== -->
 
-    <main>
+    <!-- MAIN -->
+
+    <main class="home-page">
+
 
         <!-- HERO -->
 
         <section class="hero">
 
+
             <div class="hero-content">
+
 
                 <span class="hero-label">
                     یازدهم رشته ریاضی
@@ -124,459 +141,498 @@
 
 
                 <h1>
+
                     یادگیری رو
-                    <br>
-                    <strong>
-                        حرفه‌ای‌تر شروع کن.
-                    </strong>
+
+                    <span>
+                        حرفه‌ای‌تر
+                    </span>
+
+                    شروع کن.
+
                 </h1>
 
 
                 <p>
+
                     درس‌ها، تمرین‌ها، آزمون‌ها و
                     دستیار هوش مصنوعی؛
                     همه در یکجا.
+
                 </p>
 
 
                 <div class="hero-actions">
 
+
                     <a
                         href="hesaban.html"
                         class="primary-button"
                     >
+
                         شروع حسابان
-                        <span>←</span>
+
+                        <span>
+                            ←
+                        </span>
+
                     </a>
+
 
                     <a
                         href="#subjects"
                         class="secondary-button"
                     >
+
                         مشاهده درس‌ها
+
                     </a>
 
+
                 </div>
+
 
             </div>
 
 
-            <div class="hero-decoration">
 
-                <div class="hero-circle"></div>
+            <!-- HERO VISUAL -->
 
-                <div class="hero-plus">
-                    +
+            <div class="hero-visual">
+
+
+                <div class="orbit orbit-one"></div>
+
+                <div class="orbit orbit-two"></div>
+
+
+                <div class="axis-core">
+
+                    <span>
+                        A
+                    </span>
+
                 </div>
 
+
+                <div class="orbit-dot dot-one"></div>
+
+                <div class="orbit-dot dot-two"></div>
+
+                <div class="orbit-dot dot-three"></div>
+
+
             </div>
+
 
         </section>
 
 
-        <!-- =================================
-             USER STATS
-        ================================== -->
 
-        <section class="stats">
+        <!-- USER STATS -->
+
+        <section class="stats-grid">
+
 
             <div class="stat-card">
+
 
                 <span>
                     سطح فعلی
                 </span>
 
-                <strong id="profileLevel">
-                    1
+
+                <strong>
+                    <b>1</b>
                 </strong>
+
 
                 <small>
                     Level
                 </small>
 
+
             </div>
 
 
+
             <div class="stat-card">
+
 
                 <span>
                     امتیاز
                 </span>
 
-                <strong id="profileXP">
-                    0
+
+                <strong>
+                    <b id="xpValue">
+                        0
+                    </b>
                 </strong>
+
 
                 <small>
                     XP
                 </small>
 
+
             </div>
 
 
+
             <div class="stat-card">
+
 
                 <span>
                     وضعیت
                 </span>
 
-                <strong>
+
+                <strong class="status-active">
                     فعال
                 </strong>
+
 
                 <small>
                     حساب کاربری
                 </small>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- =================================
-             SUBJECTS
-        ================================== -->
+
+        <!-- SUBJECTS -->
 
         <section
             id="subjects"
             class="subjects-section"
         >
 
+
             <div class="section-heading">
+
 
                 <div>
 
-                    <span>
-                        دروس
+                    <span class="section-label">
+                        مسیر یادگیری
                     </span>
 
+
                     <h2>
-                        مسیر یادگیری
+                        دروس
                     </h2>
 
                 </div>
 
-                <p>
-                    درس موردنظرت رو انتخاب کن.
-                </p>
+
+                <span class="section-description">
+                    مسیرت رو انتخاب کن
+                </span>
+
 
             </div>
+
 
 
             <div class="subjects-grid">
 
 
-                <!-- حسابان -->
+                <!-- HESABAN -->
 
                 <a
                     href="hesaban.html"
-                    class="subject-card available"
+                    class="subject-card subject-main"
                 >
 
-                    <div class="subject-number">
-                        01
-                    </div>
 
                     <div class="subject-icon">
                         ∫
                     </div>
 
-                    <div class="subject-content">
+
+                    <div class="subject-info">
+
 
                         <span>
-                            آماده یادگیری
+                            01
                         </span>
+
 
                         <h3>
                             حسابان
                         </h3>
 
+
                         <p>
-                            توابع، مثلثات، حد،
-                            مشتق و مباحث حسابان
+                            تابع، حد، مشتق و مباحث اصلی حسابان
                         </p>
 
+
                     </div>
+
 
                     <div class="subject-arrow">
                         ←
                     </div>
 
+
                 </a>
 
 
-                <!-- گسسته -->
 
-                <div
-                    class="subject-card disabled"
+                <!-- DISCRETE -->
+
+                <a
+                    href="#"
+                    class="subject-card"
                 >
 
-                    <div class="subject-number">
-                        02
-                    </div>
 
                     <div class="subject-icon">
-                        ∑
+                        ∞
                     </div>
 
-                    <div class="subject-content">
+
+                    <div class="subject-info">
+
 
                         <span>
-                            به‌زودی
+                            02
                         </span>
+
 
                         <h3>
                             گسسته
                         </h3>
 
+
                         <p>
-                            مباحث ریاضیات گسسته
-                            یازدهم
+                            به‌زودی
                         </p>
 
+
                     </div>
 
-                </div>
+
+                    <div class="subject-arrow">
+                        ←
+                    </div>
 
 
-                <!-- هندسه -->
+                </a>
 
-                <div
-                    class="subject-card disabled"
+
+
+                <!-- GEOMETRY -->
+
+                <a
+                    href="#"
+                    class="subject-card"
                 >
 
-                    <div class="subject-number">
-                        03
-                    </div>
 
                     <div class="subject-icon">
                         △
                     </div>
 
-                    <div class="subject-content">
+
+                    <div class="subject-info">
+
 
                         <span>
-                            به‌زودی
+                            03
                         </span>
+
 
                         <h3>
                             هندسه
                         </h3>
 
+
                         <p>
-                            هندسه یازدهم رشته ریاضی
+                            به‌زودی
                         </p>
 
+
                     </div>
 
-                </div>
+
+                    <div class="subject-arrow">
+                        ←
+                    </div>
 
 
-                <!-- فیزیک -->
+                </a>
 
-                <div
-                    class="subject-card disabled"
+
+
+                <!-- PHYSICS -->
+
+                <a
+                    href="#"
+                    class="subject-card"
                 >
 
-                    <div class="subject-number">
-                        04
-                    </div>
 
                     <div class="subject-icon">
-                        F
+                        Φ
                     </div>
 
-                    <div class="subject-content">
+
+                    <div class="subject-info">
+
 
                         <span>
-                            به‌زودی
+                            04
                         </span>
+
 
                         <h3>
                             فیزیک
                         </h3>
 
+
                         <p>
-                            فیزیک یازدهم رشته ریاضی
+                            به‌زودی
                         </p>
 
+
                     </div>
 
-                </div>
+
+                    <div class="subject-arrow">
+                        ←
+                    </div>
 
 
-                <!-- شیمی -->
+                </a>
 
-                <div
-                    class="subject-card disabled"
+
+
+                <!-- CHEMISTRY -->
+
+                <a
+                    href="#"
+                    class="subject-card"
                 >
 
-                    <div class="subject-number">
-                        05
-                    </div>
 
                     <div class="subject-icon">
                         ⚗
                     </div>
 
-                    <div class="subject-content">
+
+                    <div class="subject-info">
+
 
                         <span>
-                            به‌زودی
+                            05
                         </span>
+
 
                         <h3>
                             شیمی
                         </h3>
 
+
                         <p>
-                            شیمی یازدهم
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ریاضی -->
-
-                <div
-                    class="subject-card disabled"
-                >
-
-                    <div class="subject-number">
-                        06
-                    </div>
-
-                    <div class="subject-icon">
-                        π
-                    </div>
-
-                    <div class="subject-content">
-
-                        <span>
                             به‌زودی
-                        </span>
-
-                        <h3>
-                            ریاضی
-                        </h3>
-
-                        <p>
-                            مباحث تکمیلی ریاضی
                         </p>
+
 
                     </div>
 
-                </div>
+
+                    <div class="subject-arrow">
+                        ←
+                    </div>
+
+
+                </a>
+
 
             </div>
+
 
         </section>
 
 
-        <!-- =================================
-             AI
-        ================================== -->
 
-        <section class="ai-home">
+        <!-- AI -->
 
-            <div>
+        <section class="home-ai">
+
+
+            <div class="ai-orb">
+                AI
+            </div>
+
+
+            <div class="ai-info">
+
 
                 <span>
-                    دستیار هوشمند
+                    AXIS AI
                 </span>
 
+
                 <h2>
-                    هرجا گیر کردی،
-                    بپرس.
+                    گیر کردی؟ ازش بپرس.
                 </h2>
 
+
                 <p>
-                    سؤال ریاضی‌ات رو بفرست؛
-                    حتی می‌تونی از سؤال کتاب
-                    عکس بگیری.
+                    سؤال ریاضی‌ات رو بفرست؛ حتی می‌تونی
+                    از صفحه‌ی کتاب عکس بگیری.
                 </p>
+
 
             </div>
 
 
             <a
-                href="hesaban.html"
-                class="primary-button"
+                href="ai.html"
+                class="secondary-button"
             >
-                رفتن به حسابان
-                <span>←</span>
+                دستیار هوشمند
             </a>
 
+
         </section>
+
 
     </main>
 
 
-    <!-- =====================================
-         FOOTER
-    ====================================== -->
+
+    <!-- FOOTER -->
 
     <footer class="site-footer">
 
-        <span>
-            یازدهم‌پلاس
-        </span>
 
         <span>
-            مخصوص یازدهم رشته ریاضی
+            AXIS
         </span>
+
+
+        <span>
+            Learn beyond the formula
+        </span>
+
 
     </footer>
 
 
-    <!-- =====================================
-         SCRIPTS
-    ====================================== -->
 
     <script src="js/user.js"></script>
 
-    <script>
+    <script src="js/script.js"></script>
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            () => {
-
-                const user =
-                    getUser();
-
-
-                const level =
-                    document.getElementById(
-                        "profileLevel"
-                    );
-
-                const xp =
-                    document.getElementById(
-                        "profileXP"
-                    );
-
-
-                if (level) {
-
-                    level.textContent =
-                        user.level;
-
-                }
-
-
-                if (xp) {
-
-                    xp.textContent =
-                        user.xp;
-
-                }
-
-            }
-        );
-
-    </script>
 
 </body>
 
