@@ -1,51 +1,45 @@
-```css
 /* =========================================
    HESABAN PAGE
-   Yazdahom Riazi
-========================================= */
-
-:root {
-
-    --background: #080a09;
-    --secondary: #0d100e;
-    --surface: #101410;
-    --card: #131714;
-    --card-hover: #181e1a;
-
-    --green: #107c10;
-    --green-light: #35d35a;
-
-    --text: #e8ebe9;
-    --muted: #8d958f;
-
-    --border: #242a26;
-
-}
-
-
-/* =========================================
-   RESET
+   Yazdahom Plus
 ========================================= */
 
 * {
-
-    box-sizing: border-box;
-
     margin: 0;
     padding: 0;
-
+    box-sizing: border-box;
 }
 
+:root {
+    --bg: #080a09;
+    --surface: #0e1210;
+    --card: #141916;
+    --card-hover: #181e1a;
 
-/* =========================================
-   BODY
-========================================= */
+    --border: #252c27;
+
+    --green: #35d35a;
+    --green-soft: rgba(53, 211, 90, 0.09);
+
+    --text: #eef2ef;
+    --muted: #8d9690;
+
+    --error: #e05252;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
-
     min-height: 100vh;
 
-    background: var(--background);
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(53, 211, 90, 0.07),
+            transparent 35%
+        ),
+        var(--bg);
 
     color: var(--text);
 
@@ -54,6 +48,12 @@ body {
         Arial,
         sans-serif;
 
+    direction: rtl;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 
@@ -61,11 +61,544 @@ body {
    HEADER
 ========================================= */
 
-.site-header {
+.hesaban-header {
+    position: sticky;
 
-    height: 72px;
+    top: 0;
 
-    padding: 0 6%;
+    z-index: 100;
+
+    min-height: 70px;
+
+    padding:
+        0 5%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom:
+        1px solid rgba(37, 44, 39, 0.9);
+
+    background:
+        rgba(8, 10, 9, 0.93);
+
+    backdrop-filter:
+        blur(15px);
+}
+
+.hesaban-logo {
+    color: var(--green);
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.hesaban-nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+.hesaban-nav a {
+    position: relative;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    transition: color 0.2s;
+}
+
+.hesaban-nav a:hover,
+.hesaban-nav a.active {
+    color: var(--text);
+}
+
+.hesaban-nav a.active::after {
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+    left: 0;
+
+    bottom: -8px;
+
+    height: 2px;
+
+    border-radius: 10px;
+
+    background:
+        var(--green);
+}
+
+
+/* =========================================
+   HEADER USER
+========================================= */
+
+.hesaban-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.hesaban-user > span:first-child {
+    padding:
+        6px 10px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 8px;
+
+    background:
+        var(--surface);
+
+    color: var(--text);
+}
+
+.user-xp strong {
+    color: var(--green);
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.hesaban-page {
+    width: min(
+        1150px,
+        90%
+    );
+
+    margin:
+        0 auto;
+}
+
+
+/* =========================================
+   BREADCRUMB
+========================================= */
+
+.breadcrumb {
+    padding-top: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.breadcrumb a:hover {
+    color: var(--green);
+}
+
+.breadcrumb strong {
+    color: var(--text);
+
+    font-weight: normal;
+}
+
+.breadcrumb span {
+    color: #444c46;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hesaban-hero {
+    position: relative;
+
+    min-height: 340px;
+
+    margin-top: 25px;
+
+    padding:
+        55px;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 15% 50%,
+            rgba(53, 211, 90, 0.10),
+            transparent 40%
+        ),
+        var(--card);
+}
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 700px;
+}
+
+.hero-label {
+    color: var(--green);
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.hero-content h1 {
+    margin-top: 8px;
+
+    font-size: 42px;
+
+    line-height: 1.5;
+}
+
+.hero-content p {
+    max-width: 650px;
+
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 2;
+}
+
+
+/* =========================================
+   HERO STATS
+========================================= */
+
+.hero-stats {
+    margin-top: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 35px;
+}
+
+.hero-stats > div {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 6px;
+}
+
+.hero-stats strong {
+    color: var(--text);
+
+    font-size: 22px;
+}
+
+.hero-stats span {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================
+   HERO SYMBOL
+========================================= */
+
+.hero-symbol {
+    position: absolute;
+
+    left: 7%;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        rgba(53, 211, 90, 0.10);
+
+    font-size: 220px;
+
+    font-weight: 100;
+
+    line-height: 1;
+
+    user-select: none;
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+
+.chapters-section {
+    padding-top: 75px;
+}
+
+.section-heading {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.section-heading span {
+    color: var(--green);
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.section-heading h2 {
+    margin-top: 4px;
+
+    font-size: 23px;
+}
+
+.section-heading p {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================
+   CHAPTER GRID
+========================================= */
+
+.chapters-grid {
+    margin-top: 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 13px;
+}
+
+
+/* =========================================
+   CHAPTER CARD
+========================================= */
+
+.chapter-card {
+    position: relative;
+
+    min-height: 180px;
+
+    padding:
+        27px 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 16px;
+
+    background:
+        var(--card);
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s,
+        background 0.2s;
+}
+
+.chapter-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(53, 211, 90, 0.38);
+
+    background:
+        var(--card-hover);
+}
+
+
+/* =========================================
+   CHAPTER NUMBER
+========================================= */
+
+.chapter-number {
+    position: absolute;
+
+    top: 13px;
+
+    left: 17px;
+
+    color:
+        rgba(255, 255, 255, 0.10);
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   CHAPTER ICON
+========================================= */
+
+.chapter-icon {
+    width: 62px;
+    height: 62px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(53, 211, 90, 0.12);
+
+    border-radius: 14px;
+
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green);
+
+    font-size: 27px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   CHAPTER CONTENT
+========================================= */
+
+.chapter-content {
+    flex: 1;
+}
+
+.chapter-content > span {
+    color: var(--green);
+
+    font-size: 8px;
+}
+
+.chapter-content h3 {
+    margin-top: 3px;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+}
+
+.chapter-content p {
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    line-height: 1.8;
+}
+
+.chapter-content small {
+    display: inline-block;
+
+    margin-top: 8px;
+
+    padding:
+        3px 8px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: #727b75;
+
+    font-size: 8px;
+}
+
+
+/* =========================================
+   CHAPTER ARROW
+========================================= */
+
+.chapter-arrow {
+    color: var(--green);
+
+    font-size: 18px;
+
+    transition:
+        transform 0.2s;
+}
+
+.chapter-card:hover .chapter-arrow {
+    transform:
+        translateX(-4px);
+}
+
+
+/* =========================================
+   AI
+========================================= */
+
+.hesaban-ai {
+    margin-top: 75px;
+
+    padding:
+        32px 35px;
 
     display: flex;
 
@@ -75,897 +608,341 @@ body {
 
     gap: 25px;
 
+    border:
+        1px solid
+        rgba(53, 211, 90, 0.18);
+
+    border-radius: 17px;
+
     background:
-        rgba(8, 10, 9, 0.96);
+        linear-gradient(
+            135deg,
+            rgba(53, 211, 90, 0.07),
+            var(--card)
+        );
+}
 
-    border-bottom:
-        1px solid var(--border);
+.hesaban-ai > div > span {
+    color: var(--green);
 
-    position: sticky;
+    font-size: 9px;
 
-    top: 0;
+    font-weight: bold;
+}
 
-    z-index: 100;
+.hesaban-ai h2 {
+    margin-top: 5px;
 
+    font-size: 21px;
+}
+
+.hesaban-ai p {
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 9px;
 }
 
 
-.site-logo {
+/* =========================================
+   AI BUTTON
+========================================= */
 
-    color:
-        var(--green-light);
+.ai-button {
+    min-height: 43px;
 
-    text-decoration: none;
+    padding:
+        0 17px;
 
-    font-size: 18px;
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 9px;
+
+    background:
+        var(--green);
+
+    color: #061007;
+
+    font-size: 10px;
 
     font-weight: bold;
 
     white-space: nowrap;
 
-}
-
-
-.main-nav {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 28px;
-
-}
-
-
-.main-nav a {
-
-    color:
-        var(--muted);
-
-    text-decoration: none;
-
-    font-size: 13px;
-
     transition:
-        color 0.2s ease;
-
+        transform 0.2s,
+        filter 0.2s;
 }
 
-
-.main-nav a:hover {
-
-    color:
-        var(--text);
-
-}
-
-
-.main-nav a.active {
-
-    color:
-        var(--green-light);
-
-}
-
-
-.header-user {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    color:
-        var(--muted);
-
-    font-size: 12px;
-
-}
-
-
-.header-xp {
-
-    padding:
-        6px 10px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 20px;
-
-    background:
-        var(--secondary);
-
-}
-
-
-.header-xp strong {
-
-    color:
-        var(--green-light);
-
-}
-
-
-/* =========================================
-   MAIN
-========================================= */
-
-.hesaban-main {
-
-    width:
-        min(1100px, 90%);
-
-    margin:
-        0 auto;
-
-    padding:
-        40px 0 80px;
-
-}
-
-
-/* =========================================
-   HERO
-========================================= */
-
-.hesaban-hero {
-
-    min-height:
-        280px;
-
-    padding:
-        45px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        30px;
-
-    position:
-        relative;
-
-    overflow:
-        hidden;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        22px;
-
-    background:
-
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(53, 211, 90, 0.13),
-            transparent 35%
-        ),
-
-        linear-gradient(
-            135deg,
-            var(--card),
-            var(--surface)
-        );
-
-}
-
-
-.hesaban-hero::before {
-
-    content: "";
-
-    position:
-        absolute;
-
-    width:
-        260px;
-
-    height:
-        260px;
-
-    left:
-        -130px;
-
-    bottom:
-        -150px;
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(53, 211, 90, 0.035);
-
-}
-
-
-.hero-content {
-
-    position:
-        relative;
-
-    z-index:
-        1;
-
-}
-
-
-.hero-label {
-
-    color:
-        var(--green-light);
-
-    font-size:
-        13px;
-
-}
-
-
-.hesaban-hero h1 {
-
-    margin-top:
-        14px;
-
-    font-size:
-        clamp(40px, 6vw, 64px);
-
-    line-height:
-        1.1;
-
-}
-
-
-.hesaban-hero p {
-
-    max-width:
-        650px;
-
-    margin-top:
-        18px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        14px;
-
-    line-height:
-        2;
-
-}
-
-
-.hero-icon {
-
-    width:
-        110px;
-
-    height:
-        110px;
-
-    flex-shrink:
-        0;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border:
-        1px solid
-        rgba(53, 211, 90, 0.25);
-
-    border-radius:
-        28px;
-
-    background:
-        rgba(53, 211, 90, 0.07);
-
-    font-size:
-        52px;
-
-}
-
-
-/* =========================================
-   OVERVIEW
-========================================= */
-
-.hesaban-overview {
-
-    margin-top:
-        18px;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap:
-        15px;
-
-}
-
-
-.overview-card {
-
-    padding:
-        22px;
-
-    background:
-        var(--card);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        15px;
-
-}
-
-
-.overview-card span {
-
-    display:
-        block;
-
-    color:
-        var(--muted);
-
-    font-size:
-        12px;
-
-}
-
-
-.overview-card strong {
-
-    display:
-        block;
-
-    margin-top:
-        10px;
-
-    color:
-        var(--green-light);
-
-    font-size:
-        27px;
-
-}
-
-
-/* =========================================
-   CHAPTERS SECTION
-========================================= */
-
-.chapters-section {
-
-    margin-top:
-        45px;
-
-}
-
-
-.section-heading {
-
-    padding-bottom:
-        18px;
-
-    border-bottom:
-        1px solid var(--border);
-
-}
-
-
-.section-heading span {
-
-    color:
-        var(--green-light);
-
-    font-size:
-        12px;
-
-}
-
-
-.section-heading h2 {
-
-    margin-top:
-        8px;
-
-    font-size:
-        28px;
-
-}
-
-
-.section-heading p {
-
-    margin-top:
-        8px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        12px;
-
-}
-
-
-/* =========================================
-   CHAPTER GRID
-========================================= */
-
-.chapters-grid {
-
-    margin-top:
-        25px;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap:
-        16px;
-
-}
-
-
-/* =========================================
-   CHAPTER CARD
-========================================= */
-
-.chapter-card {
-
-    min-height:
-        220px;
-
-    padding:
-        25px;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    background:
-        var(--card);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        17px;
-
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease;
-
-}
-
-
-.chapter-card:hover {
-
+.ai-button:hover {
     transform:
-        translateY(-4px);
+        translateY(-2px);
 
-    background:
-        var(--card-hover);
-
-    border-color:
-        rgba(53, 211, 90, 0.3);
-
+    filter:
+        brightness(1.08);
 }
 
 
 /* =========================================
-   CHAPTER NUMBER
+   LOADING / EMPTY
 ========================================= */
 
-.chapter-number {
-
-    width:
-        48px;
-
-    height:
-        48px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border:
-        1px solid
-        rgba(53, 211, 90, 0.2);
-
-    border-radius:
-        12px;
-
-    background:
-        rgba(53, 211, 90, 0.07);
-
-    color:
-        var(--green-light);
-
-    font-size:
-        15px;
-
-    font-weight:
-        bold;
-
-}
-
-
-/* =========================================
-   CHAPTER CONTENT
-========================================= */
-
-.chapter-content {
-
-    flex:
-        1;
-
-    margin-top:
-        20px;
-
-}
-
-
-.chapter-content h3 {
-
-    font-size:
-        19px;
-
-}
-
-
-.chapter-content p {
-
-    margin-top:
-        9px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        12px;
-
-    line-height:
-        1.9;
-
-}
-
-
-/* =========================================
-   PROGRESS
-========================================= */
-
-.chapter-progress {
-
-    margin-top:
-        20px;
-
-}
-
-
-.chapter-progress span {
-
-    display:
-        block;
-
-    margin-bottom:
-        8px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        10px;
-
-}
-
-
-.chapter-progress > div {
-
-    width:
-        100%;
-
-    height:
-        6px;
-
-    overflow:
-        hidden;
-
-    border-radius:
-        20px;
-
-    background:
-        var(--secondary);
-
-}
-
-
-.chapter-progress i {
-
-    display:
-        block;
-
-    width:
-        0%;
-
-    height:
-        100%;
-
-    border-radius:
-        inherit;
-
-    background:
-        var(--green-light);
-
-    transition:
-        width 0.5s ease;
-
-}
-
-
-/* =========================================
-   CHAPTER BUTTON
-========================================= */
-
-.chapter-card button {
-
-    width:
-        100%;
-
-    margin-top:
-        20px;
-
-    padding:
-        12px 15px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        9px;
-
-    background:
-        var(--secondary);
-
-    color:
-        var(--text);
-
-    font-family:
-        inherit;
-
-    font-size:
-        12px;
-
-    cursor:
-        pointer;
-
-    transition:
-        0.2s ease;
-
-}
-
-
-.chapter-card button:hover {
-
-    color:
-        var(--green-light);
-
-    border-color:
-        var(--green-light);
-
-    background:
-        rgba(53, 211, 90, 0.05);
-
-}
-
-
-/* =========================================
-   LOADING
-========================================= */
-
-.loading {
-
+.loading-state,
+.empty-state {
     grid-column:
         1 / -1;
 
-    padding:
-        45px 25px;
+    min-height: 180px;
 
-    text-align:
-        center;
+    display: flex;
 
-    color:
-        var(--muted);
+    align-items: center;
 
-    background:
-        var(--card);
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 8px;
 
     border:
-        1px solid var(--border);
+        1px dashed var(--border);
 
-    border-radius:
-        15px;
+    border-radius: 15px;
 
-    font-size:
-        13px;
+    color: var(--muted);
 
+    font-size: 10px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 25px;
+}
+
+.empty-state h3 {
+    color: var(--text);
+
+    font-size: 15px;
+}
+
+.empty-state p {
+    color: var(--muted);
+
+    font-size: 9px;
 }
 
 
 /* =========================================
-   MOBILE
+   ERROR
 ========================================= */
 
-@media (max-width: 800px) {
+.hesaban-error {
+    display: none;
 
-    .site-header {
+    margin-top: 15px;
 
+    padding: 12px 15px;
+
+    border:
+        1px solid
+        rgba(224, 82, 82, 0.25);
+
+    border-radius: 9px;
+
+    background:
+        rgba(224, 82, 82, 0.06);
+
+    color: var(--error);
+
+    font-size: 9px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.hesaban-footer {
+    width: min(
+        1150px,
+        90%
+    );
+
+    margin:
+        70px auto 25px;
+
+    padding-top: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-top:
+        1px solid var(--border);
+
+    color: #555d58;
+
+    font-size: 9px;
+}
+
+.hesaban-footer span:first-child {
+    color: var(--green);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 850px) {
+
+    .hesaban-header {
         padding:
-            0 20px;
-
+            0 4%;
     }
 
-
-    .main-nav {
-
-        display:
-            none;
-
+    .hesaban-nav {
+        gap: 15px;
     }
-
-
-    .header-user {
-
-        gap:
-            8px;
-
-    }
-
-
-    .hesaban-main {
-
-        width:
-            92%;
-
-    }
-
 
     .hesaban-hero {
+        padding:
+            45px 35px;
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+
+    .hero-symbol {
+        left: -5%;
+
+        opacity: 0.45;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .hesaban-header {
+        min-height: 65px;
+    }
+
+    .hesaban-nav {
+        display: none;
+    }
+
+    .hesaban-page {
+        width: 92%;
+    }
+
+    .hesaban-hero {
+        min-height: 360px;
 
         padding:
-            32px;
-
+            35px 25px;
     }
 
-
-    .hero-icon {
-
-        width:
-            85px;
-
-        height:
-            85px;
-
-        font-size:
-            40px;
-
+    .hero-content h1 {
+        font-size: 32px;
     }
 
+    .hero-stats {
+        gap: 22px;
+    }
 
     .chapters-grid {
-
         grid-template-columns:
             1fr;
+    }
 
+    .section-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .hesaban-ai {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .ai-button {
+        width: 100%;
     }
 
 }
 
 
-@media (max-width: 550px) {
+@media (max-width: 450px) {
 
-    .hesaban-main {
-
-        padding-top:
-            20px;
-
+    .hesaban-user {
+        gap: 6px;
     }
 
+    .user-xp {
+        display: none;
+    }
 
     .hesaban-hero {
-
-        min-height:
-            240px;
-
         padding:
-            25px;
-
-        flex-direction:
-            column;
-
-        align-items:
-            flex-start;
-
+            30px 20px;
     }
 
-
-    .hero-icon {
-
-        position:
-            absolute;
-
-        left:
-            20px;
-
-        bottom:
-            20px;
-
-        width:
-            65px;
-
-        height:
-            65px;
-
-        border-radius:
-            18px;
-
-        font-size:
-            30px;
-
+    .hero-content h1 {
+        font-size: 28px;
     }
 
+    .hero-stats {
+        justify-content: space-between;
 
-    .hesaban-hero h1 {
-
-        font-size:
-            40px;
-
+        gap: 10px;
     }
 
-
-    .hesaban-overview {
-
-        grid-template-columns:
-            1fr;
-
+    .hero-stats strong {
+        font-size: 19px;
     }
-
 
     .chapter-card {
+        min-height: 160px;
 
         padding:
-            20px;
+            23px 18px;
+    }
 
+    .chapter-icon {
+        width: 52px;
+        height: 52px;
+
+        font-size: 23px;
+    }
+
+    .chapter-content h3 {
+        font-size: 15px;
+    }
+
+    .chapter-content p {
+        font-size: 8px;
+    }
+
+    .hesaban-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
     }
 
 }
-```
