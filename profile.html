@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="پروفایل کاربر | یازدهم‌پلاس"
+    >
+
+    <title>پروفایل | یازدهم‌پلاس</title>
+
+    <link
+        rel="stylesheet"
+        href="css/profile.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header class="profile-header">
+
+        <a
+            href="index.html"
+            class="profile-logo"
+        >
+            یازدهم‌پلاس
+        </a>
+
+
+        <nav class="profile-nav">
+
+            <a href="index.html">
+                خانه
+            </a>
+
+            <a href="hesaban.html">
+                حسابان
+            </a>
+
+            <a
+                href="profile.html"
+                class="active"
+            >
+                پروفایل
+            </a>
+
+        </nav>
+
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+            type="button"
+        >
+            خروج
+        </button>
+
+    </header>
+
+
+
+    <!-- =====================================
+         MAIN
+    ====================================== -->
+
+    <main class="profile-page">
+
+
+        <!-- =================================
+             PROFILE HERO
+        ================================== -->
+
+        <section class="profile-hero">
+
+
+            <div class="profile-avatar">
+
+                <span id="avatarLetter">
+                    ؟
+                </span>
+
+            </div>
+
+
+            <div class="profile-info">
+
+                <span>
+                    پروفایل دانش‌آموز
+                </span>
+
+
+                <h1 id="profileUsername">
+                    در حال بارگذاری...
+                </h1>
+
+
+                <p>
+                    مسیر پیشرفت تحصیلی تو در یازدهم‌پلاس
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             STATS
+        ================================== -->
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    XP
+                </span>
+
+
+                <strong id="profileXP">
+                    0
+                </strong>
+
+
+                <small>
+                    امتیاز تجربه
+                </small>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    درس‌های تکمیل‌شده
+                </span>
+
+
+                <strong id="completedLessons">
+                    0
+                </strong>
+
+
+                <small>
+                    درس
+                </small>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    سطح
+                </span>
+
+
+                <strong id="profileLevel">
+                    1
+                </strong>
+
+
+                <small id="levelProgressText">
+                    شروع مسیر
+                </small>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    وضعیت
+                </span>
+
+
+                <strong id="profileStatus">
+                    فعال
+                </strong>
+
+
+                <small>
+                    حساب کاربری
+                </small>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             LEVEL PROGRESS
+        ================================== -->
+
+        <section class="level-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        پیشرفت
+                    </span>
+
+                    <h2>
+                        سطح فعلی
+                    </h2>
+
+                </div>
+
+
+                <strong id="levelXP">
+                    0 XP
+                </strong>
+
+            </div>
+
+
+            <div class="level-bar">
+
+                <div
+                    id="levelBarFill"
+                    class="level-bar-fill"
+                    style="width: 0%"
+                ></div>
+
+            </div>
+
+
+            <div class="level-bottom">
+
+                <span id="currentLevelText">
+                    سطح ۱
+                </span>
+
+
+                <span id="nextLevelText">
+                    100 XP تا سطح بعد
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             PROGRESS
+        ================================== -->
+
+        <section class="progress-section">
+
+
+            <div class="section-title">
+
+                <div>
+
+                    <span>
+                        مسیر یادگیری
+                    </span>
+
+                    <h2>
+                        پیشرفت دروس
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="subjectProgress"
+                class="subject-progress"
+            >
+
+                <div class="loading-state">
+
+                    در حال بارگذاری...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             ACCOUNT
+        ================================== -->
+
+        <section class="account-section">
+
+            <div>
+
+                <span>
+                    حساب کاربری
+                </span>
+
+
+                <h2>
+                    اطلاعات حساب
+                </h2>
+
+
+                <p>
+                    نام کاربری و اطلاعات پیشرفت تو
+                    در این دستگاه ذخیره می‌شود.
+                </p>
+
+            </div>
+
+
+            <div class="account-info">
+
+                <div>
+
+                    <span>
+                        نام کاربری
+                    </span>
+
+                    <strong id="accountUsername">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        تاریخ عضویت
+                    </span>
+
+                    <strong id="accountCreated">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
+
+    <script src="js/user.js"></script>
+
+    <script src="js/profile.js"></script>
+
+
+</body>
+
+</html>
