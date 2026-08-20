@@ -1,124 +1,164 @@
+
 /* =========================================
-   LESSON PAGE
-   Yazdahom Plus
+   AXIS — LESSON PAGE
 ========================================= */
 
-let currentLesson = null;
-let currentChapter = null;
-let currentUser = null;
-
 document.addEventListener("DOMContentLoaded", () => {
-    initializeLesson();
+    loadLesson();
 });
 
 
 /* =========================================
-   INITIALIZE
+   LOAD LESSON
 ========================================= */
 
-async function initializeLesson() {
+async function loadLesson() {
 
     try {
 
-        /*
-         * Get lesson ID from URL
-         *
-         * Example:
-         * lesson.html?lesson=lesson-1
-         */
-
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-        const lessonId =
-            params.get("lesson");
-
+        const lessonId = getLessonId();
 
         if (!lessonId) {
-
-            throw new Error(
-                "شناسه درس پیدا نشد."
-            );
-
+            throw new Error("شناسه درس پیدا نشد.");
         }
 
 
-        /* -----------------------------
-           Load data
-        ----------------------------- */
-
-        const response =
-            await fetch(
-                "data/subjects.json"
-            );
+        const response = await fetch(
+            "data/subjects.json",
+            {
+                cache: "no-store"
+            }
+        );
 
 
         if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+
+        const rawText = await response.text();
+
+        const cleanedJSON = cleanJSON(rawText);
+
+        let data;
+
+
+        try {
+
+            data = JSON.parse(cleanedJSON);
+
+        } catch (error) {
+
+            console.error("JSON Parse Error:", error);
 
             throw new Error(
-                "فایل اطلاعات دروس قابل دریافت نیست."
+                "فایل subjects.json ساختار صحیحی ندارد."
             );
 
         }
 
 
-        const data =
-            await response.json();
+        const result =
+            findLesson(
+                data,
+                lessonId
+            );
 
 
-        if (
-            !data ||
-            !Array.isArray(data.subjects)
-        ) {
+        if (!result) {
 
             throw new Error(
-                "ساختار subjects.json صحیح نیست."
+                "درس مورد نظر پیدا نشد."
             );
 
         }
 
 
-        /* -----------------------------
-           Find Hesaban
-        ----------------------------- */
-
-        const hesaban =
-            data.subjects.find(
-                subject =>
-                    subject.id === "hesaban"
-            );
+        renderLesson(
+            result.lesson,
+            result.chapter
+        );
 
 
-        if (!hesaban) {
-
-            throw new Error(
-                "درس حسابان پیدا نشد."
-            );
-
-        }
+        setupCompleteButton(
+            result.lesson
+        );
 
 
-        /* -----------------------------
-           Find lesson
-        ----------------------------- */
+        setupNextLesson(
+            result.chapter,
+            result.lesson
+        );
 
-        let foundLesson = null;
-        let foundChapter = null;
 
+    } catch (error) {
+
+        console.error(
+            "Lesson error:",
+            error
+        );
+
+        showLessonError(
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   GET LESSON ID
+========================================= */
+
+function getLessonId() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return params.get("id");
+
+}
+
+
+/* =========================================
+   FIND LESSON
+========================================= */
+
+function findLesson(
+    data,
+    lessonId
+) {
+
+    let subjects = [];
+
+
+    if (Array.isArray(data.subjects)) {
+
+        subjects =
+            data.subjects;
+
+    } else if (Array.isArray(data)) {
+
+        subjects =
+            data;
+
+    }
+
+
+    for (const subject of subjects) {
 
         const chapters =
             Array.isArray(
-                hesaban.chapters
+                subject.chapters
             )
-                ? hesaban.chapters
+                ? subject.chapters
                 : [];
 
 
-        for (
-            const chapter of chapters
-        ) {
+        for (const chapter of chapters) {
 
             const lessons =
                 Array.isArray(
@@ -131,89 +171,27 @@ async function initializeLesson() {
             const lesson =
                 lessons.find(
                     item =>
-                        item.id === lessonId
+                        String(item.id) ===
+                        String(lessonId)
                 );
 
 
             if (lesson) {
 
-                foundLesson =
-                    lesson;
-
-                foundChapter =
-                    chapter;
-
-                break;
+                return {
+                    lesson,
+                    chapter,
+                    subject
+                };
 
             }
 
         }
 
-
-        if (!foundLesson) {
-
-            throw new Error(
-                "درس موردنظر پیدا نشد."
-            );
-
-        }
-
-
-        /* -----------------------------
-           Save current data
-        ----------------------------- */
-
-        currentLesson =
-            foundLesson;
-
-        currentChapter =
-            foundChapter;
-
-
-        /* -----------------------------
-           User
-        ----------------------------- */
-
-        if (
-            typeof getUser === "function"
-        ) {
-
-            currentUser =
-                getUser();
-
-        }
-
-
-        /* -----------------------------
-           Render
-        ----------------------------- */
-
-        renderLesson(
-            currentLesson,
-            currentChapter
-        );
-
-
-        /* -----------------------------
-           Events
-        ----------------------------- */
-
-        setupLessonEvents();
-
-
-    } catch (error) {
-
-        console.error(
-            "Lesson error:",
-            error
-        );
-
-
-        showLessonError(
-            error.message
-        );
-
     }
+
+
+    return null;
 
 }
 
@@ -227,139 +205,146 @@ function renderLesson(
     chapter
 ) {
 
-    /* ---------------------------------
-       Title
-    --------------------------------- */
-
     const title =
-        document.getElementById(
-            "lessonTitle"
-        );
+        lesson.title ||
+        "درس";
 
-
-    if (title) {
-
-        title.textContent =
-            lesson.title ||
-            "درس حسابان";
-
-    }
-
-
-    /* ---------------------------------
-       Description
-    --------------------------------- */
 
     const description =
-        document.getElementById(
-            "lessonDescription"
-        );
+        lesson.description ||
+        "";
 
 
-    if (description) {
-
-        description.textContent =
-            lesson.description ||
-            "محتوای این درس را مطالعه کن.";
-
-    }
-
-
-    /* ---------------------------------
-       Lesson number
-    --------------------------------- */
-
-    const number =
-        document.getElementById(
-            "lessonNumber"
-        );
-
-
-    if (number) {
-
-        number.textContent =
-            lesson.number
-                ? `درس ${lesson.number}`
-                : "درس";
-
-    }
-
-
-    /* ---------------------------------
-       Breadcrumb
-    --------------------------------- */
-
-    const breadcrumb =
-        document.getElementById(
-            "lessonBreadcrumb"
-        );
-
-
-    if (breadcrumb) {
-
-        breadcrumb.textContent =
-            lesson.title ||
-            "درس";
-
-    }
-
-
-    /* ---------------------------------
-       Chapter link
-    --------------------------------- */
-
-    const chapterLink =
-        document.getElementById(
-            "chapterLink"
-        );
-
-
-    if (chapterLink) {
-
-        chapterLink.textContent =
-            chapter.title ||
-            "فصل";
-
-
-        chapterLink.href =
-            `chapter.html?chapter=${encodeURIComponent(
-                chapter.id
-            )}`;
-
-    }
-
-
-    /* ---------------------------------
-       Page title
-    --------------------------------- */
-
-    document.title =
-        `${lesson.title || "درس"} | یازدهم‌پلاس`;
-
-
-    /* ---------------------------------
-       Content
-    --------------------------------- */
-
-    renderLessonContent(
-        lesson
+    setText(
+        "lessonTitle",
+        title
     );
 
 
-    /* ---------------------------------
-       Exercises
-    --------------------------------- */
-
-    renderExercises(
-        lesson.exercises
+    setText(
+        "lessonDescription",
+        description
     );
 
 
-    /* ---------------------------------
-       Progress
-    --------------------------------- */
+    setText(
+        "breadcrumbChapter",
+        chapter.title || "فصل"
+    );
 
-    updateLessonProgress(
+
+    setText(
+        "breadcrumbLesson",
+        title
+    );
+
+
+    /*
+     * محتوای اصلی
+     */
+
+    const content =
+        document.getElementById(
+            "lessonContent"
+        );
+
+
+    if (!content) {
+
+        return;
+
+    }
+
+
+    content.innerHTML =
+        "";
+
+
+    /*
+     * اگر content آرایه باشد
+     */
+
+    if (
+        Array.isArray(
+            lesson.content
+        )
+    ) {
+
+        lesson.content.forEach(
+            block => {
+
+                content.appendChild(
+                    createContentBlock(
+                        block
+                    )
+                );
+
+            }
+        );
+
+    }
+
+    /*
+     * اگر content متن باشد
+     */
+
+    else if (
+        typeof lesson.content ===
+        "string"
+    ) {
+
+        const block =
+            document.createElement(
+                "div"
+            );
+
+
+        block.className =
+            "content-block";
+
+
+        block.innerHTML =
+            formatText(
+                lesson.content
+            );
+
+
+        content.appendChild(
+            block
+        );
+
+    }
+
+    /*
+     * اگر content وجود نداشته باشد
+     */
+
+    else {
+
+        content.innerHTML = `
+
+            <div class="content-block">
+
+                <h2>
+                    محتوای درس
+                </h2>
+
+                <p>
+                    محتوای این درس هنوز اضافه نشده است.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * وضعیت درس
+     */
+
+    updateLessonStatus(
         lesson.id
     );
 
@@ -367,115 +352,520 @@ function renderLesson(
 
 
 /* =========================================
-   LESSON CONTENT
+   CREATE CONTENT BLOCK
 ========================================= */
 
-function renderLessonContent(
+function createContentBlock(
+    block
+) {
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.className =
+        "content-block";
+
+
+    if (typeof block === "string") {
+
+        element.innerHTML =
+            formatText(
+                block
+            );
+
+        return element;
+
+    }
+
+
+    const type =
+        block.type ||
+        "text";
+
+
+    switch (type) {
+
+        case "heading":
+
+            element.innerHTML = `
+
+                <h2>
+                    ${escapeHTML(
+                        block.title ||
+                        ""
+                    )}
+                </h2>
+
+                ${
+                    block.text
+                        ? `<p>${formatText(
+                            block.text
+                        )}</p>`
+                        : ""
+                }
+
+            `;
+
+            break;
+
+
+        case "text":
+
+            element.innerHTML = `
+
+                ${
+                    block.title
+                        ? `<h2>${escapeHTML(
+                            block.title
+                        )}</h2>`
+                        : ""
+                }
+
+                <p>
+                    ${formatText(
+                        block.text ||
+                        block.content ||
+                        ""
+                    )}
+                </p>
+
+            `;
+
+            break;
+
+
+        case "formula":
+
+            element.innerHTML = `
+
+                ${
+                    block.title
+                        ? `<h3>${escapeHTML(
+                            block.title
+                        )}</h3>`
+                        : ""
+                }
+
+                <div class="formula-box">
+
+                    ${escapeHTML(
+                        block.formula ||
+                        block.text ||
+                        ""
+                    )}
+
+                </div>
+
+            `;
+
+            break;
+
+
+        case "note":
+
+            element.innerHTML = `
+
+                <div class="lesson-note">
+
+                    ${
+                        block.title
+                            ? `<strong>${escapeHTML(
+                                block.title
+                            )}</strong>`
+                            : ""
+                    }
+
+                    <p>
+                        ${formatText(
+                            block.text ||
+                            block.content ||
+                            ""
+                        )}
+                    </p>
+
+                </div>
+
+            `;
+
+            break;
+
+
+        case "example":
+
+            element.innerHTML = `
+
+                <div class="example-box">
+
+                    <div class="example-title">
+
+                        ${
+                            escapeHTML(
+                                block.title ||
+                                "مثال"
+                            )
+                        }
+
+                    </div>
+
+                    <p>
+                        ${formatText(
+                            block.text ||
+                            block.content ||
+                            ""
+                        )}
+                    </p>
+
+                </div>
+
+            `;
+
+            break;
+
+
+        case "question":
+
+            element.innerHTML = `
+
+                <div class="question-box">
+
+                    <span class="question-number">
+
+                        تمرین
+
+                    </span>
+
+                    <h3>
+                        ${formatText(
+                            block.question ||
+                            block.text ||
+                            ""
+                        )}
+                    </h3>
+
+                    ${
+                        block.answer
+                            ? `
+                                <div class="question-answer">
+
+                                    ${formatText(
+                                        block.answer
+                                    )}
+
+                                </div>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+            `;
+
+            break;
+
+
+        default:
+
+            element.innerHTML = `
+
+                <p>
+                    ${formatText(
+                        block.text ||
+                        block.content ||
+                        ""
+                    )}
+                </p>
+
+            `;
+
+    }
+
+
+    return element;
+
+}
+
+
+/* =========================================
+   COMPLETE BUTTON
+========================================= */
+
+function setupCompleteButton(
     lesson
+) {
+
+    const button =
+        document.getElementById(
+            "completeLesson"
+        );
+
+
+    if (!button) {
+
+        return;
+
+    }
+
+
+    const completed =
+        isLessonCompleted(
+            lesson.id
+        );
+
+
+    updateCompleteButton(
+        button,
+        completed
+    );
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const nowCompleted =
+                !isLessonCompleted(
+                    lesson.id
+                );
+
+
+            saveLessonProgress(
+                lesson.id,
+                nowCompleted
+            );
+
+
+            updateCompleteButton(
+                button,
+                nowCompleted
+            );
+
+
+            updateLessonStatus(
+                lesson.id
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   SAVE PROGRESS
+========================================= */
+
+function saveLessonProgress(
+    lessonId,
+    completed
+) {
+
+    let progress = {
+        completedLessons: []
+    };
+
+
+    try {
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(
+                    "axis_progress"
+                )
+            );
+
+
+        if (
+            saved &&
+            Array.isArray(
+                saved.completedLessons
+            )
+        ) {
+
+            progress =
+                saved;
+
+        }
+
+    } catch {
+
+        progress = {
+            completedLessons: []
+        };
+
+    }
+
+
+    const list =
+        progress.completedLessons;
+
+
+    const index =
+        list.indexOf(
+            lessonId
+        );
+
+
+    if (
+        completed &&
+        index === -1
+    ) {
+
+        list.push(
+            lessonId
+        );
+
+    }
+
+
+    if (
+        !completed &&
+        index !== -1
+    ) {
+
+        list.splice(
+            index,
+            1
+        );
+
+    }
+
+
+    localStorage.setItem(
+        "axis_progress",
+        JSON.stringify(
+            progress
+        )
+    );
+
+}
+
+
+/* =========================================
+   BUTTON STATE
+========================================= */
+
+function updateCompleteButton(
+    button,
+    completed
+) {
+
+    if (completed) {
+
+        button.textContent =
+            "✓ یاد گرفتم";
+
+        button.classList.add(
+            "completed"
+        );
+
+    } else {
+
+        button.textContent =
+            "یاد گرفتم";
+
+        button.classList.remove(
+            "completed"
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   LESSON STATUS
+========================================= */
+
+function updateLessonStatus(
+    lessonId
+) {
+
+    const status =
+        document.getElementById(
+            "lessonStatus"
+        );
+
+
+    if (!status) {
+
+        return;
+
+    }
+
+
+    if (
+        isLessonCompleted(
+            lessonId
+        )
+    ) {
+
+        status.textContent =
+            "کامل شده";
+
+    } else {
+
+        status.textContent =
+            "در حال یادگیری";
+
+    }
+
+}
+
+
+/* =========================================
+   NEXT LESSON
+========================================= */
+
+function setupNextLesson(
+    chapter,
+    currentLesson
 ) {
 
     const container =
         document.getElementById(
-            "lessonContent"
+            "nextLessonContainer"
         );
 
 
     if (!container) {
+
         return;
+
     }
 
 
-    /*
-     * Support both:
-     *
-     * lesson.content
-     *
-     * lesson.sections
-     */
-
-    if (
+    const lessons =
         Array.isArray(
-            lesson.sections
-        ) &&
-        lesson.sections.length > 0
-    ) {
-
-        container.innerHTML = "";
+            chapter.lessons
+        )
+            ? chapter.lessons
+            : [];
 
 
-        lesson.sections.forEach(
-            section => {
-
-                const element =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                element.className =
-                    "content-block";
-
-
-                if (section.title) {
-
-                    const heading =
-                        document.createElement(
-                            "h3"
-                        );
-
-
-                    heading.textContent =
-                        section.title;
-
-
-                    element.appendChild(
-                        heading
-                    );
-
-                }
-
-
-                if (section.text) {
-
-                    const paragraph =
-                        document.createElement(
-                            "p"
-                        );
-
-
-                    paragraph.textContent =
-                        section.text;
-
-
-                    element.appendChild(
-                        paragraph
-                    );
-
-                }
-
-
-                container.appendChild(
-                    element
-                );
-
-            }
+    const currentIndex =
+        lessons.findIndex(
+            lesson =>
+                String(
+                    lesson.id
+                ) ===
+                String(
+                    currentLesson.id
+                )
         );
 
 
-        return;
+    const nextLesson =
+        lessons[
+            currentIndex + 1
+        ];
 
-    }
 
+    if (!nextLesson) {
 
-    if (
-        lesson.content &&
-        typeof lesson.content === "string"
-    ) {
-
-        container.innerHTML =
-            formatLessonText(
-                lesson.content
-            );
+        container.innerHTML = "";
 
         return;
 
@@ -484,21 +874,33 @@ function renderLessonContent(
 
     container.innerHTML = `
 
-        <div class="empty-state">
+        <a
+            href="lesson.html?id=${encodeURIComponent(
+                nextLesson.id
+            )}"
+            class="next-lesson-card"
+        >
 
-            <div class="empty-icon">
-                📖
+            <div>
+
+                <small>
+                    درس بعدی
+                </small>
+
+                <strong>
+                    ${escapeHTML(
+                        nextLesson.title ||
+                        "درس بعدی"
+                    )}
+                </strong>
+
             </div>
 
-            <h3>
-                محتوای این درس هنوز آماده نیست
-            </h3>
+            <div class="next-lesson-arrow">
+                ←
+            </div>
 
-            <p>
-                محتوای آموزشی این درس به‌زودی اضافه می‌شود.
-            </p>
-
-        </div>
+        </a>
 
     `;
 
@@ -506,455 +908,155 @@ function renderLessonContent(
 
 
 /* =========================================
-   FORMAT TEXT
+   CHECK COMPLETION
 ========================================= */
 
-function formatLessonText(
-    text
-) {
-
-    return escapeHTML(text)
-
-        .replace(
-            /\n\n/g,
-            "</p><p>"
-        )
-
-        .replace(
-            /\n/g,
-            "<br>"
-        )
-
-        .replace(
-            /^/,
-            "<p>"
-        )
-
-        .replace(
-            /$/,
-            "</p>"
-        );
-
-}
-
-
-/* =========================================
-   EXERCISES
-========================================= */
-
-function renderExercises(
-    exercises
-) {
-
-    const container =
-        document.getElementById(
-            "exercisesContainer"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const list =
-        Array.isArray(exercises)
-            ? exercises
-            : [];
-
-
-    if (list.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    ✏️
-                </div>
-
-                <h3>
-                    هنوز تمرینی برای این درس ثبت نشده
-                </h3>
-
-                <p>
-                    تمرین‌های این درس به‌زودی اضافه می‌شوند.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    list.forEach(
-        (exercise, index) => {
-
-            const card =
-                createExerciseCard(
-                    exercise,
-                    index + 1
-                );
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   EXERCISE CARD
-========================================= */
-
-function createExerciseCard(
-    exercise,
-    number
-) {
-
-    const article =
-        document.createElement(
-            "article"
-        );
-
-
-    article.className =
-        "exercise-card";
-
-
-    const question =
-        exercise.question ||
-        `تمرین ${number}`;
-
-
-    article.innerHTML = `
-
-        <div class="exercise-number">
-
-            تمرین ${number}
-
-        </div>
-
-
-        <div class="exercise-question">
-
-            ${escapeHTML(question)}
-
-        </div>
-
-    `;
-
-
-    if (
-        exercise.answer
-    ) {
-
-        const answerButton =
-            document.createElement(
-                "button"
-            );
-
-
-        answerButton.type =
-            "button";
-
-
-        answerButton.className =
-            "answer-button";
-
-
-        answerButton.textContent =
-            "نمایش پاسخ";
-
-
-        const answer =
-            document.createElement(
-                "div"
-            );
-
-
-        answer.className =
-            "exercise-answer";
-
-
-        answer.hidden =
-            true;
-
-
-        answer.textContent =
-            exercise.answer;
-
-
-        answerButton.addEventListener(
-            "click",
-            () => {
-
-                const isHidden =
-                    answer.hidden;
-
-
-                answer.hidden =
-                    !isHidden;
-
-
-                answerButton.textContent =
-                    isHidden
-                        ? "پنهان کردن پاسخ"
-                        : "نمایش پاسخ";
-
-            }
-        );
-
-
-        article.appendChild(
-            answerButton
-        );
-
-
-        article.appendChild(
-            answer
-        );
-
-    }
-
-
-    return article;
-
-}
-
-
-/* =========================================
-   PROGRESS
-========================================= */
-
-function updateLessonProgress(
+function isLessonCompleted(
     lessonId
 ) {
 
-    let completed = false;
+    try {
 
-
-    if (
-        currentUser &&
-        currentUser.progress &&
-        Array.isArray(
-            currentUser.progress.completedLessons
-        )
-    ) {
-
-        completed =
-            currentUser.progress.completedLessons
-                .includes(
-                    lessonId
-                );
-
-    }
-
-
-    const percent =
-        completed
-            ? 100
-            : 0;
-
-
-    const progressPercent =
-        document.getElementById(
-            "progressPercent"
-        );
-
-
-    const progressFill =
-        document.getElementById(
-            "progressFill"
-        );
-
-
-    if (progressPercent) {
-
-        progressPercent.textContent =
-            `${percent}%`;
-
-    }
-
-
-    if (progressFill) {
-
-        progressFill.style.width =
-            `${percent}%`;
-
-    }
-
-
-    const button =
-        document.getElementById(
-            "completeLessonButton"
-        );
-
-
-    if (button) {
-
-        if (completed) {
-
-            button.textContent =
-                "درس تکمیل شده ✓";
-
-
-            button.classList.add(
-                "completed"
+        const progress =
+            JSON.parse(
+                localStorage.getItem(
+                    "axis_progress"
+                )
             );
+
+
+        if (
+            !progress ||
+            !Array.isArray(
+                progress.completedLessons
+            )
+        ) {
+
+            return false;
 
         }
 
-    }
 
-}
-
-
-/* =========================================
-   EVENTS
-========================================= */
-
-function setupLessonEvents() {
-
-    const button =
-        document.getElementById(
-            "completeLessonButton"
-        );
-
-
-    if (button) {
-
-        button.addEventListener(
-            "click",
-            completeCurrentLesson
-        );
-
-    }
-
-}
-
-
-/* =========================================
-   COMPLETE LESSON
-========================================= */
-
-function completeCurrentLesson() {
-
-    if (!currentLesson) {
-        return;
-    }
-
-
-    if (
-        typeof getUser !== "function" ||
-        typeof saveUser !== "function"
-    ) {
-
-        console.warn(
-            "User system is not available."
-        );
-
-        return;
-
-    }
-
-
-    let user =
-        getUser();
-
-
-    if (!user) {
-
-        return;
-
-    }
-
-
-    if (!user.progress) {
-
-        user.progress = {
-
-            completedLessons: []
-
-        };
-
-    }
-
-
-    if (
-        !Array.isArray(
-            user.progress.completedLessons
-        )
-    ) {
-
-        user.progress.completedLessons =
-            [];
-
-    }
-
-
-    const lessonId =
-        currentLesson.id;
-
-
-    const alreadyCompleted =
-        user.progress.completedLessons
-            .includes(
-                lessonId
-            );
-
-
-    if (!alreadyCompleted) {
-
-        user.progress.completedLessons.push(
+        return progress.completedLessons.includes(
             lessonId
         );
 
+    } catch {
 
-        /*
-         * XP reward
-         */
+        return false;
 
-        const reward =
-            Number(
-                currentLesson.xp || 20
-            );
+    }
+
+}
 
 
-        user.xp =
-            Number(
-                user.xp || 0
-            ) + reward;
+/* =========================================
+   TEXT FORMATTER
+========================================= */
 
+function formatText(
+    text
+) {
 
-        /*
-         * Save
-         */
+    if (
+        text === undefined ||
+        text === null
+    ) {
 
-        saveUser(
-            user
-        );
-
-
-        currentUser =
-            user;
+        return "";
 
     }
 
 
-    updateLessonProgress(
-        lessonId
-    );
+    let value =
+        escapeHTML(
+            String(text)
+        );
+
+
+    /*
+     * خط جدید
+     */
+
+    value =
+        value.replace(
+            /\n/g,
+            "<br>"
+        );
+
+
+    return value;
+
+}
+
+
+/* =========================================
+   CLEAN JSON
+========================================= */
+
+function cleanJSON(
+    text
+) {
+
+    if (
+        typeof text !== "string"
+    ) {
+
+        return "";
+    }
+
+
+    let result =
+        text.trim();
+
+
+    result =
+        result.replace(
+            /^```json\s*/i,
+            ""
+        );
+
+
+    result =
+        result.replace(
+            /\s*```$/i,
+            ""
+        );
+
+
+    result =
+        result.replace(
+            /^\uFEFF/,
+            ""
+        );
+
+
+    return result.trim();
+
+}
+
+
+/* =========================================
+   SET TEXT
+========================================= */
+
+function setText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (element) {
+
+        element.textContent =
+            value ?? "";
+
+    }
 
 }
 
@@ -973,62 +1075,31 @@ function showLessonError(
         );
 
 
-    const exercises =
-        document.getElementById(
-            "exercisesContainer"
-        );
+    if (!content) {
 
-
-    const error =
-        document.getElementById(
-            "lessonError"
-        );
-
-
-    if (content) {
-
-        content.innerHTML = `
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    ⚠️
-                </div>
-
-                <h3>
-                    خطا در بارگذاری درس
-                </h3>
-
-                <p>
-                    ${escapeHTML(
-                        message ||
-                        "مشکلی رخ داد."
-                    )}
-                </p>
-
-            </div>
-
-        `;
+        return;
 
     }
 
 
-    if (exercises) {
+    content.innerHTML = `
 
-        exercises.innerHTML = "";
+        <div class="content-block">
 
-    }
+            <h2>
+                خطا در بارگذاری درس
+            </h2>
 
+            <p>
+                ${escapeHTML(
+                    message ||
+                    "خطای ناشناخته"
+                )}
+            </p>
 
-    if (error) {
+        </div>
 
-        error.textContent =
-            message || "";
-
-        error.style.display =
-            "block";
-
-    }
+    `;
 
 }
 
@@ -1041,7 +1112,9 @@ function escapeHTML(
     value
 ) {
 
-    return String(value)
+    return String(
+        value ?? ""
+    )
 
         .replace(
             /&/g,
