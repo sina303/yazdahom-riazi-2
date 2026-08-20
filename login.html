@@ -1,8 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,11 +10,20 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>ورود | یازدهم ریاضی</title>
+    <meta
+        name="description"
+        content="یازدهم‌پلاس؛ پلتفرم مطالعه و یادگیری یازدهم رشته ریاضی"
+    >
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login.css">
+    <title>ورود | یازدهم‌پلاس</title>
+
+    <link
+        rel="stylesheet"
+        href="css/login.css"
+    >
+
 </head>
+
 
 <body>
 
@@ -22,69 +31,127 @@
 
         <section class="login-card">
 
+            <!-- Logo -->
+
             <div class="login-logo">
-                ∑
-            </div>
 
-            <span class="login-label">
-                یازدهم ریاضی
-            </span>
-
-            <h1>
-                خوش اومدی
-            </h1>
-
-            <p class="login-description">
-                برای ورود به حساب کاربری، نام کاربری خودت رو وارد کن.
-            </p>
-
-            <form id="loginForm">
-
-                <div class="input-group">
-
-                    <label for="username">
-                        نام کاربری
-                    </label>
-
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="مثلاً sina"
-                        autocomplete="username"
-                        maxlength="30"
-                        required
-                    >
-
+                <div class="logo-mark">
+                    ی+
                 </div>
 
-                <p
+                <div class="logo-text">
+                    <strong>
+                        یازدهم‌پلاس
+                    </strong>
+
+                    <span>
+                        مسیر بهتر برای یادگیری
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- Title -->
+
+            <div class="login-heading">
+
+                <span>
+                    خوش آمدی
+                </span>
+
+                <h1>
+                    وارد حساب خودت شو
+                </h1>
+
+                <p>
+                    برای ادامه، یک نام کاربری انتخاب کن.
+                </p>
+
+            </div>
+
+
+            <!-- Login Form -->
+
+            <form
+                id="loginForm"
+                class="login-form"
+                autocomplete="off"
+            >
+
+                <label for="username">
+                    نام کاربری
+                </label>
+
+
+                <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="مثلاً Sina"
+                    minlength="2"
+                    maxlength="30"
+                    autocomplete="username"
+                    required
+                >
+
+
+                <div
                     id="loginError"
                     class="login-error"
+                    role="alert"
                     aria-live="polite"
-                ></p>
+                ></div>
+
 
                 <button
                     type="submit"
                     class="login-button"
                 >
-                    ورود به سایت
+                    ورود به یازدهم‌پلاس
+                    <span>←</span>
                 </button>
 
             </form>
 
-            <p class="login-note">
-                حساب کاربری شما برای ذخیره‌ی پیشرفت، XP و فعالیت‌های آموزشی استفاده می‌شود.
-            </p>
+
+            <!-- Info -->
+
+            <div class="login-info">
+
+                <span>
+                    شروع سریع
+                </span>
+
+                <p>
+                    فعلاً ورود با نام کاربری انجام می‌شود.
+                    اطلاعات پیشرفت و XP روی همین دستگاه ذخیره می‌شود.
+                </p>
+
+            </div>
 
         </section>
 
+
+        <footer class="login-footer">
+
+            یازدهم‌پلاس
+            <span>•</span>
+            مخصوص یازدهم رشته ریاضی
+
+        </footer>
+
     </main>
 
-    <script src="user.js"></script>
-    <script src="login.js"></script>
+
+    <!-- User System -->
+
+    <script src="js/user.js"></script>
+
+    <!-- Login -->
+
+    <script src="js/login.js"></script>
 
 </body>
 
 </html>
-```
