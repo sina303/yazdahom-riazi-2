@@ -1,42 +1,49 @@
-```javascript
 /* =========================================
-   HESABAN
-   Load Chapters + Progress
+   HESABAN PAGE
+   Yazdahom Plus
 ========================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
+    loadHesaban();
+});
+
 
 /* =========================================
-   LOAD DATA
+   LOAD HESABAN
 ========================================= */
 
 async function loadHesaban() {
 
-    const chaptersGrid =
-        document.getElementById("chaptersGrid");
-
-    if (!chaptersGrid) {
-        return;
-    }
-
-
     try {
 
-        const response =
-            await fetch("data/subjects.json");
+        const response = await fetch(
+            "data/subjects.json"
+        );
 
 
         if (!response.ok) {
-
             throw new Error(
-                "Could not load subjects.json"
+                "فایل اطلاعات دروس قابل دریافت نیست."
             );
-
         }
 
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
+
+        if (
+            !data ||
+            !Array.isArray(data.subjects)
+        ) {
+            throw new Error(
+                "ساختار subjects.json صحیح نیست."
+            );
+        }
+
+
+        /* ---------------------------------
+           Find Hesaban
+        --------------------------------- */
 
         const hesaban =
             data.subjects.find(
@@ -46,47 +53,39 @@ async function loadHesaban() {
 
 
         if (!hesaban) {
-
             throw new Error(
-                "Hesaban subject not found"
+                "درس حسابان پیدا نشد."
             );
-
         }
 
 
-        renderChapters(
-            hesaban.chapters
-        );
+        /* ---------------------------------
+           Chapters
+        --------------------------------- */
+
+        const chapters =
+            Array.isArray(hesaban.chapters)
+                ? hesaban.chapters
+                : [];
 
 
-        updateHesabanOverview(
-            hesaban.chapters
-        );
+        renderChapters(chapters);
+
+
+        updateStatistics(chapters);
 
 
     } catch (error) {
 
         console.error(
-            "Hesaban loading error:",
+            "Hesaban error:",
             error
         );
 
 
-        chaptersGrid.innerHTML = `
-
-            <div class="loading">
-
-                خطا در بارگذاری فصل‌ها
-
-                <br>
-
-                <small>
-                    ${error.message}
-                </small>
-
-            </div>
-
-        `;
+        showHesabanError(
+            error.message
+        );
 
     }
 
@@ -97,219 +96,179 @@ async function loadHesaban() {
    RENDER CHAPTERS
 ========================================= */
 
-function renderChapters(chapters) {
+function renderChapters(
+    chapters
+) {
 
-    const chaptersGrid =
+    const container =
         document.getElementById(
-            "chaptersGrid"
+            "chaptersContainer"
         );
 
 
-    if (!chaptersGrid) {
+    if (!container) {
         return;
     }
 
 
-    chaptersGrid.innerHTML = "";
+    /* ---------------------------------
+       Empty
+    --------------------------------- */
 
+    if (chapters.length === 0) {
 
-    if (
-        !Array.isArray(chapters) ||
-        chapters.length === 0
-    ) {
+        container.innerHTML = `
 
-        chaptersGrid.innerHTML = `
+            <div class="empty-state">
 
-            <div class="loading">
-
-                هنوز فصلی اضافه نشده است.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const user =
-        typeof getUser === "function"
-            ? getUser()
-            : null;
-
-
-    chapters.forEach(chapter => {
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "chapter-card";
-
-
-        let progress =
-            Number(chapter.progress) || 0;
-
-
-        /*
-            اگر سیستم کاربر بعداً
-            پیشرفت اختصاصی داشته باشد،
-            از آن استفاده می‌کنیم.
-        */
-
-        if (
-            user &&
-            user.progress &&
-            user.progress.hesaban &&
-            user.progress.hesaban.chapters &&
-            user.progress.hesaban.chapters[
-                chapter.id
-            ]
-        ) {
-
-            const chapterData =
-                user.progress
-                    .hesaban
-                    .chapters[
-                        chapter.id
-                    ];
-
-
-            if (
-                typeof chapterData.progress ===
-                "number"
-            ) {
-
-                progress =
-                    chapterData.progress;
-
-            }
-
-        }
-
-
-        progress =
-            Math.max(
-                0,
-                Math.min(
-                    100,
-                    progress
-                )
-            );
-
-
-        card.innerHTML = `
-
-            <div class="chapter-number">
-
-                ${String(
-                    chapter.number
-                ).padStart(2, "0")}
-
-            </div>
-
-
-            <div class="chapter-content">
-
-                <h3>
-                    ${escapeHTML(
-                        chapter.title
-                    )}
-                </h3>
-
-
-                <p>
-                    ${escapeHTML(
-                        chapter.description
-                    )}
-                </p>
-
-
-                <div class="chapter-progress">
-
-                    <span>
-                        پیشرفت ${progress}%
-                    </span>
-
-
-                    <div>
-
-                        <i
-                            style="
-                                width: ${progress}%;
-                            "
-                        ></i>
-
-                    </div>
-
+                <div class="empty-icon">
+                    📚
                 </div>
 
+                <h3>
+                    هنوز فصلی اضافه نشده
+                </h3>
+
+                <p>
+                    فصل‌های حسابان به‌زودی اضافه می‌شوند.
+                </p>
+
             </div>
-
-
-            <button
-                type="button"
-                class="chapter-button"
-                data-chapter-id="${chapter.id}"
-            >
-                ورود →
-            </button>
 
         `;
 
-
-        const button =
-            card.querySelector(
-                ".chapter-button"
-            );
-
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                openChapter(
-                    chapter.id
-                );
-
-            }
-        );
-
-
-        chaptersGrid.appendChild(card);
-
-    });
-
-}
-
-
-/* =========================================
-   OPEN CHAPTER
-========================================= */
-
-function openChapter(chapterId) {
-
-    if (!chapterId) {
         return;
+
     }
 
 
-    window.location.href =
-        "chapter.html?chapter=" +
-        encodeURIComponent(
-            chapterId
-        );
+    container.innerHTML = "";
+
+
+    /* ---------------------------------
+       Create cards
+    --------------------------------- */
+
+    chapters.forEach(
+        (chapter, index) => {
+
+            const card =
+                createChapterCard(
+                    chapter,
+                    index + 1
+                );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
 /* =========================================
-   OVERVIEW
+   CREATE CHAPTER CARD
 ========================================= */
 
-function updateHesabanOverview(
+function createChapterCard(
+    chapter,
+    number
+) {
+
+    const link =
+        document.createElement("a");
+
+
+    link.className =
+        "chapter-card";
+
+
+    link.href =
+        `chapter.html?chapter=${encodeURIComponent(
+            chapter.id
+        )}`;
+
+
+    const lessons =
+        Array.isArray(chapter.lessons)
+            ? chapter.lessons
+            : [];
+
+
+    const lessonCount =
+        lessons.length;
+
+
+    const title =
+        chapter.title ||
+        `فصل ${number}`;
+
+
+    const description =
+        chapter.description ||
+        "مشاهده درس‌های این فصل";
+
+
+    link.innerHTML = `
+
+        <div class="chapter-number">
+
+            ${String(number).padStart(2, "0")}
+
+        </div>
+
+
+        <div class="chapter-icon">
+
+            ∫
+
+        </div>
+
+
+        <div class="chapter-content">
+
+            <span>
+                فصل ${number}
+            </span>
+
+            <h3>
+                ${escapeHTML(title)}
+            </h3>
+
+            <p>
+                ${escapeHTML(description)}
+            </p>
+
+            <small>
+                ${lessonCount}
+                درس
+            </small>
+
+        </div>
+
+
+        <div class="chapter-arrow">
+
+            ←
+
+        </div>
+
+    `;
+
+
+    return link;
+
+}
+
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+function updateStatistics(
     chapters
 ) {
 
@@ -319,22 +278,21 @@ function updateHesabanOverview(
         );
 
 
-    const completedLessons =
+    const lessonCount =
         document.getElementById(
-            "completedLessons"
+            "lessonCount"
         );
 
 
-    const overallProgress =
+    const completedCount =
         document.getElementById(
-            "overallProgress"
+            "completedCount"
         );
 
 
-    if (!Array.isArray(chapters)) {
-        return;
-    }
-
+    /* ---------------------------------
+       Chapter count
+    --------------------------------- */
 
     if (chapterCount) {
 
@@ -344,9 +302,44 @@ function updateHesabanOverview(
     }
 
 
+    /* ---------------------------------
+       Total lessons
+    --------------------------------- */
+
     let totalLessons = 0;
 
-    let completedCount = 0;
+
+    chapters.forEach(
+        chapter => {
+
+            if (
+                Array.isArray(
+                    chapter.lessons
+                )
+            ) {
+
+                totalLessons +=
+                    chapter.lessons.length;
+
+            }
+
+        }
+    );
+
+
+    if (lessonCount) {
+
+        lessonCount.textContent =
+            totalLessons;
+
+    }
+
+
+    /* ---------------------------------
+       Completed lessons
+    --------------------------------- */
+
+    let completedLessons = 0;
 
 
     const user =
@@ -355,86 +348,85 @@ function updateHesabanOverview(
             : null;
 
 
-    chapters.forEach(chapter => {
+    if (
+        user &&
+        user.progress &&
+        Array.isArray(
+            user.progress.completedLessons
+        )
+    ) {
 
-        const lessons =
-            Array.isArray(
-                chapter.lessons
-            )
-                ? chapter.lessons
-                : [];
-
-
-        totalLessons +=
-            lessons.length;
-
-
-        if (
-            user &&
-            user.progress &&
-            user.progress.hesaban &&
-            user.progress.hesaban.chapters &&
-            user.progress.hesaban.chapters[
-                chapter.id
-            ]
-        ) {
-
-            const chapterData =
-                user.progress
-                    .hesaban
-                    .chapters[
-                        chapter.id
-                    ];
-
-
-            const lessonProgress =
-                chapterData.lessons || {};
-
-
-            lessons.forEach(
-                lesson => {
-
-                    if (
-                        lessonProgress[
-                            lesson.id
-                        ]
-                    ) {
-
-                        completedCount++;
-
-                    }
-
-                }
-            );
-
-        }
-
-    });
-
-
-    if (completedLessons) {
-
-        completedLessons.textContent =
-            completedCount;
+        completedLessons =
+            user.progress.completedLessons.length;
 
     }
 
 
-    const progress =
-        totalLessons === 0
-            ? 0
-            : Math.round(
-                (
-                    completedCount /
-                    totalLessons
-                ) * 100
-            );
+    if (completedCount) {
+
+        completedCount.textContent =
+            completedLessons;
+
+    }
+
+}
 
 
-    if (overallProgress) {
+/* =========================================
+   ERROR
+========================================= */
 
-        overallProgress.textContent =
-            progress + "%";
+function showHesabanError(
+    message
+) {
+
+    const container =
+        document.getElementById(
+            "chaptersContainer"
+        );
+
+
+    const error =
+        document.getElementById(
+            "hesabanError"
+        );
+
+
+    if (container) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    خطا در بارگذاری حسابان
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        message ||
+                        "مشکلی رخ داد."
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    if (error) {
+
+        error.textContent =
+            message || "";
+
+        error.style.display =
+            "block";
 
     }
 
@@ -445,11 +437,11 @@ function updateHesabanOverview(
    ESCAPE HTML
 ========================================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
-    return String(
-        value ?? ""
-    )
+    return String(value)
 
         .replace(
             /&/g,
@@ -477,68 +469,3 @@ function escapeHTML(value) {
         );
 
 }
-
-
-/* =========================================
-   HEADER USER
-========================================= */
-
-function updateHesabanHeader() {
-
-    const user =
-        typeof getUser === "function"
-            ? getUser()
-            : null;
-
-
-    if (!user) {
-        return;
-    }
-
-
-    const username =
-        document.getElementById(
-            "headerUsername"
-        );
-
-
-    const xp =
-        document.getElementById(
-            "headerXP"
-        );
-
-
-    if (username) {
-
-        username.textContent =
-            user.username ||
-            "کاربر";
-
-    }
-
-
-    if (xp) {
-
-        xp.textContent =
-            user.xp || 0;
-
-    }
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        updateHesabanHeader();
-
-        loadHesaban();
-
-    }
-);
-```
