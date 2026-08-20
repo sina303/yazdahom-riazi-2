@@ -1,6 +1,6 @@
+
 /* =========================================
-   HESABAN PAGE
-   YAZDAHOM PLUS
+   AXIS — HESABAN PAGE
 ========================================= */
 
 document.addEventListener(
@@ -18,6 +18,10 @@ document.addEventListener(
 ========================================= */
 
 async function loadHesaban() {
+
+    const chaptersContainer =
+        document.getElementById("chapters");
+
 
     try {
 
@@ -39,21 +43,11 @@ async function loadHesaban() {
         }
 
 
-        /*
-         * اول متن خام را می‌گیریم.
-         */
-
         const rawText =
             await response.text();
 
 
-        /*
-         * اگر فایل به اشتباه با
-         * ```json یا ``` ذخیره شده باشد،
-         * قبل از JSON.parse حذفش می‌کنیم.
-         */
-
-        const cleanedText =
+        const cleanedJSON =
             cleanJSON(
                 rawText
             );
@@ -66,23 +60,23 @@ async function loadHesaban() {
 
             data =
                 JSON.parse(
-                    cleanedText
+                    cleanedJSON
                 );
 
         } catch (error) {
 
             console.error(
-                "JSON ERROR:",
+                "JSON Parse Error:",
                 error
             );
 
             console.error(
-                "RAW SUBJECTS JSON:",
+                "JSON received:",
                 rawText
             );
 
             throw new Error(
-                "ساختار subjects.json معتبر نیست."
+                "فایل subjects.json ساختار صحیحی ندارد."
             );
 
         }
@@ -92,24 +86,9 @@ async function loadHesaban() {
          * پیدا کردن حسابان
          */
 
-        if (
-            !Array.isArray(
-                data.subjects
-            )
-        ) {
-
-            throw new Error(
-                "آرایه subjects در subjects.json پیدا نشد."
-            );
-
-        }
-
-
         const hesaban =
-            data.subjects.find(
-                subject =>
-                    subject.id ===
-                    "hesaban"
+            findHesaban(
+                data
             );
 
 
@@ -122,14 +101,26 @@ async function loadHesaban() {
         }
 
 
-        console.log(
-            "Hesaban loaded:",
+        /*
+         * اطلاعات حسابان
+         */
+
+        renderSubjectInfo(
             hesaban
         );
 
 
-        renderHesaban(
-            hesaban
+        /*
+         * فصل‌ها
+         */
+
+        renderChapters(
+            hesaban.chapters || []
+        );
+
+
+        console.log(
+            "AXIS Hesaban loaded successfully."
         );
 
 
@@ -141,11 +132,317 @@ async function loadHesaban() {
         );
 
 
-        showHesabanError(
+        showError(
+            chaptersContainer,
             error.message
         );
 
     }
+
+}
+
+
+/* =========================================
+   FIND HESABAN
+========================================= */
+
+function findHesaban(data) {
+
+    /*
+     * حالت اصلی پروژه
+     */
+
+    if (
+        Array.isArray(
+            data.subjects
+        )
+    ) {
+
+        return data.subjects.find(
+            subject =>
+                subject.id === "hesaban" ||
+                subject.slug === "hesaban" ||
+                subject.title === "حسابان"
+        );
+
+    }
+
+
+    /*
+     * اگر خود JSON آرایه باشد
+     */
+
+    if (
+        Array.isArray(data)
+    ) {
+
+        return data.find(
+            subject =>
+                subject.id === "hesaban" ||
+                subject.slug === "hesaban" ||
+                subject.title === "حسابان"
+        );
+
+    }
+
+
+    /*
+     * اگر subjects مستقیماً object باشد
+     */
+
+    if (
+        data.subjects &&
+        typeof data.subjects === "object"
+    ) {
+
+        if (
+            data.subjects.hesaban
+        ) {
+
+            return data.subjects.hesaban;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================
+   RENDER SUBJECT INFO
+========================================= */
+
+function renderSubjectInfo(
+    subject
+) {
+
+    const title =
+        document.getElementById(
+            "subjectTitle"
+        );
+
+
+    const description =
+        document.getElementById(
+            "subjectDescription"
+        );
+
+
+    if (title) {
+
+        title.textContent =
+            subject.title ||
+            "حسابان";
+
+    }
+
+
+    if (description) {
+
+        description.textContent =
+            subject.description ||
+            "آموزش حسابان یازدهم رشته ریاضی";
+
+    }
+
+}
+
+
+/* =========================================
+   RENDER CHAPTERS
+========================================= */
+
+function renderChapters(
+    chapters
+) {
+
+    const container =
+        document.getElementById(
+            "chapters"
+        );
+
+
+    const count =
+        document.getElementById(
+            "chapterCount"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    if (!Array.isArray(chapters)) {
+
+        chapters = [];
+
+    }
+
+
+    if (count) {
+
+        count.textContent =
+            `${toPersianNumber(
+                chapters.length
+            )} فصل`;
+
+    }
+
+
+    if (chapters.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                هنوز فصلی برای حسابان اضافه نشده است.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    chapters.forEach(
+        (
+            chapter,
+            index
+        ) => {
+
+            const card =
+                createChapterCard(
+                    chapter,
+                    index
+                );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CREATE CHAPTER CARD
+========================================= */
+
+function createChapterCard(
+    chapter,
+    index
+) {
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.className =
+        "chapter-card";
+
+
+    /*
+     * رفتن به chapter.html
+     */
+
+    const chapterId =
+        chapter.id ||
+        chapter.slug ||
+        index + 1;
+
+
+    link.href =
+        `chapter.html?id=${encodeURIComponent(
+            chapterId
+        )}`;
+
+
+    const number =
+        chapter.number !== undefined
+            ? chapter.number
+            : index + 1;
+
+
+    const title =
+        chapter.title ||
+        `فصل ${index + 1}`;
+
+
+    const description =
+        chapter.description ||
+        "درس‌های این فصل";
+
+
+    const lessonCount =
+        Array.isArray(
+            chapter.lessons
+        )
+            ? chapter.lessons.length
+            : 0;
+
+
+    link.innerHTML = `
+
+        <div class="chapter-number">
+
+            ${toPersianNumber(
+                String(number).padStart(
+                    2,
+                    "0"
+                )
+            )}
+
+        </div>
+
+
+        <div class="chapter-content">
+
+            <h3>
+                ${escapeHTML(
+                    title
+                )}
+            </h3>
+
+            <p>
+                ${escapeHTML(
+                    description
+                )}
+            </p>
+
+            <span>
+                ${toPersianNumber(
+                    lessonCount
+                )} درس
+            </span>
+
+        </div>
+
+
+        <div class="chapter-arrow">
+            ←
+        </div>
+
+    `;
+
+
+    return link;
 
 }
 
@@ -172,7 +469,7 @@ function cleanJSON(
 
 
     /*
-     * حذف ```json از ابتدا
+     * حذف ```json
      */
 
     result =
@@ -183,12 +480,23 @@ function cleanJSON(
 
 
     /*
-     * حذف ``` از انتها
+     * حذف ``` انتهای فایل
      */
 
     result =
         result.replace(
             /\s*```$/i,
+            ""
+        );
+
+
+    /*
+     * حذف BOM احتمالی
+     */
+
+    result =
+        result.replace(
+            /^\uFEFF/,
             ""
         );
 
@@ -199,214 +507,13 @@ function cleanJSON(
 
 
 /* =========================================
-   RENDER HESABAN
-========================================= */
-
-function renderHesaban(
-    subject
-) {
-
-    /*
-     * اطلاعات اصلی
-     */
-
-    setText(
-        "subjectTitle",
-        subject.title ||
-        "حسابان"
-    );
-
-
-    setText(
-        "subjectDescription",
-        subject.description ||
-        "آموزش حسابان یازدهم"
-    );
-
-
-    /*
-     * Chapters
-     */
-
-    const container =
-        document.getElementById(
-            "chapters"
-        ) ||
-        document.getElementById(
-            "chaptersContainer"
-        );
-
-
-    if (!container) {
-
-        console.warn(
-            "chapters container پیدا نشد."
-        );
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        "";
-
-
-    const chapters =
-        Array.isArray(
-            subject.chapters
-        )
-            ? subject.chapters
-            : [];
-
-
-    if (
-        chapters.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                هنوز فصلی برای حسابان اضافه نشده است.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    chapters.forEach(
-        (chapter, index) => {
-
-            const card =
-                createChapterCard(
-                    chapter,
-                    index
-                );
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   CREATE CHAPTER
-========================================= */
-
-function createChapterCard(
-    chapter,
-    index
-) {
-
-    const card =
-        document.createElement(
-            "a"
-        );
-
-
-    card.className =
-        "chapter-card";
-
-
-    /*
-     * chapter.html
-     */
-
-    card.href =
-        `chapter.html?id=${encodeURIComponent(
-            chapter.id
-        )}`;
-
-
-    const lessonCount =
-        Array.isArray(
-            chapter.lessons
-        )
-            ? chapter.lessons.length
-            : 0;
-
-
-    card.innerHTML = `
-
-        <div class="chapter-number">
-
-            ${index + 1}
-
-        </div>
-
-
-        <div class="chapter-content">
-
-            <h3>
-
-                ${escapeHTML(
-                    chapter.title ||
-                    `فصل ${index + 1}`
-                )}
-
-            </h3>
-
-
-            <p>
-
-                ${escapeHTML(
-                    chapter.description ||
-                    "مباحث این فصل"
-                )}
-
-            </p>
-
-
-            <span>
-
-                ${lessonCount}
-                درس
-
-            </span>
-
-        </div>
-
-
-        <div class="chapter-arrow">
-
-            ←
-
-        </div>
-
-    `;
-
-
-    return card;
-
-}
-
-
-/* =========================================
    ERROR
 ========================================= */
 
-function showHesabanError(
+function showError(
+    container,
     message
 ) {
-
-    const container =
-        document.getElementById(
-            "chapters"
-        ) ||
-        document.getElementById(
-            "chaptersContainer"
-        );
-
 
     if (!container) {
 
@@ -423,7 +530,6 @@ function showHesabanError(
                 خطا در بارگذاری حسابان
             </h3>
 
-
             <p>
                 ${escapeHTML(
                     message ||
@@ -434,31 +540,6 @@ function showHesabanError(
         </div>
 
     `;
-
-}
-
-
-/* =========================================
-   SET TEXT
-========================================= */
-
-function setText(
-    id,
-    value
-) {
-
-    const element =
-        document.getElementById(
-            id
-        );
-
-
-    if (element) {
-
-        element.textContent =
-            value ?? "";
-
-    }
 
 }
 
@@ -499,5 +580,24 @@ function escapeHTML(
             /'/g,
             "&#039;"
         );
+
+}
+
+
+/* =========================================
+   PERSIAN NUMBERS
+========================================= */
+
+function toPersianNumber(
+    value
+) {
+
+    return String(
+        value
+    ).replace(
+        /\d/g,
+        digit =>
+            "۰۱۲۳۴۵۶۷۸۹"[digit]
+    );
 
 }
