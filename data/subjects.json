@@ -2,83 +2,70 @@
   "subjects": [
     {
       "id": "hesaban",
-      "title": "حسابان",
-      "description": "آموزش حسابان یازدهم رشته ریاضی",
+      "name": "حسابان",
       "icon": "∫",
+      "description": "حساب دیفرانسیل و انتگرال",
       "chapters": [
         {
-          "id": "chapter-1",
-          "title": "فصل اول",
-          "description": "درس‌های فصل اول حسابان",
+          "id": "hesaban-chapter-1",
+          "number": 1,
+          "title": "جبر و معادله",
+          "description": "مجموع جملات دنباله‌های حسابی و هندسی",
+          "progress": 0,
           "lessons": [
             {
-              "id": "hesaban-lesson-1",
-              "title": "درس اول",
-              "description": "مباحث درس اول",
-              "xp": 20
-            },
-            {
-              "id": "hesaban-lesson-2",
-              "title": "درس دوم",
-              "description": "مباحث درس دوم",
-              "xp": 20
-            },
-            {
-              "id": "hesaban-lesson-3",
-              "title": "درس سوم",
-              "description": "مباحث درس سوم",
-              "xp": 20
+              "id": "hesaban-ch1-lesson-1",
+              "number": 1,
+              "title": "مجموع جملات دنباله‌های حسابی",
+              "description": "آموزش دنباله‌های حسابی و فرمول مجموع",
+              "questions": [
+                {
+                  "id": "h1q1",
+                  "type": "exercise",
+                  "question": "جمله عمومی دنباله‌ای با جمله اول ۱ و قدر نسبت ۳ را بنویسید.",
+                  "correctAnswer": "3n - 2",
+                  "answer": "از فرمول جمله عمومی دنباله حسابی استفاده می‌کنیم.",
+                  "solution": "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2",
+                  "difficulty": "آسان"
+                },
+                {
+                  "id": "h1q2",
+                  "type": "exercise",
+                  "question": "مجموع ۱۰ جمله اول دنباله حسابی ۱, ۴, ۷, ۱۰, ... را حساب کنید.",
+                  "correctAnswer": "145",
+                  "answer": "از فرمول مجموع n جمله اول استفاده می‌کنیم.",
+                  "solution": "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145",
+                  "difficulty": "متوسط"
+                }
+              ]
             }
           ]
         },
         {
-          "id": "chapter-2",
-          "title": "فصل دوم",
-          "description": "درس‌های فصل دوم حسابان",
-          "lessons": [
-            {
-              "id": "hesaban-lesson-4",
-              "title": "درس چهارم",
-              "description": "مباحث درس چهارم",
-              "xp": 20
-            },
-            {
-              "id": "hesaban-lesson-5",
-              "title": "درس پنجم",
-              "description": "مباحث درس پنجم",
-              "xp": 20
-            }
-          ]
+          "id": "hesaban-chapter-2",
+          "number": 2,
+          "title": "تابع",
+          "description": "تابع و ویژگی‌های آن",
+          "progress": 0,
+          "lessons": []
+        },
+        {
+          "id": "hesaban-chapter-3",
+          "number": 3,
+          "title": "توابع نمایی و لگاریتمی",
+          "description": "توابع نمایی و لگاریتمی",
+          "progress": 0,
+          "lessons": []
+        },
+        {
+          "id": "hesaban-chapter-4",
+          "number": 4,
+          "title": "مثلثات",
+          "description": "مثلثات و کاربردهای آن",
+          "progress": 0,
+          "lessons": []
         }
       ]
-    },
-    {
-      "id": "discrete",
-      "title": "گسسته",
-      "description": "ریاضیات گسسته یازدهم",
-      "icon": "∑",
-      "chapters": []
-    },
-    {
-      "id": "geometry",
-      "title": "هندسه",
-      "description": "هندسه یازدهم رشته ریاضی",
-      "icon": "△",
-      "chapters": []
-    },
-    {
-      "id": "physics",
-      "title": "فیزیک",
-      "description": "فیزیک یازدهم رشته ریاضی",
-      "icon": "⚡",
-      "chapters": []
-    },
-    {
-      "id": "chemistry",
-      "title": "شیمی",
-      "description": "شیمی یازدهم رشته ریاضی",
-      "icon": "⚗",
-      "chapters": []
     }
   ]
 }
