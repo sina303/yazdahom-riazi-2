@@ -1,654 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>AXIS | یازدهم ریاضی</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIS | یازدهم ریاضی</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
 
-    <!-- SPACE BACKGROUND -->
+  <!-- پس‌زمینه متحرک اعداد ریاضی -->
+  <div class="math-bg" id="mathBg"></div>
 
-    <div class="space">
+  <header class="site-header">
+    <div class="site-logo">AXIS</div>
+    <nav class="site-nav">
+      <a href="index.html" class="active">خانه</a>
+      <a href="hesaban.html">حسابان</a>
+      <a href="profile.html">پروفایل</a>
+    </nav>
+    <a href="profile.html" class="site-user">پروفایل</a>
+  </header>
 
-        <div class="space-haze"></div>
+  <main>
 
-        <div class="particle particle-1"></div>
-        <div class="particle particle-2"></div>
-        <div class="particle particle-3"></div>
-        <div class="particle particle-4"></div>
-        <div class="particle particle-5"></div>
-        <div class="particle particle-6"></div>
-        <div class="particle particle-7"></div>
-        <div class="particle particle-8"></div>
-        <div class="particle particle-9"></div>
-        <div class="particle particle-10"></div>
-        <div class="particle particle-11"></div>
-        <div class="particle particle-12"></div>
+    <!-- HERO -->
+    <section class="home-hero">
+      <div class="hero-text">
+        <span class="hero-tag">یازدهم ریاضی</span>
+        <h1>
+          یادگیری <span>هوشمند</span><br>
+          برای یازدهم ریاضی
+        </h1>
+        <p>
+          AXIS یک پلتفرم آموزشی برای دانش‌آموزان یازدهم رشته ریاضی است.
+          درس‌ها، تمرین‌ها، آزمون‌ها و دستیار هوشمند — همه در یک‌جا.
+        </p>
+        <div class="hero-buttons">
+          <a href="hesaban.html" class="btn-primary">شروع حسابان</a>
+          <a href="#subjects" class="btn-secondary">مشاهده دروس</a>
+        </div>
+      </div>
 
-        <div class="big-particle big-1"></div>
-        <div class="big-particle big-2"></div>
-        <div class="big-particle big-3"></div>
-        <div class="big-particle big-4"></div>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <span class="label">Level</span>
+          <div class="value" id="heroLevel">1</div>
+        </div>
+        <div class="stat-box">
+          <span class="label">XP</span>
+          <div class="value" id="heroXp">0</div>
+        </div>
+        <div class="stat-box">
+          <span class="label">Status</span>
+          <div class="value" style="font-size:16px;color:#6ee787;">Active</div>
+        </div>
+      </div>
+    </section>
 
-    </div>
+    <!-- SUBJECTS -->
+    <section class="home-section" id="subjects">
+      <div class="section-head">
+        <span class="tag">Learning Path</span>
+        <h2>مسیر یادگیری</h2>
+        <p>درس‌های یازدهم ریاضی — به‌زودی همه فعال می‌شن.</p>
+      </div>
 
+      <div class="subjects-grid">
 
-    <!-- HEADER -->
+        <a href="hesaban.html" class="subject-card">
+          <div class="subject-number">01</div>
+          <div class="subject-icon">∫</div>
+          <div class="subject-info">
+            <h3>حسابان</h3>
+            <p>حساب دیفرانسیل و انتگرال</p>
+            <div class="subject-meta">
+              <span>4 Chapters</span>
+              <span>2 Lessons</span>
+              <span>0% Progress</span>
+            </div>
+          </div>
+          <div class="subject-action">Start →</div>
+        </a>
 
-    <header class="site-header">
-
-        <div class="header-inner">
-
-            <a
-                href="index.html"
-                class="brand"
-            >
-
-                <div class="brand-mark">
-                    A
-                </div>
-
-                <div class="brand-name">
-
-                    <strong>
-                        AXIS
-                    </strong>
-
-                    <span>
-                        یازدهم ریاضی
-                    </span>
-
-                </div>
-
-            </a>
-
-
-            <nav class="main-nav">
-
-                <a
-                    href="index.html"
-                    class="nav-link active"
-                >
-                    Home
-                </a>
-
-                <a
-                    href="hesaban.html"
-                    class="nav-link"
-                >
-                    Subjects
-                </a>
-
-                <a
-                    href="profile.html"
-                    class="nav-link"
-                >
-                    Profile
-                </a>
-
-            </nav>
-
+        <div class="subject-card disabled">
+          <div class="subject-number">02</div>
+          <div class="subject-icon">∞</div>
+          <div class="subject-info">
+            <h3>گسسته</h3>
+            <p>ریاضیات گسسته</p>
+            <div class="subject-meta">
+              <span>Soon</span>
+            </div>
+          </div>
+          <div class="subject-action">Soon</div>
         </div>
 
-    </header>
-
-
-    <!-- MAIN -->
-
-    <main class="home">
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="hero-text">
-
-                <span class="eyebrow">
-                    یازدهم رشته ریاضی
-                </span>
-
-                <h1>
-                    یادگیری رو
-                    <span>
-                        حرفه‌ای‌تر
-                    </span>
-                    شروع کن.
-                </h1>
-
-                <p>
-                    درس‌ها، تمرین‌ها، آزمون‌ها و دستیار هوش مصنوعی؛
-                    همه در یکجا.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <a
-                        href="hesaban.html"
-                        class="main-button"
-                    >
-                        Start Hesaban
-                        <span>←</span>
-                    </a>
-
-                    <a
-                        href="#subjects"
-                        class="outline-button"
-                    >
-                        View Subjects
-                    </a>
-
-                </div>
-
+        <div class="subject-card disabled">
+          <div class="subject-number">03</div>
+          <div class="subject-icon">△</div>
+          <div class="subject-info">
+            <h3>هندسه</h3>
+            <p>هندسه ۲</p>
+            <div class="subject-meta">
+              <span>Soon</span>
             </div>
+          </div>
+          <div class="subject-action">Soon</div>
+        </div>
 
-
-            <!-- AXIS SYMBOL -->
-
-            <div class="hero-symbol">
-
-                <div class="symbol-orbit orbit-a"></div>
-
-                <div class="symbol-orbit orbit-b"></div>
-
-                <div class="symbol-core">
-                    A
-                </div>
-
-                <span class="symbol-dot dot-a"></span>
-                <span class="symbol-dot dot-b"></span>
-                <span class="symbol-dot dot-c"></span>
-
+        <div class="subject-card disabled">
+          <div class="subject-number">04</div>
+          <div class="subject-icon">Φ</div>
+          <div class="subject-info">
+            <h3>فیزیک</h3>
+            <p>فیزیک ۲</p>
+            <div class="subject-meta">
+              <span>Soon</span>
             </div>
+          </div>
+          <div class="subject-action">Soon</div>
+        </div>
 
-        </section>
-
-
-        <!-- QUICK INFO -->
-
-        <section class="quick-info">
-
-
-            <div class="info-item">
-
-                <span>
-                    Level
-                </span>
-
-                <strong>
-                    01
-                </strong>
-
-                <small>
-                    Current Level
-                </small>
-
+        <div class="subject-card disabled">
+          <div class="subject-number">05</div>
+          <div class="subject-icon">⚗</div>
+          <div class="subject-info">
+            <h3>شیمی</h3>
+            <p>شیمی ۲</p>
+            <div class="subject-meta">
+              <span>Soon</span>
             </div>
-
-
-            <div class="info-item">
-
-                <span>
-                    XP
-                </span>
-
-                <strong id="xpValue">
-                    0
-                </strong>
-
-                <small>
-                    Experience Points
-                </small>
-
-            </div>
-
-
-            <div class="info-item">
-
-                <span>
-                    Status
-                </span>
-
-                <strong class="online">
-                    Active
-                </strong>
-
-                <small>
-                    Account Status
-                </small>
-
-            </div>
-
-
-        </section>
-
-
-        <!-- SUBJECTS -->
-
-        <section
-            id="subjects"
-            class="subjects"
-        >
-
-            <div class="section-top">
-
-                <div>
-
-                    <span class="eyebrow">
-                        Learning Path
-                    </span>
-
-                    <h2>
-                        دروس
-                    </h2>
-
-                </div>
-
-                <span class="section-note">
-                    Choose your path
-                </span>
-
-            </div>
-
-
-            <div class="subject-list">
-
-
-                <!-- HESABAN -->
-
-                <a
-                    href="hesaban.html"
-                    class="subject"
-                >
-
-                    <div class="subject-number">
-                        01
-                    </div>
-
-
-                    <div class="subject-icon">
-                        ∫
-                    </div>
-
-
-                    <div class="subject-content">
-
-                        <div class="subject-heading">
-
-                            <h3>
-                                حسابان
-                            </h3>
-
-                            <span class="subject-tag">
-                                Available
-                            </span>
-
-                        </div>
-
-                        <p>
-                            تابع، حد، مشتق و مباحث حسابان
-                        </p>
-
-
-                        <div class="subject-meta">
-
-                            <span>
-                                04 Chapters
-                            </span>
-
-                            <span>
-                                28 Lessons
-                            </span>
-
-                            <span>
-                                0% Progress
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="subject-action">
-
-                        <span>
-                            Start
-                        </span>
-
-                        <strong>
-                            ←
-                        </strong>
-
-                    </div>
-
-                </a>
-
-
-                <!-- DISCRETE -->
-
-                <div class="subject disabled">
-
-                    <div class="subject-number">
-                        02
-                    </div>
-
-
-                    <div class="subject-icon">
-                        ∞
-                    </div>
-
-
-                    <div class="subject-content">
-
-                        <div class="subject-heading">
-
-                            <h3>
-                                گسسته
-                            </h3>
-
-                            <span class="subject-tag coming">
-                                Soon
-                            </span>
-
-                        </div>
-
-                        <p>
-                            مباحث گسسته و ترکیبیات
-                        </p>
-
-
-                        <div class="subject-meta">
-
-                            <span>
-                                Chapters —
-                            </span>
-
-                            <span>
-                                Lessons —
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="subject-action">
-
-                        <span>
-                            Soon
-                        </span>
-
-                        <strong>
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- GEOMETRY -->
-
-                <div class="subject disabled">
-
-                    <div class="subject-number">
-                        03
-                    </div>
-
-
-                    <div class="subject-icon">
-                        △
-                    </div>
-
-
-                    <div class="subject-content">
-
-                        <div class="subject-heading">
-
-                            <h3>
-                                هندسه
-                            </h3>
-
-                            <span class="subject-tag coming">
-                                Soon
-                            </span>
-
-                        </div>
-
-                        <p>
-                            هندسه یازدهم
-                        </p>
-
-
-                        <div class="subject-meta">
-
-                            <span>
-                                Chapters —
-                            </span>
-
-                            <span>
-                                Lessons —
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="subject-action">
-
-                        <span>
-                            Soon
-                        </span>
-
-                        <strong>
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- PHYSICS -->
-
-                <div class="subject disabled">
-
-                    <div class="subject-number">
-                        04
-                    </div>
-
-
-                    <div class="subject-icon">
-                        Φ
-                    </div>
-
-
-                    <div class="subject-content">
-
-                        <div class="subject-heading">
-
-                            <h3>
-                                فیزیک
-                            </h3>
-
-                            <span class="subject-tag coming">
-                                Soon
-                            </span>
-
-                        </div>
-
-                        <p>
-                            فیزیک یازدهم
-                        </p>
-
-
-                        <div class="subject-meta">
-
-                            <span>
-                                Chapters —
-                            </span>
-
-                            <span>
-                                Lessons —
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="subject-action">
-
-                        <span>
-                            Soon
-                        </span>
-
-                        <strong>
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- CHEMISTRY -->
-
-                <div class="subject disabled">
-
-                    <div class="subject-number">
-                        05
-                    </div>
-
-
-                    <div class="subject-icon">
-                        ⚗
-                    </div>
-
-
-                    <div class="subject-content">
-
-                        <div class="subject-heading">
-
-                            <h3>
-                                شیمی
-                            </h3>
-
-                            <span class="subject-tag coming">
-                                Soon
-                            </span>
-
-                        </div>
-
-                        <p>
-                            شیمی یازدهم
-                        </p>
-
-
-                        <div class="subject-meta">
-
-                            <span>
-                                Chapters —
-                            </span>
-
-                            <span>
-                                Lessons —
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="subject-action">
-
-                        <span>
-                            Soon
-                        </span>
-
-                        <strong>
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- AI -->
-
-        <section class="ai-strip">
-
-            <div class="ai-mark">
-                AI
-            </div>
-
-            <div class="ai-text">
-
-                <span>
-                    AXIS AI
-                </span>
-
-                <h3>
-                    سوالی داری؟
-                </h3>
-
-                <p>
-                    سوالت رو بفرست یا از صفحه کتاب عکس بگیر.
-                </p>
-
-            </div>
-
-            <a
-                href="ai.html"
-                class="outline-button"
-            >
-                Open AI
-            </a>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- FOOTER -->
-
-    <footer class="footer">
-
-        <span>
-            AXIS
-        </span>
-
-        <span>
-            Learn beyond the formula
-        </span>
-
-    </footer>
-
-
-    <script src="js/user.js"></script>
-    <script src="js/script.js"></script>
+          </div>
+          <div class="subject-action">Soon</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- AI -->
+    <section class="ai-section">
+      <div class="ai-icon">AI</div>
+      <div class="ai-info">
+        <h3>AXIS AI</h3>
+        <p>
+          هر سوالی از حسابان داری، از دستیار هوشمند AXIS بپرس.
+          می‌تونی عکس سوال رو هم بفرستی تا برات حلش کنه.
+        </p>
+      </div>
+      <a href="hesaban.html" class="btn-primary">امتحان کن</a>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <strong>AXIS</strong> — Learn beyond the formula
+  </footer>
+
+  <!-- =========================================
+  MATH BACKGROUND SCRIPT
+  ========================================= -->
+  <script>
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+
+      const count = 30;
+
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+        const size = 14 + Math.random() * 34;
+        const left = Math.random() * 100;
+        const duration = 12 + Math.random() * 18;
+        const delay = Math.random() * 15;
+        const opacity = 0.08 + Math.random() * 0.18;
+
+        span.style.fontSize = size + "px";
+        span.style.left = left + "%";
+        span.style.animationDuration = duration + "s";
+        span.style.animationDelay = "-" + delay + "s";
+        span.style.color = "rgba(53, 211, 90, " + opacity + ")";
+
+        bg.appendChild(span);
+      }
+    }
+
+    /* =========================================
+    خواندن XP و Level از localStorage
+    ========================================= */
+    function loadUserStats() {
+      const raw = localStorage.getItem("y11_math_user");
+      let xp = 0;
+
+      if (raw) {
+        try {
+          const user = JSON.parse(raw);
+          xp = user.xp || 0;
+        } catch (e) {}
+      }
+
+      let level = 1;
+      if (xp >= 700) level = 5;
+      else if (xp >= 450) level = 4;
+      else if (xp >= 250) level = 3;
+      else if (xp >= 100) level = 2;
+
+      const xpEl = document.getElementById("heroXp");
+      const levelEl = document.getElementById("heroLevel");
+      if (xpEl) xpEl.textContent = xp;
+      if (levelEl) levelEl.textContent = level;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      loadUserStats();
+    });
+  </script>
 
 </body>
-
 </html>
