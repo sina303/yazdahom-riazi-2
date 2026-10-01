@@ -1,308 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>AXIS | فصل</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="css/chapter.css"
-    >
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>فصل | حسابان</title>
+  <link rel="stylesheet" href="css/chapter.css" />
 </head>
-
-
 <body>
 
+  <header class="chapter-header">
+    <div class="brand">AXIS</div>
+    <nav>
+      <a href="index.html">خانه</a>
+      <a href="hesaban.html">حسابان</a>
+    </nav>
+    <div class="user">پروفایل</div>
+  </header>
 
-    <!-- =========================================
-         HEADER
-    ========================================== -->
+  <main>
 
-    <header class="site-header">
+    <div class="breadcrumb">
+      <a href="index.html">یازدهم ریاضی</a>
+      <span>←</span>
+      <a href="hesaban.html">حسابان</a>
+      <span>←</span>
+      <strong id="breadcrumbChapter">فصل</strong>
+    </div>
 
-        <div class="header-inner">
+    <section class="chapter-hero">
+      <div>
+        <span class="chapter-label" id="chapterLabel">فصل</span>
+        <h1 id="chapterTitle">در حال بارگذاری...</h1>
+        <p id="chapterDescription">توضیحات فصل در حال بارگذاری است.</p>
+      </div>
+      <div class="chapter-progress-card">
+        <span>پیشرفت فصل</span>
+        <strong id="chapterProgressText">0%</strong>
+        <div class="progress-bar">
+          <i id="chapterProgressBar" style="width: 0%"></i>
+        </div>
+        <small id="chapterLessonCount">0 درس</small>
+      </div>
+    </section>
 
+    <section class="content-layout">
 
-            <a
-                href="index.html"
-                class="brand"
-            >
+      <aside class="chapter-sidebar">
+        <h3>محتوای فصل</h3>
+        <button class="sidebar-item active">۰۱ <span>درس‌ها</span></button>
+        <button class="sidebar-item">۰۲ <span>تمرین‌ها</span></button>
+        <button class="sidebar-item">۰۳ <span>آزمون فصل</span></button>
+        <button class="sidebar-item ai-item">AI <span>دستیار AXIS</span></button>
+      </aside>
 
-                <span class="brand-mark">
-                    A
-                </span>
+      <section class="chapter-content">
 
-                <div>
-
-                    <strong>
-                        AXIS
-                    </strong>
-
-                    <small>
-                        یازدهم ریاضی
-                    </small>
-
-                </div>
-
-            </a>
-
-
-            <nav class="main-nav">
-
-
-                <a
-                    href="index.html"
-                    class="nav-link"
-                >
-                    خانه
-                </a>
-
-
-                <a
-                    href="hesaban.html"
-                    class="nav-link active"
-                >
-                    حسابان
-                </a>
-
-
-                <a
-                    href="profile.html"
-                    class="nav-profile"
-                >
-
-                    <span class="profile-dot">
-                        ●
-                    </span>
-
-                    پروفایل
-
-                </a>
-
-
-            </nav>
-
-
+        <div class="content-header">
+          <span>درس‌ها</span>
+          <h2>لیست درس‌های فصل</h2>
+          <p>روی هر درس کلیک کن تا وارد شوی و سوالات را پاسخ دهی.</p>
         </div>
 
-    </header>
-
-
-
-    <!-- =========================================
-         MAIN
-    ========================================== -->
-
-    <main class="page-main">
-
-
-        <!-- =====================================
-             BREADCRUMB
-        ====================================== -->
-
-        <div class="breadcrumb">
-
-
-            <a href="index.html">
-                خانه
-            </a>
-
-
-            <span>
-                ←
-            </span>
-
-
-            <a href="hesaban.html">
-                حسابان
-            </a>
-
-
-            <span>
-                ←
-            </span>
-
-
-            <span id="breadcrumbChapter">
-                فصل
-            </span>
-
-
+        <div class="lesson-grid" id="lessonGrid">
+          <div class="loading">در حال بارگذاری درس‌ها...</div>
         </div>
 
-
-
-        <!-- =====================================
-             CHAPTER HERO
-        ====================================== -->
-
-        <section class="chapter-hero">
-
-
-            <div>
-
-
-                <span class="section-label">
-                    حسابان
-                </span>
-
-
-                <h1 id="chapterTitle">
-                    در حال بارگذاری...
-                </h1>
-
-
-                <p id="chapterDescription">
-                    محتوای فصل در حال بارگذاری است.
-                </p>
-
-
-            </div>
-
-
-            <div
-                class="chapter-number-large"
-            >
-                01
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =====================================
-             LESSONS
-        ====================================== -->
-
-        <section class="lessons-section">
-
-
-            <div class="section-heading">
-
-
-                <div>
-
-
-                    <span class="section-label">
-                        مسیر یادگیری
-                    </span>
-
-
-                    <h2>
-                        درس‌های فصل
-                    </h2>
-
-
-                </div>
-
-
-                <span class="section-count">
-                    درس‌ها
-                </span>
-
-
-            </div>
-
-
-
-            <div
-                id="lessons"
-                class="lessons-list"
-            >
-
-
-                <div class="lesson-card">
-
-
-                    <div class="lesson-number">
-                        01
-                    </div>
-
-
-                    <div class="lesson-card-content">
-
-
-                        <h3>
-                            در حال بارگذاری...
-                        </h3>
-
-
-                        <p>
-                            درس‌ها در حال بارگذاری هستند.
-                        </p>
-
-
-                    </div>
-
-
-                    <div class="lesson-card-status">
-                        ...
-                    </div>
-
-
-                    <div class="lesson-card-arrow">
-                        ←
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer class="site-footer">
-
-
-        <span>
-            AXIS
-        </span>
-
-
-        <span>
-            Learn beyond the formula
-        </span>
-
-
-    </footer>
-
-
-
-    <!-- =========================================
-         JS
-    ========================================== -->
-
-    <script src="js/user.js"></script>
-
-    <script src="js/chapter.js"></script>
-
-
+        <div class="ai-box">
+          <div class="ai-symbol">AI</div>
+          <div class="ai-text">
+            <span>دستیار هوشمند</span>
+            <h3>سوالی داری؟ از AXIS بپرس</h3>
+            <p>هر سوالی درباره این فصل داری، می‌تونی از دستیار هوشمند بپرسی.</p>
+          </div>
+          <button>پرسیدن از AI</button>
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <script src="js/script.js"></script>
 </body>
-
 </html>
