@@ -1,384 +1,251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="پروفایل کاربر | یازدهم‌پلاس"
-    >
-
-    <title>پروفایل | یازدهم‌پلاس</title>
-
-    <link
-        rel="stylesheet"
-        href="css/profile.css"
-    >
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>پروفایل | AXIS</title>
+  <link rel="stylesheet" href="css/profile.css" />
 </head>
-
-
 <body>
 
-
-    <!-- =====================================
-         HEADER
-    ====================================== -->
-
-    <header class="profile-header">
-
-        <a
-            href="index.html"
-            class="profile-logo"
-        >
-            یازدهم‌پلاس
-        </a>
-
-
-        <nav class="profile-nav">
-
-            <a href="index.html">
-                خانه
-            </a>
-
-            <a href="hesaban.html">
-                حسابان
-            </a>
-
-            <a
-                href="profile.html"
-                class="active"
-            >
-                پروفایل
-            </a>
-
-        </nav>
-
-
-        <button
-            id="logoutButton"
-            class="logout-button"
-            type="button"
-        >
-            خروج
-        </button>
-
-    </header>
-
-
-
-    <!-- =====================================
-         MAIN
-    ====================================== -->
-
-    <main class="profile-page">
-
-
-        <!-- =================================
-             PROFILE HERO
-        ================================== -->
-
-        <section class="profile-hero">
-
-
-            <div class="profile-avatar">
-
-                <span id="avatarLetter">
-                    ؟
-                </span>
-
-            </div>
-
-
-            <div class="profile-info">
-
-                <span>
-                    پروفایل دانش‌آموز
-                </span>
-
-
-                <h1 id="profileUsername">
-                    در حال بارگذاری...
-                </h1>
-
-
-                <p>
-                    مسیر پیشرفت تحصیلی تو در یازدهم‌پلاس
-                </p>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =================================
-             STATS
-        ================================== -->
-
-        <section class="stats-grid">
-
-
-            <div class="stat-card">
-
-                <span class="stat-label">
-                    XP
-                </span>
-
-
-                <strong id="profileXP">
-                    0
-                </strong>
-
-
-                <small>
-                    امتیاز تجربه
-                </small>
-
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <span class="stat-label">
-                    درس‌های تکمیل‌شده
-                </span>
-
-
-                <strong id="completedLessons">
-                    0
-                </strong>
-
-
-                <small>
-                    درس
-                </small>
-
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <span class="stat-label">
-                    سطح
-                </span>
-
-
-                <strong id="profileLevel">
-                    1
-                </strong>
-
-
-                <small id="levelProgressText">
-                    شروع مسیر
-                </small>
-
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <span class="stat-label">
-                    وضعیت
-                </span>
-
-
-                <strong id="profileStatus">
-                    فعال
-                </strong>
-
-
-                <small>
-                    حساب کاربری
-                </small>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =================================
-             LEVEL PROGRESS
-        ================================== -->
-
-        <section class="level-section">
-
-            <div class="section-title">
-
-                <div>
-
-                    <span>
-                        پیشرفت
-                    </span>
-
-                    <h2>
-                        سطح فعلی
-                    </h2>
-
-                </div>
-
-
-                <strong id="levelXP">
-                    0 XP
-                </strong>
-
-            </div>
-
-
-            <div class="level-bar">
-
-                <div
-                    id="levelBarFill"
-                    class="level-bar-fill"
-                    style="width: 0%"
-                ></div>
-
-            </div>
-
-
-            <div class="level-bottom">
-
-                <span id="currentLevelText">
-                    سطح ۱
-                </span>
-
-
-                <span id="nextLevelText">
-                    100 XP تا سطح بعد
-                </span>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================
-             PROGRESS
-        ================================== -->
-
-        <section class="progress-section">
-
-
-            <div class="section-title">
-
-                <div>
-
-                    <span>
-                        مسیر یادگیری
-                    </span>
-
-                    <h2>
-                        پیشرفت دروس
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="subjectProgress"
-                class="subject-progress"
-            >
-
-                <div class="loading-state">
-
-                    در حال بارگذاری...
-
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- =================================
-             ACCOUNT
-        ================================== -->
-
-        <section class="account-section">
-
-            <div>
-
-                <span>
-                    حساب کاربری
-                </span>
-
-
-                <h2>
-                    اطلاعات حساب
-                </h2>
-
-
-                <p>
-                    نام کاربری و اطلاعات پیشرفت تو
-                    در این دستگاه ذخیره می‌شود.
-                </p>
-
-            </div>
-
-
-            <div class="account-info">
-
-                <div>
-
-                    <span>
-                        نام کاربری
-                    </span>
-
-                    <strong id="accountUsername">
-                        -
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        تاریخ عضویت
-                    </span>
-
-                    <strong id="accountCreated">
-                        -
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =====================================
-         SCRIPTS
-    ====================================== -->
-
-    <script src="js/user.js"></script>
-
-    <script src="js/profile.js"></script>
-
+  <!-- پس‌زمینه متحرک اعداد ریاضی -->
+  <div class="math-bg" id="mathBg"></div>
+
+  <header class="profile-header">
+    <div class="brand">AXIS</div>
+    <nav>
+      <a href="index.html">خانه</a>
+      <a href="hesaban.html">حسابان</a>
+      <a href="profile.html">پروفایل</a>
+    </nav>
+    <div class="user">یازدهم ریاضی</div>
+  </header>
+
+  <main>
+
+    <section class="profile-hero">
+      <div class="profile-avatar" id="avatarLetter">S</div>
+      <div class="profile-info">
+        <h1 id="usernameDisplay">کاربر</h1>
+        <p>دانش‌آموز یازدهم ریاضی — AXIS</p>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="label">XP</span>
+        <div class="value" id="statXp">0</div>
+        <span class="sub">امتیاز تجربه</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Level</span>
+        <div class="value" id="statLevel">1</div>
+        <span class="sub">سطح</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Solved</span>
+        <div class="value" id="statSolved">0</div>
+        <span class="sub">سوال حل‌شده</span>
+      </div>
+      <div class="stat-card">
+        <span class="label">Correct</span>
+        <div class="value" id="statCorrect">0</div>
+        <span class="sub">پاسخ درست</span>
+      </div>
+    </section>
+
+    <section class="level-section">
+      <div class="level-header">
+        <div>
+          <span class="label">Progress</span>
+          <h2>سطح فعلی</h2>
+        </div>
+      </div>
+      <div class="level-progress">
+        <div><i id="levelBar" style="width: 0%"></i></div>
+      </div>
+      <div class="level-meta">
+        <span id="levelCurrent">سطح ۱</span>
+        <span id="levelNext">تا سطح بعدی ۱۰۰ XP</span>
+      </div>
+    </section>
+
+    <section class="subject-progress-section">
+      <span class="section-label">Learning Path</span>
+      <h2>پیشرفت دروس</h2>
+
+      <div class="subject-progress-card">
+        <div>
+          <h3>حسابان</h3>
+          <p id="hesabanProgressText">در حال یادگیری</p>
+        </div>
+        <div class="percent" id="hesabanPercent">0%</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- پس‌زمینه متحرک — استایل مستقیم -->
+  <style>
+    .math-bg {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .math-bg span {
+      position: absolute;
+      bottom: -120px;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-weight: bold;
+      user-select: none;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-115vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .math-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 45% 65%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 75% 15%, rgba(255,255,255,0.45), transparent),
+        radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 30% 85%, rgba(53,211,90,0.4), transparent),
+        radial-gradient(2px 2px at 60% 35%, rgba(53,211,90,0.3), transparent);
+      background-size: 100% 100%;
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .profile-header,
+    main {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+
+  <script>
+    /* =========================================
+    ساخت پس‌زمینه متحرک اعداد ریاضی — رنگ سبز
+    ========================================= */
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+
+      const count = 30;
+
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+        const size = 14 + Math.random() * 34;
+        const left = Math.random() * 100;
+        const duration = 12 + Math.random() * 18;
+        const delay = Math.random() * 15;
+        const opacity = 0.08 + Math.random() * 0.18;
+
+        span.style.fontSize = size + "px";
+        span.style.left = left + "%";
+        span.style.animationDuration = duration + "s";
+        span.style.animationDelay = "-" + delay + "s";
+        /* رنگ سبز */
+        span.style.color = "rgba(53, 211, 90, " + opacity + ")";
+
+        bg.appendChild(span);
+      }
+    }
+
+    /* =========================================
+    خواندن اطلاعات کاربر
+    ========================================= */
+    function loadUserData() {
+      const raw = localStorage.getItem("y11_math_user");
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function renderProfile() {
+      const user = loadUserData();
+
+      if (!user) {
+        document.getElementById("usernameDisplay").textContent = "کاربر مهمان";
+        return;
+      }
+
+      const xp = user.xp || 0;
+      const solved = user.solved || 0;
+      const correct = user.correct || 0;
+      const username = user.username || "کاربر";
+
+      document.getElementById("usernameDisplay").textContent = username;
+      document.getElementById("avatarLetter").textContent =
+        username.charAt(0).toUpperCase() || "U";
+
+      document.getElementById("statXp").textContent = xp;
+      document.getElementById("statSolved").textContent = solved;
+      document.getElementById("statCorrect").textContent = correct;
+
+      let level = 1;
+      if (xp >= 700) level = 5;
+      else if (xp >= 450) level = 4;
+      else if (xp >= 250) level = 3;
+      else if (xp >= 100) level = 2;
+
+      const levelXpStart = [0, 100, 250, 450, 700][level - 1] || 0;
+      const levelXpEnd = [100, 250, 450, 700, 1000][level - 1] || 1000;
+      const progress = Math.min(
+        100,
+        Math.round(((xp - levelXpStart) / (levelXpEnd - levelXpStart)) * 100)
+      );
+
+      document.getElementById("statLevel").textContent = level;
+      document.getElementById("levelCurrent").textContent = "سطح " + level;
+      document.getElementById("levelNext").textContent =
+        "تا سطح بعدی " + (levelXpEnd - xp) + " XP";
+      document.getElementById("levelBar").style.width = progress + "%";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      renderProfile();
+    });
+  </script>
 
 </body>
-
 </html>
