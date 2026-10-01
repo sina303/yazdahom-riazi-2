@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>درس | یازدهم ریاضی</title>
+  <title>درس | AXIS</title>
   <link rel="stylesheet" href="css/lesson.css" />
 </head>
 <body>
+
+  <!-- پس‌زمینه متحرک اعداد ریاضی -->
+  <div class="math-bg" id="mathBg"></div>
 
   <header class="lesson-header">
     <div class="logo">AXIS</div>
@@ -14,7 +17,7 @@
       <a href="index.html">خانه</a>
       <a href="hesaban.html">حسابان</a>
     </nav>
-    <div class="user">پروفایل</div>
+    <a href="profile.html" class="user">پروفایل</a>
   </header>
 
   <main>
@@ -37,7 +40,7 @@
       <div class="lesson-info">
         <span>راهنمای درس</span>
         <h2>توضیحات</h2>
-        <p>در این بخش می‌توانی سوالات درس را یکی‌یکی پاسخ دهی و راه‌حل کامل را ببینی.</p>
+        <p>در این بخش می‌توانی سوالات درس را یکی‌یکی پاسخ دهی و راه‌حل کامل را ببینی. هر پاسخ درست ۱۰ XP به تو می‌دهد.</p>
       </div>
 
       <div class="questions-header">
@@ -55,6 +58,413 @@
 
   </main>
 
-  <script src="js/lesson.js"></script>
+  <!-- =========================================
+  MATH BACKGROUND + LESSON SCRIPT
+  ========================================= -->
+  <script>
+    /* پس‌زمینه متحرک */
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.fontSize = (14 + Math.random() * 34) + "px";
+        span.style.left = (Math.random() * 100) + "%";
+        span.style.animationDuration = (12 + Math.random() * 18) + "s";
+        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
+        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        bg.appendChild(span);
+      }
+    }
+
+    /* =========================================
+    DATA — سوالات درس‌ها
+    ========================================= */
+    const LESSONS_DATA = {
+      "hesaban-ch1-lesson-1": {
+        id: "hesaban-ch1-lesson-1",
+        number: 1,
+        title: "مجموع جملات دنباله‌های حسابی",
+        description: "آموزش دنباله‌های حسابی و فرمول مجموع",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          {
+            id: "h1q1",
+            difficulty: "آسان",
+            question: "جمله عمومی دنباله‌ای با جمله اول ۱ و قدر نسبت ۳ را بنویسید.",
+            correctAnswer: "3n - 2",
+            answer: "از فرمول جمله عمومی دنباله حسابی استفاده می‌کنیم.",
+            solution: "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2"
+          },
+          {
+            id: "h1q2",
+            difficulty: "متوسط",
+            question: "مجموع ۱۰ جمله اول دنباله حسابی ۱, ۴, ۷, ۱۰, ... را حساب کنید.",
+            correctAnswer: "145",
+            answer: "از فرمول مجموع n جمله اول استفاده می‌کنیم.",
+            solution: "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145"
+          },
+          {
+            id: "h1q3",
+            difficulty: "آسان",
+            question: "اگر جمله اول یک دنباله حسابی ۵ و قدر نسبت آن ۲ باشد، جمله دهم چند است؟",
+            correctAnswer: "23",
+            answer: "از فرمول جمله عمومی استفاده می‌کنیم.",
+            solution: "a_10 = a_1 + 9d = 5 + 9×2 = 5 + 18 = 23"
+          }
+        ]
+      },
+      "hesaban-ch1-lesson-2": {
+        id: "hesaban-ch1-lesson-2",
+        number: 2,
+        title: "دنباله‌های هندسی",
+        description: "آموزش دنباله‌های هندسی و فرمول مجموع",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          {
+            id: "h2q1",
+            difficulty: "آسان",
+            question: "جمله عمومی دنباله هندسی با جمله اول ۲ و نسبت ۳ را بنویسید.",
+            correctAnswer: "2 × 3^(n-1)",
+            answer: "از فرمول جمله عمومی دنباله هندسی استفاده می‌کنیم.",
+            solution: "a_n = a_1 × r^(n-1) = 2 × 3^(n-1)"
+          },
+          {
+            id: "h2q2",
+            difficulty: "آسان",
+            question: "مجموع ۴ جمله اول دنباله هندسی ۱, ۲, ۴, ۸, ... چقدر است؟",
+            correctAnswer: "15",
+            answer: "جملات را با هم جمع می‌کنیم.",
+            solution: "1 + 2 + 4 + 8 = 15"
+          }
+        ]
+      }
+    };
+
+    /* =========================================
+    STATE
+    ========================================= */
+    let currentLesson = null;
+    let currentQuestionIndex = 0;
+    let sessionScore = 0;
+
+    /* =========================================
+    USER / XP ذخیره‌سازی
+    ========================================= */
+    const USER_KEY = "y11_math_user";
+
+    function getUser() {
+      const raw = localStorage.getItem(USER_KEY);
+      if (!raw) {
+        return {
+          username: "Sina",
+          xp: 0,
+          solved: 0,
+          correct: 0,
+          wrong: 0,
+          solvedQuestions: []
+        };
+      }
+      try {
+        const u = JSON.parse(raw);
+        return {
+          username: u.username || "Sina",
+          xp: u.xp || 0,
+          solved: u.solved || 0,
+          correct: u.correct || 0,
+          wrong: u.wrong || 0,
+          solvedQuestions: u.solvedQuestions || []
+        };
+      } catch (e) {
+        return {
+          username: "Sina",
+          xp: 0,
+          solved: 0,
+          correct: 0,
+          wrong: 0,
+          solvedQuestions: []
+        };
+      }
+    }
+
+    function saveUser(user) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+
+    function registerAnswer(questionId, isCorrect) {
+      const user = getUser();
+
+      /* اگه قبلاً حل شده، XP دوباره نده */
+      if (user.solvedQuestions.includes(questionId)) {
+        return user;
+      }
+
+      user.solvedQuestions.push(questionId);
+      user.solved += 1;
+
+      if (isCorrect) {
+        user.correct += 1;
+        user.xp += 10;
+      } else {
+        user.wrong += 1;
+      }
+
+      saveUser(user);
+      return user;
+    }
+
+    /* =========================================
+    LOAD LESSON
+    ========================================= */
+    function loadLesson() {
+      const container = document.getElementById("questionsList");
+
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const lessonId = params.get("lesson");
+
+        if (!lessonId) {
+          throw new Error("شناسه درس در آدرس نیست");
+        }
+
+        const lesson = LESSONS_DATA[lessonId];
+        if (!lesson) {
+          throw new Error("درسی با این شناسه پیدا نشد: " + lessonId);
+        }
+
+        currentLesson = lesson;
+
+        document.getElementById("lessonNumber").textContent = "درس " + lesson.number;
+        document.getElementById("lessonTitle").textContent = lesson.title;
+        document.getElementById("lessonDescription").textContent = lesson.description;
+        document.getElementById("breadcrumbLesson").textContent = lesson.title;
+        document.getElementById("backToChapter").href =
+          "chapter.html?chapter=" + lesson.chapterId;
+        document.getElementById("questionCount").textContent =
+          lesson.questions.length + " سوال";
+
+        renderCurrentQuestion();
+
+      } catch (err) {
+        console.error(err);
+        if (container) {
+          container.innerHTML =
+            '<div class="loading" style="color:#e05252;">خطا: ' +
+            err.message + '</div>';
+        }
+      }
+    }
+
+    /* =========================================
+    RENDER QUESTION
+    ========================================= */
+    function renderCurrentQuestion() {
+      const container = document.getElementById("questionsList");
+      const questions = currentLesson.questions;
+
+      if (!questions.length) {
+        container.innerHTML =
+          '<div class="loading">هنوز سوالی برای این درس ثبت نشده.</div>';
+        return;
+      }
+
+      const q = questions[currentQuestionIndex];
+      const progress = Math.round(
+        ((currentQuestionIndex + 1) / questions.length) * 100
+      );
+
+      container.innerHTML = `
+        <article class="question-card">
+          <div class="question-top">
+            <span class="question-number">
+              سوال ${currentQuestionIndex + 1} از ${questions.length}
+            </span>
+            <span class="difficulty">${q.difficulty}</span>
+          </div>
+
+          <div class="question-progress">
+            <div><i style="width: ${progress}%"></i></div>
+          </div>
+
+          <div class="question-text">${q.question}</div>
+
+          <div class="answer-input-area">
+            <label for="userAnswer">پاسخ خود را وارد کنید</label>
+            <input
+              type="text"
+              id="userAnswer"
+              placeholder="مثلاً: 3n - 2"
+              autocomplete="off"
+            >
+          </div>
+
+          <div id="resultArea" class="result-area hidden"></div>
+
+          <div class="question-actions">
+            <button class="check-button" id="checkButton" onclick="checkAnswer()">
+              بررسی پاسخ
+            </button>
+            <button class="solution-button hidden" id="solutionButton" onclick="showSolution()">
+              مشاهده راه‌حل
+            </button>
+          </div>
+
+          <div id="navigationArea" class="navigation-area hidden">
+            <button onclick="previousQuestion()" class="nav-button secondary">
+              ← قبلی
+            </button>
+            <button onclick="nextQuestion()" class="nav-button">
+              بعدی →
+            </button>
+          </div>
+        </article>
+      `;
+
+      /* Enter برای بررسی */
+      const input = document.getElementById("userAnswer");
+      if (input) {
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") checkAnswer();
+        });
+      }
+    }
+
+    /* =========================================
+    CHECK ANSWER
+    ========================================= */
+    function checkAnswer() {
+      const input = document.getElementById("userAnswer");
+      const resultArea = document.getElementById("resultArea");
+      const checkButton = document.getElementById("checkButton");
+      const solutionButton = document.getElementById("solutionButton");
+      const navigationArea = document.getElementById("navigationArea");
+
+      const userAnswer = input.value.trim();
+
+      if (!userAnswer) {
+        resultArea.className = "result-area wrong";
+        resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید.";
+        return;
+      }
+
+      const q = currentLesson.questions[currentQuestionIndex];
+      const correct = normalizeAnswer(q.correctAnswer);
+      const user = normalizeAnswer(userAnswer);
+      const isCorrect = user === correct;
+
+      const userData = registerAnswer(q.id, isCorrect);
+
+      if (isCorrect) {
+        sessionScore += 10;
+        resultArea.className = "result-area correct";
+        resultArea.innerHTML =
+          "<strong>آفرین!</strong>" +
+          "<span>+10 XP</span>" +
+          "<span>XP کل: " + userData.xp + "</span>";
+      } else {
+        resultArea.className = "result-area wrong";
+        resultArea.innerHTML =
+          "<strong>پاسخ درست نیست.</strong>" +
+          "<span>پاسخ درست: " + q.correctAnswer + "</span>" +
+          "<span>XP کل: " + userData.xp + "</span>";
+      }
+
+      input.disabled = true;
+      checkButton.disabled = true;
+      solutionButton.classList.remove("hidden");
+      navigationArea.classList.remove("hidden");
+    }
+
+    /* =========================================
+    SHOW SOLUTION
+    ========================================= */
+    function showSolution() {
+      const q = currentLesson.questions[currentQuestionIndex];
+      const resultArea = document.getElementById("resultArea");
+
+      resultArea.innerHTML += `
+        <div class="solution-box">
+          <div class="solution-title">راه‌حل</div>
+          <p>${q.answer}</p>
+          <p class="solution-text">${q.solution}</p>
+        </div>
+      `;
+
+      document.getElementById("solutionButton").disabled = true;
+    }
+
+    /* =========================================
+    NAVIGATION
+    ========================================= */
+    function nextQuestion() {
+      if (currentQuestionIndex < currentLesson.questions.length - 1) {
+        currentQuestionIndex++;
+        renderCurrentQuestion();
+      } else {
+        showLessonResult();
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderCurrentQuestion();
+      }
+    }
+
+    /* =========================================
+    RESULT
+    ========================================= */
+    function showLessonResult() {
+      const container = document.getElementById("questionsList");
+
+      container.innerHTML = `
+        <div class="lesson-result">
+          <div class="result-icon">✓</div>
+          <h2>درس تمام شد!</h2>
+          <p>امتیاز این جلسه</p>
+          <strong>${sessionScore} XP</strong>
+          <button onclick="restartLesson()">شروع دوباره</button>
+        </div>
+      `;
+    }
+
+    function restartLesson() {
+      currentQuestionIndex = 0;
+      sessionScore = 0;
+      renderCurrentQuestion();
+    }
+
+    /* =========================================
+    NORMALIZE ANSWER
+    ========================================= */
+    function normalizeAnswer(answer) {
+      return String(answer)
+        .trim()
+        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+        .replace(/\s+/g, "")
+        .toLowerCase();
+    }
+
+    /* =========================================
+    START
+    ========================================= */
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      loadLesson();
+    });
+  </script>
+
 </body>
 </html>
