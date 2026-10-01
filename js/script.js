@@ -9,9 +9,7 @@ function openSubject(subject) {
 
 function scrollToChapters() {
   const chapters = document.getElementById("chapters");
-  if (chapters) {
-    chapters.scrollIntoView({ behavior: "smooth" });
-  }
+  if (chapters) chapters.scrollIntoView({ behavior: "smooth" });
 }
 
 /* =========================================
@@ -22,17 +20,14 @@ async function loadHesaban() {
   if (!chaptersGrid) return;
 
   try {
-    const response = await fetch("data/subjects.json");
-    if (!response.ok) throw new Error("Could not load subjects.json");
-
-    const data = await response.json();
+    const res = await fetch("data/subjects.json");
+    const data = await res.json();
     const hesaban = data.subjects.find((s) => s.id === "hesaban");
     if (!hesaban) throw new Error("Hesaban not found");
-
     renderChapters(hesaban.chapters);
-  } catch (error) {
-    console.error(error);
-    chaptersGrid.innerHTML = '<div class="loading">خطا در بارگذاری فصل‌ها</div>';
+  } catch (e) {
+    console.error(e);
+    chaptersGrid.innerHTML = '<div class="loading">خطا در بارگذاری</div>';
   }
 }
 
@@ -40,33 +35,26 @@ async function loadHesaban() {
 RENDER CHAPTERS
 ========================================= */
 function renderChapters(chapters) {
-  const chaptersGrid = document.getElementById("chaptersGrid");
-  if (!chaptersGrid) return;
+  const grid = document.getElementById("chaptersGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
 
-  chaptersGrid.innerHTML = "";
-
-  chapters.forEach((chapter) => {
+  chapters.forEach((ch) => {
     const card = document.createElement("div");
     card.className = "chapter-card";
     card.innerHTML = `
-      <div class="chapter-number">
-        ${String(chapter.number).padStart(2, "0")}
-      </div>
+      <div class="chapter-number">${String(ch.number).padStart(2, "0")}</div>
       <div class="chapter-content">
-        <h3>${chapter.title}</h3>
-        <p>${chapter.description}</p>
+        <h3>${ch.title}</h3>
+        <p>${ch.description}</p>
         <div class="chapter-progress">
-          <span>پیشرفت ${chapter.progress}%</span>
-          <div>
-            <i style="width: ${chapter.progress}%"></i>
-          </div>
+          <span>پیشرفت ${ch.progress}%</span>
+          <div><i style="width: ${ch.progress}%"></i></div>
         </div>
       </div>
-      <button onclick="openChapter('${chapter.id}')">
-        شروع →
-      </button>
+      <button onclick="openChapter('${ch.id}')">شروع →</button>
     `;
-    chaptersGrid.appendChild(card);
+    grid.appendChild(card);
   });
 }
 
@@ -87,22 +75,37 @@ async function loadChapter() {
   try {
     const params = new URLSearchParams(window.location.search);
     const chapterId = params.get("chapter");
+
     if (!chapterId) throw new Error("Chapter ID not found");
 
-    const response = await fetch("data/subjects.json");
-    if (!response.ok) throw new Error("Could not load data");
-
-    const data = await response.json();
+    const res = await fetch("data/subjects.json");
+    const data = await res.json();
     const hesaban = data.subjects.find((s) => s.id === "hesaban");
     if (!hesaban) throw new Error("Subject not found");
 
     const chapter = hesaban.chapters.find((c) => c.id === chapterId);
     if (!chapter) throw new Error("Chapter not found");
 
+    const label = document.getElementById("chapterLabel");
+    const title = document.getElementById("chapterTitle");
+    const desc = document.getElementById("chapterDescription");
+    const bread = document.getElementById("breadcrumbChapter");
+    const progText = document.getElementById("chapterProgressText");
+    const progBar = document.getElementById("chapterProgressBar");
+    const count = document.getElementById("chapterLessonCount");
+
+    if (label) label.textContent = "فصل " + chapter.number;
+    if (title) title.textContent = chapter.title;
+    if (desc) desc.textContent = chapter.description;
+    if (bread) bread.textContent = chapter.title;
+    if (progText) progText.textContent = chapter.progress + "%";
+    if (progBar) progBar.style.width = chapter.progress + "%";
+    if (count) count.textContent = (chapter.lessons?.length || 0) + " درس";
+
     renderLessons(chapter.lessons);
-  } catch (error) {
-    console.error(error);
-    lessonGrid.innerHTML = '<div class="loading">خطا در بارگذاری درس‌ها</div>';
+  } catch (e) {
+    console.error(e);
+    lessonGrid.innerHTML = '<div class="loading">خطا: ' + e.message + '</div>';
   }
 }
 
@@ -110,33 +113,27 @@ async function loadChapter() {
 RENDER LESSONS
 ========================================= */
 function renderLessons(lessons) {
-  const lessonGrid = document.getElementById("lessonGrid");
-  if (!lessonGrid) return;
-
-  lessonGrid.innerHTML = "";
+  const grid = document.getElementById("lessonGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
 
   if (!lessons || lessons.length === 0) {
-    lessonGrid.innerHTML =
-      '<div class="loading">هنوز درسی برای این فصل ثبت نشده.</div>';
+    grid.innerHTML = '<div class="loading">هنوز درسی ثبت نشده.</div>';
     return;
   }
 
-  lessons.forEach((lesson) => {
+  lessons.forEach((l) => {
     const card = document.createElement("article");
     card.className = "lesson-card";
     card.innerHTML = `
-      <div class="lesson-icon">
-        ${String(lesson.number).padStart(2, "0")}
-      </div>
+      <div class="lesson-icon">${String(l.number).padStart(2, "0")}</div>
       <div>
-        <h3>${lesson.title}</h3>
-        <p>${lesson.description}</p>
+        <h3>${l.title}</h3>
+        <p>${l.description}</p>
       </div>
-      <button onclick="openLesson('${lesson.id}')">
-        شروع →
-      </button>
+      <button onclick="openLesson('${l.id}')">شروع →</button>
     `;
-    lessonGrid.appendChild(card);
+    grid.appendChild(card);
   });
 }
 
