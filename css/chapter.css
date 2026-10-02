@@ -106,7 +106,7 @@ main {
 
 .chapter-header nav {
   display: flex;
-  gap: 25px;
+  gap: 22px;
 }
 
 .chapter-header nav a {
@@ -209,6 +209,36 @@ main {
   color: var(--muted);
   line-height: 2;
   font-size: 14px;
+}
+
+/* EXTERNAL LINKS */
+.chapter-links {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.external-link-btn {
+  padding: 12px 22px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, transform 0.1s;
+}
+
+.external-link-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.external-link-btn:active {
+  transform: scale(0.98);
 }
 
 /* PROGRESS CARD */
@@ -381,6 +411,13 @@ main {
   font-size: 12px;
 }
 
+.lesson-actions-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .lesson-card button {
   padding: 11px 20px;
   border-radius: 9px;
@@ -397,6 +434,18 @@ main {
 
 .lesson-card button:hover {
   opacity: 0.9;
+}
+
+.external-mini-btn {
+  background: transparent !important;
+  color: var(--muted) !important;
+  border: 1px solid var(--border) !important;
+  font-weight: bold;
+}
+
+.external-mini-btn:hover {
+  color: var(--green) !important;
+  border-color: var(--green) !important;
 }
 
 /* AI BOX */
@@ -501,9 +550,12 @@ main {
     padding: 18px;
   }
 
-  .lesson-card button {
+  .lesson-actions-group {
     grid-column: 1 / -1;
-    width: 100%;
+  }
+
+  .lesson-card button {
+    flex: 1;
   }
 
   .ai-box {
