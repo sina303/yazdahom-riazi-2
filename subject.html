@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>حسابان | AXIS</title>
+  <title>درس | AXIS</title>
   <link rel="stylesheet" href="css/hesaban.css" />
 </head>
 <body>
@@ -26,12 +26,9 @@
 
     <section class="hesaban-hero">
       <div class="hero-text">
-        <span class="small-title">درس حسابان</span>
-        <h1>حسابان ۱</h1>
-        <p>
-          حساب دیفرانسیل و انتگرال، دنباله‌ها، توابع، مثلثات و لگاریتم.
-          مسیر یادگیری خودت رو شروع کن.
-        </p>
+        <span class="small-title" id="subjectTag">درس</span>
+        <h1 id="subjectTitle">در حال بارگذاری...</h1>
+        <p id="subjectDescription">توضیحات درس در حال بارگذاری است.</p>
         <div class="hero-buttons">
           <button onclick="scrollToChapters()">شروع یادگیری</button>
           <button class="secondary-button" onclick="window.location.href='profile.html'">مشاهده پروفایل</button>
@@ -44,7 +41,7 @@
         <div class="progress-bar">
           <div class="progress-fill" id="totalProgressBar"></div>
         </div>
-        <small id="totalLessons">۰ از ۵ سوال حل شده</small>
+        <small id="totalLessons">۰ سوال حل شده</small>
       </div>
     </section>
 
@@ -55,7 +52,7 @@
       </div>
       <div class="quick-grid">
         <div class="quick-card">
-          <div>∫</div>
+          <div id="subjectIcon1">📖</div>
           <h3>درس‌نامه</h3>
           <p>خلاصه و فرمول‌های کلیدی</p>
         </div>
@@ -80,7 +77,7 @@
     <section class="chapters-section" id="chapters">
       <div class="section-heading">
         <span>فصل‌ها</span>
-        <h2>فصل‌های حسابان</h2>
+        <h2 id="chaptersTitle">فصل‌ها</h2>
         <p>روی هر فصل کلیک کن تا وارد درس‌ها شوی.</p>
       </div>
       <div class="chapters-grid" id="chaptersGrid">
@@ -88,21 +85,12 @@
       </div>
     </section>
 
-    <section class="exam-section" id="exams">
-      <div>
-        <span>آزمون‌ها</span>
-        <h2>خودت رو محک بزن</h2>
-        <p>بعد از هر فصل، یک آزمون کوتاه می‌تونی بدی.</p>
-      </div>
-      <button>به‌زودی</button>
-    </section>
-
     <section class="ai-section">
       <div class="ai-icon">AI</div>
       <div>
         <span>دستیار هوشمند</span>
         <h2>سوال‌هایت را از AXIS بپرس</h2>
-        <p>هر سوالی از حسابان داری، می‌تونی از دستیار هوشمند AXIS بپرسی.</p>
+        <p>هر سوالی داری، می‌تونی از دستیار هوشمند AXIS بپرسی.</p>
       </div>
       <button>پرسیدن از AI</button>
     </section>
@@ -134,36 +122,13 @@
 
     function getUser() {
       const raw = localStorage.getItem("y11_math_user");
-      if (!raw) return { xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
+      if (!raw) return { xp:0, solved:0 };
       try {
         const u = JSON.parse(raw);
-        return {
-          xp: u.xp || 0,
-          solved: u.solved || 0,
-          correct: u.correct || 0,
-          wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || [],
-          mistakes: u.mistakes || []
-        };
+        return { xp: u.xp || 0, solved: u.solved || 0 };
       } catch (e) {
-        return { xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
+        return { xp:0, solved:0 };
       }
-    }
-
-    const TOTAL_QUESTIONS = 5;
-
-    function updateProgress() {
-      const user = getUser();
-      const solved = user.solved;
-      const percent = Math.min(100, Math.round((solved / TOTAL_QUESTIONS) * 100));
-
-      const progEl = document.getElementById("totalProgress");
-      const barEl = document.getElementById("totalProgressBar");
-      const lessonEl = document.getElementById("totalLessons");
-
-      if (progEl) progEl.textContent = percent + "%";
-      if (barEl) barEl.style.width = percent + "%";
-      if (lessonEl) lessonEl.textContent = solved + " از " + TOTAL_QUESTIONS + " سوال حل شده";
     }
 
     function openChapter(chapterId) {
@@ -175,21 +140,33 @@
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
 
-    async function loadChapters() {
+    async function loadSubject() {
       const grid = document.getElementById("chaptersGrid");
       if (!grid) return;
 
       try {
+        const params = new URLSearchParams(window.location.search);
+        const subjectId = params.get("subject") || "hesaban";
+
         const res = await fetch("data/subjects.json");
         if (!res.ok) throw new Error("خطا در بارگذاری");
 
         const data = await res.json();
-        const hesaban = data.subjects.find((s) => s.id === "hesaban");
-        if (!hesaban) throw new Error("حسابان پیدا نشد");
+        const subject = data.subjects.find((s) => s.id === subjectId);
+        if (!subject) throw new Error("درس پیدا نشد");
+
+        document.title = subject.name + " | AXIS";
+        document.getElementById("subjectTag").textContent = "درس " + subject.name;
+        document.getElementById("subjectTitle").textContent = subject.name;
+        document.getElementById("subjectDescription").textContent = subject.description;
+        document.getElementById("chaptersTitle").textContent = "فصل‌های " + subject.name;
+        document.getElementById("subjectIcon1").textContent = subject.icon;
 
         grid.innerHTML = "";
 
-        hesaban.chapters.forEach((ch) => {
+        let totalLessons = 0;
+        subject.chapters.forEach((ch) => {
+          totalLessons += (ch.lessons?.length || 0);
           const card = document.createElement("div");
           card.className = "chapter-card";
           card.innerHTML = `
@@ -206,19 +183,25 @@
           `;
           grid.appendChild(card);
         });
+
+        /* پیشرفت */
+        const user = getUser();
+        const total = 5;
+        const percent = Math.min(100, Math.round((user.solved / total) * 100));
+        document.getElementById("totalProgress").textContent = percent + "%";
+        document.getElementById("totalProgressBar").style.width = percent + "%";
+        document.getElementById("totalLessons").textContent = user.solved + " سوال حل شده";
+
       } catch (err) {
         console.error(err);
-        grid.innerHTML = '<div class="loading">خطا در بارگذاری فصل‌ها</div>';
+        grid.innerHTML = '<div class="loading">خطا: ' + err.message + '</div>';
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
-      updateProgress();
-      loadChapters();
+      loadSubject();
     });
-
-    window.addEventListener("pageshow", updateProgress);
   </script>
 
 </body>
