@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- پس‌زمینه متحرک اعداد ریاضی -->
   <div class="math-bg" id="mathBg"></div>
 
   <header class="site-header">
@@ -16,6 +15,7 @@
     <nav class="site-nav">
       <a href="index.html" class="active">خانه</a>
       <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
       <a href="profile.html">پروفایل</a>
     </nav>
     <a href="profile.html" class="site-user">پروفایل</a>
@@ -23,7 +23,6 @@
 
   <main>
 
-    <!-- HERO -->
     <section class="home-hero">
       <div class="hero-text">
         <span class="hero-tag">یازدهم ریاضی</span>
@@ -57,7 +56,6 @@
       </div>
     </section>
 
-    <!-- SUBJECTS -->
     <section class="home-section" id="subjects">
       <div class="section-head">
         <span class="tag">Learning Path</span>
@@ -129,7 +127,6 @@
       </div>
     </section>
 
-    <!-- AI -->
     <section class="ai-section">
       <div class="ai-icon">AI</div>
       <div class="ai-info">
@@ -148,15 +145,10 @@
     <strong>AXIS</strong> — Learn beyond the formula
   </footer>
 
-  <!-- =========================================
-  SCRIPTS
-  ========================================= -->
   <script>
-    /* پس‌زمینه متحرک */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-
       const symbols = [
         "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
         "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
@@ -164,7 +156,6 @@
         "+", "−", "×", "÷", "=", "%", "e", "i",
         "1", "2", "3", "7", "9", "0", "½", "¼"
       ];
-
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -177,19 +168,9 @@
       }
     }
 
-    /* خواندن اطلاعات کاربر */
     function getUser() {
       const raw = localStorage.getItem("y11_math_user");
-      if (!raw) {
-        return {
-          username: "Sina",
-          xp: 0,
-          solved: 0,
-          correct: 0,
-          wrong: 0,
-          solvedQuestions: []
-        };
-      }
+      if (!raw) return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
       try {
         const u = JSON.parse(raw);
         return {
@@ -198,21 +179,14 @@
           solved: u.solved || 0,
           correct: u.correct || 0,
           wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || []
+          solvedQuestions: u.solvedQuestions || [],
+          mistakes: u.mistakes || []
         };
       } catch (e) {
-        return {
-          username: "Sina",
-          xp: 0,
-          solved: 0,
-          correct: 0,
-          wrong: 0,
-          solvedQuestions: []
-        };
+        return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
       }
     }
 
-    /* محاسبه‌ی سطح */
     function getLevel(xp) {
       if (xp >= 700) return 5;
       if (xp >= 450) return 4;
@@ -221,7 +195,6 @@
       return 1;
     }
 
-    /* نمایش XP و Level */
     function renderHeroStats() {
       const user = getUser();
       const level = getLevel(user.xp);
@@ -249,22 +222,17 @@
         }
       }
 
-      /* کارت حسابان */
       const totalQ = 5;
       const percent = Math.min(100, Math.round((user.solved / totalQ) * 100));
       const cardProgress = document.getElementById("hesabanCardProgress");
-      if (cardProgress) {
-        cardProgress.textContent = percent + "% Progress";
-      }
+      if (cardProgress) cardProgress.textContent = percent + "% Progress";
     }
 
-    /* شروع */
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
       renderHeroStats();
     });
 
-    /* وقتی از صفحه‌ی دیگه برگشتی، آپدیت کن */
     window.addEventListener("pageshow", renderHeroStats);
   </script>
 
