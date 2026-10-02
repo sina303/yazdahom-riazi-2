@@ -10,6 +10,12 @@
 
   <div class="math-bg" id="mathBg"></div>
 
+  <!-- Focus mode overlay -->
+  <div class="focus-overlay" id="focusOverlay">
+    <button class="focus-exit" onclick="exitFocusMode()">✕ خروج از حالت مطالعه</button>
+    <div class="focus-timer-display" id="focusTimer">00:00</div>
+  </div>
+
   <header class="lesson-header">
     <div class="logo">AXIS</div>
     <nav>
@@ -36,9 +42,10 @@
       <span id="lessonNumber">درس</span>
       <h1 id="lessonTitle">در حال بارگذاری...</h1>
       <p id="lessonDescription">محتوای درس در حال بارگذاری است.</p>
-      <div id="lessonActions" style="margin-top:25px; display:flex; gap:10px; flex-wrap:wrap; position:relative;">
-        <button id="practiceBtn" class="check-button" onclick="startPractice()">حالت تمرین</button>
-        <button id="examBtn" class="solution-button" onclick="startExam()">حالت آزمون ⏱</button>
+      <div class="lesson-actions">
+        <button class="check-button" onclick="startPractice()">حالت تمرین</button>
+        <button class="solution-button" onclick="startExam()">حالت آزمون ⏱</button>
+        <button class="solution-button" onclick="enterFocusMode()">حالت مطالعه 🎯</button>
       </div>
     </section>
 
@@ -100,27 +107,21 @@
         description: "آموزش دنباله‌های حسابی و فرمول مجموع",
         chapterId: "hesaban-chapter-1",
         questions: [
-          {
-            id: "h1q1", difficulty: "آسان",
+          { id: "h1q1", difficulty: "آسان",
             question: "جمله عمومی دنباله‌ای با جمله اول ۱ و قدر نسبت ۳ را بنویسید.",
             correctAnswer: "3n - 2",
             answer: "از فرمول جمله عمومی دنباله حسابی استفاده می‌کنیم.",
-            solution: "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2"
-          },
-          {
-            id: "h1q2", difficulty: "متوسط",
+            solution: "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2" },
+          { id: "h1q2", difficulty: "متوسط",
             question: "مجموع ۱۰ جمله اول دنباله حسابی ۱, ۴, ۷, ۱۰, ... را حساب کنید.",
             correctAnswer: "145",
             answer: "از فرمول مجموع n جمله اول استفاده می‌کنیم.",
-            solution: "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145"
-          },
-          {
-            id: "h1q3", difficulty: "آسان",
+            solution: "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145" },
+          { id: "h1q3", difficulty: "آسان",
             question: "اگر جمله اول یک دنباله حسابی ۵ و قدر نسبت آن ۲ باشد، جمله دهم چند است؟",
             correctAnswer: "23",
             answer: "از فرمول جمله عمومی استفاده می‌کنیم.",
-            solution: "a_10 = a_1 + 9d = 5 + 9×2 = 5 + 18 = 23"
-          }
+            solution: "a_10 = a_1 + 9d = 5 + 9×2 = 5 + 18 = 23" }
         ]
       },
       "hesaban-ch1-lesson-2": {
@@ -130,20 +131,16 @@
         description: "آموزش دنباله‌های هندسی و فرمول مجموع",
         chapterId: "hesaban-chapter-1",
         questions: [
-          {
-            id: "h2q1", difficulty: "آسان",
+          { id: "h2q1", difficulty: "آسان",
             question: "جمله عمومی دنباله هندسی با جمله اول ۲ و نسبت ۳ را بنویسید.",
             correctAnswer: "2 × 3^(n-1)",
             answer: "از فرمول جمله عمومی دنباله هندسی استفاده می‌کنیم.",
-            solution: "a_n = a_1 × r^(n-1) = 2 × 3^(n-1)"
-          },
-          {
-            id: "h2q2", difficulty: "آسان",
+            solution: "a_n = a_1 × r^(n-1) = 2 × 3^(n-1)" },
+          { id: "h2q2", difficulty: "آسان",
             question: "مجموع ۴ جمله اول دنباله هندسی ۱, ۲, ۴, ۸, ... چقدر است؟",
             correctAnswer: "15",
             answer: "جملات را با هم جمع می‌کنیم.",
-            solution: "1 + 2 + 4 + 8 = 15"
-          }
+            solution: "1 + 2 + 4 + 8 = 15" }
         ]
       }
     };
@@ -156,6 +153,8 @@
     let examAnswers = [];
     let timerInterval = null;
     let timerSeconds = 0;
+    let focusInterval = null;
+    let focusSeconds = 0;
 
     const USER_KEY = "y11_math_user";
 
@@ -277,6 +276,33 @@
       if (el) el.textContent = m + ":" + s;
     }
 
+    /* =========================================
+    FOCUS MODE
+    ========================================= */
+    function enterFocusMode() {
+      document.body.classList.add("focus-mode");
+      focusSeconds = 0;
+      updateFocusTimer();
+
+      if (focusInterval) clearInterval(focusInterval);
+      focusInterval = setInterval(() => {
+        focusSeconds++;
+        updateFocusTimer();
+      }, 1000);
+    }
+
+    function exitFocusMode() {
+      document.body.classList.remove("focus-mode");
+      if (focusInterval) clearInterval(focusInterval);
+    }
+
+    function updateFocusTimer() {
+      const m = String(Math.floor(focusSeconds / 60)).padStart(2, "0");
+      const s = String(focusSeconds % 60).padStart(2, "0");
+      const el = document.getElementById("focusTimer");
+      if (el) el.textContent = m + ":" + s;
+    }
+
     function renderCurrentQuestion() {
       const container = document.getElementById("questionsList");
       const questions = examQuestions;
@@ -322,130 +348,4 @@
       const input = document.getElementById("userAnswer");
       const resultArea = document.getElementById("resultArea");
       const checkButton = document.getElementById("checkButton");
-      const solutionButton = document.getElementById("solutionButton");
-      const navigationArea = document.getElementById("navigationArea");
-
-      const userAnswer = input.value.trim();
-      if (!userAnswer) {
-        resultArea.className = "result-area wrong";
-        resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید.";
-        return;
-      }
-
-      const q = examQuestions[currentQuestionIndex];
-      const correct = normalizeAnswer(q.correctAnswer);
-      const user = normalizeAnswer(userAnswer);
-      const isCorrect = user === correct;
-      const userData = registerAnswer(q.id, isCorrect, q);
-
-      examAnswers.push({ id: q.id, isCorrect: isCorrect });
-
-      if (isCorrect) {
-        sessionScore += 10;
-        resultArea.className = "result-area correct";
-        resultArea.innerHTML = "<strong>آفرین!</strong><span>+10 XP</span><span>XP کل: " + userData.xp + "</span>";
-      } else {
-        resultArea.className = "result-area wrong";
-        resultArea.innerHTML = "<strong>پاسخ درست نیست.</strong><span>پاسخ درست: " + q.correctAnswer + "</span><span>به غلط‌نامه اضافه شد</span>";
-      }
-
-      input.disabled = true;
-      checkButton.disabled = true;
-      solutionButton.classList.remove("hidden");
-      navigationArea.classList.remove("hidden");
-    }
-
-    function showSolution() {
-      const q = examQuestions[currentQuestionIndex];
-      const resultArea = document.getElementById("resultArea");
-      resultArea.innerHTML += `
-        <div class="solution-box">
-          <div class="solution-title">راه‌حل</div>
-          <p>${q.answer}</p>
-          <p class="solution-text">${q.solution}</p>
-        </div>
-      `;
-      document.getElementById("solutionButton").disabled = true;
-    }
-
-    function nextQuestion() {
-      if (currentQuestionIndex < examQuestions.length - 1) {
-        currentQuestionIndex++;
-        renderCurrentQuestion();
-      } else {
-        if (mode === "exam") showExamResult();
-        else showLessonResult();
-      }
-    }
-
-    function previousQuestion() {
-      if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        renderCurrentQuestion();
-      }
-    }
-
-    function showLessonResult() {
-      const container = document.getElementById("questionsList");
-      container.innerHTML = `
-        <div class="lesson-result">
-          <div class="result-icon">✓</div>
-          <h2>درس تمام شد!</h2>
-          <p>امتیاز این جلسه</p>
-          <strong>${sessionScore} XP</strong>
-          <button onclick="restartLesson()">شروع دوباره</button>
-        </div>
-      `;
-    }
-
-    function showExamResult() {
-      if (timerInterval) clearInterval(timerInterval);
-      const container = document.getElementById("questionsList");
-      const total = examQuestions.length;
-      const correctCount = examAnswers.filter((a) => a.isCorrect).length;
-      const percent = Math.round((correctCount / total) * 100);
-
-      let message = "";
-      if (percent === 100) message = "بی‌نقص! 🎉";
-      else if (percent >= 80) message = "عالی بود! 🔥";
-      else if (percent >= 60) message = "خوب بود، ادامه بده!";
-      else if (percent >= 40) message = "باز نیاز به تمرین داری.";
-      else message = "بیا دوباره مرور کنیم.";
-
-      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
-      const s = String(timerSeconds % 60).padStart(2, "0");
-
-      container.innerHTML = `
-        <div class="exam-card">
-          <h2>${percent}%</h2>
-          <p>${message}</p>
-          <div class="exam-stat">
-            <div><span>درست</span><strong>${correctCount}</strong></div>
-            <div><span>غلط</span><strong>${total - correctCount}</strong></div>
-            <div><span>زمان</span><strong>${m}:${s}</strong></div>
-          </div>
-          <button onclick="startExam()">آزمون دوباره</button>
-          <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
-        </div>
-      `;
-    }
-
-    function restartLesson() { startPractice(); }
-
-    function normalizeAnswer(answer) {
-      return String(answer)
-        .trim()
-        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-        .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
-        .replace(/\s+/g, "")
-        .toLowerCase();
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      createMathBackground();
-      loadLesson();
-    });
-  </script>
-
-</body>
-</html>
+      const
