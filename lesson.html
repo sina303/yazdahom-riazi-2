@@ -348,4 +348,137 @@
       const input = document.getElementById("userAnswer");
       const resultArea = document.getElementById("resultArea");
       const checkButton = document.getElementById("checkButton");
-      const
+      const solutionButton = document.getElementById("solutionButton");
+      const navigationArea = document.getElementById("navigationArea");
+
+      const userAnswer = input.value.trim();
+      if (!userAnswer) {
+        resultArea.className = "result-area wrong";
+        resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید.";
+        return;
+      }
+
+      const q = examQuestions[currentQuestionIndex];
+      const correct = normalizeAnswer(q.correctAnswer);
+      const user = normalizeAnswer(userAnswer);
+      const isCorrect = user === correct;
+      const userData = registerAnswer(q.id, isCorrect, q);
+
+      examAnswers.push({ id: q.id, isCorrect: isCorrect });
+
+      if (isCorrect) {
+        sessionScore += 10;
+        resultArea.className = "result-area correct";
+        resultArea.innerHTML = "<strong>آفرین!</strong><span>+10 XP</span><span>XP کل: " + userData.xp + "</span>";
+      } else {
+        resultArea.className = "result-area wrong";
+        resultArea.innerHTML = "<strong>پاسخ درست نیست.</strong><span>پاسخ درست: " + q.correctAnswer + "</span><span>به غلط‌نامه اضافه شد</span>";
+      }
+
+      input.disabled = true;
+      checkButton.disabled = true;
+      solutionButton.classList.remove("hidden");
+      navigationArea.classList.remove("hidden");
+    }
+
+    function showSolution() {
+      const q = examQuestions[currentQuestionIndex];
+      const resultArea = document.getElementById("resultArea");
+      resultArea.innerHTML += `
+        <div class="solution-box">
+          <div class="solution-title">راه‌حل</div>
+          <p>${q.answer}</p>
+          <p class="solution-text">${q.solution}</p>
+        </div>
+      `;
+      document.getElementById("solutionButton").disabled = true;
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < examQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderCurrentQuestion();
+      } else {
+        if (mode === "exam") showExamResult();
+        else showLessonResult();
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderCurrentQuestion();
+      }
+    }
+
+    function showLessonResult() {
+      const container = document.getElementById("questionsList");
+      container.innerHTML = `
+        <div class="lesson-result">
+          <div class="result-icon">✓</div>
+          <h2>درس تمام شد!</h2>
+          <p>امتیاز این جلسه</p>
+          <strong>${sessionScore} XP</strong>
+          <button onclick="restartLesson()">شروع دوباره</button>
+        </div>
+      `;
+    }
+
+    function showExamResult() {
+      if (timerInterval) clearInterval(timerInterval);
+      const container = document.getElementById("questionsList");
+      const total = examQuestions.length;
+      const correctCount = examAnswers.filter((a) => a.isCorrect).length;
+      const percent = Math.round((correctCount / total) * 100);
+
+      let message = "";
+      if (percent === 100) message = "بی‌نقص! 🎉";
+      else if (percent >= 80) message = "عالی بود! 🔥";
+      else if (percent >= 60) message = "خوب بود، ادامه بده!";
+      else if (percent >= 40) message = "باز نیاز به تمرین داری.";
+      else message = "بیا دوباره مرور کنیم.";
+
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+      const s = String(timerSeconds % 60).padStart(2, "0");
+
+      container.innerHTML = `
+        <div class="exam-card">
+          <h2>${percent}%</h2>
+          <p>${message}</p>
+          <div class="exam-stat">
+            <div><span>درست</span><strong>${correctCount}</strong></div>
+            <div><span>غلط</span><strong>${total - correctCount}</strong></div>
+            <div><span>زمان</span><strong>${m}:${s}</strong></div>
+          </div>
+          <button onclick="startExam()">آزمون دوباره</button>
+          <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
+        </div>
+      `;
+    }
+
+    function restartLesson() { startPractice(); }
+
+    function normalizeAnswer(answer) {
+      return String(answer)
+        .trim()
+        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+        .replace(/\s+/g, "")
+        .toLowerCase();
+    }
+
+    /* کیبورد — خروج از Focus با ESC */
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && document.body.classList.contains("focus-mode")) {
+        exitFocusMode();
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      loadLesson();
+    });
+  </script>
+
+</body>
+</html>
