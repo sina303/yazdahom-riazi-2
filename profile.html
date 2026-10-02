@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- پس‌زمینه متحرک اعداد ریاضی -->
   <div class="math-bg" id="mathBg"></div>
 
   <header class="profile-header">
@@ -23,7 +22,6 @@
 
   <main>
 
-    <!-- HERO -->
     <section class="profile-hero">
       <div class="profile-avatar" id="avatarLetter">S</div>
       <div class="profile-info">
@@ -32,7 +30,6 @@
       </div>
     </section>
 
-    <!-- STATS -->
     <section class="stats-grid">
       <div class="stat-card">
         <span class="label">XP</span>
@@ -56,7 +53,6 @@
       </div>
     </section>
 
-    <!-- LEVEL -->
     <section class="level-section">
       <div class="level-header">
         <div>
@@ -73,7 +69,6 @@
       </div>
     </section>
 
-    <!-- SUBJECT PROGRESS -->
     <section class="subject-progress-section">
       <span class="section-label">Learning Path</span>
       <h2>پیشرفت دروس</h2>
@@ -87,17 +82,50 @@
       </div>
     </section>
 
+    <!-- غلط‌نامه -->
+    <section class="subject-progress-section" style="margin-top: 30px;">
+      <span class="section-label">Mistake Log</span>
+      <h2>غلط‌نامه</h2>
+
+      <div id="mistakesList">
+        <p style="color:#8d9690;font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>
+      </div>
+    </section>
+
   </main>
 
-  <!-- =========================================
-  MATH BACKGROUND + PROFILE SCRIPT
-  ========================================= -->
+  <style>
+    .mistake-item {
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-right: 3px solid #e05252;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .mistake-item .mistake-question {
+      font-size: 15px;
+      line-height: 2;
+      margin-bottom: 12px;
+    }
+    .mistake-item .mistake-answer {
+      color: var(--green);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .mistake-item .mistake-solution {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+  </style>
+
   <script>
-    /* پس‌زمینه متحرک */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-
       const symbols = [
         "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
         "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
@@ -105,7 +133,6 @@
         "+", "−", "×", "÷", "=", "%", "e", "i",
         "1", "2", "3", "7", "9", "0", "½", "¼"
       ];
-
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -118,17 +145,13 @@
       }
     }
 
-    /* خواندن اطلاعات کاربر */
     function getUser() {
       const raw = localStorage.getItem("y11_math_user");
       if (!raw) {
         return {
           username: "Sina",
-          xp: 0,
-          solved: 0,
-          correct: 0,
-          wrong: 0,
-          solvedQuestions: []
+          xp: 0, solved: 0, correct: 0, wrong: 0,
+          solvedQuestions: [], mistakes: []
         };
       }
       try {
@@ -139,21 +162,18 @@
           solved: u.solved || 0,
           correct: u.correct || 0,
           wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || []
+          solvedQuestions: u.solvedQuestions || [],
+          mistakes: u.mistakes || []
         };
       } catch (e) {
         return {
           username: "Sina",
-          xp: 0,
-          solved: 0,
-          correct: 0,
-          wrong: 0,
-          solvedQuestions: []
+          xp: 0, solved: 0, correct: 0, wrong: 0,
+          solvedQuestions: [], mistakes: []
         };
       }
     }
 
-    /* نمایش اطلاعات */
     function renderProfile() {
       const user = getUser();
       const xp = user.xp;
@@ -169,11 +189,9 @@
       document.getElementById("statSolved").textContent = solved;
       document.getElementById("statCorrect").textContent = correct;
 
-      /* سطح */
       let level = 1;
       let levelStart = 0;
       let levelEnd = 100;
-
       if (xp >= 700) { level = 5; levelStart = 700; levelEnd = 1000; }
       else if (xp >= 450) { level = 4; levelStart = 450; levelEnd = 700; }
       else if (xp >= 250) { level = 3; levelStart = 250; levelEnd = 450; }
@@ -190,33 +208,51 @@
         "تا سطح بعدی " + (levelEnd - xp) + " XP";
       document.getElementById("levelBar").style.width = progress + "%";
 
-      /* پیشرفت حسابان — بر اساس تعداد سوالات حل‌شده */
-      const totalQuestions = 5; /* ۳ سوال درس ۱ + ۲ سوال درس ۲ */
-      const hesabanPercent = Math.min(
-        100,
-        Math.round((solved / totalQuestions) * 100)
-      );
-
+      /* پیشرفت حسابان */
+      const totalQ = 5;
+      const p = Math.min(100, Math.round((solved / totalQ) * 100));
       const hesabanEl = document.getElementById("hesabanPercent");
       const hesabanText = document.getElementById("hesabanProgressText");
-
-      if (hesabanEl) hesabanEl.textContent = hesabanPercent + "%";
-
+      if (hesabanEl) hesabanEl.textContent = p + "%";
       if (hesabanText) {
-        if (hesabanPercent === 0) {
-          hesabanText.textContent = "در حال یادگیری";
-        } else if (hesabanPercent < 100) {
-          hesabanText.textContent = solved + " از " + totalQuestions + " سوال حل شده";
-        } else {
-          hesabanText.textContent = "کامل شد! 🎉";
-        }
+        if (p === 0) hesabanText.textContent = "در حال یادگیری";
+        else if (p < 100) hesabanText.textContent = solved + " از " + totalQ + " سوال";
+        else hesabanText.textContent = "کامل شد! 🎉";
       }
+
+      renderMistakes(user);
+    }
+
+    function renderMistakes(user) {
+      const container = document.getElementById("mistakesList");
+      if (!container) return;
+
+      if (!user.mistakes || user.mistakes.length === 0) {
+        container.innerHTML =
+          '<p style="color:#8d9690;font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>';
+        return;
+      }
+
+      container.innerHTML = "";
+
+      user.mistakes.forEach((m) => {
+        const div = document.createElement("div");
+        div.className = "mistake-item";
+        div.innerHTML = `
+          <div class="mistake-question">${m.question}</div>
+          <div class="mistake-answer">پاسخ درست: ${m.correctAnswer}</div>
+          <div class="mistake-solution">${m.solution}</div>
+        `;
+        container.appendChild(div);
+      });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
       renderProfile();
     });
+
+    window.addEventListener("pageshow", renderProfile);
   </script>
 
 </body>
