@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>محاسبه‌گر معدل | AXIS</title>
   <link rel="stylesheet" href="css/gpa.css" />
+  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -14,11 +15,10 @@
     <div class="brand">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="hesaban.html">حسابان</a>
+      <a href="subject.html">حسابان</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
-      <a href="profile.html">پروفایل</a>
     </nav>
     <a href="profile.html" class="user">پروفایل</a>
   </header>
@@ -79,7 +79,7 @@
         span.style.left = (Math.random() * 100) + "%";
         span.style.animationDuration = (12 + Math.random() * 18) + "s";
         span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
         bg.appendChild(span);
       }
     }
@@ -179,10 +179,10 @@
       gpaEl.textContent = roundedGpa;
 
       let status = "", statusColor = "";
-      if (gpa >= 18) { status = "عالی 🎉"; statusColor = "#6ee787"; }
-      else if (gpa >= 16) { status = "خیلی خوب 🔥"; statusColor = "#6ee787"; }
-      else if (gpa >= 14) { status = "خوب"; statusColor = "#e5e7eb"; }
-      else if (gpa >= 12) { status = "قابل قبول"; statusColor = "#e5e7eb"; }
+      if (gpa >= 18) { status = "عالی 🎉"; statusColor = "var(--green-light)"; }
+      else if (gpa >= 16) { status = "خیلی خوب 🔥"; statusColor = "var(--green-light)"; }
+      else if (gpa >= 14) { status = "خوب"; statusColor = "var(--text)"; }
+      else if (gpa >= 12) { status = "قابل قبول"; statusColor = "var(--text)"; }
       else if (gpa >= 10) { status = "نیاز به تلاش بیشتر"; statusColor = "#f0c35a"; }
       else { status = "نیاز به تجدیدنظر جدی"; statusColor = "#e05252"; }
 
@@ -191,7 +191,7 @@
 
       detailsEl.innerHTML = `
         <div class="detail-row"><span>دروس وارد شده</span><strong>${enteredCount} از ${SUBJECTS.length}</strong></div>
-        <div class="detail-row"><span>واحدهای قبول</span><strong style="color:#6ee787;">${passedUnits}</strong></div>
+        <div class="detail-row"><span>واحدهای قبول</span><strong style="color:var(--green-light);">${passedUnits}</strong></div>
         <div class="detail-row"><span>واحدهای افتاده</span><strong style="color:#e05252;">${failedUnits}</strong></div>
         <div class="detail-row"><span>مجموع واحدها</span><strong>${totalUnits}</strong></div>
       `;
