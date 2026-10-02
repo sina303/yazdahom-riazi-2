@@ -37,6 +37,7 @@
         <span class="chapter-label" id="chapterLabel">فصل</span>
         <h1 id="chapterTitle">در حال بارگذاری...</h1>
         <p id="chapterDescription">توضیحات فصل در حال بارگذاری است.</p>
+        <div id="chapterLinks" class="chapter-links"></div>
       </div>
       <div class="chapter-progress-card">
         <span>پیشرفت فصل</span>
@@ -113,6 +114,10 @@
       window.location.href = "lesson.html?lesson=" + encodeURIComponent(lessonId);
     }
 
+    function openExternal(url) {
+      if (url) window.open(url, "_blank", "noopener");
+    }
+
     async function loadChapter() {
       const lessonGrid = document.getElementById("lessonGrid");
       if (!lessonGrid) return;
@@ -140,6 +145,7 @@
         const elProgText = document.getElementById("chapterProgressText");
         const elProgBar = document.getElementById("chapterProgressBar");
         const elCount = document.getElementById("chapterLessonCount");
+        const elLinks = document.getElementById("chapterLinks");
 
         if (elLabel) elLabel.textContent = "فصل " + chapter.number;
         if (elTitle) elTitle.textContent = chapter.title;
@@ -148,6 +154,18 @@
         if (elProgText) elProgText.textContent = chapter.progress + "%";
         if (elProgBar) elProgBar.style.width = chapter.progress + "%";
         if (elCount) elCount.textContent = (chapter.lessons?.length || 0) + " درس";
+
+        /* لینک‌های بیرونی */
+        if (elLinks) {
+          elLinks.innerHTML = "";
+          if (chapter.solutionUrl) {
+            const btn = document.createElement("button");
+            btn.className = "external-link-btn";
+            btn.innerHTML = "📖 مشاهده حل تمرین‌های کتاب ↗";
+            btn.onclick = () => openExternal(chapter.solutionUrl);
+            elLinks.appendChild(btn);
+          }
+        }
 
         renderLessons(chapter.lessons);
       } catch (err) {
@@ -169,13 +187,26 @@
       lessons.forEach((lesson) => {
         const card = document.createElement("article");
         card.className = "lesson-card";
+
+        let externalBtn = "";
+        if (lesson.solutionUrl) {
+          externalBtn = `
+            <button class="external-mini-btn" onclick="openExternal('${lesson.solutionUrl}')">
+              حل تمرین ↗
+            </button>
+          `;
+        }
+
         card.innerHTML = `
           <div class="lesson-icon">${String(lesson.number).padStart(2, "0")}</div>
           <div>
             <h3>${lesson.title}</h3>
             <p>${lesson.description}</p>
           </div>
-          <button onclick="openLesson('${lesson.id}')">شروع →</button>
+          <div class="lesson-actions-group">
+            ${externalBtn}
+            <button onclick="openLesson('${lesson.id}')">شروع →</button>
+          </div>
         `;
         grid.appendChild(card);
       });
