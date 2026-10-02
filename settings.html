@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تنظیمات | AXIS</title>
+  <link rel="stylesheet" href="css/settings.css" />
+</head>
+<body>
+
+  <div class="math-bg" id="mathBg"></div>
+
+  <header class="settings-header">
+    <div class="brand">AXIS</div>
+    <nav>
+      <a href="index.html">خانه</a>
+      <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
+      <a href="gpa.html">معدل</a>
+      <a href="about.html">درباره</a>
+      <a href="profile.html">پروفایل</a>
+      <a href="settings.html">تنظیمات</a>
+    </nav>
+    <a href="profile.html" class="user">پروفایل</a>
+  </header>
+
+  <main>
+
+    <div class="breadcrumb">
+      <a href="index.html">خانه</a>
+      <span>←</span>
+      <a href="profile.html">پروفایل</a>
+      <span>←</span>
+      <strong>تنظیمات</strong>
+    </div>
+
+    <section class="settings-hero">
+      <span>Settings</span>
+      <h1>تنظیمات</h1>
+      <p>پروفایل، ظاهر، و داده‌های خود را از اینجا مدیریت کن.</p>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="settings-section">
+      <div class="section-head">
+        <span class="section-label">Profile</span>
+        <h2>پروفایل</h2>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <h3>نام کاربری</h3>
+          <p>اسمی که در پروفایل و Home نمایش داده می‌شه.</p>
+        </div>
+        <div class="setting-action">
+          <input type="text" id="usernameInput" placeholder="نام جدید..." maxlength="20">
+          <button class="btn-primary" onclick="saveUsername()">ذخیره</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPEARANCE -->
+    <section class="settings-section">
+      <div class="section-head">
+        <span class="section-label">Appearance</span>
+        <h2>ظاهر</h2>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <h3>حالت نمایش</h3>
+          <p>بین حالت شب (Dark) و روز (Light) جابجا شو.</p>
+        </div>
+        <div class="setting-action">
+          <div class="theme-toggle">
+            <button id="themeDarkBtn" class="theme-btn active" onclick="setTheme('dark')">🌙 شب</button>
+            <button id="themeLightBtn" class="theme-btn" onclick="setTheme('light')">☀️ روز</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h3>پس‌زمینه‌ی متحرک</h3>
+          <p>اعداد ریاضی که در پس‌زمینه میان بالا.</p>
+        </div>
+        <div class="setting-action">
+          <label class="switch">
+            <input type="checkbox" id="bgToggle" checked onchange="toggleBg(this.checked)">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA -->
+    <section class="settings-section">
+      <div class="section-head">
+        <span class="section-label">Data</span>
+        <h2>داده‌ها</h2>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h3>خروجی گرفتن از پیشرفت</h3>
+          <p>همه‌ی XP، آمار و غلط‌نامه به صورت فایل JSON دانلود می‌شه.</p>
+        </div>
+        <div class="setting-action">
+          <button class="btn-primary" onclick="exportData()">⬇ دانلود JSON</button>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <h3>وارد کردن پیشرفت</h3>
+          <p>فایل JSON که قبلاً دانلود کردی رو آپلود کن.</p>
+        </div>
+        <div class="setting-action">
+          <input type="file" id="importFile" accept=".json" onchange="importData(event)">
+          <button class="btn-secondary" onclick="document.getElementById('importFile').click()">⬆ انتخاب فایل</button>
+        </div>
+      </div>
+
+      <div class="setting-item danger">
+        <div class="setting-info">
+          <h3>پاک کردن همه‌ی داده‌ها</h3>
+          <p>XP، سوالات حل‌شده، غلط‌نامه و نمرات پاک می‌شن. این عمل برگشت‌پذیر نیست.</p>
+        </div>
+        <div class="setting-action">
+          <button class="btn-danger" onclick="resetAllData()">🗑 پاک کردن همه</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT APP -->
+    <section class="settings-section">
+      <div class="section-head">
+        <span class="section-label">About</span>
+        <h2>درباره‌ی AXIS</h2>
+      </div>
+      <div class="about-mini">
+        <div class="about-mini-row">
+          <span>نسخه</span>
+          <strong>1.0.0</strong>
+        </div>
+        <div class="about-mini-row">
+          <span>ساخته شده با</span>
+          <strong>HTML / CSS / JavaScript</strong>
+        </div>
+        <div class="about-mini-row">
+          <span>میزبانی</span>
+          <strong>GitHub Pages</strong>
+        </div>
+        <div class="about-mini-row">
+          <span>وضعیت</span>
+          <strong style="color:#6ee787;">فعال ✅</strong>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="settings-footer">
+    <strong>AXIS</strong> — Learn beyond the formula
+  </footer>
+
+  <script>
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.fontSize = (14 + Math.random() * 34) + "px";
+        span.style.left = (Math.random() * 100) + "%";
+        span.style.animationDuration = (12 + Math.random() * 18) + "s";
+        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
+        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        bg.appendChild(span);
+      }
+    }
+
+    /* =========================================
+    THEME
+    ========================================= */
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("y11_theme", theme);
+
+      document.getElementById("themeDarkBtn").classList.toggle("active", theme === "dark");
+      document.getElementById("themeLightBtn").classList.toggle("active", theme === "light");
+    }
+
+    function loadTheme() {
+      const theme = localStorage.getItem("y11_theme") || "dark";
+      setTheme(theme);
+    }
+
+    /* =========================================
+    BACKGROUND TOGGLE
+    ========================================= */
+    function toggleBg(enabled) {
+      localStorage.setItem("y11_bg_enabled", enabled ? "1" : "0");
+      const bg = document.getElementById("mathBg");
+      if (bg) bg.style.display = enabled ? "block" : "none";
+    }
+
+    function loadBgSetting() {
+      const enabled = localStorage.getItem("y11_bg_enabled") !== "0";
+      const toggle = document.getElementById("bgToggle");
+      if (toggle) toggle.checked = enabled;
+      const bg = document.getElementById("mathBg");
+      if (bg) bg.style.display = enabled ? "block" : "none";
+    }
+
+    /* =========================================
+    USERNAME
+    ========================================= */
+    function saveUsername() {
+      const input = document.getElementById("usernameInput");
+      const name = input.value.trim();
+
+      if (!name) {
+        alert("نام کاربری نمی‌تونه خالی باشه.");
+        return;
+      }
+      if (name.length < 3) {
+        alert("نام کاربری حداقل باید ۳ حرف باشه.");
+        return;
+      }
+
+      const raw = localStorage.getItem("y11_math_user");
+      let user;
+      try { user = raw ? JSON.parse(raw) : {}; } catch (e) { user = {}; }
+
+      user.username = name;
+      localStorage.setItem("y11_math_user", JSON.stringify(user));
+
+      alert("نام کاربری با موفقیت ذخیره شد ✅");
+      input.value = "";
+    }
+
+    function loadCurrentUsername() {
+      const raw = localStorage.getItem("y11_math_user");
+      if (!raw) return;
+      try {
+        const u = JSON.parse(raw);
+        if (u.username) {
+          document.getElementById("usernameInput").placeholder = "نام فعلی: " + u.username;
+        }
+      } catch (e) {}
+    }
+
+    /* =========================================
+    EXPORT / IMPORT
+    ========================================= */
+    function exportData() {
+      const data = {
+        user: JSON.parse(localStorage.getItem("y11_math_user") || "{}"),
+        gpa: JSON.parse(localStorage.getItem("y11_gpa_grades") || "{}"),
+        theme: localStorage.getItem("y11_theme") || "dark",
+        bgEnabled: localStorage.getItem("y11_bg_enabled") !== "0",
+        exportDate: new Date().toISOString()
+      };
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "axis-backup-" + new Date().toISOString().split("T")[0] + ".json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+
+          if (data.user) localStorage.setItem("y11_math_user", JSON.stringify(data.user));
+          if (data.gpa) localStorage.setItem("y11_gpa_grades", JSON.stringify(data.gpa));
+          if (data.theme) localStorage.setItem("y11_theme", data.theme);
+          if (data.bgEnabled !== undefined) {
+            localStorage.setItem("y11_bg_enabled", data.bgEnabled ? "1" : "0");
+          }
+
+          alert("داده‌ها با موفقیت وارد شد ✅");
+          window.location.reload();
+        } catch (err) {
+          alert("خطا در خواندن فایل: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    /* =========================================
+    RESET
+    ========================================= */
+    function resetAllData() {
+      const confirm1 = confirm("⚠️ مطمئنی می‌خوای همه‌ی داده‌ها رو پاک کنی؟");
+      if (!confirm1) return;
+
+      const confirm2 = confirm("⚠️ این عمل برگشت‌پذیر نیست. مطمئنی؟");
+      if (!confirm2) return;
+
+      localStorage.removeItem("y11_math_user");
+      localStorage.removeItem("y11_gpa_grades");
+      localStorage.removeItem("y11_theme");
+      localStorage.removeItem("y11_bg_enabled");
+
+      alert("همه‌ی داده‌ها پاک شد ✅");
+      window.location.href = "index.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      loadTheme();
+      loadBgSetting();
+      loadCurrentUsername();
+    });
+  </script>
+
+</body>
+</html>
