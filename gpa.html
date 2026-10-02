@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محاسبه‌گر معدل | AXIS</title>
+  <link rel="stylesheet" href="css/gpa.css" />
+</head>
+<body>
+
+  <div class="math-bg" id="mathBg"></div>
+
+  <header class="gpa-header">
+    <div class="brand">AXIS</div>
+    <nav>
+      <a href="index.html">خانه</a>
+      <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
+      <a href="gpa.html">معدل</a>
+      <a href="profile.html">پروفایل</a>
+    </nav>
+    <a href="profile.html" class="user">پروفایل</a>
+  </header>
+
+  <main>
+
+    <div class="breadcrumb">
+      <a href="index.html">خانه</a>
+      <span>←</span>
+      <strong>محاسبه‌گر معدل</strong>
+    </div>
+
+    <section class="gpa-hero">
+      <span>ابزار</span>
+      <h1>محاسبه‌گر معدل</h1>
+      <p>نمرات دروس یازدهم ریاضی رو وارد کن تا معدل و وضعیتت رو ببینی. نمرات خودکار ذخیره می‌شن.</p>
+    </section>
+
+    <section class="gpa-layout">
+
+      <div class="gpa-form">
+        <h2>نمرات دروس</h2>
+        <div id="subjectsList"></div>
+
+        <div class="gpa-actions">
+          <button class="btn-primary" onclick="calculateGPA()">محاسبه معدل</button>
+          <button class="btn-secondary" onclick="resetGrades()">پاک کردن همه</button>
+        </div>
+      </div>
+
+      <div class="gpa-result" id="gpaResult">
+        <span class="result-label">نتیجه</span>
+        <div class="result-value" id="gpaValue">—</div>
+        <div class="result-status" id="gpaStatus">نمرات رو وارد کن</div>
+
+        <div class="result-details" id="gpaDetails"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.fontSize = (14 + Math.random() * 34) + "px";
+        span.style.left = (Math.random() * 100) + "%";
+        span.style.animationDuration = (12 + Math.random() * 18) + "s";
+        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
+        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        bg.appendChild(span);
+      }
+    }
+
+    /* =========================================
+    دروس یازدهم ریاضی
+    ========================================= */
+    const SUBJECTS = [
+      { id: "hesaban",    name: "حسابان ۱",         unit: 4 },
+      { id: "handese",    name: "هندسه ۲",          unit: 3 },
+      { id: "gosite",     name: "ریاضیات گسسته",    unit: 2 },
+      { id: "fizik",      name: "فیزیک ۲",          unit: 3 },
+      { id: "shimi",      name: "شیمی ۲",           unit: 3 },
+      { id: "farsi",      name: "فارسی ۲",          unit: 2 },
+      { id: "arabic",     name: "عربی ۲",           unit: 2 },
+      { id: "dini",       name: "دین و زندگی ۲",    unit: 2 },
+      { id: "english",    name: "زبان انگلیسی ۲",   unit: 2 },
+      { id: "joghrafia",  name: "جغرافیا ۲",        unit: 2 },
+      { id: "tarikh",     name: "تاریخ معاصر",      unit: 2 },
+      { id: "ejtema",     name: "جامعه‌شناسی ۲",   unit: 2 }
+    ];
+
+    const STORAGE_KEY = "y11_gpa_grades";
+
+    function loadGrades() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return {};
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveGrades(grades) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(grades));
+    }
+
+    function renderSubjects() {
+      const container = document.getElementById("subjectsList");
+      if (!container) return;
+
+      const grades = loadGrades();
+      container.innerHTML = "";
+
+      SUBJECTS.forEach((subject) => {
+        const row = document.createElement("div");
+        row.className = "subject-row";
+
+        const value = grades[subject.id] !== undefined ? grades[subject.id] : "";
+
+        row.innerHTML = `
+          <div class="subject-name">
+            <strong>${subject.name}</strong>
+            <span>${subject.unit} واحد</span>
+          </div>
+          <input
+            type="number"
+            min="0"
+            max="20"
+            step="0.25"
+            placeholder="نمره"
+            value="${value}"
+            data-subject="${subject.id}"
+            oninput="onGradeChange(this)"
+          >
+        `;
+
+        container.appendChild(row);
+      });
+    }
+
+    function onGradeChange(input) {
+      const subjectId = input.dataset.subject;
+      const value = input.value;
+
+      let n = parseFloat(value);
+      if (isNaN(n)) n = 0;
+      if (n < 0) n = 0;
+      if (n > 20) n = 20;
+
+      const grades = loadGrades();
+      if (value === "") {
+        delete grades[subjectId];
+      } else {
+        grades[subjectId] = n;
+      }
+      saveGrades(grades);
+    }
+
+    function calculateGPA() {
+      const grades = loadGrades();
+
+      let totalWeighted = 0;
+      let totalUnits = 0;
+      let enteredCount = 0;
+      let passedUnits = 0;
+      let failedUnits = 0;
+
+      SUBJECTS.forEach((subject) => {
+        const g = grades[subject.id];
+        if (g === undefined) return;
+
+        enteredCount++;
+        totalWeighted += g * subject.unit;
+        totalUnits += subject.unit;
+
+        if (g >= 10) passedUnits += subject.unit;
+        else failedUnits += subject.unit;
+      });
+
+      const gpaEl = document.getElementById("gpaValue");
+      const statusEl = document.getElementById("gpaStatus");
+      const detailsEl = document.getElementById("gpaDetails");
+
+      if (enteredCount === 0) {
+        gpaEl.textContent = "—";
+        statusEl.textContent = "نمرات رو وارد کن";
+        detailsEl.innerHTML = "";
+        return;
+      }
+
+      const gpa = totalWeighted / totalUnits;
+      const roundedGpa = gpa.toFixed(2);
+
+      gpaEl.textContent = roundedGpa;
+
+      let status = "";
+      let statusColor = "";
+
+      if (gpa >= 18) { status = "عالی 🎉"; statusColor = "#6ee787"; }
+      else if (gpa >= 16) { status = "خیلی خوب 🔥"; statusColor = "#6ee787"; }
+      else if (gpa >= 14) { status = "خوب"; statusColor = "#e5e7eb"; }
+      else if (gpa >= 12) { status = "قابل قبول"; statusColor = "#e5e7eb"; }
+      else if (gpa >= 10) { status = "نیاز به تلاش بیشتر"; statusColor = "#f0c35a"; }
+      else { status = "نیاز به تجدیدنظر جدی"; statusColor = "#e05252"; }
+
+      statusEl.textContent = status;
+      statusEl.style.color = statusColor;
+
+      detailsEl.innerHTML = `
+        <div class="detail-row">
+          <span>دروس وارد شده</span>
+          <strong>${enteredCount} از ${SUBJECTS.length}</strong>
+        </div>
+        <div class="detail-row">
+          <span>واحدهای قبول</span>
+          <strong style="color:#6ee787;">${passedUnits}</strong>
+        </div>
+        <div class="detail-row">
+          <span>واحدهای افتاده</span>
+          <strong style="color:#e05252;">${failedUnits}</strong>
+        </div>
+        <div class="detail-row">
+          <span>مجموع واحدها</span>
+          <strong>${totalUnits}</strong>
+        </div>
+      `;
+    }
+
+    function resetGrades() {
+      if (!confirm("مطمئنی می‌خوای همه‌ی نمرات رو پاک کنی؟")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderSubjects();
+      document.getElementById("gpaValue").textContent = "—";
+      document.getElementById("gpaStatus").textContent = "نمرات رو وارد کن";
+      document.getElementById("gpaStatus").style.color = "";
+      document.getElementById("gpaDetails").innerHTML = "";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      renderSubjects();
+    });
+  </script>
+
+</body>
+</html>
