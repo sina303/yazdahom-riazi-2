@@ -106,7 +106,7 @@ main {
 
 .lesson-header nav {
   display: flex;
-  gap: 25px;
+  gap: 22px;
 }
 
 .lesson-header nav a {
@@ -205,6 +205,44 @@ main {
   margin-top: 15px;
   color: var(--muted);
   line-height: 2;
+}
+
+/* HERO ACTIONS */
+.lesson-actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lesson-actions button {
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.lesson-actions .check-button {
+  background: var(--green);
+  color: #071008;
+}
+
+.lesson-actions .solution-button {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.lesson-actions button:hover {
+  opacity: 0.9;
+}
+
+.lesson-actions button:active {
+  transform: scale(0.98);
 }
 
 /* CONTENT */
@@ -615,6 +653,72 @@ button:disabled {
   font-size: 14px;
   cursor: pointer;
   margin: 5px;
+}
+
+/* =========================================
+FOCUS MODE
+========================================= */
+body.focus-mode {
+  overflow: hidden;
+}
+
+body.focus-mode .lesson-header,
+body.focus-mode .breadcrumb,
+body.focus-mode .lesson-hero,
+body.focus-mode .lesson-info,
+body.focus-mode .questions-header,
+body.focus-mode .exam-timer {
+  opacity: 0.1;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+body.focus-mode .question-card {
+  box-shadow: 0 0 60px rgba(53, 211, 90, 0.15);
+  border-color: var(--green);
+}
+
+.focus-overlay {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 200;
+  display: none;
+}
+
+body.focus-mode .focus-overlay {
+  display: flex;
+  gap: 10px;
+}
+
+.focus-exit {
+  padding: 12px 20px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.focus-exit:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.focus-timer-display {
+  padding: 12px 20px;
+  background: rgba(53, 211, 90, 0.1);
+  border: 1px solid rgba(53, 211, 90, 0.3);
+  border-radius: 10px;
+  color: var(--green);
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 /* LOADING */
