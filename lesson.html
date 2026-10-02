@@ -15,6 +15,7 @@
     <nav>
       <a href="index.html">خانه</a>
       <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
     </nav>
     <a href="profile.html" class="user">پروفایل</a>
   </header>
@@ -33,18 +34,14 @@
       <span id="lessonNumber">درس</span>
       <h1 id="lessonTitle">در حال بارگذاری...</h1>
       <p id="lessonDescription">محتوای درس در حال بارگذاری است.</p>
-      <div id="lessonActions" style="margin-top:25px; display:flex; gap:10px; flex-wrap:wrap;">
-        <button id="practiceBtn" class="check-button" onclick="startPractice()">
-          حالت تمرین
-        </button>
-        <button id="examBtn" class="solution-button" onclick="startExam()">
-          حالت آزمون ⏱
-        </button>
+      <div id="lessonActions" style="margin-top:25px; display:flex; gap:10px; flex-wrap:wrap; position:relative;">
+        <button id="practiceBtn" class="check-button" onclick="startPractice()">حالت تمرین</button>
+        <button id="examBtn" class="solution-button" onclick="startExam()">حالت آزمون ⏱</button>
       </div>
     </section>
 
     <section class="lesson-content">
-      <div class="lesson-info" id="lessonInfo">
+      <div class="lesson-info">
         <span>راهنمای درس</span>
         <h2>توضیحات</h2>
         <p>در این بخش می‌توانی سوالات درس را یکی‌یکی پاسخ دهی و راه‌حل کامل را ببینی. هر پاسخ درست ۱۰ XP به تو می‌دهد.</p>
@@ -70,81 +67,7 @@
 
   </main>
 
-  <style>
-    .exam-timer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px;
-      background: var(--surface);
-      border: 1px solid var(--green);
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-    .exam-timer.hidden { display: none; }
-    .timer-icon { font-size: 20px; color: var(--green); }
-    .exam-timer strong {
-      font-size: 24px;
-      color: var(--green);
-      font-family: monospace;
-      letter-spacing: 2px;
-    }
-    .exam-card {
-      padding: 30px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      text-align: center;
-    }
-    .exam-card h2 {
-      color: var(--green);
-      font-size: 32px;
-      margin-bottom: 15px;
-    }
-    .exam-card p {
-      color: var(--muted);
-      margin-bottom: 20px;
-      line-height: 2;
-    }
-    .exam-card .exam-stat {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin: 25px 0;
-    }
-    .exam-card .exam-stat div {
-      padding: 18px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-    }
-    .exam-card .exam-stat span {
-      color: var(--muted);
-      font-size: 12px;
-      display: block;
-      margin-bottom: 8px;
-    }
-    .exam-card .exam-stat strong {
-      color: var(--green);
-      font-size: 22px;
-    }
-    .exam-card button {
-      padding: 13px 28px;
-      border-radius: 10px;
-      background: var(--green);
-      color: #071008;
-      border: none;
-      font-weight: bold;
-      font-family: inherit;
-      font-size: 14px;
-      cursor: pointer;
-      margin: 5px;
-    }
-  </style>
-
   <script>
-    /* پس‌زمینه */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
@@ -167,9 +90,6 @@
       }
     }
 
-    /* =========================================
-    DATA
-    ========================================= */
     const LESSONS_DATA = {
       "hesaban-ch1-lesson-1": {
         id: "hesaban-ch1-lesson-1",
@@ -226,21 +146,15 @@
       }
     };
 
-    /* =========================================
-    STATE
-    ========================================= */
     let currentLesson = null;
     let currentQuestionIndex = 0;
     let sessionScore = 0;
-    let mode = "practice"; /* practice | exam */
+    let mode = "practice";
     let examQuestions = [];
     let examAnswers = [];
     let timerInterval = null;
     let timerSeconds = 0;
 
-    /* =========================================
-    USER
-    ========================================= */
     const USER_KEY = "y11_math_user";
 
     function getUser() {
@@ -293,45 +207,30 @@
       return user;
     }
 
-    /* =========================================
-    LOAD
-    ========================================= */
     function loadLesson() {
       const container = document.getElementById("questionsList");
-
       try {
         const params = new URLSearchParams(window.location.search);
         const lessonId = params.get("lesson");
-
         if (!lessonId) throw new Error("شناسه درس در آدرس نیست");
-
         const lesson = LESSONS_DATA[lessonId];
         if (!lesson) throw new Error("درس پیدا نشد");
-
         currentLesson = lesson;
 
         document.getElementById("lessonNumber").textContent = "درس " + lesson.number;
         document.getElementById("lessonTitle").textContent = lesson.title;
         document.getElementById("lessonDescription").textContent = lesson.description;
         document.getElementById("breadcrumbLesson").textContent = lesson.title;
-        document.getElementById("backToChapter").href =
-          "chapter.html?chapter=" + lesson.chapterId;
-        document.getElementById("questionCount").textContent =
-          lesson.questions.length + " سوال";
+        document.getElementById("backToChapter").href = "chapter.html?chapter=" + lesson.chapterId;
+        document.getElementById("questionCount").textContent = lesson.questions.length + " سوال";
 
         startPractice();
-
       } catch (err) {
         console.error(err);
-        if (container) {
-          container.innerHTML = '<div class="loading" style="color:#e05252;">خطا: ' + err.message + '</div>';
-        }
+        if (container) container.innerHTML = '<div class="loading" style="color:#e05252;">خطا: ' + err.message + '</div>';
       }
     }
 
-    /* =========================================
-    PRACTICE MODE
-    ========================================= */
     function startPractice() {
       mode = "practice";
       currentQuestionIndex = 0;
@@ -344,29 +243,20 @@
       document.getElementById("examTimer").classList.add("hidden");
 
       if (timerInterval) clearInterval(timerInterval);
-
       renderCurrentQuestion();
     }
 
-    /* =========================================
-    EXAM MODE
-    ========================================= */
     function startExam() {
       mode = "exam";
       currentQuestionIndex = 0;
       sessionScore = 0;
-
-      /* سوالات رو تصادفی کن */
-      examQuestions = [...currentLesson.questions].sort(
-        () => Math.random() - 0.5
-      );
+      examQuestions = [...currentLesson.questions].sort(() => Math.random() - 0.5);
       examAnswers = [];
 
       document.getElementById("modeLabel").textContent = "آزمون";
       document.getElementById("modeTitle").textContent = "آزمون درس";
       document.getElementById("examTimer").classList.remove("hidden");
 
-      /* تایمر */
       timerSeconds = 0;
       updateTimerText();
       if (timerInterval) clearInterval(timerInterval);
@@ -385,13 +275,9 @@
       if (el) el.textContent = m + ":" + s;
     }
 
-    /* =========================================
-    RENDER
-    ========================================= */
     function renderCurrentQuestion() {
       const container = document.getElementById("questionsList");
       const questions = examQuestions;
-
       if (!questions.length) {
         container.innerHTML = '<div class="loading">سوالی موجود نیست.</div>';
         return;
@@ -430,9 +316,6 @@
       if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") checkAnswer(); });
     }
 
-    /* =========================================
-    CHECK
-    ========================================= */
     function checkAnswer() {
       const input = document.getElementById("userAnswer");
       const resultArea = document.getElementById("resultArea");
@@ -441,7 +324,6 @@
       const navigationArea = document.getElementById("navigationArea");
 
       const userAnswer = input.value.trim();
-
       if (!userAnswer) {
         resultArea.className = "result-area wrong";
         resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید.";
@@ -452,7 +334,6 @@
       const correct = normalizeAnswer(q.correctAnswer);
       const user = normalizeAnswer(userAnswer);
       const isCorrect = user === correct;
-
       const userData = registerAnswer(q.id, isCorrect, q);
 
       examAnswers.push({ id: q.id, isCorrect: isCorrect });
@@ -460,16 +341,10 @@
       if (isCorrect) {
         sessionScore += 10;
         resultArea.className = "result-area correct";
-        resultArea.innerHTML =
-          "<strong>آفرین!</strong>" +
-          "<span>+10 XP</span>" +
-          "<span>XP کل: " + userData.xp + "</span>";
+        resultArea.innerHTML = "<strong>آفرین!</strong><span>+10 XP</span><span>XP کل: " + userData.xp + "</span>";
       } else {
         resultArea.className = "result-area wrong";
-        resultArea.innerHTML =
-          "<strong>پاسخ درست نیست.</strong>" +
-          "<span>پاسخ درست: " + q.correctAnswer + "</span>" +
-          "<span>به غلط‌نامه اضافه شد</span>";
+        resultArea.innerHTML = "<strong>پاسخ درست نیست.</strong><span>پاسخ درست: " + q.correctAnswer + "</span><span>به غلط‌نامه اضافه شد</span>";
       }
 
       input.disabled = true;
@@ -481,7 +356,6 @@
     function showSolution() {
       const q = examQuestions[currentQuestionIndex];
       const resultArea = document.getElementById("resultArea");
-
       resultArea.innerHTML += `
         <div class="solution-box">
           <div class="solution-title">راه‌حل</div>
@@ -489,7 +363,6 @@
           <p class="solution-text">${q.solution}</p>
         </div>
       `;
-
       document.getElementById("solutionButton").disabled = true;
     }
 
@@ -510,9 +383,6 @@
       }
     }
 
-    /* =========================================
-    RESULTS
-    ========================================= */
     function showLessonResult() {
       const container = document.getElementById("questionsList");
       container.innerHTML = `
@@ -528,7 +398,6 @@
 
     function showExamResult() {
       if (timerInterval) clearInterval(timerInterval);
-
       const container = document.getElementById("questionsList");
       const total = examQuestions.length;
       const correctCount = examAnswers.filter((a) => a.isCorrect).length;
@@ -549,18 +418,9 @@
           <h2>${percent}%</h2>
           <p>${message}</p>
           <div class="exam-stat">
-            <div>
-              <span>درست</span>
-              <strong>${correctCount}</strong>
-            </div>
-            <div>
-              <span>غلط</span>
-              <strong>${total - correctCount}</strong>
-            </div>
-            <div>
-              <span>زمان</span>
-              <strong>${m}:${s}</strong>
-            </div>
+            <div><span>درست</span><strong>${correctCount}</strong></div>
+            <div><span>غلط</span><strong>${total - correctCount}</strong></div>
+            <div><span>زمان</span><strong>${m}:${s}</strong></div>
           </div>
           <button onclick="startExam()">آزمون دوباره</button>
           <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
@@ -568,9 +428,7 @@
       `;
     }
 
-    function restartLesson() {
-      startPractice();
-    }
+    function restartLesson() { startPractice(); }
 
     function normalizeAnswer(answer) {
       return String(answer)
