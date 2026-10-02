@@ -11,6 +11,38 @@
 
   <div class="math-bg" id="mathBg"></div>
 
+  <!-- ⭐ ستاره‌ی یادبود (Easter Egg) -->
+  <div class="memorial-star" id="memorialStar" title="..." aria-label="یادبود">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
+    </svg>
+  </div>
+
+  <!-- 🕯️ مودال یادبود -->
+  <div class="memorial-modal" id="memorialModal">
+    <div class="memorial-stars" id="memorialStars"></div>
+    <div class="memorial-glow"></div>
+
+    <div class="memorial-content">
+      <div class="memorial-big-star">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
+        </svg>
+      </div>
+
+      <h1 class="memorial-title">جاویدنامان</h1>
+
+      <p class="memorial-text">اینجا اسمی گفته نمی‌شه.</p>
+      <p class="memorial-text">فقط سکوت می‌کنیم.</p>
+      <p class="memorial-text">برای آن‌ها که رفتند،</p>
+      <p class="memorial-text">تا ما بمانیم.</p>
+
+      <div class="memorial-rose">🌹</div>
+
+      <button class="memorial-close" onclick="closeMemorial()">بازگشت</button>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="site-logo">AXIS</div>
     <nav class="site-nav">
@@ -47,7 +79,7 @@
         </div>
         <div class="stat-box">
           <span class="label">Status</span>
-          <div class="value" style="font-size:16px;color:#6ee787;" id="heroStatus">Active</div>
+          <div class="value" style="font-size:16px;color:var(--green-light);" id="heroStatus">Active</div>
         </div>
       </div>
     </section>
@@ -149,6 +181,9 @@
   </footer>
 
   <script>
+    /* =========================================
+    MATH BACKGROUND
+    ========================================= */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
@@ -171,59 +206,44 @@
       }
     }
 
-    function getUser() {
-      const raw = localStorage.getItem("y11_math_user");
-      if (!raw) return { username:"Sina", xp:0, solved:0 };
-      try {
-        const u = JSON.parse(raw);
-        return { username: u.username || "Sina", xp: u.xp || 0, solved: u.solved || 0 };
-      } catch (e) {
-        return { username:"Sina", xp:0, solved:0 };
+    /* =========================================
+    MEMORIAL EASTER EGG
+    ========================================= */
+    function positionMemorialStar() {
+      const star = document.getElementById("memorialStar");
+      if (!star) return;
+      /* موقعیت تصادفی ستاره توی صفحه */
+      const left = 10 + Math.random() * 80; /* 10% تا 90% */
+      star.style.left = left + "%";
+    }
+
+    function createMemorialStars() {
+      const container = document.getElementById("memorialStars");
+      if (!container) return;
+      container.innerHTML = "";
+      for (let i = 0; i < 100; i++) {
+        const s = document.createElement("span");
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.animationDelay = (Math.random() * 4) + "s";
+        s.style.animationDuration = (2 + Math.random() * 4) + "s";
+        const size = 1 + Math.random() * 2;
+        s.style.width = size + "px";
+        s.style.height = size + "px";
+        container.appendChild(s);
       }
     }
 
-    function getLevel(xp) {
-      if (xp >= 700) return 5;
-      if (xp >= 450) return 4;
-      if (xp >= 250) return 3;
-      if (xp >= 100) return 2;
-      return 1;
+    function openMemorial() {
+      const modal = document.getElementById("memorialModal");
+      if (!modal) return;
+      createMemorialStars();
+      modal.classList.remove("closing");
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
     }
 
-    function renderHeroStats() {
-      const user = getUser();
-      const level = getLevel(user.xp);
-      document.getElementById("heroXp").textContent = user.xp;
-      document.getElementById("heroLevel").textContent = level;
-
-      const statusEl = document.getElementById("heroStatus");
-      if (user.solved === 0) {
-        statusEl.textContent = "New";
-        statusEl.style.color = "var(--muted)";
-      } else if (level >= 4) {
-        statusEl.textContent = "Expert";
-        statusEl.style.color = "var(--green-light)";
-      } else if (level >= 2) {
-        statusEl.textContent = "Active";
-        statusEl.style.color = "var(--green-light)";
-      } else {
-        statusEl.textContent = "Beginner";
-        statusEl.style.color = "var(--text)";
-      }
-
-      const totalQ = 5;
-      const percent = Math.min(100, Math.round((user.solved / totalQ) * 100));
-      const cardProgress = document.getElementById("hesabanCardProgress");
-      if (cardProgress) cardProgress.textContent = percent + "% Progress";
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      createMathBackground();
-      renderHeroStats();
-    });
-
-    window.addEventListener("pageshow", renderHeroStats);
-  </script>
-
-</body>
-</html>
+    function closeMemorial() {
+      const modal = document.getElementById("memorialModal");
+      if (!modal) return;
+      modal.classList.add("
