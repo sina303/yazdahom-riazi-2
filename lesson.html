@@ -33,10 +33,18 @@
       <span id="lessonNumber">درس</span>
       <h1 id="lessonTitle">در حال بارگذاری...</h1>
       <p id="lessonDescription">محتوای درس در حال بارگذاری است.</p>
+      <div id="lessonActions" style="margin-top:25px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="practiceBtn" class="check-button" onclick="startPractice()">
+          حالت تمرین
+        </button>
+        <button id="examBtn" class="solution-button" onclick="startExam()">
+          حالت آزمون ⏱
+        </button>
+      </div>
     </section>
 
     <section class="lesson-content">
-      <div class="lesson-info">
+      <div class="lesson-info" id="lessonInfo">
         <span>راهنمای درس</span>
         <h2>توضیحات</h2>
         <p>در این بخش می‌توانی سوالات درس را یکی‌یکی پاسخ دهی و راه‌حل کامل را ببینی. هر پاسخ درست ۱۰ XP به تو می‌دهد.</p>
@@ -44,10 +52,15 @@
 
       <div class="questions-header">
         <div>
-          <span>تمرین</span>
-          <h2>سوالات درس</h2>
+          <span id="modeLabel">تمرین</span>
+          <h2 id="modeTitle">سوالات درس</h2>
         </div>
         <div id="questionCount">0 سوال</div>
+      </div>
+
+      <div id="examTimer" class="exam-timer hidden">
+        <span class="timer-icon">⏱</span>
+        <strong id="timerText">00:00</strong>
       </div>
 
       <div class="questions-list" id="questionsList">
@@ -57,8 +70,81 @@
 
   </main>
 
+  <style>
+    .exam-timer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      background: var(--surface);
+      border: 1px solid var(--green);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .exam-timer.hidden { display: none; }
+    .timer-icon { font-size: 20px; color: var(--green); }
+    .exam-timer strong {
+      font-size: 24px;
+      color: var(--green);
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+    .exam-card {
+      padding: 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+    .exam-card h2 {
+      color: var(--green);
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+    .exam-card p {
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 2;
+    }
+    .exam-card .exam-stat {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 25px 0;
+    }
+    .exam-card .exam-stat div {
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .exam-card .exam-stat span {
+      color: var(--muted);
+      font-size: 12px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .exam-card .exam-stat strong {
+      color: var(--green);
+      font-size: 22px;
+    }
+    .exam-card button {
+      padding: 13px 28px;
+      border-radius: 10px;
+      background: var(--green);
+      color: #071008;
+      border: none;
+      font-weight: bold;
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 5px;
+    }
+  </style>
+
   <script>
-    /* پس‌زمینه متحرک */
+    /* پس‌زمینه */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
@@ -82,7 +168,7 @@
     }
 
     /* =========================================
-    DATA سوالات
+    DATA
     ========================================= */
     const LESSONS_DATA = {
       "hesaban-ch1-lesson-1": {
@@ -93,24 +179,21 @@
         chapterId: "hesaban-chapter-1",
         questions: [
           {
-            id: "h1q1",
-            difficulty: "آسان",
+            id: "h1q1", difficulty: "آسان",
             question: "جمله عمومی دنباله‌ای با جمله اول ۱ و قدر نسبت ۳ را بنویسید.",
             correctAnswer: "3n - 2",
             answer: "از فرمول جمله عمومی دنباله حسابی استفاده می‌کنیم.",
             solution: "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2"
           },
           {
-            id: "h1q2",
-            difficulty: "متوسط",
+            id: "h1q2", difficulty: "متوسط",
             question: "مجموع ۱۰ جمله اول دنباله حسابی ۱, ۴, ۷, ۱۰, ... را حساب کنید.",
             correctAnswer: "145",
             answer: "از فرمول مجموع n جمله اول استفاده می‌کنیم.",
             solution: "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145"
           },
           {
-            id: "h1q3",
-            difficulty: "آسان",
+            id: "h1q3", difficulty: "آسان",
             question: "اگر جمله اول یک دنباله حسابی ۵ و قدر نسبت آن ۲ باشد، جمله دهم چند است؟",
             correctAnswer: "23",
             answer: "از فرمول جمله عمومی استفاده می‌کنیم.",
@@ -126,16 +209,14 @@
         chapterId: "hesaban-chapter-1",
         questions: [
           {
-            id: "h2q1",
-            difficulty: "آسان",
+            id: "h2q1", difficulty: "آسان",
             question: "جمله عمومی دنباله هندسی با جمله اول ۲ و نسبت ۳ را بنویسید.",
             correctAnswer: "2 × 3^(n-1)",
             answer: "از فرمول جمله عمومی دنباله هندسی استفاده می‌کنیم.",
             solution: "a_n = a_1 × r^(n-1) = 2 × 3^(n-1)"
           },
           {
-            id: "h2q2",
-            difficulty: "آسان",
+            id: "h2q2", difficulty: "آسان",
             question: "مجموع ۴ جمله اول دنباله هندسی ۱, ۲, ۴, ۸, ... چقدر است؟",
             correctAnswer: "15",
             answer: "جملات را با هم جمع می‌کنیم.",
@@ -145,9 +226,17 @@
       }
     };
 
+    /* =========================================
+    STATE
+    ========================================= */
     let currentLesson = null;
     let currentQuestionIndex = 0;
     let sessionScore = 0;
+    let mode = "practice"; /* practice | exam */
+    let examQuestions = [];
+    let examAnswers = [];
+    let timerInterval = null;
+    let timerSeconds = 0;
 
     /* =========================================
     USER
@@ -156,17 +245,7 @@
 
     function getUser() {
       const raw = localStorage.getItem(USER_KEY);
-      if (!raw) {
-        return {
-          username: "Sina",
-          xp: 0,
-          solved: 0,
-          correct: 0,
-          wrong: 0,
-          solvedQuestions: [],
-          mistakes: []
-        };
-      }
+      if (!raw) return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
       try {
         const u = JSON.parse(raw);
         return {
@@ -179,15 +258,7 @@
           mistakes: u.mistakes || []
         };
       } catch (e) {
-        return {
-          username: "Sina",
-          xp: 0,
-          solved: 0,
-          correct: 0,
-          wrong: 0,
-          solvedQuestions: [],
-          mistakes: []
-        };
+        return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
       }
     }
 
@@ -197,34 +268,23 @@
 
     function registerAnswer(questionId, isCorrect, questionData) {
       const user = getUser();
-
-      /* اگه قبلاً حل شده، XP دوباره نده ولی غلط رو ثبت کن */
       const alreadySolved = user.solvedQuestions.includes(questionId);
 
       if (!alreadySolved) {
         user.solvedQuestions.push(questionId);
         user.solved += 1;
-
-        if (isCorrect) {
-          user.correct += 1;
-          user.xp += 10;
-        } else {
-          user.wrong += 1;
-        }
+        if (isCorrect) { user.correct += 1; user.xp += 10; }
+        else { user.wrong += 1; }
       }
 
-      /* ثبت غلط */
       if (!isCorrect && questionData) {
-        const alreadyInMistakes = user.mistakes.some(
-          (m) => m.id === questionId
-        );
-        if (!alreadyInMistakes) {
+        const exists = user.mistakes.some((m) => m.id === questionId);
+        if (!exists) {
           user.mistakes.push({
             id: questionId,
             question: questionData.question,
             correctAnswer: questionData.correctAnswer,
-            solution: questionData.solution,
-            date: new Date().toISOString()
+            solution: questionData.solution
           });
         }
       }
@@ -234,7 +294,7 @@
     }
 
     /* =========================================
-    LOAD LESSON
+    LOAD
     ========================================= */
     function loadLesson() {
       const container = document.getElementById("questionsList");
@@ -246,7 +306,7 @@
         if (!lessonId) throw new Error("شناسه درس در آدرس نیست");
 
         const lesson = LESSONS_DATA[lessonId];
-        if (!lesson) throw new Error("درس پیدا نشد: " + lessonId);
+        if (!lesson) throw new Error("درس پیدا نشد");
 
         currentLesson = lesson;
 
@@ -259,15 +319,70 @@
         document.getElementById("questionCount").textContent =
           lesson.questions.length + " سوال";
 
-        renderCurrentQuestion();
+        startPractice();
+
       } catch (err) {
         console.error(err);
         if (container) {
-          container.innerHTML =
-            '<div class="loading" style="color:#e05252;">خطا: ' +
-            err.message + '</div>';
+          container.innerHTML = '<div class="loading" style="color:#e05252;">خطا: ' + err.message + '</div>';
         }
       }
+    }
+
+    /* =========================================
+    PRACTICE MODE
+    ========================================= */
+    function startPractice() {
+      mode = "practice";
+      currentQuestionIndex = 0;
+      sessionScore = 0;
+      examQuestions = currentLesson.questions;
+      examAnswers = [];
+
+      document.getElementById("modeLabel").textContent = "تمرین";
+      document.getElementById("modeTitle").textContent = "سوالات درس";
+      document.getElementById("examTimer").classList.add("hidden");
+
+      if (timerInterval) clearInterval(timerInterval);
+
+      renderCurrentQuestion();
+    }
+
+    /* =========================================
+    EXAM MODE
+    ========================================= */
+    function startExam() {
+      mode = "exam";
+      currentQuestionIndex = 0;
+      sessionScore = 0;
+
+      /* سوالات رو تصادفی کن */
+      examQuestions = [...currentLesson.questions].sort(
+        () => Math.random() - 0.5
+      );
+      examAnswers = [];
+
+      document.getElementById("modeLabel").textContent = "آزمون";
+      document.getElementById("modeTitle").textContent = "آزمون درس";
+      document.getElementById("examTimer").classList.remove("hidden");
+
+      /* تایمر */
+      timerSeconds = 0;
+      updateTimerText();
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        updateTimerText();
+      }, 1000);
+
+      renderCurrentQuestion();
+    }
+
+    function updateTimerText() {
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+      const s = String(timerSeconds % 60).padStart(2, "0");
+      const el = document.getElementById("timerText");
+      if (el) el.textContent = m + ":" + s;
     }
 
     /* =========================================
@@ -275,46 +390,35 @@
     ========================================= */
     function renderCurrentQuestion() {
       const container = document.getElementById("questionsList");
-      const questions = currentLesson.questions;
+      const questions = examQuestions;
 
       if (!questions.length) {
-        container.innerHTML =
-          '<div class="loading">هنوز سوالی برای این درس ثبت نشده.</div>';
+        container.innerHTML = '<div class="loading">سوالی موجود نیست.</div>';
         return;
       }
 
       const q = questions[currentQuestionIndex];
-      const progress = Math.round(
-        ((currentQuestionIndex + 1) / questions.length) * 100
-      );
+      const progress = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
 
       container.innerHTML = `
         <article class="question-card">
           <div class="question-top">
-            <span class="question-number">
-              سوال ${currentQuestionIndex + 1} از ${questions.length}
-            </span>
+            <span class="question-number">سوال ${currentQuestionIndex + 1} از ${questions.length}</span>
             <span class="difficulty">${q.difficulty}</span>
           </div>
-
           <div class="question-progress">
             <div><i style="width: ${progress}%"></i></div>
           </div>
-
           <div class="question-text">${q.question}</div>
-
           <div class="answer-input-area">
             <label for="userAnswer">پاسخ خود را وارد کنید</label>
             <input type="text" id="userAnswer" placeholder="مثلاً: 3n - 2" autocomplete="off">
           </div>
-
           <div id="resultArea" class="result-area hidden"></div>
-
           <div class="question-actions">
             <button class="check-button" id="checkButton" onclick="checkAnswer()">بررسی پاسخ</button>
             <button class="solution-button hidden" id="solutionButton" onclick="showSolution()">مشاهده راه‌حل</button>
           </div>
-
           <div id="navigationArea" class="navigation-area hidden">
             <button onclick="previousQuestion()" class="nav-button secondary">← قبلی</button>
             <button onclick="nextQuestion()" class="nav-button">بعدی →</button>
@@ -323,11 +427,7 @@
       `;
 
       const input = document.getElementById("userAnswer");
-      if (input) {
-        input.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") checkAnswer();
-        });
-      }
+      if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") checkAnswer(); });
     }
 
     /* =========================================
@@ -348,12 +448,14 @@
         return;
       }
 
-      const q = currentLesson.questions[currentQuestionIndex];
+      const q = examQuestions[currentQuestionIndex];
       const correct = normalizeAnswer(q.correctAnswer);
       const user = normalizeAnswer(userAnswer);
       const isCorrect = user === correct;
 
       const userData = registerAnswer(q.id, isCorrect, q);
+
+      examAnswers.push({ id: q.id, isCorrect: isCorrect });
 
       if (isCorrect) {
         sessionScore += 10;
@@ -367,7 +469,7 @@
         resultArea.innerHTML =
           "<strong>پاسخ درست نیست.</strong>" +
           "<span>پاسخ درست: " + q.correctAnswer + "</span>" +
-          "<span>این سوال به غلط‌نامه اضافه شد</span>";
+          "<span>به غلط‌نامه اضافه شد</span>";
       }
 
       input.disabled = true;
@@ -377,7 +479,7 @@
     }
 
     function showSolution() {
-      const q = currentLesson.questions[currentQuestionIndex];
+      const q = examQuestions[currentQuestionIndex];
       const resultArea = document.getElementById("resultArea");
 
       resultArea.innerHTML += `
@@ -392,11 +494,12 @@
     }
 
     function nextQuestion() {
-      if (currentQuestionIndex < currentLesson.questions.length - 1) {
+      if (currentQuestionIndex < examQuestions.length - 1) {
         currentQuestionIndex++;
         renderCurrentQuestion();
       } else {
-        showLessonResult();
+        if (mode === "exam") showExamResult();
+        else showLessonResult();
       }
     }
 
@@ -407,6 +510,9 @@
       }
     }
 
+    /* =========================================
+    RESULTS
+    ========================================= */
     function showLessonResult() {
       const container = document.getElementById("questionsList");
       container.innerHTML = `
@@ -420,10 +526,50 @@
       `;
     }
 
+    function showExamResult() {
+      if (timerInterval) clearInterval(timerInterval);
+
+      const container = document.getElementById("questionsList");
+      const total = examQuestions.length;
+      const correctCount = examAnswers.filter((a) => a.isCorrect).length;
+      const percent = Math.round((correctCount / total) * 100);
+
+      let message = "";
+      if (percent === 100) message = "بی‌نقص! 🎉";
+      else if (percent >= 80) message = "عالی بود! 🔥";
+      else if (percent >= 60) message = "خوب بود، ادامه بده!";
+      else if (percent >= 40) message = "باز نیاز به تمرین داری.";
+      else message = "بیا دوباره مرور کنیم.";
+
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+      const s = String(timerSeconds % 60).padStart(2, "0");
+
+      container.innerHTML = `
+        <div class="exam-card">
+          <h2>${percent}%</h2>
+          <p>${message}</p>
+          <div class="exam-stat">
+            <div>
+              <span>درست</span>
+              <strong>${correctCount}</strong>
+            </div>
+            <div>
+              <span>غلط</span>
+              <strong>${total - correctCount}</strong>
+            </div>
+            <div>
+              <span>زمان</span>
+              <strong>${m}:${s}</strong>
+            </div>
+          </div>
+          <button onclick="startExam()">آزمون دوباره</button>
+          <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
+        </div>
+      `;
+    }
+
     function restartLesson() {
-      currentQuestionIndex = 0;
-      sessionScore = 0;
-      renderCurrentQuestion();
+      startPractice();
     }
 
     function normalizeAnswer(answer) {
