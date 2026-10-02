@@ -15,7 +15,7 @@
     <div class="brand">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="hesaban.html">حسابان</a>
+      <a href="subject.html">حسابان</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
@@ -41,7 +41,6 @@
       <p>پروفایل، ظاهر، و داده‌های خود را از اینجا مدیریت کن.</p>
     </section>
 
-    <!-- PROFILE -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Profile</span>
@@ -59,7 +58,6 @@
       </div>
     </section>
 
-    <!-- THEMES -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Appearance</span>
@@ -115,7 +113,6 @@
       </div>
     </section>
 
-    <!-- BACKGROUND -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Background</span>
@@ -135,7 +132,6 @@
       </div>
     </section>
 
-    <!-- DATA -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Data</span>
@@ -174,7 +170,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">About</span>
@@ -217,7 +212,6 @@
       }
     }
 
-    /* THEME */
     function selectTheme(theme) {
       document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("y11_theme", theme);
@@ -236,7 +230,6 @@
       updateThemeSelection(theme);
     }
 
-    /* BACKGROUND */
     function toggleBg(enabled) {
       localStorage.setItem("y11_bg_enabled", enabled ? "1" : "0");
       const bg = document.getElementById("mathBg");
@@ -251,7 +244,6 @@
       if (bg) bg.style.display = enabled ? "block" : "none";
     }
 
-    /* USERNAME */
     function saveUsername() {
       const input = document.getElementById("usernameInput");
       const name = input.value.trim();
@@ -281,7 +273,6 @@
       } catch (e) {}
     }
 
-    /* EXPORT / IMPORT */
     function exportData() {
       const data = {
         user: JSON.parse(localStorage.getItem("y11_math_user") || "{}"),
@@ -322,7 +313,6 @@
       reader.readAsText(file);
     }
 
-    /* RESET */
     function resetAllData() {
       if (!confirm("⚠️ مطمئنی می‌خوای همه‌ی داده‌ها رو پاک کنی؟")) return;
       if (!confirm("⚠️ این عمل برگشت‌پذیر نیست. مطمئنی؟")) return;
