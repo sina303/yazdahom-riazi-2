@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- پس‌زمینه متحرک اعداد ریاضی -->
   <div class="math-bg" id="mathBg"></div>
 
   <header class="lesson-header">
@@ -58,15 +57,11 @@
 
   </main>
 
-  <!-- =========================================
-  MATH BACKGROUND + LESSON SCRIPT
-  ========================================= -->
   <script>
     /* پس‌زمینه متحرک */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-
       const symbols = [
         "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
         "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
@@ -74,7 +69,6 @@
         "+", "−", "×", "÷", "=", "%", "e", "i",
         "1", "2", "3", "7", "9", "0", "½", "¼"
       ];
-
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -88,7 +82,7 @@
     }
 
     /* =========================================
-    DATA — سوالات درس‌ها
+    DATA سوالات
     ========================================= */
     const LESSONS_DATA = {
       "hesaban-ch1-lesson-1": {
@@ -151,15 +145,12 @@
       }
     };
 
-    /* =========================================
-    STATE
-    ========================================= */
     let currentLesson = null;
     let currentQuestionIndex = 0;
     let sessionScore = 0;
 
     /* =========================================
-    USER / XP ذخیره‌سازی
+    USER
     ========================================= */
     const USER_KEY = "y11_math_user";
 
@@ -172,7 +163,8 @@
           solved: 0,
           correct: 0,
           wrong: 0,
-          solvedQuestions: []
+          solvedQuestions: [],
+          mistakes: []
         };
       }
       try {
@@ -183,7 +175,8 @@
           solved: u.solved || 0,
           correct: u.correct || 0,
           wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || []
+          solvedQuestions: u.solvedQuestions || [],
+          mistakes: u.mistakes || []
         };
       } catch (e) {
         return {
@@ -192,7 +185,8 @@
           solved: 0,
           correct: 0,
           wrong: 0,
-          solvedQuestions: []
+          solvedQuestions: [],
+          mistakes: []
         };
       }
     }
@@ -201,22 +195,38 @@
       localStorage.setItem(USER_KEY, JSON.stringify(user));
     }
 
-    function registerAnswer(questionId, isCorrect) {
+    function registerAnswer(questionId, isCorrect, questionData) {
       const user = getUser();
 
-      /* اگه قبلاً حل شده، XP دوباره نده */
-      if (user.solvedQuestions.includes(questionId)) {
-        return user;
+      /* اگه قبلاً حل شده، XP دوباره نده ولی غلط رو ثبت کن */
+      const alreadySolved = user.solvedQuestions.includes(questionId);
+
+      if (!alreadySolved) {
+        user.solvedQuestions.push(questionId);
+        user.solved += 1;
+
+        if (isCorrect) {
+          user.correct += 1;
+          user.xp += 10;
+        } else {
+          user.wrong += 1;
+        }
       }
 
-      user.solvedQuestions.push(questionId);
-      user.solved += 1;
-
-      if (isCorrect) {
-        user.correct += 1;
-        user.xp += 10;
-      } else {
-        user.wrong += 1;
+      /* ثبت غلط */
+      if (!isCorrect && questionData) {
+        const alreadyInMistakes = user.mistakes.some(
+          (m) => m.id === questionId
+        );
+        if (!alreadyInMistakes) {
+          user.mistakes.push({
+            id: questionId,
+            question: questionData.question,
+            correctAnswer: questionData.correctAnswer,
+            solution: questionData.solution,
+            date: new Date().toISOString()
+          });
+        }
       }
 
       saveUser(user);
@@ -233,14 +243,10 @@
         const params = new URLSearchParams(window.location.search);
         const lessonId = params.get("lesson");
 
-        if (!lessonId) {
-          throw new Error("شناسه درس در آدرس نیست");
-        }
+        if (!lessonId) throw new Error("شناسه درس در آدرس نیست");
 
         const lesson = LESSONS_DATA[lessonId];
-        if (!lesson) {
-          throw new Error("درسی با این شناسه پیدا نشد: " + lessonId);
-        }
+        if (!lesson) throw new Error("درس پیدا نشد: " + lessonId);
 
         currentLesson = lesson;
 
@@ -254,7 +260,6 @@
           lesson.questions.length + " سوال";
 
         renderCurrentQuestion();
-
       } catch (err) {
         console.error(err);
         if (container) {
@@ -266,7 +271,7 @@
     }
 
     /* =========================================
-    RENDER QUESTION
+    RENDER
     ========================================= */
     function renderCurrentQuestion() {
       const container = document.getElementById("questionsList");
@@ -300,37 +305,23 @@
 
           <div class="answer-input-area">
             <label for="userAnswer">پاسخ خود را وارد کنید</label>
-            <input
-              type="text"
-              id="userAnswer"
-              placeholder="مثلاً: 3n - 2"
-              autocomplete="off"
-            >
+            <input type="text" id="userAnswer" placeholder="مثلاً: 3n - 2" autocomplete="off">
           </div>
 
           <div id="resultArea" class="result-area hidden"></div>
 
           <div class="question-actions">
-            <button class="check-button" id="checkButton" onclick="checkAnswer()">
-              بررسی پاسخ
-            </button>
-            <button class="solution-button hidden" id="solutionButton" onclick="showSolution()">
-              مشاهده راه‌حل
-            </button>
+            <button class="check-button" id="checkButton" onclick="checkAnswer()">بررسی پاسخ</button>
+            <button class="solution-button hidden" id="solutionButton" onclick="showSolution()">مشاهده راه‌حل</button>
           </div>
 
           <div id="navigationArea" class="navigation-area hidden">
-            <button onclick="previousQuestion()" class="nav-button secondary">
-              ← قبلی
-            </button>
-            <button onclick="nextQuestion()" class="nav-button">
-              بعدی →
-            </button>
+            <button onclick="previousQuestion()" class="nav-button secondary">← قبلی</button>
+            <button onclick="nextQuestion()" class="nav-button">بعدی →</button>
           </div>
         </article>
       `;
 
-      /* Enter برای بررسی */
       const input = document.getElementById("userAnswer");
       if (input) {
         input.addEventListener("keydown", (e) => {
@@ -340,7 +331,7 @@
     }
 
     /* =========================================
-    CHECK ANSWER
+    CHECK
     ========================================= */
     function checkAnswer() {
       const input = document.getElementById("userAnswer");
@@ -362,7 +353,7 @@
       const user = normalizeAnswer(userAnswer);
       const isCorrect = user === correct;
 
-      const userData = registerAnswer(q.id, isCorrect);
+      const userData = registerAnswer(q.id, isCorrect, q);
 
       if (isCorrect) {
         sessionScore += 10;
@@ -376,7 +367,7 @@
         resultArea.innerHTML =
           "<strong>پاسخ درست نیست.</strong>" +
           "<span>پاسخ درست: " + q.correctAnswer + "</span>" +
-          "<span>XP کل: " + userData.xp + "</span>";
+          "<span>این سوال به غلط‌نامه اضافه شد</span>";
       }
 
       input.disabled = true;
@@ -385,9 +376,6 @@
       navigationArea.classList.remove("hidden");
     }
 
-    /* =========================================
-    SHOW SOLUTION
-    ========================================= */
     function showSolution() {
       const q = currentLesson.questions[currentQuestionIndex];
       const resultArea = document.getElementById("resultArea");
@@ -403,9 +391,6 @@
       document.getElementById("solutionButton").disabled = true;
     }
 
-    /* =========================================
-    NAVIGATION
-    ========================================= */
     function nextQuestion() {
       if (currentQuestionIndex < currentLesson.questions.length - 1) {
         currentQuestionIndex++;
@@ -422,12 +407,8 @@
       }
     }
 
-    /* =========================================
-    RESULT
-    ========================================= */
     function showLessonResult() {
       const container = document.getElementById("questionsList");
-
       container.innerHTML = `
         <div class="lesson-result">
           <div class="result-icon">✓</div>
@@ -445,9 +426,6 @@
       renderCurrentQuestion();
     }
 
-    /* =========================================
-    NORMALIZE ANSWER
-    ========================================= */
     function normalizeAnswer(answer) {
       return String(answer)
         .trim()
@@ -457,9 +435,6 @@
         .toLowerCase();
     }
 
-    /* =========================================
-    START
-    ========================================= */
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
       loadLesson();
