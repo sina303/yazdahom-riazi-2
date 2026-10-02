@@ -56,9 +56,7 @@ body {
   position: relative;
 }
 
-/* =========================================
-MATH BACKGROUND
-========================================= */
+/* MATH BG */
 .math-bg {
   position: fixed;
   inset: 0;
@@ -110,25 +108,25 @@ html[data-theme="light"] .math-bg::before {
 }
 
 /* =========================================
-EASTER EGG — MEMORIAL STAR
+MEMORIAL STAR — Easter Egg
 ========================================= */
 .memorial-star {
   position: fixed;
-  width: 22px;
-  height: 22px;
+  width: 38px;
+  height: 38px;
   color: #FFD700;
   cursor: pointer;
   z-index: 5;
   pointer-events: auto;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
-  animation: starDrift 32s linear infinite, starPulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 25px rgba(255, 200, 0, 0.5));
+  animation: starDrift 75s linear infinite, starPulse 2s ease-in-out infinite;
   transition: transform 0.4s, filter 0.4s;
   user-select: none;
 }
 
 .memorial-star:hover {
-  transform: scale(1.6) rotate(180deg);
-  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
+  transform: scale(1.7) rotate(180deg);
+  filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1)) drop-shadow(0 0 60px rgba(255, 200, 0, 0.8));
 }
 
 .memorial-star svg {
@@ -139,20 +137,18 @@ EASTER EGG — MEMORIAL STAR
 
 @keyframes starDrift {
   0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 0.7; }
-  50% { transform: translateY(-50vh) translateX(30px); opacity: 1; }
-  90% { opacity: 0.7; }
-  100% { transform: translateY(-115vh) translateX(-20px); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translateY(-55vh) translateX(40px); opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-115vh) translateX(-30px); opacity: 0; }
 }
 
 @keyframes starPulse {
-  0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5)); }
-  50% { filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.8)); }
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 25px rgba(255, 200, 0, 0.5)); }
+  50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)) drop-shadow(0 0 50px rgba(255, 200, 0, 0.8)); }
 }
 
-/* =========================================
-MEMORIAL MODAL
-========================================= */
+/* MEMORIAL MODAL */
 .memorial-modal {
   position: fixed;
   inset: 0;
@@ -167,16 +163,9 @@ MEMORIAL MODAL
   overflow: hidden;
 }
 
-.memorial-modal.open {
-  display: flex;
-  opacity: 1;
-}
+.memorial-modal.open { display: flex; opacity: 1; }
+.memorial-modal.closing { opacity: 0; }
 
-.memorial-modal.closing {
-  opacity: 0;
-}
-
-/* ستاره‌های ریز پس‌زمینه */
 .memorial-stars {
   position: absolute;
   inset: 0;
@@ -198,7 +187,6 @@ MEMORIAL MODAL
   50% { opacity: 0.8; }
 }
 
-/* هاله طلایی */
 .memorial-glow {
   position: absolute;
   top: 50%;
@@ -216,7 +204,6 @@ MEMORIAL MODAL
   50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
 }
 
-/* محتوا */
 .memorial-content {
   position: relative;
   text-align: center;
@@ -225,7 +212,6 @@ MEMORIAL MODAL
   max-width: 700px;
 }
 
-/* ستاره بزرگ */
 .memorial-big-star {
   width: 90px;
   height: 90px;
@@ -251,7 +237,6 @@ MEMORIAL MODAL
   50% { filter: drop-shadow(0 0 50px rgba(255, 215, 0, 1)); }
 }
 
-/* تیتر */
 .memorial-title {
   font-size: 36px;
   color: #FFD700;
@@ -263,7 +248,6 @@ MEMORIAL MODAL
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
-/* متن */
 .memorial-text {
   font-size: 18px;
   line-height: 2.4;
@@ -284,7 +268,6 @@ MEMORIAL MODAL
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* گل سرخ */
 .memorial-rose {
   font-size: 32px;
   margin: 30px 0;
@@ -297,7 +280,6 @@ MEMORIAL MODAL
   50% { transform: scale(1.15); }
 }
 
-/* دکمه بازگشت */
 .memorial-close {
   margin-top: 20px;
   padding: 14px 40px;
@@ -322,15 +304,12 @@ MEMORIAL MODAL
   transform: scale(1.05);
 }
 
-/* =========================================
-CONTENT WRAPPER
-========================================= */
+/* CONTENT */
 .site-header, main, .site-footer {
   position: relative;
   z-index: 1;
 }
 
-/* HEADER */
 .site-header {
   height: 72px;
   padding: 0 6%;
@@ -371,13 +350,11 @@ html[data-theme="light"] .site-header { background: rgba(245, 241, 232, 0.85); }
   color: var(--muted);
   font-size: 13px;
   text-decoration: none;
-  transition: color 0.2s;
 }
 .site-user:hover { color: var(--green); }
 
 main { width: min(1200px, 92%); margin: auto; }
 
-/* HERO */
 .home-hero {
   padding: 70px 50px;
   margin-top: 40px;
@@ -477,7 +454,6 @@ html[data-theme="sepia"] .btn-primary { color: #071008; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  transition: background 0.4s, border-color 0.4s;
 }
 
 .stat-box .label {
@@ -493,7 +469,6 @@ html[data-theme="sepia"] .btn-primary { color: #071008; }
   color: var(--green);
 }
 
-/* SECTIONS */
 .home-section { padding: 60px 0 20px; }
 .section-head { margin-bottom: 30px; }
 .section-head .tag {
@@ -516,7 +491,7 @@ html[data-theme="sepia"] .btn-primary { color: #071008; }
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  transition: border-color 0.2s, transform 0.2s, background 0.4s;
+  transition: border-color 0.2s, transform 0.2s;
   text-decoration: none;
   color: var(--text);
 }
@@ -525,8 +500,6 @@ html[data-theme="sepia"] .btn-primary { color: #071008; }
   border-color: var(--green);
   transform: translateX(-4px);
 }
-
-.subject-card.disabled { opacity: 0.5; cursor: not-allowed; }
 
 .subject-number {
   color: var(--green);
@@ -554,12 +527,8 @@ html[data-theme="sepia"] .btn-primary { color: #071008; }
   color: var(--green);
   font-size: 14px;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
-/* AI */
 .ai-section {
   display: flex;
   align-items: center;
@@ -571,7 +540,6 @@ html[data-theme="sepia"] .btn-primary { color: #071008; }
   border: 1px solid var(--border);
   border-radius: 18px;
   margin: 40px 0;
-  transition: background 0.4s;
 }
 
 .ai-icon {
@@ -597,7 +565,6 @@ html[data-theme="sepia"] .ai-icon { color: #071008; }
 .ai-info p { color: var(--muted); font-size: 13px; line-height: 1.9; }
 .ai-section .btn-primary { margin-right: auto; white-space: nowrap; }
 
-/* FOOTER */
 .site-footer {
   padding: 40px 6%;
   text-align: center;
@@ -609,7 +576,6 @@ html[data-theme="sepia"] .ai-icon { color: #071008; }
 
 .site-footer strong { color: var(--green); letter-spacing: 2px; }
 
-/* MOBILE */
 @media (max-width: 900px) {
   .site-nav { display: none; }
 }
@@ -627,7 +593,6 @@ html[data-theme="sepia"] .ai-icon { color: #071008; }
   }
   .subject-action {
     grid-column: 1 / -1;
-    justify-content: flex-start;
     margin-top: 10px;
   }
   .ai-section {
@@ -639,5 +604,5 @@ html[data-theme="sepia"] .ai-icon { color: #071008; }
   .memorial-title { font-size: 26px; letter-spacing: 4px; }
   .memorial-text { font-size: 15px; }
   .memorial-big-star { width: 70px; height: 70px; }
-  .memorial-star { width: 18px; height: 18px; }
+  .memorial-star { width: 30px; height: 30px; }
 }
