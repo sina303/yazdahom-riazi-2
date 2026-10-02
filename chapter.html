@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- پس‌زمینه متحرک اعداد ریاضی -->
   <div class="math-bg" id="mathBg"></div>
 
   <header class="chapter-header">
@@ -16,6 +15,7 @@
     <nav>
       <a href="index.html">خانه</a>
       <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
     </nav>
     <a href="profile.html" class="user">پروفایل</a>
   </header>
@@ -84,15 +84,10 @@
 
   </main>
 
-  <!-- =========================================
-  MATH BACKGROUND + CHAPTER SCRIPT
-  ========================================= -->
   <script>
-    /* پس‌زمینه متحرک */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-
       const symbols = [
         "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
         "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
@@ -100,7 +95,6 @@
         "+", "−", "×", "÷", "=", "%", "e", "i",
         "1", "2", "3", "7", "9", "0", "½", "¼"
       ];
-
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -113,12 +107,10 @@
       }
     }
 
-    /* باز کردن درس */
     function openLesson(lessonId) {
       window.location.href = "lesson.html?lesson=" + encodeURIComponent(lessonId);
     }
 
-    /* بارگذاری اطلاعات فصل */
     async function loadChapter() {
       const lessonGrid = document.getElementById("lessonGrid");
       if (!lessonGrid) return;
@@ -127,21 +119,18 @@
         const params = new URLSearchParams(window.location.search);
         const chapterId = params.get("chapter");
 
-        if (!chapterId) {
-          throw new Error("شناسه فصل در آدرس نیست");
-        }
+        if (!chapterId) throw new Error("شناسه فصل در آدرس نیست");
 
         const res = await fetch("data/subjects.json");
-        if (!res.ok) throw new Error("خطا در بارگذاری داده");
+        if (!res.ok) throw new Error("خطا در بارگذاری");
 
         const data = await res.json();
         const hesaban = data.subjects.find((s) => s.id === "hesaban");
-        if (!hesaban) throw new Error("درس حسابان پیدا نشد");
+        if (!hesaban) throw new Error("حسابان پیدا نشد");
 
         const chapter = hesaban.chapters.find((c) => c.id === chapterId);
         if (!chapter) throw new Error("فصل پیدا نشد");
 
-        /* پر کردن اطلاعات هدر */
         const elLabel = document.getElementById("chapterLabel");
         const elTitle = document.getElementById("chapterTitle");
         const elDesc = document.getElementById("chapterDescription");
@@ -156,30 +145,22 @@
         if (elBread) elBread.textContent = chapter.title;
         if (elProgText) elProgText.textContent = chapter.progress + "%";
         if (elProgBar) elProgBar.style.width = chapter.progress + "%";
-        if (elCount) {
-          const n = chapter.lessons?.length || 0;
-          elCount.textContent = n + " درس";
-        }
+        if (elCount) elCount.textContent = (chapter.lessons?.length || 0) + " درس";
 
-        /* رندر درس‌ها */
         renderLessons(chapter.lessons);
-
       } catch (err) {
         console.error(err);
-        lessonGrid.innerHTML =
-          '<div class="loading">خطا: ' + err.message + '</div>';
+        lessonGrid.innerHTML = '<div class="loading">خطا: ' + err.message + '</div>';
       }
     }
 
     function renderLessons(lessons) {
       const grid = document.getElementById("lessonGrid");
       if (!grid) return;
-
       grid.innerHTML = "";
 
       if (!lessons || lessons.length === 0) {
-        grid.innerHTML =
-          '<div class="loading">هنوز درسی برای این فصل ثبت نشده.</div>';
+        grid.innerHTML = '<div class="loading">هنوز درسی ثبت نشده.</div>';
         return;
       }
 
