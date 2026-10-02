@@ -246,4 +246,86 @@
     function closeMemorial() {
       const modal = document.getElementById("memorialModal");
       if (!modal) return;
-      modal.classList.add("
+      modal.classList.add("closing");
+      setTimeout(() => {
+        modal.classList.remove("open", "closing");
+        document.body.style.overflow = "";
+      }, 600);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        const modal = document.getElementById("memorialModal");
+        if (modal && modal.classList.contains("open")) closeMemorial();
+      }
+    });
+
+    /* کلیک روی ستاره */
+    document.addEventListener("DOMContentLoaded", () => {
+      positionMemorialStar();
+      const star = document.getElementById("memorialStar");
+      if (star) star.addEventListener("click", openMemorial);
+    });
+
+    /* ستاره رو هر ۳۰ ثانیه یه جا دیگه ببر */
+    setInterval(positionMemorialStar, 30000);
+
+    /* =========================================
+    USER STATS
+    ========================================= */
+    function getUser() {
+      const raw = localStorage.getItem("y11_math_user");
+      if (!raw) return { username:"Sina", xp:0, solved:0 };
+      try {
+        const u = JSON.parse(raw);
+        return { username: u.username || "Sina", xp: u.xp || 0, solved: u.solved || 0 };
+      } catch (e) {
+        return { username:"Sina", xp:0, solved:0 };
+      }
+    }
+
+    function getLevel(xp) {
+      if (xp >= 700) return 5;
+      if (xp >= 450) return 4;
+      if (xp >= 250) return 3;
+      if (xp >= 100) return 2;
+      return 1;
+    }
+
+    function renderHeroStats() {
+      const user = getUser();
+      const level = getLevel(user.xp);
+      document.getElementById("heroXp").textContent = user.xp;
+      document.getElementById("heroLevel").textContent = level;
+
+      const statusEl = document.getElementById("heroStatus");
+      if (user.solved === 0) {
+        statusEl.textContent = "New";
+        statusEl.style.color = "var(--muted)";
+      } else if (level >= 4) {
+        statusEl.textContent = "Expert";
+        statusEl.style.color = "var(--green-light)";
+      } else if (level >= 2) {
+        statusEl.textContent = "Active";
+        statusEl.style.color = "var(--green-light)";
+      } else {
+        statusEl.textContent = "Beginner";
+        statusEl.style.color = "var(--text)";
+      }
+
+      const totalQ = 5;
+      const percent = Math.min(100, Math.round((user.solved / totalQ) * 100));
+      const cardProgress = document.getElementById("hesabanCardProgress");
+      if (cardProgress) cardProgress.textContent = percent + "% Progress";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      renderHeroStats();
+    });
+
+    window.addEventListener("pageshow", renderHeroStats);
+  </script>
+
+</body>
+</html>
