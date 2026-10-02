@@ -1,0 +1,356 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #080a09;
+  --surface: #0e1210;
+  --card: #141916;
+  --border: #222a24;
+  --green: #35d35a;
+  --green-light: #6ee787;
+  --text: #eef2ef;
+  --muted: #8d9690;
+}
+
+html, body {
+  font-family: Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(53, 211, 90, 0.08), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(53, 211, 90, 0.05), transparent 45%),
+    var(--bg);
+  position: relative;
+}
+
+/* پس‌زمینه */
+.math-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.math-bg span {
+  position: absolute;
+  bottom: -120px;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-weight: bold;
+  user-select: none;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+}
+
+.math-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 45% 65%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 75% 15%, rgba(255,255,255,0.45), transparent),
+    radial-gradient(2px 2px at 30% 85%, rgba(53,211,90,0.4), transparent);
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.formulas-header,
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER */
+.formulas-header {
+  height: 72px;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8, 10, 9, 0.7);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo {
+  color: var(--green);
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.formulas-header nav {
+  display: flex;
+  gap: 25px;
+}
+
+.formulas-header nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.formulas-header nav a:hover {
+  color: var(--green);
+}
+
+.formulas-header .user {
+  color: var(--muted);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.formulas-header .user:hover {
+  color: var(--green);
+}
+
+/* MAIN */
+main {
+  width: min(900px, 92%);
+  margin: auto;
+  padding-bottom: 80px;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+  padding: 25px 0;
+  display: flex;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  align-items: center;
+}
+
+.breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--green);
+}
+
+/* HERO */
+.formulas-hero {
+  padding: 35px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(53, 211, 90, 0.12), transparent 50%),
+    var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.formulas-hero span {
+  color: var(--green);
+  font-size: 13px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.formulas-hero h1 {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.formulas-hero p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* FLASHCARD */
+.flashcard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.flashcard {
+  width: 100%;
+  max-width: 520px;
+  height: 320px;
+  perspective: 1500px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.flashcard-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flashcard-front {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(53, 211, 90, 0.15), transparent 70%),
+    var(--card);
+}
+
+.flashcard-back {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(53, 211, 90, 0.25), transparent 70%),
+    var(--surface);
+  transform: rotateY(180deg);
+  border-color: var(--green);
+}
+
+.card-label {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.flashcard-front h2 {
+  font-size: 26px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.card-hint {
+  color: var(--muted);
+  font-size: 12px;
+  position: absolute;
+  bottom: 22px;
+}
+
+.formula {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--green);
+  font-family: "Georgia", "Times New Roman", serif;
+  direction: ltr;
+  line-height: 1.8;
+  padding: 0 10px;
+}
+
+/* CONTROLS */
+.flashcard-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.card-counter {
+  color: var(--muted);
+  font-size: 14px;
+  min-width: 70px;
+  text-align: center;
+}
+
+.nav-button {
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: var(--green);
+  color: #071008;
+  border: none;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.nav-button.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.nav-button:hover {
+  opacity: 0.9;
+}
+
+.shuffle-button {
+  padding: 11px 22px;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.shuffle-button:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .formulas-header nav {
+    display: none;
+  }
+
+  .formulas-hero h1 {
+    font-size: 26px;
+  }
+
+  .flashcard {
+    height: 280px;
+  }
+
+  .flashcard-front h2 {
+    font-size: 20px;
+  }
+
+  .formula {
+    font-size: 18px;
+  }
+
+  .flashcard-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
