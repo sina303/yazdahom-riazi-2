@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>پروفایل | AXIS</title>
   <link rel="stylesheet" href="css/profile.css" />
+  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -14,11 +15,11 @@
     <div class="brand">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="hesaban.html">حسابان</a>
+      <a href="subject.html">حسابان</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
-      <a href="profile.html">پروفایل</a>
+      <a href="settings.html">تنظیمات</a>
     </nav>
     <div class="user">یازدهم ریاضی</div>
   </header>
@@ -56,7 +57,6 @@
       </div>
     </section>
 
-    <!-- STREAK -->
     <section class="streak-section">
       <div class="streak-card">
         <div class="streak-icon">🔥</div>
@@ -75,7 +75,6 @@
       </div>
     </section>
 
-    <!-- CHART -->
     <section class="chart-section">
       <span class="section-label">Activity</span>
       <h2>فعالیت ۷ روز اخیر</h2>
@@ -116,7 +115,7 @@
       <h2>غلط‌نامه</h2>
 
       <div id="mistakesList">
-        <p style="color:#8d9690;font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>
+        <p style="color:var(--muted);font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>
       </div>
     </section>
 
@@ -140,14 +139,11 @@
         span.style.left = (Math.random() * 100) + "%";
         span.style.animationDuration = (12 + Math.random() * 18) + "s";
         span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
         bg.appendChild(span);
       }
     }
 
-    /* =========================================
-    USER
-    ========================================= */
     function getUser() {
       const raw = localStorage.getItem("y11_math_user");
       if (!raw) {
@@ -187,12 +183,9 @@
       localStorage.setItem("y11_math_user", JSON.stringify(user));
     }
 
-    /* =========================================
-    STREAK LOGIC
-    ========================================= */
     function updateStreak() {
       const user = getUser();
-      const today = new Date().toISOString().split("T")[0]; /* YYYY-MM-DD */
+      const today = new Date().toISOString().split("T")[0];
       const lastVisit = user.lastVisit;
 
       if (!lastVisit) {
@@ -202,31 +195,19 @@
         return;
       }
 
-      if (lastVisit === today) {
-        /* امروز قبلاً اومده — کاری نکن */
-        return;
-      }
+      if (lastVisit === today) return;
 
-      /* چک کن دیروز بوده یا نه */
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yDate = yesterday.toISOString().split("T")[0];
 
-      if (lastVisit === yDate) {
-        /* پیوسته — streak +1 */
-        user.streak += 1;
-      } else {
-        /* قطع شده — ریست */
-        user.streak = 1;
-      }
+      if (lastVisit === yDate) user.streak += 1;
+      else user.streak = 1;
 
       user.lastVisit = today;
       saveUser(user);
     }
 
-    /* =========================================
-    RENDER PROFILE
-    ========================================= */
     function renderProfile() {
       const user = getUser();
       const xp = user.xp;
@@ -242,7 +223,6 @@
       document.getElementById("statSolved").textContent = solved;
       document.getElementById("statCorrect").textContent = correct;
 
-      /* Level */
       let level = 1, levelStart = 0, levelEnd = 100;
       if (xp >= 700) { level = 5; levelStart = 700; levelEnd = 1000; }
       else if (xp >= 450) { level = 4; levelStart = 450; levelEnd = 700; }
@@ -256,7 +236,6 @@
       document.getElementById("levelNext").textContent = "تا سطح بعدی " + (levelEnd - xp) + " XP";
       document.getElementById("levelBar").style.width = progress + "%";
 
-      /* Subject progress */
       const totalQ = 5;
       const p = Math.min(100, Math.round((solved / totalQ) * 100));
       const hesabanEl = document.getElementById("hesabanPercent");
@@ -268,27 +247,19 @@
         else hesabanText.textContent = "کامل شد! 🎉";
       }
 
-      /* Streak cards */
       document.getElementById("streakDays").textContent = user.streak || 0;
       document.getElementById("totalTime").textContent = user.totalMinutes || 0;
 
-      /* Best day */
       let bestDay = 0;
       Object.values(user.dailyActivity || {}).forEach((count) => {
         if (count > bestDay) bestDay = count;
       });
       document.getElementById("bestDay").textContent = bestDay;
 
-      /* Chart */
       renderChart(user.dailyActivity || {});
-
-      /* Mistakes */
       renderMistakes(user);
     }
 
-    /* =========================================
-    CHART
-    ========================================= */
     function renderChart(dailyActivity) {
       const container = document.getElementById("chartBars");
       if (!container) return;
@@ -328,15 +299,12 @@
       });
     }
 
-    /* =========================================
-    MISTAKES
-    ========================================= */
     function renderMistakes(user) {
       const container = document.getElementById("mistakesList");
       if (!container) return;
 
       if (!user.mistakes || user.mistakes.length === 0) {
-        container.innerHTML = '<p style="color:#8d9690;font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>';
+        container.innerHTML = '<p style="color:var(--muted);font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>';
         return;
       }
 
