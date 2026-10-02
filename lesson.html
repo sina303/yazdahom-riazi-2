@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>درس | AXIS</title>
   <link rel="stylesheet" href="css/lesson.css" />
+  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -19,7 +20,7 @@
     <div class="logo">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="hesaban.html">حسابان</a>
+      <a href="subject.html">حسابان</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
@@ -30,7 +31,7 @@
   <main>
 
     <div class="breadcrumb">
-      <a href="hesaban.html">حسابان</a>
+      <a href="subject.html">حسابان</a>
       <span>←</span>
       <a href="#" id="backToChapter">فصل</a>
       <span>←</span>
@@ -93,7 +94,7 @@
         span.style.left = (Math.random() * 100) + "%";
         span.style.animationDuration = (12 + Math.random() * 18) + "s";
         span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
         bg.appendChild(span);
       }
     }
@@ -159,14 +160,7 @@
 
     function getUser() {
       const raw = localStorage.getItem(USER_KEY);
-      if (!raw) {
-        return {
-          username: "Sina",
-          xp: 0, solved: 0, correct: 0, wrong: 0,
-          solvedQuestions: [], mistakes: [],
-          dailyActivity: {}, totalMinutes: 0, streak: 0, lastVisit: null
-        };
-      }
+      if (!raw) return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null };
       try {
         const u = JSON.parse(raw);
         return {
@@ -183,12 +177,7 @@
           lastVisit: u.lastVisit || null
         };
       } catch (e) {
-        return {
-          username: "Sina",
-          xp: 0, solved: 0, correct: 0, wrong: 0,
-          solvedQuestions: [], mistakes: [],
-          dailyActivity: {}, totalMinutes: 0, streak: 0, lastVisit: null
-        };
+        return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null };
       }
     }
 
@@ -205,7 +194,6 @@
       const today = todayKey();
       const alreadySolved = user.solvedQuestions.includes(questionId);
 
-      /* ثبت فعالیت روزانه — هر پاسخی که بدی (خواه تکراری خواه جدید) */
       user.dailyActivity[today] = (user.dailyActivity[today] || 0) + 1;
 
       if (!alreadySolved) {
@@ -231,7 +219,6 @@
       return user;
     }
 
-    /* ثبت دقایق مطالعه وقتی کاربر از صفحه خارج می‌شه */
     let pageStartTime = Date.now();
 
     function saveStudyMinutes() {
