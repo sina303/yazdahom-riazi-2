@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AXIS | یازدهم ریاضی</title>
   <link rel="stylesheet" href="css/style.css" />
+  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -165,7 +166,7 @@
         span.style.left = (Math.random() * 100) + "%";
         span.style.animationDuration = (12 + Math.random() * 18) + "s";
         span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
         bg.appendChild(span);
       }
     }
@@ -198,16 +199,16 @@
       const statusEl = document.getElementById("heroStatus");
       if (user.solved === 0) {
         statusEl.textContent = "New";
-        statusEl.style.color = "#8d9690";
+        statusEl.style.color = "var(--muted)";
       } else if (level >= 4) {
         statusEl.textContent = "Expert";
-        statusEl.style.color = "#6ee787";
+        statusEl.style.color = "var(--green-light)";
       } else if (level >= 2) {
         statusEl.textContent = "Active";
-        statusEl.style.color = "#6ee787";
+        statusEl.style.color = "var(--green-light)";
       } else {
         statusEl.textContent = "Beginner";
-        statusEl.style.color = "#e5e7eb";
+        statusEl.style.color = "var(--text)";
       }
 
       const totalQ = 5;
