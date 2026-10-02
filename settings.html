@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>تنظیمات | AXIS</title>
   <link rel="stylesheet" href="css/settings.css" />
+  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -58,25 +59,68 @@
       </div>
     </section>
 
-    <!-- APPEARANCE -->
+    <!-- THEMES -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Appearance</span>
-        <h2>ظاهر</h2>
-      </div>
-      <div class="setting-item">
-        <div class="setting-info">
-          <h3>حالت نمایش</h3>
-          <p>بین حالت شب (Dark) و روز (Light) جابجا شو.</p>
-        </div>
-        <div class="setting-action">
-          <div class="theme-toggle">
-            <button id="themeDarkBtn" class="theme-btn active" onclick="setTheme('dark')">🌙 شب</button>
-            <button id="themeLightBtn" class="theme-btn" onclick="setTheme('light')">☀️ روز</button>
-          </div>
-        </div>
+        <h2>ظاهر و رنگ</h2>
+        <p style="color:var(--muted);font-size:13px;margin-top:6px;">رنگی که چشمت رو اذیت نکنه انتخاب کن.</p>
       </div>
 
+      <div class="themes-grid" id="themesGrid">
+        <div class="theme-card" data-theme="green" onclick="selectTheme('green')">
+          <div class="theme-preview" style="background: linear-gradient(135deg, #0e1210, #35d35a);"></div>
+          <div class="theme-info">
+            <h3>🌿 Dark Green</h3>
+            <p>متعادل و فضایی</p>
+          </div>
+          <div class="theme-check">✓</div>
+        </div>
+
+        <div class="theme-card" data-theme="purple" onclick="selectTheme('purple')">
+          <div class="theme-preview" style="background: linear-gradient(135deg, #100c1c, #8b5cf6);"></div>
+          <div class="theme-info">
+            <h3>🌌 Dark Purple</h3>
+            <p>فضایی و مدرن</p>
+          </div>
+          <div class="theme-check">✓</div>
+        </div>
+
+        <div class="theme-card" data-theme="rose" onclick="selectTheme('rose')">
+          <div class="theme-preview" style="background: linear-gradient(135deg, #1a0d15, #e879a8);"></div>
+          <div class="theme-info">
+            <h3>🌸 Dark Rose</h3>
+            <p>ملایم و دخترپسند</p>
+          </div>
+          <div class="theme-check">✓</div>
+        </div>
+
+        <div class="theme-card" data-theme="sepia" onclick="selectTheme('sepia')">
+          <div class="theme-preview" style="background: linear-gradient(135deg, #221c15, #d4a574);"></div>
+          <div class="theme-info">
+            <h3>📜 Sepia</h3>
+            <p>مثل کتاب کاغذی</p>
+          </div>
+          <div class="theme-check">✓</div>
+        </div>
+
+        <div class="theme-card" data-theme="light" onclick="selectTheme('light')">
+          <div class="theme-preview" style="background: linear-gradient(135deg, #f5f1e8, #3a7d44);"></div>
+          <div class="theme-info">
+            <h3>☀️ Light Warm</h3>
+            <p>روشن و گرم</p>
+          </div>
+          <div class="theme-check">✓</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BACKGROUND -->
+    <section class="settings-section">
+      <div class="section-head">
+        <span class="section-label">Background</span>
+        <h2>پس‌زمینه</h2>
+      </div>
       <div class="setting-item">
         <div class="setting-info">
           <h3>پس‌زمینه‌ی متحرک</h3>
@@ -130,29 +174,17 @@
       </div>
     </section>
 
-    <!-- ABOUT APP -->
+    <!-- ABOUT -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">About</span>
         <h2>درباره‌ی AXIS</h2>
       </div>
       <div class="about-mini">
-        <div class="about-mini-row">
-          <span>نسخه</span>
-          <strong>1.0.0</strong>
-        </div>
-        <div class="about-mini-row">
-          <span>ساخته شده با</span>
-          <strong>HTML / CSS / JavaScript</strong>
-        </div>
-        <div class="about-mini-row">
-          <span>میزبانی</span>
-          <strong>GitHub Pages</strong>
-        </div>
-        <div class="about-mini-row">
-          <span>وضعیت</span>
-          <strong style="color:#6ee787;">فعال ✅</strong>
-        </div>
+        <div class="about-mini-row"><span>نسخه</span><strong>1.0.0</strong></div>
+        <div class="about-mini-row"><span>ساخته شده با</span><strong>HTML / CSS / JavaScript</strong></div>
+        <div class="about-mini-row"><span>میزبانی</span><strong>GitHub Pages</strong></div>
+        <div class="about-mini-row"><span>وضعیت</span><strong style="color:var(--green);">فعال ✅</strong></div>
       </div>
     </section>
 
@@ -180,30 +212,31 @@
         span.style.left = (Math.random() * 100) + "%";
         span.style.animationDuration = (12 + Math.random() * 18) + "s";
         span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
         bg.appendChild(span);
       }
     }
 
-    /* =========================================
-    THEME
-    ========================================= */
-    function setTheme(theme) {
+    /* THEME */
+    function selectTheme(theme) {
       document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("y11_theme", theme);
+      updateThemeSelection(theme);
+    }
 
-      document.getElementById("themeDarkBtn").classList.toggle("active", theme === "dark");
-      document.getElementById("themeLightBtn").classList.toggle("active", theme === "light");
+    function updateThemeSelection(theme) {
+      document.querySelectorAll(".theme-card").forEach((card) => {
+        card.classList.toggle("active", card.dataset.theme === theme);
+      });
     }
 
     function loadTheme() {
-      const theme = localStorage.getItem("y11_theme") || "dark";
-      setTheme(theme);
+      const theme = localStorage.getItem("y11_theme") || "green";
+      document.documentElement.setAttribute("data-theme", theme);
+      updateThemeSelection(theme);
     }
 
-    /* =========================================
-    BACKGROUND TOGGLE
-    ========================================= */
+    /* BACKGROUND */
     function toggleBg(enabled) {
       localStorage.setItem("y11_bg_enabled", enabled ? "1" : "0");
       const bg = document.getElementById("mathBg");
@@ -218,21 +251,13 @@
       if (bg) bg.style.display = enabled ? "block" : "none";
     }
 
-    /* =========================================
-    USERNAME
-    ========================================= */
+    /* USERNAME */
     function saveUsername() {
       const input = document.getElementById("usernameInput");
       const name = input.value.trim();
 
-      if (!name) {
-        alert("نام کاربری نمی‌تونه خالی باشه.");
-        return;
-      }
-      if (name.length < 3) {
-        alert("نام کاربری حداقل باید ۳ حرف باشه.");
-        return;
-      }
+      if (!name) { alert("نام کاربری نمی‌تونه خالی باشه."); return; }
+      if (name.length < 3) { alert("نام کاربری حداقل باید ۳ حرف باشه."); return; }
 
       const raw = localStorage.getItem("y11_math_user");
       let user;
@@ -256,21 +281,18 @@
       } catch (e) {}
     }
 
-    /* =========================================
-    EXPORT / IMPORT
-    ========================================= */
+    /* EXPORT / IMPORT */
     function exportData() {
       const data = {
         user: JSON.parse(localStorage.getItem("y11_math_user") || "{}"),
         gpa: JSON.parse(localStorage.getItem("y11_gpa_grades") || "{}"),
-        theme: localStorage.getItem("y11_theme") || "dark",
+        theme: localStorage.getItem("y11_theme") || "green",
         bgEnabled: localStorage.getItem("y11_bg_enabled") !== "0",
         exportDate: new Date().toISOString()
       };
 
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
-
       const a = document.createElement("a");
       a.href = url;
       a.download = "axis-backup-" + new Date().toISOString().split("T")[0] + ".json";
@@ -281,19 +303,16 @@
     function importData(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
           const data = JSON.parse(e.target.result);
-
           if (data.user) localStorage.setItem("y11_math_user", JSON.stringify(data.user));
           if (data.gpa) localStorage.setItem("y11_gpa_grades", JSON.stringify(data.gpa));
           if (data.theme) localStorage.setItem("y11_theme", data.theme);
           if (data.bgEnabled !== undefined) {
             localStorage.setItem("y11_bg_enabled", data.bgEnabled ? "1" : "0");
           }
-
           alert("داده‌ها با موفقیت وارد شد ✅");
           window.location.reload();
         } catch (err) {
@@ -303,15 +322,10 @@
       reader.readAsText(file);
     }
 
-    /* =========================================
-    RESET
-    ========================================= */
+    /* RESET */
     function resetAllData() {
-      const confirm1 = confirm("⚠️ مطمئنی می‌خوای همه‌ی داده‌ها رو پاک کنی؟");
-      if (!confirm1) return;
-
-      const confirm2 = confirm("⚠️ این عمل برگشت‌پذیر نیست. مطمئنی؟");
-      if (!confirm2) return;
+      if (!confirm("⚠️ مطمئنی می‌خوای همه‌ی داده‌ها رو پاک کنی؟")) return;
+      if (!confirm("⚠️ این عمل برگشت‌پذیر نیست. مطمئنی؟")) return;
 
       localStorage.removeItem("y11_math_user");
       localStorage.removeItem("y11_gpa_grades");
