@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>فرمول‌ها | AXIS</title>
+  <link rel="stylesheet" href="css/formulas.css" />
+</head>
+<body>
+
+  <div class="math-bg" id="mathBg"></div>
+
+  <header class="formulas-header">
+    <div class="logo">AXIS</div>
+    <nav>
+      <a href="index.html">خانه</a>
+      <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
+    </nav>
+    <a href="profile.html" class="user">پروفایل</a>
+  </header>
+
+  <main>
+
+    <div class="breadcrumb">
+      <a href="hesaban.html">حسابان</a>
+      <span>←</span>
+      <strong>فلش‌کارت فرمول‌ها</strong>
+    </div>
+
+    <section class="formulas-hero">
+      <span>مرور سریع</span>
+      <h1>فلش‌کارت فرمول‌ها</h1>
+      <p>روی کارت کلیک کن تا فرمول رو ببینی. با دکمه‌های بعدی و قبلی بین فرمول‌ها جابجا شو.</p>
+    </section>
+
+    <section class="flashcard-section">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="flashcard-inner" id="flashcardInner">
+          <div class="flashcard-face flashcard-front">
+            <span class="card-label">فرمول</span>
+            <h2 id="cardTitle">...</h2>
+            <p class="card-hint">برای دیدن فرمول کلیک کن</p>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <span class="card-label">فرمول</span>
+            <div class="formula" id="cardFormula">...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-controls">
+        <button onclick="prevCard()" class="nav-button secondary">← قبلی</button>
+        <span class="card-counter" id="cardCounter">1 / 1</span>
+        <button onclick="nextCard()" class="nav-button">بعدی →</button>
+      </div>
+
+      <button class="shuffle-button" onclick="shuffleCards()">ترتیب تصادفی 🔀</button>
+    </section>
+
+  </main>
+
+  <script>
+    /* پس‌زمینه */
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.fontSize = (14 + Math.random() * 34) + "px";
+        span.style.left = (Math.random() * 100) + "%";
+        span.style.animationDuration = (12 + Math.random() * 18) + "s";
+        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
+        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        bg.appendChild(span);
+      }
+    }
+
+    /* =========================================
+    DATA فرمول‌ها
+    ========================================= */
+    const FORMULAS = [
+      {
+        title: "جمله عمومی دنباله حسابی",
+        formula: "a_n = a_1 + (n-1)d"
+      },
+      {
+        title: "مجموع n جمله اول دنباله حسابی",
+        formula: "S_n = n/2 × [2a_1 + (n-1)d]"
+      },
+      {
+        title: "مجموع دنباله حسابی (فرمول دوم)",
+        formula: "S_n = n/2 × (a_1 + a_n)"
+      },
+      {
+        title: "جمله عمومی دنباله هندسی",
+        formula: "a_n = a_1 × r^(n-1)"
+      },
+      {
+        title: "مجموع n جمله اول دنباله هندسی",
+        formula: "S_n = a_1 × (r^n - 1) / (r - 1)"
+      },
+      {
+        title: "مجموع بی‌نهایت دنباله هندسی",
+        formula: "S = a_1 / (1 - r)   (|r| < 1)"
+      },
+      {
+        title: "اتحاد مربع دو جمله‌ای",
+        formula: "(a + b)² = a² + 2ab + b²"
+      },
+      {
+        title: "اتحاد مزدوج",
+        formula: "(a + b)(a - b) = a² - b²"
+      },
+      {
+        title: "فرمول ریشه‌های معادله درجه دوم",
+        formula: "x = (-b ± √(b² - 4ac)) / 2a"
+      },
+      {
+        title: "دلتا (مبیّن) معادله درجه دوم",
+        formula: "Δ = b² - 4ac"
+      },
+      {
+        title: "رابطه فیثاغورس",
+        formula: "a² + b² = c²"
+      },
+      {
+        title: "سینوس در مثلث قائم‌الزاویه",
+        formula: "sin θ = مقابل / وتر"
+      },
+      {
+        title: "کسینوس در مثلث قائم‌الزاویه",
+        formula: "cos θ = مجاور / وتر"
+      },
+      {
+        title: "تانژانت",
+        formula: "tan θ = مقابل / مجاور = sin θ / cos θ"
+      },
+      {
+        title: "اتحاد سینوس مجموع",
+        formula: "sin(a + b) = sin a · cos b + cos a · sin b"
+      },
+      {
+        title: "اتحاد کسینوس مجموع",
+        formula: "cos(a + b) = cos a · cos b - sin a · sin b"
+      }
+    ];
+
+    let cards = [...FORMULAS];
+    let currentIndex = 0;
+    let isFlipped = false;
+
+    function renderCard() {
+      const card = cards[currentIndex];
+      const titleEl = document.getElementById("cardTitle");
+      const formulaEl = document.getElementById("cardFormula");
+      const counterEl = document.getElementById("cardCounter");
+      const inner = document.getElementById("flashcardInner");
+
+      titleEl.textContent = card.title;
+      formulaEl.textContent = card.formula;
+      counterEl.textContent = (currentIndex + 1) + " / " + cards.length;
+
+      /* برگردون به حالت اول */
+      isFlipped = false;
+      inner.classList.remove("flipped");
+    }
+
+    function flipCard() {
+      const inner = document.getElementById("flashcardInner");
+      isFlipped = !isFlipped;
+      if (isFlipped) inner.classList.add("flipped");
+      else inner.classList.remove("flipped");
+    }
+
+    function nextCard() {
+      currentIndex = (currentIndex + 1) % cards.length;
+      renderCard();
+    }
+
+    function prevCard() {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      renderCard();
+    }
+
+    function shuffleCards() {
+      cards = [...FORMULAS].sort(() => Math.random() - 0.5);
+      currentIndex = 0;
+      renderCard();
+    }
+
+    /* کیبورد */
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") nextCard();
+      if (e.key === "ArrowRight") prevCard();
+      if (e.key === " ") { e.preventDefault(); flipCard(); }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      renderCard();
+    });
+  </script>
+
+</body>
+</html>
