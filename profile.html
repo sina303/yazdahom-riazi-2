@@ -56,6 +56,32 @@
       </div>
     </section>
 
+    <!-- STREAK -->
+    <section class="streak-section">
+      <div class="streak-card">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-value" id="streakDays">0</div>
+        <div class="streak-label">روز پیاپی</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-icon">⏱</div>
+        <div class="streak-value" id="totalTime">0</div>
+        <div class="streak-label">دقیقه مطالعه</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-icon">🎯</div>
+        <div class="streak-value" id="bestDay">0</div>
+        <div class="streak-label">بهترین روز (سوال)</div>
+      </div>
+    </section>
+
+    <!-- CHART -->
+    <section class="chart-section">
+      <span class="section-label">Activity</span>
+      <h2>فعالیت ۷ روز اخیر</h2>
+      <div class="chart-bars" id="chartBars"></div>
+    </section>
+
     <section class="level-section">
       <div class="level-header">
         <div>
@@ -119,13 +145,17 @@
       }
     }
 
+    /* =========================================
+    USER
+    ========================================= */
     function getUser() {
       const raw = localStorage.getItem("y11_math_user");
       if (!raw) {
         return {
           username: "Sina",
           xp: 0, solved: 0, correct: 0, wrong: 0,
-          solvedQuestions: [], mistakes: []
+          solvedQuestions: [], mistakes: [],
+          dailyActivity: {}, totalMinutes: 0, streak: 0, lastVisit: null
         };
       }
       try {
@@ -137,17 +167,66 @@
           correct: u.correct || 0,
           wrong: u.wrong || 0,
           solvedQuestions: u.solvedQuestions || [],
-          mistakes: u.mistakes || []
+          mistakes: u.mistakes || [],
+          dailyActivity: u.dailyActivity || {},
+          totalMinutes: u.totalMinutes || 0,
+          streak: u.streak || 0,
+          lastVisit: u.lastVisit || null
         };
       } catch (e) {
         return {
           username: "Sina",
           xp: 0, solved: 0, correct: 0, wrong: 0,
-          solvedQuestions: [], mistakes: []
+          solvedQuestions: [], mistakes: [],
+          dailyActivity: {}, totalMinutes: 0, streak: 0, lastVisit: null
         };
       }
     }
 
+    function saveUser(user) {
+      localStorage.setItem("y11_math_user", JSON.stringify(user));
+    }
+
+    /* =========================================
+    STREAK LOGIC
+    ========================================= */
+    function updateStreak() {
+      const user = getUser();
+      const today = new Date().toISOString().split("T")[0]; /* YYYY-MM-DD */
+      const lastVisit = user.lastVisit;
+
+      if (!lastVisit) {
+        user.streak = 1;
+        user.lastVisit = today;
+        saveUser(user);
+        return;
+      }
+
+      if (lastVisit === today) {
+        /* امروز قبلاً اومده — کاری نکن */
+        return;
+      }
+
+      /* چک کن دیروز بوده یا نه */
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yDate = yesterday.toISOString().split("T")[0];
+
+      if (lastVisit === yDate) {
+        /* پیوسته — streak +1 */
+        user.streak += 1;
+      } else {
+        /* قطع شده — ریست */
+        user.streak = 1;
+      }
+
+      user.lastVisit = today;
+      saveUser(user);
+    }
+
+    /* =========================================
+    RENDER PROFILE
+    ========================================= */
     function renderProfile() {
       const user = getUser();
       const xp = user.xp;
@@ -163,25 +242,21 @@
       document.getElementById("statSolved").textContent = solved;
       document.getElementById("statCorrect").textContent = correct;
 
-      let level = 1;
-      let levelStart = 0;
-      let levelEnd = 100;
+      /* Level */
+      let level = 1, levelStart = 0, levelEnd = 100;
       if (xp >= 700) { level = 5; levelStart = 700; levelEnd = 1000; }
       else if (xp >= 450) { level = 4; levelStart = 450; levelEnd = 700; }
       else if (xp >= 250) { level = 3; levelStart = 250; levelEnd = 450; }
       else if (xp >= 100) { level = 2; levelStart = 100; levelEnd = 250; }
 
-      const progress = Math.min(
-        100,
-        Math.round(((xp - levelStart) / (levelEnd - levelStart)) * 100)
-      );
+      const progress = Math.min(100, Math.round(((xp - levelStart) / (levelEnd - levelStart)) * 100));
 
       document.getElementById("statLevel").textContent = level;
       document.getElementById("levelCurrent").textContent = "سطح " + level;
-      document.getElementById("levelNext").textContent =
-        "تا سطح بعدی " + (levelEnd - xp) + " XP";
+      document.getElementById("levelNext").textContent = "تا سطح بعدی " + (levelEnd - xp) + " XP";
       document.getElementById("levelBar").style.width = progress + "%";
 
+      /* Subject progress */
       const totalQ = 5;
       const p = Math.min(100, Math.round((solved / totalQ) * 100));
       const hesabanEl = document.getElementById("hesabanPercent");
@@ -193,21 +268,79 @@
         else hesabanText.textContent = "کامل شد! 🎉";
       }
 
+      /* Streak cards */
+      document.getElementById("streakDays").textContent = user.streak || 0;
+      document.getElementById("totalTime").textContent = user.totalMinutes || 0;
+
+      /* Best day */
+      let bestDay = 0;
+      Object.values(user.dailyActivity || {}).forEach((count) => {
+        if (count > bestDay) bestDay = count;
+      });
+      document.getElementById("bestDay").textContent = bestDay;
+
+      /* Chart */
+      renderChart(user.dailyActivity || {});
+
+      /* Mistakes */
       renderMistakes(user);
     }
 
+    /* =========================================
+    CHART
+    ========================================= */
+    function renderChart(dailyActivity) {
+      const container = document.getElementById("chartBars");
+      if (!container) return;
+
+      const dayNames = ["یک", "دو", "سه", "چهار", "پنج", "جمعه", "شنبه"];
+      const today = new Date();
+
+      const days = [];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(today.getDate() - i);
+        const key = d.toISOString().split("T")[0];
+        days.push({
+          key: key,
+          label: dayNames[d.getDay()],
+          count: dailyActivity[key] || 0,
+          isToday: i === 0
+        });
+      }
+
+      const maxCount = Math.max(1, ...days.map((d) => d.count));
+
+      container.innerHTML = "";
+      days.forEach((day) => {
+        const heightPercent = (day.count / maxCount) * 100;
+        const div = document.createElement("div");
+        div.className = "chart-day";
+        div.innerHTML = `
+          <div class="chart-bar-wrapper">
+            <div class="chart-bar" style="height: ${Math.max(4, heightPercent)}%">
+              ${day.count > 0 ? '<span class="chart-bar-count">' + day.count + '</span>' : ''}
+            </div>
+          </div>
+          <div class="chart-day-label ${day.isToday ? 'today' : ''}">${day.label}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    /* =========================================
+    MISTAKES
+    ========================================= */
     function renderMistakes(user) {
       const container = document.getElementById("mistakesList");
       if (!container) return;
 
       if (!user.mistakes || user.mistakes.length === 0) {
-        container.innerHTML =
-          '<p style="color:#8d9690;font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>';
+        container.innerHTML = '<p style="color:#8d9690;font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>';
         return;
       }
 
       container.innerHTML = "";
-
       user.mistakes.forEach((m) => {
         const div = document.createElement("div");
         div.className = "mistake-item";
@@ -222,6 +355,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
+      updateStreak();
       renderProfile();
     });
 
