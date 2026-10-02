@@ -15,6 +15,7 @@
     <nav>
       <a href="index.html">خانه</a>
       <a href="hesaban.html">حسابان</a>
+      <a href="formulas.html">فرمول‌ها</a>
       <a href="profile.html">پروفایل</a>
     </nav>
     <div class="user">یازدهم ریاضی</div>
@@ -82,8 +83,7 @@
       </div>
     </section>
 
-    <!-- غلط‌نامه -->
-    <section class="subject-progress-section" style="margin-top: 30px;">
+    <section class="subject-progress-section">
       <span class="section-label">Mistake Log</span>
       <h2>غلط‌نامه</h2>
 
@@ -93,34 +93,6 @@
     </section>
 
   </main>
-
-  <style>
-    .mistake-item {
-      padding: 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-right: 3px solid #e05252;
-      border-radius: 12px;
-      margin-bottom: 12px;
-    }
-    .mistake-item .mistake-question {
-      font-size: 15px;
-      line-height: 2;
-      margin-bottom: 12px;
-    }
-    .mistake-item .mistake-answer {
-      color: var(--green);
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-    .mistake-item .mistake-solution {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 2;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border);
-    }
-  </style>
 
   <script>
     function createMathBackground() {
@@ -208,7 +180,6 @@
         "تا سطح بعدی " + (levelEnd - xp) + " XP";
       document.getElementById("levelBar").style.width = progress + "%";
 
-      /* پیشرفت حسابان */
       const totalQ = 5;
       const p = Math.min(100, Math.round((solved / totalQ) * 100));
       const hesabanEl = document.getElementById("hesabanPercent");
