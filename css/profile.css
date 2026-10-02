@@ -32,7 +32,6 @@ body {
   position: relative;
 }
 
-/* MATH BACKGROUND */
 .math-bg {
   position: fixed;
   inset: 0;
@@ -106,7 +105,7 @@ main {
 
 .profile-header nav {
   display: flex;
-  gap: 25px;
+  gap: 22px;
 }
 
 .profile-header nav a {
@@ -227,6 +226,122 @@ main {
   font-size: 11px;
   display: block;
   margin-top: 6px;
+}
+
+/* STREAK SECTION */
+.streak-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.streak-card {
+  padding: 25px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(53, 211, 90, 0.1), transparent 55%),
+    var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.streak-card:hover {
+  border-color: var(--green);
+  transform: translateY(-3px);
+}
+
+.streak-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.streak-value {
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.streak-label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* CHART SECTION */
+.chart-section {
+  padding: 30px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 30px;
+}
+
+.chart-section .section-label {
+  color: var(--green);
+  font-size: 13px;
+}
+
+.chart-section h2 {
+  margin-top: 8px;
+  margin-bottom: 25px;
+  font-size: 22px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  height: 180px;
+  padding: 0 5px;
+}
+
+.chart-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+}
+
+.chart-bar-wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.chart-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--green), rgba(53, 211, 90, 0.4));
+  border-radius: 6px 6px 0 0;
+  min-height: 4px;
+  transition: height 0.5s ease;
+  position: relative;
+}
+
+.chart-bar-count {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.chart-day-label {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.chart-day-label.today {
+  color: var(--green);
+  font-weight: bold;
 }
 
 /* LEVEL SECTION */
@@ -357,13 +472,17 @@ main {
 }
 
 /* MOBILE */
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .profile-header nav {
     display: none;
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .streak-section {
+    grid-template-columns: 1fr;
   }
 
   .profile-hero {
@@ -380,5 +499,9 @@ main {
     width: 80px;
     height: 80px;
     font-size: 34px;
+  }
+
+  .chart-bars {
+    height: 140px;
   }
 }
