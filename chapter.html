@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>فصل | AXIS</title>
-  <link rel="stylesheet" href="css/chapter.css" />
+  <title>درس | AXIS</title>
+  <link rel="stylesheet" href="css/lesson.css" />
 </head>
 <body>
 
   <div class="math-bg" id="mathBg"></div>
 
-  <header class="chapter-header">
-    <div class="brand">AXIS</div>
+  <header class="lesson-header">
+    <div class="logo">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
       <a href="hesaban.html">حسابان</a>
@@ -23,63 +23,46 @@
   <main>
 
     <div class="breadcrumb">
-      <a href="index.html">یازدهم ریاضی</a>
-      <span>←</span>
       <a href="hesaban.html">حسابان</a>
       <span>←</span>
-      <strong id="breadcrumbChapter">فصل</strong>
+      <a href="#" id="backToChapter">فصل</a>
+      <span>←</span>
+      <strong id="breadcrumbLesson">درس</strong>
     </div>
 
-    <section class="chapter-hero">
-      <div>
-        <span class="chapter-label" id="chapterLabel">فصل</span>
-        <h1 id="chapterTitle">در حال بارگذاری...</h1>
-        <p id="chapterDescription">توضیحات فصل در حال بارگذاری است.</p>
-      </div>
-      <div class="chapter-progress-card">
-        <span>پیشرفت فصل</span>
-        <strong id="chapterProgressText">0%</strong>
-        <div class="progress-bar">
-          <i id="chapterProgressBar" style="width: 0%"></i>
-        </div>
-        <small id="chapterLessonCount">0 درس</small>
+    <section class="lesson-hero">
+      <span id="lessonNumber">درس</span>
+      <h1 id="lessonTitle">در حال بارگذاری...</h1>
+      <p id="lessonDescription">محتوای درس در حال بارگذاری است.</p>
+      <div id="lessonActions" style="margin-top:25px; display:flex; gap:10px; flex-wrap:wrap; position:relative;">
+        <button id="practiceBtn" class="check-button" onclick="startPractice()">حالت تمرین</button>
+        <button id="examBtn" class="solution-button" onclick="startExam()">حالت آزمون ⏱</button>
       </div>
     </section>
 
-    <section class="content-layout">
+    <section class="lesson-content">
+      <div class="lesson-info">
+        <span>راهنمای درس</span>
+        <h2>توضیحات</h2>
+        <p>در این بخش می‌توانی سوالات درس را یکی‌یکی پاسخ دهی و راه‌حل کامل را ببینی. هر پاسخ درست ۱۰ XP به تو می‌دهد.</p>
+      </div>
 
-      <aside class="chapter-sidebar">
-        <h3>محتوای فصل</h3>
-        <button class="sidebar-item active">۰۱ <span>درس‌ها</span></button>
-        <button class="sidebar-item">۰۲ <span>تمرین‌ها</span></button>
-        <button class="sidebar-item">۰۳ <span>آزمون فصل</span></button>
-        <button class="sidebar-item ai-item">AI <span>دستیار AXIS</span></button>
-      </aside>
-
-      <section class="chapter-content">
-
-        <div class="content-header">
-          <span>درس‌ها</span>
-          <h2>لیست درس‌های فصل</h2>
-          <p>روی هر درس کلیک کن تا وارد شوی و سوالات را پاسخ دهی.</p>
+      <div class="questions-header">
+        <div>
+          <span id="modeLabel">تمرین</span>
+          <h2 id="modeTitle">سوالات درس</h2>
         </div>
+        <div id="questionCount">0 سوال</div>
+      </div>
 
-        <div class="lesson-grid" id="lessonGrid">
-          <div class="loading">در حال بارگذاری درس‌ها...</div>
-        </div>
+      <div id="examTimer" class="exam-timer hidden">
+        <span class="timer-icon">⏱</span>
+        <strong id="timerText">00:00</strong>
+      </div>
 
-        <div class="ai-box">
-          <div class="ai-symbol">AI</div>
-          <div class="ai-text">
-            <span>دستیار هوشمند</span>
-            <h3>سوالی داری؟ از AXIS بپرس</h3>
-            <p>هر سوالی درباره این فصل داری، می‌تونی از دستیار هوشمند بپرسی.</p>
-          </div>
-          <button>پرسیدن از AI</button>
-        </div>
-
-      </section>
-
+      <div class="questions-list" id="questionsList">
+        <div class="loading">در حال بارگذاری...</div>
+      </div>
     </section>
 
   </main>
@@ -107,83 +90,47 @@
       }
     }
 
-    function openLesson(lessonId) {
-      window.location.href = "lesson.html?lesson=" + encodeURIComponent(lessonId);
-    }
-
-    async function loadChapter() {
-      const lessonGrid = document.getElementById("lessonGrid");
-      if (!lessonGrid) return;
-
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const chapterId = params.get("chapter");
-
-        if (!chapterId) throw new Error("شناسه فصل در آدرس نیست");
-
-        const res = await fetch("data/subjects.json");
-        if (!res.ok) throw new Error("خطا در بارگذاری");
-
-        const data = await res.json();
-        const hesaban = data.subjects.find((s) => s.id === "hesaban");
-        if (!hesaban) throw new Error("حسابان پیدا نشد");
-
-        const chapter = hesaban.chapters.find((c) => c.id === chapterId);
-        if (!chapter) throw new Error("فصل پیدا نشد");
-
-        const elLabel = document.getElementById("chapterLabel");
-        const elTitle = document.getElementById("chapterTitle");
-        const elDesc = document.getElementById("chapterDescription");
-        const elBread = document.getElementById("breadcrumbChapter");
-        const elProgText = document.getElementById("chapterProgressText");
-        const elProgBar = document.getElementById("chapterProgressBar");
-        const elCount = document.getElementById("chapterLessonCount");
-
-        if (elLabel) elLabel.textContent = "فصل " + chapter.number;
-        if (elTitle) elTitle.textContent = chapter.title;
-        if (elDesc) elDesc.textContent = chapter.description;
-        if (elBread) elBread.textContent = chapter.title;
-        if (elProgText) elProgText.textContent = chapter.progress + "%";
-        if (elProgBar) elProgBar.style.width = chapter.progress + "%";
-        if (elCount) elCount.textContent = (chapter.lessons?.length || 0) + " درس";
-
-        renderLessons(chapter.lessons);
-      } catch (err) {
-        console.error(err);
-        lessonGrid.innerHTML = '<div class="loading">خطا: ' + err.message + '</div>';
-      }
-    }
-
-    function renderLessons(lessons) {
-      const grid = document.getElementById("lessonGrid");
-      if (!grid) return;
-      grid.innerHTML = "";
-
-      if (!lessons || lessons.length === 0) {
-        grid.innerHTML = '<div class="loading">هنوز درسی ثبت نشده.</div>';
-        return;
-      }
-
-      lessons.forEach((lesson) => {
-        const card = document.createElement("article");
-        card.className = "lesson-card";
-        card.innerHTML = `
-          <div class="lesson-icon">${String(lesson.number).padStart(2, "0")}</div>
-          <div>
-            <h3>${lesson.title}</h3>
-            <p>${lesson.description}</p>
-          </div>
-          <button onclick="openLesson('${lesson.id}')">شروع →</button>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      createMathBackground();
-      loadChapter();
-    });
-  </script>
-
-</body>
-</html>
+    const LESSONS_DATA = {
+      "hesaban-ch1-lesson-1": {
+        id: "hesaban-ch1-lesson-1",
+        number: 1,
+        title: "مجموع جملات دنباله‌های حسابی",
+        description: "آموزش دنباله‌های حسابی و فرمول مجموع",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          {
+            id: "h1q1", difficulty: "آسان",
+            question: "جمله عمومی دنباله‌ای با جمله اول ۱ و قدر نسبت ۳ را بنویسید.",
+            correctAnswer: "3n - 2",
+            answer: "از فرمول جمله عمومی دنباله حسابی استفاده می‌کنیم.",
+            solution: "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2"
+          },
+          {
+            id: "h1q2", difficulty: "متوسط",
+            question: "مجموع ۱۰ جمله اول دنباله حسابی ۱, ۴, ۷, ۱۰, ... را حساب کنید.",
+            correctAnswer: "145",
+            answer: "از فرمول مجموع n جمله اول استفاده می‌کنیم.",
+            solution: "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145"
+          },
+          {
+            id: "h1q3", difficulty: "آسان",
+            question: "اگر جمله اول یک دنباله حسابی ۵ و قدر نسبت آن ۲ باشد، جمله دهم چند است؟",
+            correctAnswer: "23",
+            answer: "از فرمول جمله عمومی استفاده می‌کنیم.",
+            solution: "a_10 = a_1 + 9d = 5 + 9×2 = 5 + 18 = 23"
+          }
+        ]
+      },
+      "hesaban-ch1-lesson-2": {
+        id: "hesaban-ch1-lesson-2",
+        number: 2,
+        title: "دنباله‌های هندسی",
+        description: "آموزش دنباله‌های هندسی و فرمول مجموع",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          {
+            id: "h2q1", difficulty: "آسان",
+            question: "جمله عمومی دنباله هندسی با جمله اول ۲ و نسبت ۳ را بنویسید.",
+            correctAnswer: "2 × 3^(n-1)",
+            answer: "از فرمول جمله عمومی دنباله هندسی استفاده می‌کنیم.",
+            solution: "a_n = a_1 × r^(n-1
