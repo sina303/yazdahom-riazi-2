@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- پس‌زمینه متحرک اعداد ریاضی -->
   <div class="math-bg" id="mathBg"></div>
 
   <header class="hesaban-header">
@@ -24,7 +23,6 @@
 
   <main>
 
-    <!-- HERO -->
     <section class="hesaban-hero">
       <div class="hero-text">
         <span class="small-title">درس حسابان</span>
@@ -35,7 +33,7 @@
         </p>
         <div class="hero-buttons">
           <button onclick="scrollToChapters()">شروع یادگیری</button>
-          <button class="secondary-button">نگاه کلی</button>
+          <button class="secondary-button" onclick="window.location.href='profile.html'">مشاهده پروفایل</button>
         </div>
       </div>
 
@@ -45,11 +43,10 @@
         <div class="progress-bar">
           <div class="progress-fill" id="totalProgressBar"></div>
         </div>
-        <small id="totalLessons">۰ از ۲ درس</small>
+        <small id="totalLessons">۰ از ۵ سوال حل شده</small>
       </div>
     </section>
 
-    <!-- QUICK ACCESS -->
     <section class="quick-section">
       <div class="section-heading">
         <span>دسترسی سریع</span>
@@ -79,7 +76,6 @@
       </div>
     </section>
 
-    <!-- CHAPTERS -->
     <section class="chapters-section" id="chapters">
       <div class="section-heading">
         <span>فصل‌ها</span>
@@ -91,7 +87,6 @@
       </div>
     </section>
 
-    <!-- EXAMS -->
     <section class="exam-section" id="exams">
       <div>
         <span>آزمون‌ها</span>
@@ -101,7 +96,6 @@
       <button>به‌زودی</button>
     </section>
 
-    <!-- AI -->
     <section class="ai-section">
       <div class="ai-icon">AI</div>
       <div>
@@ -114,11 +108,10 @@
 
   </main>
 
-  <!-- =========================================
-  MATH BACKGROUND + CHAPTERS SCRIPT
-  ========================================= -->
   <script>
-    /* پس‌زمینه متحرک */
+    /* =========================================
+    پس‌زمینه متحرک
+    ========================================= */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
@@ -143,29 +136,75 @@
       }
     }
 
-    /* باز کردن فصل */
+    /* =========================================
+    خواندن اطلاعات کاربر
+    ========================================= */
+    function getUser() {
+      const raw = localStorage.getItem("y11_math_user");
+      if (!raw) {
+        return { xp: 0, solved: 0, correct: 0, wrong: 0, solvedQuestions: [] };
+      }
+      try {
+        const u = JSON.parse(raw);
+        return {
+          xp: u.xp || 0,
+          solved: u.solved || 0,
+          correct: u.correct || 0,
+          wrong: u.wrong || 0,
+          solvedQuestions: u.solvedQuestions || []
+        };
+      } catch (e) {
+        return { xp: 0, solved: 0, correct: 0, wrong: 0, solvedQuestions: [] };
+      }
+    }
+
+    /* =========================================
+    پیشرفت — بر اساس تعداد سوالات حل‌شده
+    ========================================= */
+    const TOTAL_QUESTIONS = 5;
+
+    function updateProgress() {
+      const user = getUser();
+      const solved = user.solved;
+      const percent = Math.min(100, Math.round((solved / TOTAL_QUESTIONS) * 100));
+
+      const progEl = document.getElementById("totalProgress");
+      const barEl = document.getElementById("totalProgressBar");
+      const lessonEl = document.getElementById("totalLessons");
+
+      if (progEl) progEl.textContent = percent + "%";
+      if (barEl) barEl.style.width = percent + "%";
+      if (lessonEl) {
+        lessonEl.textContent = solved + " از " + TOTAL_QUESTIONS + " سوال حل شده";
+      }
+    }
+
+    /* =========================================
+    باز کردن فصل
+    ========================================= */
     function openChapter(chapterId) {
       window.location.href = "chapter.html?chapter=" + encodeURIComponent(chapterId);
     }
 
-    /* اسکرول به فصل‌ها */
     function scrollToChapters() {
       const el = document.getElementById("chapters");
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
 
-    /* خواندن فصل‌ها از JSON */
+    /* =========================================
+    بارگذاری فصل‌ها
+    ========================================= */
     async function loadChapters() {
       const grid = document.getElementById("chaptersGrid");
       if (!grid) return;
 
       try {
         const res = await fetch("data/subjects.json");
-        if (!res.ok) throw new Error("Could not load subjects.json");
+        if (!res.ok) throw new Error("خطا در بارگذاری داده");
 
         const data = await res.json();
         const hesaban = data.subjects.find((s) => s.id === "hesaban");
-        if (!hesaban) throw new Error("Hesaban not found");
+        if (!hesaban) throw new Error("حسابان پیدا نشد");
 
         grid.innerHTML = "";
 
@@ -178,8 +217,8 @@
               <h3>${ch.title}</h3>
               <p>${ch.description}</p>
               <div class="chapter-progress">
-                <span>پیشرفت ${ch.progress}%</span>
-                <div><i style="width: ${ch.progress}%"></i></div>
+                <span>${ch.lessons?.length || 0} درس</span>
+                <div><i style="width: 0%"></i></div>
               </div>
             </div>
             <button onclick="openChapter('${ch.id}')">شروع →</button>
@@ -187,41 +226,23 @@
           grid.appendChild(card);
         });
 
-        updateProgress(hesaban.chapters);
-
       } catch (err) {
         console.error(err);
         grid.innerHTML = '<div class="loading">خطا در بارگذاری فصل‌ها</div>';
       }
     }
 
-    /* محاسبه پیشرفت کل */
-    function updateProgress(chapters) {
-      let totalLessons = 0;
-      let totalProgress = 0;
-
-      chapters.forEach((ch) => {
-        totalLessons += (ch.lessons?.length || 0);
-        totalProgress += (ch.progress || 0);
-      });
-
-      const avg = chapters.length
-        ? Math.round(totalProgress / chapters.length)
-        : 0;
-
-      const progEl = document.getElementById("totalProgress");
-      const barEl = document.getElementById("totalProgressBar");
-      const lessonEl = document.getElementById("totalLessons");
-
-      if (progEl) progEl.textContent = avg + "%";
-      if (barEl) barEl.style.width = avg + "%";
-      if (lessonEl) lessonEl.textContent = "۰ از " + totalLessons + " درس";
-    }
-
+    /* =========================================
+    شروع
+    ========================================= */
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
+      updateProgress();
       loadChapters();
     });
+
+    /* وقتی از صفحه‌ی دیگه برگشتی، آپدیت کن */
+    window.addEventListener("pageshow", updateProgress);
   </script>
 
 </body>
