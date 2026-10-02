@@ -12,18 +12,21 @@
           "title": "جبر و معادله",
           "description": "مجموع جملات دنباله‌های حسابی و هندسی",
           "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/",
           "lessons": [
             {
               "id": "hesaban-ch1-lesson-1",
               "number": 1,
               "title": "مجموع جملات دنباله‌های حسابی",
-              "description": "آموزش دنباله‌های حسابی و فرمول مجموع"
+              "description": "آموزش دنباله‌های حسابی و فرمول مجموع",
+              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
             },
             {
               "id": "hesaban-ch1-lesson-2",
               "number": 2,
               "title": "دنباله‌های هندسی",
-              "description": "آموزش دنباله‌های هندسی و فرمول مجموع"
+              "description": "آموزش دنباله‌های هندسی و فرمول مجموع",
+              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
             }
           ]
         },
@@ -33,6 +36,7 @@
           "title": "تابع",
           "description": "تابع و ویژگی‌های آن",
           "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/",
           "lessons": []
         },
         {
@@ -41,6 +45,7 @@
           "title": "توابع نمایی و لگاریتمی",
           "description": "توابع نمایی و لگاریتمی",
           "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/",
           "lessons": []
         },
         {
@@ -49,6 +54,7 @@
           "title": "مثلثات",
           "description": "مثلثات و کاربردهای آن",
           "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/",
           "lessons": []
         }
       ]
