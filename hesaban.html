@@ -15,7 +15,7 @@
     <nav>
       <a href="index.html">خانه</a>
       <a href="#chapters">فصل‌ها</a>
-      <a href="#practice">تمرین</a>
+      <a href="formulas.html">فرمول‌ها</a>
       <a href="#exams">آزمون</a>
     </nav>
     <a href="profile.html" class="user-box">پروفایل</a>
@@ -109,13 +109,9 @@
   </main>
 
   <script>
-    /* =========================================
-    پس‌زمینه متحرک
-    ========================================= */
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-
       const symbols = [
         "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
         "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
@@ -123,7 +119,6 @@
         "+", "−", "×", "÷", "=", "%", "e", "i",
         "1", "2", "3", "7", "9", "0", "½", "¼"
       ];
-
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -136,14 +131,9 @@
       }
     }
 
-    /* =========================================
-    خواندن اطلاعات کاربر
-    ========================================= */
     function getUser() {
       const raw = localStorage.getItem("y11_math_user");
-      if (!raw) {
-        return { xp: 0, solved: 0, correct: 0, wrong: 0, solvedQuestions: [] };
-      }
+      if (!raw) return { xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
       try {
         const u = JSON.parse(raw);
         return {
@@ -151,16 +141,14 @@
           solved: u.solved || 0,
           correct: u.correct || 0,
           wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || []
+          solvedQuestions: u.solvedQuestions || [],
+          mistakes: u.mistakes || []
         };
       } catch (e) {
-        return { xp: 0, solved: 0, correct: 0, wrong: 0, solvedQuestions: [] };
+        return { xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[] };
       }
     }
 
-    /* =========================================
-    پیشرفت — بر اساس تعداد سوالات حل‌شده
-    ========================================= */
     const TOTAL_QUESTIONS = 5;
 
     function updateProgress() {
@@ -174,14 +162,9 @@
 
       if (progEl) progEl.textContent = percent + "%";
       if (barEl) barEl.style.width = percent + "%";
-      if (lessonEl) {
-        lessonEl.textContent = solved + " از " + TOTAL_QUESTIONS + " سوال حل شده";
-      }
+      if (lessonEl) lessonEl.textContent = solved + " از " + TOTAL_QUESTIONS + " سوال حل شده";
     }
 
-    /* =========================================
-    باز کردن فصل
-    ========================================= */
     function openChapter(chapterId) {
       window.location.href = "chapter.html?chapter=" + encodeURIComponent(chapterId);
     }
@@ -191,16 +174,13 @@
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
 
-    /* =========================================
-    بارگذاری فصل‌ها
-    ========================================= */
     async function loadChapters() {
       const grid = document.getElementById("chaptersGrid");
       if (!grid) return;
 
       try {
         const res = await fetch("data/subjects.json");
-        if (!res.ok) throw new Error("خطا در بارگذاری داده");
+        if (!res.ok) throw new Error("خطا در بارگذاری");
 
         const data = await res.json();
         const hesaban = data.subjects.find((s) => s.id === "hesaban");
@@ -225,23 +205,18 @@
           `;
           grid.appendChild(card);
         });
-
       } catch (err) {
         console.error(err);
         grid.innerHTML = '<div class="loading">خطا در بارگذاری فصل‌ها</div>';
       }
     }
 
-    /* =========================================
-    شروع
-    ========================================= */
     document.addEventListener("DOMContentLoaded", () => {
       createMathBackground();
       updateProgress();
       loadChapters();
     });
 
-    /* وقتی از صفحه‌ی دیگه برگشتی، آپدیت کن */
     window.addEventListener("pageshow", updateProgress);
   </script>
 
