@@ -58,6 +58,146 @@
           "lessons": []
         }
       ]
+    },
+    {
+      "id": "handese",
+      "name": "هندسه",
+      "icon": "△",
+      "description": "هندسه ۲ — دایره، تبدیل‌ها، تشابه",
+      "chapters": [
+        {
+          "id": "handese-chapter-1",
+          "number": 1,
+          "title": "دایره",
+          "description": "زاویه‌ها، وترها، مماس‌ها",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/handese11/exercises/1/",
+          "lessons": []
+        },
+        {
+          "id": "handese-chapter-2",
+          "number": 2,
+          "title": "تبدیل‌های هندسی",
+          "description": "انتقال، تجانس، تشابه",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/handese11/exercises/2/",
+          "lessons": []
+        },
+        {
+          "id": "handese-chapter-3",
+          "number": 3,
+          "title": "مساحت و حجم",
+          "description": "مساحت و حجم اجسام",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/handese11/exercises/3/",
+          "lessons": []
+        }
+      ]
+    },
+    {
+      "id": "gosite",
+      "name": "گسسته",
+      "icon": "∞",
+      "description": "ریاضیات گسسته — گراف، ترکیبات",
+      "chapters": [
+        {
+          "id": "gosite-chapter-1",
+          "number": 1,
+          "title": "آشنایی با نظریه گراف",
+          "description": "گراف، درجه، مسیر، دور",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/1/",
+          "lessons": []
+        },
+        {
+          "id": "gosite-chapter-2",
+          "number": 2,
+          "title": "احتمال",
+          "description": "احتمال و ترکیبات",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/2/",
+          "lessons": []
+        },
+        {
+          "id": "gosite-chapter-3",
+          "number": 3,
+          "title": "ترکیبیات",
+          "description": "اصل ضرب، جایگشت، ترکیب",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/3/",
+          "lessons": []
+        }
+      ]
+    },
+    {
+      "id": "fizik",
+      "name": "فیزیک",
+      "icon": "Φ",
+      "description": "فیزیک ۲ — الکتریسیته، مغناطیس",
+      "chapters": [
+        {
+          "id": "fizik-chapter-1",
+          "number": 1,
+          "title": "الکتریسیته ساکن",
+          "description": "بار الکتریکی، میدان، پتانسیل",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/fizik11/exercises/1/",
+          "lessons": []
+        },
+        {
+          "id": "fizik-chapter-2",
+          "number": 2,
+          "title": "جریان الکتریکی",
+          "description": "جریان، مقاومت، مدار",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/fizik11/exercises/2/",
+          "lessons": []
+        },
+        {
+          "id": "fizik-chapter-3",
+          "number": 3,
+          "title": "مغناطیس",
+          "description": "میدان مغناطیسی و القا",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/fizik11/exercises/3/",
+          "lessons": []
+        }
+      ]
+    },
+    {
+      "id": "shimi",
+      "name": "شیمی",
+      "icon": "⚗",
+      "description": "شیمی ۲ — ساختار، واکنش‌ها",
+      "chapters": [
+        {
+          "id": "shimi-chapter-1",
+          "number": 1,
+          "title": "قدرت پیوند و ساختار",
+          "description": "پیوند شیمیایی و ساختار مولکول",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/shimi11/exercises/1/",
+          "lessons": []
+        },
+        {
+          "id": "shimi-chapter-2",
+          "number": 2,
+          "title": "واکنش‌های شیمیایی",
+          "description": "استوکیومتری و تعادل",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/shimi11/exercises/2/",
+          "lessons": []
+        },
+        {
+          "id": "shimi-chapter-3",
+          "number": 3,
+          "title": "اسیدها و بازها",
+          "description": "pH، اسید، باز",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/shimi11/exercises/3/",
+          "lessons": []
+        }
+      ]
     }
   ]
 }
