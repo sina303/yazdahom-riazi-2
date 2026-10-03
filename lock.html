@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIS — قفل</title>
+  <link rel="stylesheet" href="css/lock.css" />
+</head>
+<body>
+
+  <div class="math-bg" id="mathBg"></div>
+
+  <main>
+
+    <div class="lock-box">
+      <div class="lock-logo">AXIS</div>
+
+      <div class="lock-icon">🔐</div>
+
+      <h1>دسترسی محدود</h1>
+      <p>این سایت خصوصیه. برای ورود، رمز عبور رو وارد کن.</p>
+
+      <div class="lock-form">
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="رمز عبور..."
+          autocomplete="off"
+          autofocus
+        >
+        <button onclick="checkPassword()">ورود</button>
+      </div>
+
+      <div class="lock-error hidden" id="lockError">
+        رمز اشتباهه. دوباره تلاش کن.
+      </div>
+
+      <div class="lock-hint">
+        رمز رو از سازنده بگیر
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    /* =========================================
+    رمز عبور
+    ========================================= */
+    const CORRECT_PASSWORD = "axis1404";
+    const STORAGE_KEY = "axis_auth";
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput");
+      const errorEl = document.getElementById("lockError");
+      const password = input.value.trim();
+
+      if (password === CORRECT_PASSWORD) {
+        /* رمز درست — ذخیره کن و برو به Home */
+        localStorage.setItem(STORAGE_KEY, "true");
+        window.location.href = "index.html";
+      } else {
+        /* رمز غلط */
+        errorEl.classList.remove("hidden");
+        input.value = "";
+        input.focus();
+
+        /* لرزش */
+        input.style.animation = "shake 0.5s";
+        setTimeout(() => { input.style.animation = ""; }, 500);
+      }
+    }
+
+    /* Enter برای ورود */
+    document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("passwordInput");
+      if (input) {
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") checkPassword();
+        });
+      }
+
+      /* پس‌زمینه متحرک */
+      createMathBackground();
+    });
+
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+      const symbols = [
+        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+        "+", "−", "×", "÷", "=", "%", "e", "i",
+        "1", "2", "3", "7", "9", "0", "½", "¼"
+      ];
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.fontSize = (14 + Math.random() * 34) + "px";
+        span.style.left = (Math.random() * 100) + "%";
+        span.style.animationDuration = (12 + Math.random() * 18) + "s";
+        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
+        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        bg.appendChild(span);
+      }
+    }
+  </script>
+
+</body>
+</html>
