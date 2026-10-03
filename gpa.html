@@ -15,7 +15,7 @@
     <div class="brand">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="subject.html">حسابان</a>
+      <a href="subject.html">درس‌ها</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
@@ -65,13 +65,26 @@
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
+
+      const theme = localStorage.getItem("y11_theme") || "green";
+      let symbols;
+
+      if (theme === "persian") {
+        symbols = [
+          "𒀭", "𒆠", "𒌋", "𒀀", "𒁹", "𒂍", "𒃲", "𒄑", "𒅆", "𒆳",
+          "☫", "𐎠", "𐎡", "𐎢", "𐎣", "𐎤", "𐎥", "𐎦", "𐎧", "𐎨",
+          "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "𐏐", "𐏑", "𐏒", "𐏓", "𐏔"
+        ];
+      } else {
+        symbols = [
+          "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+          "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+          "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+          "+", "−", "×", "÷", "=", "%", "e", "i",
+          "1", "2", "3", "7", "9", "0", "½", "¼"
+        ];
+      }
+
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -87,7 +100,6 @@
     const SUBJECTS = [
       { id: "hesaban",    name: "حسابان ۱",         unit: 4 },
       { id: "handese",    name: "هندسه ۲",          unit: 3 },
-      { id: "gosite",     name: "ریاضیات گسسته",    unit: 2 },
       { id: "fizik",      name: "فیزیک ۲",          unit: 3 },
       { id: "shimi",      name: "شیمی ۲",           unit: 3 },
       { id: "farsi",      name: "فارسی ۲",          unit: 2 },
@@ -96,7 +108,8 @@
       { id: "english",    name: "زبان انگلیسی ۲",   unit: 2 },
       { id: "joghrafia",  name: "جغرافیا ۲",        unit: 2 },
       { id: "tarikh",     name: "تاریخ معاصر",      unit: 2 },
-      { id: "ejtema",     name: "جامعه‌شناسی ۲",   unit: 2 }
+      { id: "ejtema",     name: "جامعه‌شناسی ۲",   unit: 2 },
+      { id: "varzesh",    name: "تربیت بدنی",       unit: 1 }
     ];
 
     const STORAGE_KEY = "y11_gpa_grades";
