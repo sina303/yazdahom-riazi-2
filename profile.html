@@ -15,7 +15,7 @@
     <div class="brand">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="subject.html">حسابان</a>
+      <a href="subject.html">درس‌ها</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
@@ -103,7 +103,7 @@
 
       <div class="subject-progress-card">
         <div>
-          <h3>حسابان</h3>
+          <h3>کل سایت</h3>
           <p id="hesabanProgressText">در حال یادگیری</p>
         </div>
         <div class="percent" id="hesabanPercent">0%</div>
@@ -113,7 +113,6 @@
     <section class="subject-progress-section">
       <span class="section-label">Mistake Log</span>
       <h2>غلط‌نامه</h2>
-
       <div id="mistakesList">
         <p style="color:var(--muted);font-size:14px;">هنوز سوالی رو غلط نزدی. آفرین!</p>
       </div>
@@ -125,13 +124,26 @@
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
+
+      const theme = localStorage.getItem("y11_theme") || "green";
+      let symbols;
+
+      if (theme === "persian") {
+        symbols = [
+          "𒀭", "𒆠", "𒌋", "𒀀", "𒁹", "𒂍", "𒃲", "𒄑", "𒅆", "𒆳",
+          "☫", "𐎠", "𐎡", "𐎢", "𐎣", "𐎤", "𐎥", "𐎦", "𐎧", "𐎨",
+          "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "𐏐", "𐏑", "𐏒", "𐏓", "𐏔"
+        ];
+      } else {
+        symbols = [
+          "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+          "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+          "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+          "+", "−", "×", "÷", "=", "%", "e", "i",
+          "1", "2", "3", "7", "9", "0", "½", "¼"
+        ];
+      }
+
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -158,10 +170,8 @@
         const u = JSON.parse(raw);
         return {
           username: u.username || "Sina",
-          xp: u.xp || 0,
-          solved: u.solved || 0,
-          correct: u.correct || 0,
-          wrong: u.wrong || 0,
+          xp: u.xp || 0, solved: u.solved || 0,
+          correct: u.correct || 0, wrong: u.wrong || 0,
           solvedQuestions: u.solvedQuestions || [],
           mistakes: u.mistakes || [],
           dailyActivity: u.dailyActivity || {},
@@ -236,7 +246,7 @@
       document.getElementById("levelNext").textContent = "تا سطح بعدی " + (levelEnd - xp) + " XP";
       document.getElementById("levelBar").style.width = progress + "%";
 
-      const totalQ = 5;
+      const totalQ = 213;
       const p = Math.min(100, Math.round((solved / totalQ) * 100));
       const hesabanEl = document.getElementById("hesabanPercent");
       const hesabanText = document.getElementById("hesabanProgressText");
