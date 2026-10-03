@@ -100,290 +100,333 @@
     }
 
     const LESSONS_DATA = {
-      "handese-ch1-lesson-1": {
-        id: "handese-ch1-lesson-1",
-        number: 1,
-        title: "زاویه‌های مرکزی و محاطی",
-        description: "رابطه بین زاویه مرکزی و محاطی",
-        chapterId: "handese-chapter-1",
+      "fizik-ch1-lesson-1": {
+        id: "fizik-ch1-lesson-1", number: 1,
+        title: "بار الکتریکی و قانون کولن",
+        description: "بار الکتریکی و نیروی بین بارها",
+        chapterId: "fizik-chapter-1",
         questions: [
-          { id: "g1q1", difficulty: "آسان",
-            question: "اندازه زاویه محاطی روبروی قطر دایره چند درجه است؟",
-            correctAnswer: "90",
-            answer: "قطر، کمانی به اندازه ۱۸۰ درجه می‌سازد.",
-            solution: "زاویه محاطی = نصف زاویه مرکزی = 90 درجه" },
-          { id: "g1q2", difficulty: "آسان",
-            question: "اگر زاویه مرکزی ۱۰۰ درجه باشد، زاویه محاطی متناظر چقدر است؟",
-            correctAnswer: "50",
-            answer: "زاویه محاطی نصف زاویه مرکزی است.",
-            solution: "100 ÷ 2 = 50 درجه" },
-          { id: "g1q3", difficulty: "متوسط",
-            question: "اگر زاویه محاطی ۴۰ درجه باشد، کمان روبروی آن چند درجه است؟",
-            correctAnswer: "80",
-            answer: "کمان = دو برابر زاویه محاطی",
-            solution: "کمان = 2 × 40 = 80 درجه" },
-          { id: "g1q4", difficulty: "متوسط",
-            question: "زاویه مرکزی متناظر با کمان ۱۲۰ درجه چقدر است؟",
-            correctAnswer: "120",
-            answer: "زاویه مرکزی برابر کمان روبروی آن است.",
-            solution: "زاویه مرکزی = 120 درجه" },
-          { id: "g1q5", difficulty: "سخت",
-            question: "در یک دایره، دو زاویه محاطی روبروی یک کمان هستند. اگر یکی ۳۵ درجه باشد، دیگری چند درجه است؟",
-            correctAnswer: "35",
-            answer: "زاویه‌های محاطی روبروی یک کمان با هم برابرند.",
-            solution: "هر دو = 35 درجه" }
+          { id: "f1q1", difficulty: "آسان",
+            question: "واحد بار الکتریکی در SI چیست؟",
+            correctAnswer: "کولن",
+            answer: "واحد اصلی بار الکتریکی.",
+            solution: "کولن (C)" },
+          { id: "f1q2", difficulty: "آسان",
+            question: "بار الکترون چند کولن است؟ (به صورت 1.6×10^-19)",
+            correctAnswer: "1.6×10^-19",
+            answer: "بار پایه‌ای الکترون.",
+            solution: "e = 1.6 × 10⁻¹⁹ C" },
+          { id: "f1q3", difficulty: "متوسط",
+            question: "اگر فاصله دو بار نقطه‌ای ۳ برابر شود، نیروی کولن چند برابر می‌شود؟ (به صورت 1/9)",
+            correctAnswer: "1/9",
+            answer: "نیرو با مجذور فاصله نسبت عکس دارد.",
+            solution: "F ∝ 1/r² → با ۳ برابر شدن r، F به ۱/۹ می‌رسد" },
+          { id: "f1q4", difficulty: "متوسط",
+            question: "دو بار هم‌نام چه نیرویی به هم وارد می‌کنند؟ (رانش/کشش)",
+            correctAnswer: "رانش",
+            answer: "بارهای هم‌نام یکدیگر را می‌رانند.",
+            solution: "رانش" },
+          { id: "f1q5", difficulty: "سخت",
+            question: "دو بار هم‌نام چه نیرویی به هم وارد می‌کنند؟ (رانش/کشش)",
+            correctAnswer: "کشش",
+            answer: "بارهای ناهم‌نام یکدیگر را می‌کشند.",
+            solution: "کشش" }
         ]
       },
-      "handese-ch1-lesson-2": {
-        id: "handese-ch1-lesson-2",
-        number: 2,
-        title: "وترها و قوس‌ها",
-        description: "روابط وترها و قوس‌های دایره",
-        chapterId: "handese-chapter-1",
+      "fizik-ch1-lesson-2": {
+        id: "fizik-ch1-lesson-2", number: 2,
+        title: "میدان الکتریکی",
+        description: "مفهوم میدان و خطوط میدان",
+        chapterId: "fizik-chapter-1",
         questions: [
-          { id: "g2q1", difficulty: "آسان",
-            question: "وترهایی که از مرکز دایره به یک فاصله باشند، چه رابطه‌ای دارند؟",
+          { id: "f2q1", difficulty: "آسان",
+            question: "واحد میدان الکتریکی چیست؟ (به صورت N/C)",
+            correctAnswer: "N/C",
+            answer: "نیرو بر بار.",
+            solution: "نیوتن بر کولن (N/C)" },
+          { id: "f2q2", difficulty: "آسان",
+            question: "جهت خطوط میدان الکتریکی برای بار مثبت چگونه است؟ (خارج/داخل)",
+            correctAnswer: "خارج",
+            answer: "خطوط از بار مثبت خارج می‌شوند.",
+            solution: "خارج از بار مثبت" },
+          { id: "f2q3", difficulty: "متوسط",
+            question: "اگر بار نقطه‌ای q = 2×10^-6 C باشد و میدان E = 5×10^4 N/C، نیروی وارد بر بار چقدر است؟ (به صورت 0.1)",
+            correctAnswer: "0.1",
+            answer: "F = qE",
+            solution: "F = 2×10⁻⁶ × 5×10⁴ = 10⁻¹ = 0.1 N" },
+          { id: "f2q4", difficulty: "سخت",
+            question: "برای بار منفی، جهت خطوط میدان الکتریکی چگونه است؟ (خارج/داخل)",
+            correctAnswer: "داخل",
+            answer: "خطوط به بار منفی وارد می‌شوند.",
+            solution: "داخل بار منفی" }
+        ]
+      },
+      "fizik-ch1-lesson-3": {
+        id: "fizik-ch1-lesson-3", number: 3,
+        title: "پتانسیل الکتریکی",
+        description: "پتانسیل و اختلاف پتانسیل",
+        chapterId: "fizik-chapter-1",
+        questions: [
+          { id: "f3q1", difficulty: "آسان",
+            question: "واحد پتانسیل الکتریکی چیست؟",
+            correctAnswer: "ولت",
+            answer: "واحد اختلاف پتانسیل.",
+            solution: "ولت (V)" },
+          { id: "f3q2", difficulty: "متوسط",
+            question: "اختلاف پتانسیل بین دو نقطه ۱۲ ولت است. اگر بار ۲ کولن جابجا شود، کار چقدر است؟",
+            correctAnswer: "24",
+            answer: "W = qV",
+            solution: "W = 2 × 12 = 24 ژول" },
+          { id: "f3q3", difficulty: "سخت",
+            question: "پتانسیل الکتریکی در فاصله r از بار نقطه‌ای q با چه رابطه‌ای محاسبه می‌شود؟ (به صورت kq/r)",
+            correctAnswer: "kq/r",
+            answer: "فرمول پتانسیل.",
+            solution: "V = kq/r" }
+        ]
+      },
+      "fizik-ch2-lesson-1": {
+        id: "fizik-ch2-lesson-1", number: 1,
+        title: "جریان الکتریکی و مقاومت",
+        description: "جریان، مقاومت و قانون اهم",
+        chapterId: "fizik-chapter-2",
+        questions: [
+          { id: "f4q1", difficulty: "آسان",
+            question: "واحد جریان الکتریکی چیست؟",
+            correctAnswer: "آمپر",
+            answer: "واحد اصلی جریان.",
+            solution: "آمپر (A)" },
+          { id: "f4q2", difficulty: "آسان",
+            question: "قانون اهم را بنویسید. (به صورت V=IR)",
+            correctAnswer: "V=IR",
+            answer: "رابطه بین ولتاژ، جریان و مقاومت.",
+            solution: "V = I × R" },
+          { id: "f4q3", difficulty: "متوسط",
+            question: "اگر V = ۱۲ ولت و R = ۴ اهم باشد، جریان چقدر است؟",
+            correctAnswer: "3",
+            answer: "از قانون اهم.",
+            solution: "I = V/R = 12/4 = 3 آمپر" },
+          { id: "f4q4", difficulty: "سخت",
+            question: "واحد مقاومت الکتریکی چیست؟",
+            correctAnswer: "اهم",
+            answer: "واحد مقاومت.",
+            solution: "اهم (Ω)" }
+        ]
+      },
+      "fizik-ch2-lesson-2": {
+        id: "fizik-ch2-lesson-2", number: 2,
+        title: "مدارهای الکتریکی",
+        description: "مدار سری و موازی",
+        chapterId: "fizik-chapter-2",
+        questions: [
+          { id: "f5q1", difficulty: "آسان",
+            question: "در مدار سری، جریان در همه نقاط چگونه است؟ (برابر/متفاوت)",
             correctAnswer: "برابر",
-            answer: "قضیه وترهای هم‌فاصله از مرکز.",
-            solution: "وترهای هم‌فاصله از مرکز با هم برابرند." },
-          { id: "g2q2", difficulty: "آسان",
-            question: "عمود از مرکز دایره بر وتر، آن را به چند قسمت مساوی تقسیم می‌کند؟",
+            answer: "ویژگی مدار سری.",
+            solution: "برابر" },
+          { id: "f5q2", difficulty: "متوسط",
+            question: "دو مقاومت ۲ و ۴ اهم به صورت سری بسته شده‌اند. مقاومت کل چقدر است؟",
+            correctAnswer: "6",
+            answer: "مقاومت سری جمع می‌شود.",
+            solution: "R = 2 + 4 = 6 اهم" },
+          { id: "f5q3", difficulty: "متوسط",
+            question: "دو مقاومت ۶ و ۳ اهم به صورت موازی بسته شده‌اند. مقاومت کل چقدر است؟",
             correctAnswer: "2",
-            answer: "عمود از مرکز، نیمساز وتر است.",
-            solution: "به ۲ قسمت مساوی" },
-          { id: "g2q3", difficulty: "متوسط",
-            question: "اگر شعاع دایره ۵ و فاصله مرکز از وتر ۳ باشد، نصف طول وتر چقدر است؟",
-            correctAnswer: "4",
-            answer: "از قضیه فیثاغورس استفاده می‌کنیم.",
-            solution: "√(5²-3²) = √16 = 4" },
-          { id: "g2q4", difficulty: "متوسط",
-            question: "اگر دو وتر در یک دایره برابر باشند، فاصله آن‌ها از مرکز چه رابطه‌ای دارند؟",
+            answer: "مقاومت موازی: 1/R = 1/R₁ + 1/R₂",
+            solution: "1/R = 1/6 + 1/3 = 1/2 → R = 2 اهم" },
+          { id: "f5q4", difficulty: "سخت",
+            question: "در مدار موازی، ولتاژ دو سر مقاومت‌ها چگونه است؟ (برابر/متفاوت)",
             correctAnswer: "برابر",
-            answer: "عکس قضیه وترهای هم‌فاصله.",
-            solution: "فاصله‌شان از مرکز برابر است." },
-          { id: "g2q5", difficulty: "سخت",
-            question: "در دایره‌ای به شعاع ۱۳، وتری به طول ۲۴ رسم شده. فاصله وتر از مرکز چقدر است؟",
-            correctAnswer: "5",
-            answer: "نصف وتر = ۱۲، از فیثاغورس استفاده می‌کنیم.",
-            solution: "√(13² - 12²) = √25 = 5" }
+            answer: "ویژگی مدار موازی.",
+            solution: "برابر" }
         ]
       },
-      "handese-ch1-lesson-3": {
-        id: "handese-ch1-lesson-3",
-        number: 3,
-        title: "مماس‌ها و خطوط مماس",
-        description: "خط مماس بر دایره و ویژگی‌های آن",
-        chapterId: "handese-chapter-1",
+      "fizik-ch3-lesson-1": {
+        id: "fizik-ch3-lesson-1", number: 1,
+        title: "میدان مغناطیسی",
+        description: "میدان مغناطیسی و خطوط آن",
+        chapterId: "fizik-chapter-3",
         questions: [
-          { id: "g3q1", difficulty: "آسان",
-            question: "خط مماس بر دایره با شعاع در نقطه تماس چه زاویه‌ای می‌سازد؟",
-            correctAnswer: "90",
-            answer: "ویژگی اصلی خط مماس.",
-            solution: "زاویه بین مماس و شعاع = 90 درجه" },
-          { id: "g3q2", difficulty: "آسان",
-            question: "از یک نقطه خارج دایره چند مماس می‌توان رسم کرد؟",
+          { id: "f6q1", difficulty: "آسان",
+            question: "واحد میدان مغناطیسی چیست؟",
+            correctAnswer: "تسلا",
+            answer: "واحد اصلی میدان مغناطیسی.",
+            solution: "تسلا (T)" },
+          { id: "f6q2", difficulty: "متوسط",
+            question: "میدان مغناطیسی اطراف سیم راست حامل جریان با فاصله چه رابطه‌ای دارد؟ (عکس/مستقیم)",
+            correctAnswer: "عکس",
+            answer: "B ∝ 1/r",
+            solution: "عکس با فاصله" },
+          { id: "f6q3", difficulty: "سخت",
+            question: "خطوط میدان مغناطیسی چه شکلی هستند؟ (بسته/باز)",
+            correctAnswer: "بسته",
+            answer: "خطوط میدان مغناطیسی همیشه بسته‌اند.",
+            solution: "بسته" }
+        ]
+      },
+      "fizik-ch3-lesson-2": {
+        id: "fizik-ch3-lesson-2", number: 2,
+        title: "القای الکترومغناطیسی",
+        description: "قانون فارادی و لنز",
+        chapterId: "fizik-chapter-3",
+        questions: [
+          { id: "f7q1", difficulty: "آسان",
+            question: "القای الکترومغناطیسی اولین بار توسط چه کسی کشف شد؟",
+            correctAnswer: "فارادی",
+            answer: "مایکل فارادی.",
+            solution: "فارادی" },
+          { id: "f7q2", difficulty: "متوسط",
+            question: "قانون لنز درباره چه چیزی است؟ (جهت/اندازه)",
+            correctAnswer: "جهت",
+            answer: "جهت جریان القایی.",
+            solution: "جهت جریان القایی" },
+          { id: "f7q3", difficulty: "سخت",
+            question: "واحد شار مغناطیسی چیست؟",
+            correctAnswer: "وبر",
+            answer: "واحد شار مغناطیسی.",
+            solution: "وبر (Wb)" }
+        ]
+      },
+      "shimi-ch1-lesson-1": {
+        id: "shimi-ch1-lesson-1", number: 1,
+        title: "پیوندهای شیمیایی",
+        description: "انواع پیوند و قدرت آن‌ها",
+        chapterId: "shimi-chapter-1",
+        questions: [
+          { id: "s1q1", difficulty: "آسان",
+            question: "پیوند بین فلز و نافلز چه نوع پیوندی است؟",
+            correctAnswer: "یونی",
+            answer: "انتقال الکترون از فلز به نافلز.",
+            solution: "پیوند یونی" },
+          { id: "s1q2", difficulty: "آسان",
+            question: "پیوند بین دو نافلز چه نوع پیوندی است؟",
+            correctAnswer: "کووالانسی",
+            answer: "اشتراک الکترون.",
+            solution: "پیوند کووالانسی" },
+          { id: "s1q3", difficulty: "متوسط",
+            question: "قوی‌ترین نوع پیوند شیمیایی کدام است؟ (یونی/کووالانسی/فلزی)",
+            correctAnswer: "کووالانسی",
+            answer: "پیوند کووالانسی معمولاً قوی‌ترین است.",
+            solution: "کووالانسی" },
+          { id: "s1q4", difficulty: "سخت",
+            question: "پیوند فلزی بین چه اتم‌هایی برقرار می‌شود؟",
+            correctAnswer: "فلزات",
+            answer: "بین اتم‌های فلزی.",
+            solution: "فلزات" }
+        ]
+      },
+      "shimi-ch1-lesson-2": {
+        id: "shimi-ch1-lesson-2", number: 2,
+        title: "ساختار لوویس",
+        description: "رسم ساختار لوویس مولکول‌ها",
+        chapterId: "shimi-chapter-1",
+        questions: [
+          { id: "s2q1", difficulty: "آسان",
+            question: "در ساختار لوویس، هر جفت الکترون مشترک با چه نمادی نشان داده می‌شود؟",
+            correctAnswer: "خط",
+            answer: "جفت الکترون مشترک با خط تیره.",
+            solution: "خط (-)" },
+          { id: "s2q2", difficulty: "متوسط",
+            question: "چند الکترون ظرفیتی در اتم کربن وجود دارد؟",
+            correctAnswer: "4",
+            answer: "گروه ۱۴ جدول تناوبی.",
+            solution: "4 الکترون" },
+          { id: "s2q3", difficulty: "سخت",
+            question: "ساختار لوویس آب (H₂O) چند جفت الکترون ناپیوندی دارد؟",
             correctAnswer: "2",
-            answer: "از هر نقطه خارج، دو مماس.",
-            solution: "۲ مماس" },
-          { id: "g3q3", difficulty: "متوسط",
-            question: "دو مماس رسم شده از یک نقطه خارج دایره، چه رابطه‌ای با هم دارند؟",
+            answer: "اکسیژن دو جفت ناپیوندی دارد.",
+            solution: "2 جفت" }
+        ]
+      },
+      "shimi-ch2-lesson-1": {
+        id: "shimi-ch2-lesson-1", number: 1,
+        title: "استوکیومتری",
+        description: "محاسبات استوکیومتری",
+        chapterId: "shimi-chapter-2",
+        questions: [
+          { id: "s3q1", difficulty: "آسان",
+            question: "عدد آووگادرو چقدر است؟ (به صورت 6.02×10^23)",
+            correctAnswer: "6.02×10^23",
+            answer: "تعداد ذرات در یک مول.",
+            solution: "6.02 × 10²³" },
+          { id: "s3q2", difficulty: "متوسط",
+            question: "جرم مولی آب (H₂O) چقدر است؟ (H=1, O=16)",
+            correctAnswer: "18",
+            answer: "جمع جرم‌های اتمی.",
+            solution: "2(1) + 16 = 18 گرم بر مول" },
+          { id: "s3q3", difficulty: "سخت",
+            question: "چند مول در ۴۴ گرم CO₂ وجود دارد؟ (C=12, O=16)",
+            correctAnswer: "1",
+            answer: "n = m/M",
+            solution: "M(CO₂) = 44 → n = 44/44 = 1 مول" }
+        ]
+      },
+      "shimi-ch2-lesson-2": {
+        id: "shimi-ch2-lesson-2", number: 2,
+        title: "تعادل شیمیایی",
+        description: "تعادل و اصل لوشاتلیه",
+        chapterId: "shimi-chapter-2",
+        questions: [
+          { id: "s4q1", difficulty: "آسان",
+            question: "در تعادل شیمیایی، سرعت واکنش رفت و برگشت چگونه است؟ (برابر/متفاوت)",
             correctAnswer: "برابر",
-            answer: "پاره‌های مماس از یک نقطه خارج برابرند.",
-            solution: "پاره مماس‌ها با هم برابرند." },
-          { id: "g3q4", difficulty: "متوسط",
-            question: "خطی که در یک نقطه با دایره فقط یک نقطه مشترک دارد چه نامیده می‌شود؟",
-            correctAnswer: "مماس",
-            answer: "تعریف خط مماس.",
-            solution: "خط مماس" },
-          { id: "g3q5", difficulty: "سخت",
-            question: "دو دایره مماس خارجی، اگر شعاع‌هایشان ۳ و ۵ باشد، فاصله مرکزها چقدر است؟",
-            correctAnswer: "8",
-            answer: "در مماس خارجی، فاصله مرکزها برابر مجموع شعاع‌هاست.",
-            solution: "3 + 5 = 8" }
+            answer: "ویژگی تعادل.",
+            solution: "برابر" },
+          { id: "s4q2", difficulty: "متوسط",
+            question: "اصل لوشاتلیه درباره چه چیزی است؟ (تعادل/سرعت)",
+            correctAnswer: "تعادل",
+            answer: "پاسخ تعادل به تغییر شرایط.",
+            solution: "تعادل شیمیایی" },
+          { id: "s4q3", difficulty: "سخت",
+            question: "افزایش دما در یک واکنش گرماده، تعادل را به کدام سمت می‌برد؟ (چپ/راست)",
+            correctAnswer: "چپ",
+            answer: "طبق اصل لوشاتلیه.",
+            solution: "به سمت واکنش برگشت (چپ)" }
         ]
       },
-      "handese-ch1-lesson-4": {
-        id: "handese-ch1-lesson-4",
-        number: 4,
-        title: "زاویه‌های ظلی و خارجی",
-        description: "زاویه‌های بین وتر و مماس",
-        chapterId: "handese-chapter-1",
+      "shimi-ch3-lesson-1": {
+        id: "shimi-ch3-lesson-1", number: 1,
+        title: "اسیدها و بازها",
+        description: "تعریف اسید و باز",
+        chapterId: "shimi-chapter-3",
         questions: [
-          { id: "g4q1", difficulty: "آسان",
-            question: "زاویه ظلی (بین وتر و مماس) با کمان روبرویش چه رابطه‌ای دارد؟",
-            correctAnswer: "نصف",
-            answer: "زاویه ظلی = نصف کمان.",
-            solution: "زاویه ظلی = نصف کمان روبرو" },
-          { id: "g4q2", difficulty: "متوسط",
-            question: "اگر کمان روبروی زاویه ظلی ۱۰۰ درجه باشد، اندازه زاویه ظلی چقدر است؟",
-            correctAnswer: "50",
-            answer: "نصف کمان.",
-            solution: "100 ÷ 2 = 50 درجه" },
-          { id: "g4q3", difficulty: "متوسط",
-            question: "زاویه بین دو مماس رسم شده از یک نقطه خارج دایره، با کمان بزرگتر چه رابطه‌ای دارد؟",
-            correctAnswer: "نصف تفاضل",
-            answer: "زاویه خارجی = نصف تفاضل دو کمان.",
-            solution: "نصف تفاضل کمان‌ها" },
-          { id: "g4q4", difficulty: "سخت",
-            question: "زاویه بین دو مماس از نقطه‌ای خارج دایره ۶۰ درجه است. مجموع دو کمان چقدر است؟",
-            correctAnswer: "360",
-            answer: "مجموع دو کمان = ۳۶۰ درجه همیشه.",
-            solution: "کمان بزرگ + کمان کوچک = 360 درجه" }
+          { id: "s5q1", difficulty: "آسان",
+            question: "طبق تعریف آرنیوس، اسید چیست؟ (تولید H+/تولید OH-)",
+            correctAnswer: "تولید H+",
+            answer: "اسید در آب یون هیدروژن تولید می‌کند.",
+            solution: "تولید H⁺" },
+          { id: "s5q2", difficulty: "متوسط",
+            question: "طبق تعریف برونستد، اسید چیست؟ (دهنده پروتون/گیرنده پروتون)",
+            correctAnswer: "دهنده پروتون",
+            answer: "اسید پروتون می‌دهد.",
+            solution: "دهنده پروتون (H⁺)" },
+          { id: "s5q3", difficulty: "سخت",
+            question: "pH یک محلول خنثی چقدر است؟",
+            correctAnswer: "7",
+            answer: "pH آب خالص.",
+            solution: "pH = 7" }
         ]
       },
-      "handese-ch2-lesson-1": {
-        id: "handese-ch2-lesson-1",
-        number: 1,
-        title: "انتقال",
-        description: "تبدیل انتقال و ویژگی‌های آن",
-        chapterId: "handese-chapter-2",
+      "shimi-ch3-lesson-2": {
+        id: "shimi-ch3-lesson-2", number: 2,
+        title: "pH و محاسبات آن",
+        description: "محاسبه pH محلول‌ها",
+        chapterId: "shimi-chapter-3",
         questions: [
-          { id: "h1q1", difficulty: "آسان",
-            question: "در تبدیل انتقال، طول پاره‌خط‌ها چه تغییری می‌کند؟",
-            correctAnswer: "تغییر نمی‌کند",
-            answer: "انتقال یک ایزومتری است.",
-            solution: "طول‌ها حفظ می‌شوند." },
-          { id: "h1q2", difficulty: "آسان",
-            question: "در انتقال، جهت پاره‌خط‌ها چه تغییری می‌کند؟",
-            correctAnswer: "تغییر نمی‌کند",
-            answer: "انتقال جهت را حفظ می‌کند.",
-            solution: "جهت خطوط حفظ می‌شود." },
-          { id: "h1q3", difficulty: "متوسط",
-            question: "اگر نقطه A(1,2) با بردار (3,4) انتقال یابد، مختصات جدید چقدر است؟ (به صورت x,y)",
-            correctAnswer: "4,6",
-            answer: "مختصات نقطه + بردار انتقال.",
-            solution: "(1+3, 2+4) = (4, 6)" },
-          { id: "h1q4", difficulty: "سخت",
-            question: "انتقال‌ها چه نوع تبدیلی هستند؟ (فقط نام: ایزومتری/تشابه/تجانس)",
-            correctAnswer: "ایزومتری",
-            answer: "انتقال فاصله‌ها را حفظ می‌کند.",
-            solution: "ایزومتری (هم‌سنجی)" }
-        ]
-      },
-      "handese-ch2-lesson-2": {
-        id: "handese-ch2-lesson-2",
-        number: 2,
-        title: "تجانس",
-        description: "تبدیل تجانس و مرکز تجانس",
-        chapterId: "handese-chapter-2",
-        questions: [
-          { id: "h2q1", difficulty: "آسان",
-            question: "در تجانس با نسبت k، طول‌ها چند برابر می‌شوند؟",
-            correctAnswer: "k",
-            answer: "نسبت تجانس، ضریب تغییر طول است.",
-            solution: "طول‌ها k برابر می‌شوند." },
-          { id: "h2q2", difficulty: "آسان",
-            question: "در تجانس با نسبت ۲، مساحت چند برابر می‌شود؟",
-            correctAnswer: "4",
-            answer: "مساحت با مجذور نسبت تغییر می‌کند.",
-            solution: "2² = 4" },
-          { id: "h2q3", difficulty: "متوسط",
-            question: "در تجانس با نسبت ۳، حجم چند برابر می‌شود؟",
-            correctAnswer: "27",
-            answer: "حجم با مکعب نسبت تغییر می‌کند.",
-            solution: "3³ = 27" },
-          { id: "h2q4", difficulty: "سخت",
-            question: "اگر تجانس نسبت منفی داشته باشد، شکل چه تغییری می‌کند؟",
-            correctAnswer: "برعکس",
-            answer: "نسبت منفی، شکل را نسبت به مرکز برمی‌گرداند.",
-            solution: "شکل نسبت به مرکز تجانس برعکس می‌شود." }
-        ]
-      },
-      "handese-ch2-lesson-3": {
-        id: "handese-ch2-lesson-3",
-        number: 3,
-        title: "تشابه",
-        description: "تبدیل تشابه و کاربردهای آن",
-        chapterId: "handese-chapter-2",
-        questions: [
-          { id: "h3q1", difficulty: "آسان",
-            question: "تشابه ترکیب چه دو تبدیلی است؟ (با کاما)",
-            correctAnswer: "تجانس,ایزومتری",
-            answer: "تشابه = تجانس + ایزومتری",
-            solution: "تشابه ترکیب تجانس و ایزومتری است." },
-          { id: "h3q2", difficulty: "متوسط",
-            question: "در دو مثلث متشابه، اگر نسبت اضلاع ۲ باشد، نسبت مساحت‌ها چقدر است؟",
-            correctAnswer: "4",
-            answer: "نسبت مساحت = مجذور نسبت اضلاع.",
-            solution: "2² = 4" },
-          { id: "h3q3", difficulty: "متوسط",
-            question: "اگر دو مثلث متشابه باشند، زاویه‌های متناظر چه رابطه‌ای دارند؟",
-            correctAnswer: "برابر",
-            answer: "ویژگی اصلی تشابه.",
-            solution: "زاویه‌های متناظر برابرند." },
-          { id: "h3q4", difficulty: "سخت",
-            question: "در دو مثلث متشابه، نسبت محیط‌ها با نسبت اضلاع چه رابطه‌ای دارد؟",
-            correctAnswer: "برابر",
-            answer: "محیط با توان یک تغییر می‌کند.",
-            solution: "نسبت محیط = نسبت اضلاع" }
-        ]
-      },
-      "handese-ch3-lesson-1": {
-        id: "handese-ch3-lesson-1",
-        number: 1,
-        title: "مساحت جانبی و کل",
-        description: "مساحت سطوح جانبی و کل اجسام",
-        chapterId: "handese-chapter-3",
-        questions: [
-          { id: "i1q1", difficulty: "آسان",
-            question: "مساحت جانبی استوانه با شعاع r و ارتفاع h چقدر است؟ (به صورت فرمول)",
-            correctAnswer: "2πrh",
-            answer: "محیط قاعده × ارتفاع",
-            solution: "S = 2πrh" },
-          { id: "i1q2", difficulty: "آسان",
-            question: "مساحت کل مکعب با ضلع a چقدر است؟ (فرمول)",
-            correctAnswer: "6a²",
-            answer: "مکعب ۶ وجه مربعی دارد.",
-            solution: "S = 6a²" },
-          { id: "i1q3", difficulty: "متوسط",
-            question: "مساحت جانبی منشور قائم با محیط قاعده P و ارتفاع h چقدر است؟ (فرمول)",
-            correctAnswer: "Ph",
-            answer: "محیط قاعده × ارتفاع",
-            solution: "S = P × h" },
-          { id: "i1q4", difficulty: "متوسط",
-            question: "مساحت کل کره با شعاع r چقدر است؟ (فرمول)",
-            correctAnswer: "4πr²",
-            answer: "فرمول مساحت کره.",
-            solution: "S = 4πr²" },
-          { id: "i1q5", difficulty: "سخت",
-            question: "مساحت جانبی مخروط با شعاع r و مولد l چقدر است؟ (فرمول)",
-            correctAnswer: "πrl",
-            answer: "فرمول مساحت جانبی مخروط.",
-            solution: "S = πrl" }
-        ]
-      },
-      "handese-ch3-lesson-2": {
-        id: "handese-ch3-lesson-2",
-        number: 2,
-        title: "حجم اجسام",
-        description: "حجم منشور، هرم، استوانه، مخروط و کره",
-        chapterId: "handese-chapter-3",
-        questions: [
-          { id: "i2q1", difficulty: "آسان",
-            question: "حجم مکعب با ضلع a چقدر است؟ (فرمول)",
-            correctAnswer: "a³",
-            answer: "فرمول حجم مکعب.",
-            solution: "V = a³" },
-          { id: "i2q2", difficulty: "آسان",
-            question: "حجم استوانه با شعاع r و ارتفاع h چقدر است؟ (فرمول)",
-            correctAnswer: "πr²h",
-            answer: "مساحت قاعده × ارتفاع.",
-            solution: "V = πr²h" },
-          { id: "i2q3", difficulty: "متوسط",
-            question: "حجم هرم با مساحت قاعده S و ارتفاع h چقدر است؟ (فرمول)",
-            correctAnswer: "Sh/3",
-            answer: "یک‌سوم حجم منشور با همان قاعده.",
-            solution: "V = Sh/3" },
-          { id: "i2q4", difficulty: "متوسط",
-            question: "حجم کره با شعاع r چقدر است؟ (فرمول)",
-            correctAnswer: "4πr³/3",
-            answer: "فرمول حجم کره.",
-            solution: "V = 4πr³/3" },
-          { id: "i2q5", difficulty: "سخت",
-            question: "حجم مخروط با شعاع r و ارتفاع h چقدر است؟ (فرمول)",
-            correctAnswer: "πr²h/3",
-            answer: "یک‌سوم حجم استوانه با همان ابعاد.",
-            solution: "V = πr²h/3" }
+          { id: "s6q1", difficulty: "آسان",
+            question: "pH محلول اسیدی چه محدوده‌ای دارد؟ (کمتر از 7/بیشتر از 7)",
+            correctAnswer: "کمتر از 7",
+            answer: "اسید pH کمتر از ۷ دارد.",
+            solution: "کمتر از ۷" },
+          { id: "s6q2", difficulty: "متوسط",
+            question: "اگر [H⁺] = 10^-3 باشد، pH چقدر است؟",
+            correctAnswer: "3",
+            answer: "pH = -log[H⁺]",
+            solution: "pH = -log(10⁻³) = 3" },
+          { id: "s6q3", difficulty: "سخت",
+            question: "اگر pH = 11 باشد، محلول چه خاصیتی دارد؟ (اسیدی/بازی)",
+            correctAnswer: "بازی",
+            answer: "pH بیشتر از ۷ = بازی.",
+            solution: "بازی" }
         ]
       }
     };
@@ -406,62 +449,34 @@
       if (!raw) return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null };
       try {
         const u = JSON.parse(raw);
-        return {
-          username: u.username || "Sina",
-          xp: u.xp || 0, solved: u.solved || 0,
-          correct: u.correct || 0, wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || [],
-          mistakes: u.mistakes || [],
-          dailyActivity: u.dailyActivity || {},
-          totalMinutes: u.totalMinutes || 0,
-          streak: u.streak || 0,
-          lastVisit: u.lastVisit || null
-        };
-      } catch (e) {
-        return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null };
-      }
+        return { username: u.username || "Sina", xp: u.xp || 0, solved: u.solved || 0, correct: u.correct || 0, wrong: u.wrong || 0, solvedQuestions: u.solvedQuestions || [], mistakes: u.mistakes || [], dailyActivity: u.dailyActivity || {}, totalMinutes: u.totalMinutes || 0, streak: u.streak || 0, lastVisit: u.lastVisit || null };
+      } catch (e) { return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null }; }
     }
 
-    function saveUser(user) {
-      localStorage.setItem(USER_KEY, JSON.stringify(user));
-    }
-
-    function todayKey() {
-      return new Date().toISOString().split("T")[0];
-    }
+    function saveUser(user) { localStorage.setItem(USER_KEY, JSON.stringify(user)); }
+    function todayKey() { return new Date().toISOString().split("T")[0]; }
 
     function registerAnswer(questionId, isCorrect, questionData) {
       const user = getUser();
       const today = todayKey();
       const alreadySolved = user.solvedQuestions.includes(questionId);
-
       user.dailyActivity[today] = (user.dailyActivity[today] || 0) + 1;
-
       if (!alreadySolved) {
         user.solvedQuestions.push(questionId);
         user.solved += 1;
-        if (isCorrect) { user.correct += 1; user.xp += 10; }
-        else { user.wrong += 1; }
+        if (isCorrect) { user.correct += 1; user.xp += 10; } else { user.wrong += 1; }
       }
-
       if (!isCorrect && questionData) {
         const exists = user.mistakes.some((m) => m.id === questionId);
         if (!exists) {
-          user.mistakes.push({
-            id: questionId,
-            question: questionData.question,
-            correctAnswer: questionData.correctAnswer,
-            solution: questionData.solution
-          });
+          user.mistakes.push({ id: questionId, question: questionData.question, correctAnswer: questionData.correctAnswer, solution: questionData.solution });
         }
       }
-
       saveUser(user);
       return user;
     }
 
     let pageStartTime = Date.now();
-
     function saveStudyMinutes() {
       const minutes = Math.round((Date.now() - pageStartTime) / 60000);
       if (minutes > 0) {
@@ -471,7 +486,6 @@
         pageStartTime = Date.now();
       }
     }
-
     window.addEventListener("beforeunload", saveStudyMinutes);
     window.addEventListener("pagehide", saveStudyMinutes);
 
@@ -484,14 +498,12 @@
         const lesson = LESSONS_DATA[lessonId];
         if (!lesson) throw new Error("درس پیدا نشد");
         currentLesson = lesson;
-
         document.getElementById("lessonNumber").textContent = "درس " + lesson.number;
         document.getElementById("lessonTitle").textContent = lesson.title;
         document.getElementById("lessonDescription").textContent = lesson.description;
         document.getElementById("breadcrumbLesson").textContent = lesson.title;
         document.getElementById("backToChapter").href = "chapter.html?chapter=" + lesson.chapterId;
         document.getElementById("questionCount").textContent = lesson.questions.length + " سوال";
-
         startPractice();
       } catch (err) {
         console.error(err);
@@ -500,39 +512,25 @@
     }
 
     function startPractice() {
-      mode = "practice";
-      currentQuestionIndex = 0;
-      sessionScore = 0;
-      examQuestions = currentLesson.questions;
-      examAnswers = [];
-
+      mode = "practice"; currentQuestionIndex = 0; sessionScore = 0;
+      examQuestions = currentLesson.questions; examAnswers = [];
       document.getElementById("modeLabel").textContent = "تمرین";
       document.getElementById("modeTitle").textContent = "سوالات درس";
       document.getElementById("examTimer").classList.add("hidden");
-
       if (timerInterval) clearInterval(timerInterval);
       renderCurrentQuestion();
     }
 
     function startExam() {
-      mode = "exam";
-      currentQuestionIndex = 0;
-      sessionScore = 0;
+      mode = "exam"; currentQuestionIndex = 0; sessionScore = 0;
       examQuestions = [...currentLesson.questions].sort(() => Math.random() - 0.5);
       examAnswers = [];
-
       document.getElementById("modeLabel").textContent = "آزمون";
       document.getElementById("modeTitle").textContent = "آزمون درس";
       document.getElementById("examTimer").classList.remove("hidden");
-
-      timerSeconds = 0;
-      updateTimerText();
+      timerSeconds = 0; updateTimerText();
       if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timerSeconds++;
-        updateTimerText();
-      }, 1000);
-
+      timerInterval = setInterval(() => { timerSeconds++; updateTimerText(); }, 1000);
       renderCurrentQuestion();
     }
 
@@ -545,14 +543,9 @@
 
     function enterFocusMode() {
       document.body.classList.add("focus-mode");
-      focusSeconds = 0;
-      updateFocusTimer();
-
+      focusSeconds = 0; updateFocusTimer();
       if (focusInterval) clearInterval(focusInterval);
-      focusInterval = setInterval(() => {
-        focusSeconds++;
-        updateFocusTimer();
-      }, 1000);
+      focusInterval = setInterval(() => { focusSeconds++; updateFocusTimer(); }, 1000);
     }
 
     function exitFocusMode() {
@@ -570,23 +563,16 @@
     function renderCurrentQuestion() {
       const container = document.getElementById("questionsList");
       const questions = examQuestions;
-      if (!questions.length) {
-        container.innerHTML = '<div class="loading">سوالی موجود نیست.</div>';
-        return;
-      }
-
+      if (!questions.length) { container.innerHTML = '<div class="loading">سوالی موجود نیست.</div>'; return; }
       const q = questions[currentQuestionIndex];
       const progress = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
-
       container.innerHTML = `
         <article class="question-card">
           <div class="question-top">
             <span class="question-number">سوال ${currentQuestionIndex + 1} از ${questions.length}</span>
             <span class="difficulty">${q.difficulty}</span>
           </div>
-          <div class="question-progress">
-            <div><i style="width: ${progress}%"></i></div>
-          </div>
+          <div class="question-progress"><div><i style="width: ${progress}%"></i></div></div>
           <div class="question-text">${q.question}</div>
           <div class="answer-input-area">
             <label for="userAnswer">پاسخ خود را وارد کنید</label>
@@ -603,7 +589,6 @@
           </div>
         </article>
       `;
-
       const input = document.getElementById("userAnswer");
       if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") checkAnswer(); });
     }
@@ -614,22 +599,14 @@
       const checkButton = document.getElementById("checkButton");
       const solutionButton = document.getElementById("solutionButton");
       const navigationArea = document.getElementById("navigationArea");
-
       const userAnswer = input.value.trim();
-      if (!userAnswer) {
-        resultArea.className = "result-area wrong";
-        resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید.";
-        return;
-      }
-
+      if (!userAnswer) { resultArea.className = "result-area wrong"; resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید."; return; }
       const q = examQuestions[currentQuestionIndex];
       const correct = normalizeAnswer(q.correctAnswer);
       const user = normalizeAnswer(userAnswer);
       const isCorrect = user === correct;
       const userData = registerAnswer(q.id, isCorrect, q);
-
       examAnswers.push({ id: q.id, isCorrect: isCorrect });
-
       if (isCorrect) {
         sessionScore += 10;
         resultArea.className = "result-area correct";
@@ -638,9 +615,7 @@
         resultArea.className = "result-area wrong";
         resultArea.innerHTML = "<strong>پاسخ درست نیست.</strong><span>پاسخ درست: " + q.correctAnswer + "</span><span>به غلط‌نامه اضافه شد</span>";
       }
-
-      input.disabled = true;
-      checkButton.disabled = true;
+      input.disabled = true; checkButton.disabled = true;
       solutionButton.classList.remove("hidden");
       navigationArea.classList.remove("hidden");
     }
@@ -648,45 +623,22 @@
     function showSolution() {
       const q = examQuestions[currentQuestionIndex];
       const resultArea = document.getElementById("resultArea");
-      resultArea.innerHTML += `
-        <div class="solution-box">
-          <div class="solution-title">راه‌حل</div>
-          <p>${q.answer}</p>
-          <p class="solution-text">${q.solution}</p>
-        </div>
-      `;
+      resultArea.innerHTML += `<div class="solution-box"><div class="solution-title">راه‌حل</div><p>${q.answer}</p><p class="solution-text">${q.solution}</p></div>`;
       document.getElementById("solutionButton").disabled = true;
     }
 
     function nextQuestion() {
-      if (currentQuestionIndex < examQuestions.length - 1) {
-        currentQuestionIndex++;
-        renderCurrentQuestion();
-      } else {
-        if (mode === "exam") showExamResult();
-        else showLessonResult();
-      }
+      if (currentQuestionIndex < examQuestions.length - 1) { currentQuestionIndex++; renderCurrentQuestion(); }
+      else { if (mode === "exam") showExamResult(); else showLessonResult(); }
     }
 
     function previousQuestion() {
-      if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        renderCurrentQuestion();
-      }
+      if (currentQuestionIndex > 0) { currentQuestionIndex--; renderCurrentQuestion(); }
     }
 
     function showLessonResult() {
       saveStudyMinutes();
-      const container = document.getElementById("questionsList");
-      container.innerHTML = `
-        <div class="lesson-result">
-          <div class="result-icon">✓</div>
-          <h2>درس تمام شد!</h2>
-          <p>امتیاز این جلسه</p>
-          <strong>${sessionScore} XP</strong>
-          <button onclick="restartLesson()">شروع دوباره</button>
-        </div>
-      `;
+      document.getElementById("questionsList").innerHTML = `<div class="lesson-result"><div class="result-icon">✓</div><h2>درس تمام شد!</h2><p>امتیاز این جلسه</p><strong>${sessionScore} XP</strong><button onclick="restartLesson()">شروع دوباره</button></div>`;
     }
 
     function showExamResult() {
@@ -696,53 +648,28 @@
       const total = examQuestions.length;
       const correctCount = examAnswers.filter((a) => a.isCorrect).length;
       const percent = Math.round((correctCount / total) * 100);
-
       let message = "";
       if (percent === 100) message = "بی‌نقص! 🎉";
       else if (percent >= 80) message = "عالی بود! 🔥";
       else if (percent >= 60) message = "خوب بود، ادامه بده!";
       else if (percent >= 40) message = "باز نیاز به تمرین داری.";
       else message = "بیا دوباره مرور کنیم.";
-
       const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
       const s = String(timerSeconds % 60).padStart(2, "0");
-
-      container.innerHTML = `
-        <div class="exam-card">
-          <h2>${percent}%</h2>
-          <p>${message}</p>
-          <div class="exam-stat">
-            <div><span>درست</span><strong>${correctCount}</strong></div>
-            <div><span>غلط</span><strong>${total - correctCount}</strong></div>
-            <div><span>زمان</span><strong>${m}:${s}</strong></div>
-          </div>
-          <button onclick="startExam()">آزمون دوباره</button>
-          <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
-        </div>
-      `;
+      container.innerHTML = `<div class="exam-card"><h2>${percent}%</h2><p>${message}</p><div class="exam-stat"><div><span>درست</span><strong>${correctCount}</strong></div><div><span>غلط</span><strong>${total - correctCount}</strong></div><div><span>زمان</span><strong>${m}:${s}</strong></div></div><button onclick="startExam()">آزمون دوباره</button><button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button></div>`;
     }
 
     function restartLesson() { startPractice(); }
 
     function normalizeAnswer(answer) {
-      return String(answer)
-        .trim()
-        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-        .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
-        .replace(/\s+/g, "")
-        .toLowerCase();
+      return String(answer).trim().replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/\s+/g, "").toLowerCase();
     }
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && document.body.classList.contains("focus-mode")) {
-        exitFocusMode();
-      }
+      if (e.key === "Escape" && document.body.classList.contains("focus-mode")) exitFocusMode();
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-      createMathBackground();
-      loadLesson();
-    });
+    document.addEventListener("DOMContentLoaded", () => { createMathBackground(); loadLesson(); });
   </script>
 
 </body>
