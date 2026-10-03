@@ -14,41 +14,11 @@
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/",
           "lessons": [
-            {
-              "id": "hesaban-ch1-lesson-1",
-              "number": 1,
-              "title": "مجموع جملات دنباله‌های حسابی و هندسی",
-              "description": "دنباله‌های حسابی و هندسی و فرمول مجموع",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
-            },
-            {
-              "id": "hesaban-ch1-lesson-2",
-              "number": 2,
-              "title": "معادلات درجه دوم",
-              "description": "حل معادلات درجه دوم و روش‌های مختلف",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
-            },
-            {
-              "id": "hesaban-ch1-lesson-3",
-              "number": 3,
-              "title": "معادلات گویا و رادیکالی",
-              "description": "حل معادلات کسری و رادیکالی",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
-            },
-            {
-              "id": "hesaban-ch1-lesson-4",
-              "number": 4,
-              "title": "قدر مطلق و ویژگی‌های آن",
-              "description": "قدر مطلق و معادلات قدر مطلقی",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
-            },
-            {
-              "id": "hesaban-ch1-lesson-5",
-              "number": 5,
-              "title": "آشنایی با هندسه تحلیلی",
-              "description": "فاصله دو نقطه، معادله خط، فاصله نقطه از خط",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/"
-            }
+            { "id": "hesaban-ch1-lesson-1", "number": 1, "title": "مجموع جملات دنباله‌های حسابی و هندسی", "description": "دنباله‌های حسابی و هندسی و فرمول مجموع", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-2", "number": 2, "title": "معادلات درجه دوم", "description": "حل معادلات درجه دوم و روابط ریشه‌ها", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-3", "number": 3, "title": "معادلات گویا و رادیکالی", "description": "حل معادلات کسری و رادیکالی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-4", "number": 4, "title": "قدر مطلق و ویژگی‌های آن", "description": "قدر مطلق و معادلات قدر مطلقی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-5", "number": 5, "title": "آشنایی با هندسه تحلیلی", "description": "فاصله دو نقطه، معادله خط، فاصله نقطه از خط", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" }
           ]
         },
         {
@@ -59,34 +29,10 @@
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/",
           "lessons": [
-            {
-              "id": "hesaban-ch2-lesson-1",
-              "number": 1,
-              "title": "آشنایی بیشتر با تابع",
-              "description": "مفهوم تابع، دامنه و برد",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/"
-            },
-            {
-              "id": "hesaban-ch2-lesson-2",
-              "number": 2,
-              "title": "انواع توابع",
-              "description": "توابع چندجمله‌ای، گویا، رادیکالی",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/"
-            },
-            {
-              "id": "hesaban-ch2-lesson-3",
-              "number": 3,
-              "title": "توابع وارون",
-              "description": "تابع وارون و روش پیدا کردن آن",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/"
-            },
-            {
-              "id": "hesaban-ch2-lesson-4",
-              "number": 4,
-              "title": "عمل جبری روی توابع",
-              "description": "جمع، تفریق، ضرب، تقسیم و ترکیب توابع",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/"
-            }
+            { "id": "hesaban-ch2-lesson-1", "number": 1, "title": "آشنایی بیشتر با تابع", "description": "مفهوم تابع، دامنه و برد", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" },
+            { "id": "hesaban-ch2-lesson-2", "number": 2, "title": "انواع توابع", "description": "توابع چندجمله‌ای، گویا، رادیکالی، جزء صحیح", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" },
+            { "id": "hesaban-ch2-lesson-3", "number": 3, "title": "توابع وارون", "description": "تابع وارون و روش پیدا کردن آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" },
+            { "id": "hesaban-ch2-lesson-4", "number": 4, "title": "عمل جبری روی توابع", "description": "جمع، تفریق، ضرب، تقسیم و ترکیب توابع", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" }
           ]
         },
         {
@@ -97,27 +43,9 @@
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/",
           "lessons": [
-            {
-              "id": "hesaban-ch3-lesson-1",
-              "number": 1,
-              "title": "تابع نمایی",
-              "description": "تابع نمایی و ویژگی‌های آن",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/"
-            },
-            {
-              "id": "hesaban-ch3-lesson-2",
-              "number": 2,
-              "title": "تابع لگاریتمی و ویژگی‌های آن",
-              "description": "لگاریتم و خواص آن",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/"
-            },
-            {
-              "id": "hesaban-ch3-lesson-3",
-              "number": 3,
-              "title": "معادلات و نامعادله‌های لگاریتمی",
-              "description": "حل معادلات لگاریتمی و نامعادله‌ها",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/"
-            }
+            { "id": "hesaban-ch3-lesson-1", "number": 1, "title": "تابع نمایی", "description": "تابع نمایی و ویژگی‌های آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/" },
+            { "id": "hesaban-ch3-lesson-2", "number": 2, "title": "تابع لگاریتمی و ویژگی‌های آن", "description": "لگاریتم و خواص آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/" },
+            { "id": "hesaban-ch3-lesson-3", "number": 3, "title": "معادلات و نامعادله‌های لگاریتمی", "description": "حل معادلات لگاریتمی و نامعادله‌ها", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/" }
           ]
         },
         {
@@ -128,34 +56,10 @@
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/",
           "lessons": [
-            {
-              "id": "hesaban-ch4-lesson-1",
-              "number": 1,
-              "title": "رادیان",
-              "description": "اندازه‌گیری زاویه به رادیان",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/"
-            },
-            {
-              "id": "hesaban-ch4-lesson-2",
-              "number": 2,
-              "title": "نسبت‌های مثلثاتی برخی زوایا",
-              "description": "نسبت‌های مثلثاتی زوایای خاص",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/"
-            },
-            {
-              "id": "hesaban-ch4-lesson-3",
-              "number": 3,
-              "title": "توابع مثلثاتی",
-              "description": "توابع سینوس، کسینوس، تانژانت",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/"
-            },
-            {
-              "id": "hesaban-ch4-lesson-4",
-              "number": 4,
-              "title": "روابط مجموع و تفاضل زوایا",
-              "description": "اتحادهای مثلثاتی",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/"
-            }
+            { "id": "hesaban-ch4-lesson-1", "number": 1, "title": "رادیان", "description": "اندازه‌گیری زاویه به رادیان", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" },
+            { "id": "hesaban-ch4-lesson-2", "number": 2, "title": "نسبت‌های مثلثاتی برخی زوایا", "description": "نسبت‌های مثلثاتی زوایای خاص", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" },
+            { "id": "hesaban-ch4-lesson-3", "number": 3, "title": "توابع مثلثاتی", "description": "توابع سینوس، کسینوس، تانژانت", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" },
+            { "id": "hesaban-ch4-lesson-4", "number": 4, "title": "روابط مجموع و تفاضل زوایا", "description": "اتحادهای مثلثاتی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" }
           ]
         },
         {
@@ -166,41 +70,11 @@
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/",
           "lessons": [
-            {
-              "id": "hesaban-ch5-lesson-1",
-              "number": 1,
-              "title": "مفهوم حد و فرایندهای حدی",
-              "description": "مفهوم حد و شهود آن",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/"
-            },
-            {
-              "id": "hesaban-ch5-lesson-2",
-              "number": 2,
-              "title": "حدهای یک‌طرفه و حد در بی‌نهایت",
-              "description": "حد چپ، حد راست، حد در بی‌نهایت",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/"
-            },
-            {
-              "id": "hesaban-ch5-lesson-3",
-              "number": 3,
-              "title": "قضایای حد",
-              "description": "قضایای حد و کاربردهایشان",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/"
-            },
-            {
-              "id": "hesaban-ch5-lesson-4",
-              "number": 4,
-              "title": "محاسبه‌ی حد و رفع ابهام",
-              "description": "روش‌های محاسبه‌ی حد و رفع ابهام",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/"
-            },
-            {
-              "id": "hesaban-ch5-lesson-5",
-              "number": 5,
-              "title": "پیوستگی",
-              "description": "تابع پیوسته و نقاط ناپیوستگی",
-              "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/"
-            }
+            { "id": "hesaban-ch5-lesson-1", "number": 1, "title": "مفهوم حد و فرایندهای حدی", "description": "مفهوم حد و شهود آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-2", "number": 2, "title": "حدهای یک‌طرفه و حد در بی‌نهایت", "description": "حد چپ، حد راست، حد در بی‌نهایت", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-3", "number": 3, "title": "قضایای حد", "description": "قضایای حد و کاربردهایشان", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-4", "number": 4, "title": "محاسبه‌ی حد و رفع ابهام", "description": "روش‌های محاسبه‌ی حد و رفع ابهام", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-5", "number": 5, "title": "پیوستگی", "description": "تابع پیوسته و نقاط ناپیوستگی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" }
           ]
         }
       ]
@@ -218,7 +92,12 @@
           "description": "زاویه‌ها، وترها، مماس‌ها",
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/",
-          "lessons": []
+          "lessons": [
+            { "id": "handese-ch1-lesson-1", "number": 1, "title": "زاویه‌های مرکزی و محاطی", "description": "رابطه بین زاویه مرکزی و محاطی", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" },
+            { "id": "handese-ch1-lesson-2", "number": 2, "title": "وترها و قوس‌ها", "description": "روابط وترها و قوس‌های دایره", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" },
+            { "id": "handese-ch1-lesson-3", "number": 3, "title": "مماس‌ها و خطوط مماس", "description": "خط مماس بر دایره و ویژگی‌های آن", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" },
+            { "id": "handese-ch1-lesson-4", "number": 4, "title": "زاویه‌های ظلی و خارجی", "description": "زاویه‌های بین وتر و مماس", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" }
+          ]
         },
         {
           "id": "handese-chapter-2",
@@ -227,7 +106,11 @@
           "description": "انتقال، تجانس، تشابه",
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/",
-          "lessons": []
+          "lessons": [
+            { "id": "handese-ch2-lesson-1", "number": 1, "title": "انتقال", "description": "تبدیل انتقال و ویژگی‌های آن", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/" },
+            { "id": "handese-ch2-lesson-2", "number": 2, "title": "تجانس", "description": "تبدیل تجانس و مرکز تجانس", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/" },
+            { "id": "handese-ch2-lesson-3", "number": 3, "title": "تشابه", "description": "تبدیل تشابه و کاربردهای آن", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/" }
+          ]
         },
         {
           "id": "handese-chapter-3",
@@ -236,7 +119,10 @@
           "description": "مساحت و حجم اجسام",
           "progress": 0,
           "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/3/",
-          "lessons": []
+          "lessons": [
+            { "id": "handese-ch3-lesson-1", "number": 1, "title": "مساحت جانبی و کل", "description": "مساحت سطوح جانبی و کل اجسام", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/3/" },
+            { "id": "handese-ch3-lesson-2", "number": 2, "title": "حجم اجسام", "description": "حجم منشور، هرم، استوانه، مخروط و کره", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/3/" }
+          ]
         }
       ]
     },
@@ -246,33 +132,9 @@
       "icon": "∞",
       "description": "ریاضیات گسسته — گراف، ترکیبات",
       "chapters": [
-        {
-          "id": "gosite-chapter-1",
-          "number": 1,
-          "title": "آشنایی با نظریه گراف",
-          "description": "گراف، درجه، مسیر، دور",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/1/",
-          "lessons": []
-        },
-        {
-          "id": "gosite-chapter-2",
-          "number": 2,
-          "title": "احتمال",
-          "description": "احتمال و ترکیبات",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/2/",
-          "lessons": []
-        },
-        {
-          "id": "gosite-chapter-3",
-          "number": 3,
-          "title": "ترکیبیات",
-          "description": "اصل ضرب، جایگشت، ترکیب",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/3/",
-          "lessons": []
-        }
+        { "id": "gosite-chapter-1", "number": 1, "title": "آشنایی با نظریه گراف", "description": "گراف، درجه، مسیر، دور", "progress": 0, "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/1/", "lessons": [] },
+        { "id": "gosite-chapter-2", "number": 2, "title": "احتمال", "description": "احتمال و ترکیبات", "progress": 0, "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/2/", "lessons": [] },
+        { "id": "gosite-chapter-3", "number": 3, "title": "ترکیبیات", "description": "اصل ضرب، جایگشت، ترکیب", "progress": 0, "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/3/", "lessons": [] }
       ]
     },
     {
@@ -281,33 +143,9 @@
       "icon": "Φ",
       "description": "فیزیک ۲ — الکتریسیته، مغناطیس",
       "chapters": [
-        {
-          "id": "fizik-chapter-1",
-          "number": 1,
-          "title": "الکتریسیته ساکن",
-          "description": "بار الکتریکی، میدان، پتانسیل",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/",
-          "lessons": []
-        },
-        {
-          "id": "fizik-chapter-2",
-          "number": 2,
-          "title": "جریان الکتریکی",
-          "description": "جریان، مقاومت، مدار",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/",
-          "lessons": []
-        },
-        {
-          "id": "fizik-chapter-3",
-          "number": 3,
-          "title": "مغناطیس",
-          "description": "میدان مغناطیسی و القا",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/",
-          "lessons": []
-        }
+        { "id": "fizik-chapter-1", "number": 1, "title": "الکتریسیته ساکن", "description": "بار الکتریکی، میدان، پتانسیل", "progress": 0, "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/", "lessons": [] },
+        { "id": "fizik-chapter-2", "number": 2, "title": "جریان الکتریکی", "description": "جریان، مقاومت، مدار", "progress": 0, "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/", "lessons": [] },
+        { "id": "fizik-chapter-3", "number": 3, "title": "مغناطیس", "description": "میدان مغناطیسی و القا", "progress": 0, "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/", "lessons": [] }
       ]
     },
     {
@@ -316,33 +154,9 @@
       "icon": "⚗",
       "description": "شیمی ۲ — ساختار، واکنش‌ها",
       "chapters": [
-        {
-          "id": "shimi-chapter-1",
-          "number": 1,
-          "title": "قدرت پیوند و ساختار",
-          "description": "پیوند شیمیایی و ساختار مولکول",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/",
-          "lessons": []
-        },
-        {
-          "id": "shimi-chapter-2",
-          "number": 2,
-          "title": "واکنش‌های شیمیایی",
-          "description": "استوکیومتری و تعادل",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/",
-          "lessons": []
-        },
-        {
-          "id": "shimi-chapter-3",
-          "number": 3,
-          "title": "اسیدها و بازها",
-          "description": "pH، اسید، باز",
-          "progress": 0,
-          "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/",
-          "lessons": []
-        }
+        { "id": "shimi-chapter-1", "number": 1, "title": "قدرت پیوند و ساختار", "description": "پیوند شیمیایی و ساختار مولکول", "progress": 0, "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/", "lessons": [] },
+        { "id": "shimi-chapter-2", "number": 2, "title": "واکنش‌های شیمیایی", "description": "استوکیومتری و تعادل", "progress": 0, "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/", "lessons": [] },
+        { "id": "shimi-chapter-3", "number": 3, "title": "اسیدها و بازها", "description": "pH، اسید، باز", "progress": 0, "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/", "lessons": [] }
       ]
     }
   ]
