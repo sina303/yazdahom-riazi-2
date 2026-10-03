@@ -20,7 +20,7 @@
     <div class="logo">AXIS</div>
     <nav>
       <a href="index.html">خانه</a>
-      <a href="subject.html">حسابان</a>
+      <a href="subject.html">درس‌ها</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
@@ -80,13 +80,26 @@
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
+
+      const theme = localStorage.getItem("y11_theme") || "green";
+      let symbols;
+
+      if (theme === "persian") {
+        symbols = [
+          "𒀭", "𒆠", "𒌋", "𒀀", "𒁹", "𒂍", "𒃲", "𒄑", "𒅆", "𒆳",
+          "☫", "𐎠", "𐎡", "𐎢", "𐎣", "𐎤", "𐎥", "𐎦", "𐎧", "𐎨",
+          "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "𐏐", "𐏑", "𐏒", "𐏓", "𐏔"
+        ];
+      } else {
+        symbols = [
+          "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+          "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+          "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+          "+", "−", "×", "÷", "=", "%", "e", "i",
+          "1", "2", "3", "7", "9", "0", "½", "¼"
+        ];
+      }
+
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -100,333 +113,519 @@
     }
 
     const LESSONS_DATA = {
+      "hesaban-ch1-lesson-1": {
+        id: "hesaban-ch1-lesson-1", number: 1,
+        title: "مجموع جملات دنباله‌های حسابی و هندسی",
+        description: "دنباله‌های حسابی و هندسی و فرمول مجموع",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          { id: "h1q1", difficulty: "آسان", question: "جمله عمومی دنباله‌ای با جمله اول ۱ و قدر نسبت ۳ را بنویسید.", correctAnswer: "3n - 2", answer: "از فرمول جمله عمومی دنباله حسابی استفاده می‌کنیم.", solution: "a_n = a_1 + (n-1)d = 1 + (n-1)×3 = 3n - 2" },
+          { id: "h1q2", difficulty: "متوسط", question: "مجموع ۱۰ جمله اول دنباله حسابی ۱, ۴, ۷, ۱۰, ... را حساب کنید.", correctAnswer: "145", answer: "از فرمول مجموع n جمله اول استفاده می‌کنیم.", solution: "S_n = n/2 [2a_1 + (n-1)d] = 10/2 [2(1) + 9(3)] = 5 × 29 = 145" },
+          { id: "h1q3", difficulty: "آسان", question: "اگر جمله اول یک دنباله حسابی ۵ و قدر نسبت آن ۲ باشد، جمله دهم چند است؟", correctAnswer: "23", answer: "از فرمول جمله عمومی استفاده می‌کنیم.", solution: "a_10 = a_1 + 9d = 5 + 9×2 = 5 + 18 = 23" },
+          { id: "h1q4", difficulty: "آسان", question: "جمله عمومی دنباله هندسی با جمله اول ۲ و نسبت ۳ را بنویسید.", correctAnswer: "2 × 3^(n-1)", answer: "از فرمول جمله عمومی دنباله هندسی استفاده می‌کنیم.", solution: "a_n = a_1 × r^(n-1) = 2 × 3^(n-1)" },
+          { id: "h1q5", difficulty: "آسان", question: "مجموع ۴ جمله اول دنباله هندسی ۱, ۲, ۴, ۸, ... چقدر است؟", correctAnswer: "15", answer: "جملات را با هم جمع می‌کنیم.", solution: "1 + 2 + 4 + 8 = 15" },
+          { id: "h1q6", difficulty: "متوسط", question: "مجموع ۲۰ جمله اول دنباله حسابی با جمله اول ۳ و قدر نسبت ۲ چقدر است؟", correctAnswer: "440", answer: "از فرمول مجموع دنباله حسابی استفاده می‌کنیم.", solution: "S_20 = 20/2 [2(3) + 19(2)] = 10 × 44 = 440" },
+          { id: "h1q7", difficulty: "متوسط", question: "در یک دنباله هندسی، جمله اول ۳ و جمله چهارم ۲۴ است. نسبت این دنباله چقدر است؟", correctAnswer: "2", answer: "از فرمول جمله عمومی استفاده می‌کنیم.", solution: "a_4 = a_1 × r^3 → 24 = 3 × r^3 → r^3 = 8 → r = 2" },
+          { id: "h1q8", difficulty: "سخت", question: "مجموع بی‌نهایت دنباله هندسی با جمله اول ۸ و نسبت ۱/۲ چقدر است؟", correctAnswer: "16", answer: "از فرمول مجموع بی‌نهایت استفاده می‌کنیم.", solution: "S = a_1 / (1 - r) = 8 / (1 - 1/2) = 8 / 0.5 = 16" }
+        ]
+      },
+      "hesaban-ch1-lesson-2": {
+        id: "hesaban-ch1-lesson-2", number: 2,
+        title: "معادلات درجه دوم",
+        description: "حل معادلات درجه دوم و روابط ریشه‌ها",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          { id: "h2q1", difficulty: "آسان", question: "ریشه‌های معادله x² - 5x + 6 = 0 را پیدا کنید. (با کاما جدا کنید)", correctAnswer: "2, 3", answer: "از تجزیه استفاده می‌کنیم.", solution: "x² - 5x + 6 = (x-2)(x-3) = 0 → x = 2 یا x = 3" },
+          { id: "h2q2", difficulty: "آسان", question: "دلتای معادله x² - 4x + 3 = 0 چقدر است؟", correctAnswer: "4", answer: "از فرمول Δ = b² - 4ac استفاده می‌کنیم.", solution: "Δ = (-4)² - 4(1)(3) = 16 - 12 = 4" },
+          { id: "h2q3", difficulty: "متوسط", question: "ریشه‌های معادله 2x² - 7x + 3 = 0 را پیدا کنید. (با کاما جدا کنید)", correctAnswer: "3, 1/2", answer: "از فرمول ریشه‌های معادله درجه دوم استفاده می‌کنیم.", solution: "x = (7 ± √(49-24)) / 4 = (7 ± 5) / 4 → x = 3 یا x = 1/2" },
+          { id: "h2q4", difficulty: "متوسط", question: "اگر یکی از ریشه‌های معادله x² - kx + 6 = 0 برابر ۲ باشد، مقدار k چقدر است؟", correctAnswer: "5", answer: "ریشه را در معادله جایگزین می‌کنیم.", solution: "2² - k(2) + 6 = 0 → 4 - 2k + 6 = 0 → 10 = 2k → k = 5" },
+          { id: "h2q5", difficulty: "متوسط", question: "مجموع ریشه‌های معادله 3x² - 12x + 7 = 0 چقدر است؟", correctAnswer: "4", answer: "از رابطه‌ی مجموع ریشه‌ها استفاده می‌کنیم.", solution: "S = -b/a = -(-12)/3 = 4" },
+          { id: "h2q6", difficulty: "متوسط", question: "حاصل‌ضرب ریشه‌های معادله 2x² - 8x + 6 = 0 چقدر است؟", correctAnswer: "3", answer: "از رابطه‌ی حاصل‌ضرب ریشه‌ها استفاده می‌کنیم.", solution: "P = c/a = 6/2 = 3" },
+          { id: "h2q7", difficulty: "سخت", question: "معادله درجه دومی بنویسید که ریشه‌های آن ۲ و ۳- باشند. (به فرم x² + bx + c = 0)", correctAnswer: "x² + x - 6", answer: "از فرمول x² - Sx + P = 0 استفاده می‌کنیم.", solution: "S = -1، P = -6 → x² + x - 6 = 0" }
+        ]
+      },
+      "hesaban-ch1-lesson-3": {
+        id: "hesaban-ch1-lesson-3", number: 3,
+        title: "معادلات گویا و رادیکالی",
+        description: "حل معادلات کسری و رادیکالی",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          { id: "h3q1", difficulty: "آسان", question: "معادله 1/x = 2 را حل کنید.", correctAnswer: "1/2", answer: "طرفین را در x ضرب می‌کنیم.", solution: "1/x = 2 → 1 = 2x → x = 1/2" },
+          { id: "h3q2", difficulty: "متوسط", question: "معادله √(x + 5) = 3 را حل کنید.", correctAnswer: "4", answer: "طرفین را به توان ۲ می‌رسانیم.", solution: "√(x+5) = 3 → x + 5 = 9 → x = 4" },
+          { id: "h3q3", difficulty: "متوسط", question: "معادله (x+1)/(x-2) = 3 را حل کنید.", correctAnswer: "7/2", answer: "طرفین را در (x-2) ضرب می‌کنیم.", solution: "x + 1 = 3(x - 2) → 7 = 2x → x = 7/2" },
+          { id: "h3q4", difficulty: "سخت", question: "معادله √(2x + 1) = x - 1 را حل کنید.", correctAnswer: "4", answer: "طرفین را به توان ۲ می‌رسانیم و جواب‌ها را چک می‌کنیم.", solution: "2x + 1 = (x-1)² → x²-4x = 0 → x = 4 (x=0 رد می‌شه)" },
+          { id: "h3q5", difficulty: "سخت", question: "معادله (x+2)/(x-1) = (x+1)/(x-3) را حل کنید.", correctAnswer: "-5", answer: "طرفین را ضرب‌در‌ضرب می‌کنیم.", solution: "(x+2)(x-3) = (x+1)(x-1) → x²-x-6 = x²-1 → -x = 5 → x = -5" }
+        ]
+      },
+      "hesaban-ch1-lesson-4": {
+        id: "hesaban-ch1-lesson-4", number: 4,
+        title: "قدر مطلق و ویژگی‌های آن",
+        description: "قدر مطلق و معادلات قدر مطلقی",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          { id: "h4q1", difficulty: "آسان", question: "حاصل |-7| + |3| چقدر است؟", correctAnswer: "10", answer: "قدر مطلق عدد منفی، مثبت می‌شه.", solution: "|-7| = 7 و |3| = 3 → 7 + 3 = 10" },
+          { id: "h4q2", difficulty: "آسان", question: "معادله |x| = 5 چند جواب داره؟", correctAnswer: "2", answer: "قدر مطلق هم جواب مثبت داره هم منفی.", solution: "x = 5 یا x = -5 → دو جواب" },
+          { id: "h4q3", difficulty: "متوسط", question: "معادله |x - 2| = 3 را حل کنید. (جواب‌ها با کاما)", correctAnswer: "5, -1", answer: "قدر مطلق رو باز می‌کنیم.", solution: "x - 2 = 3 → x = 5 یا x - 2 = -3 → x = -1" },
+          { id: "h4q4", difficulty: "متوسط", question: "معادله |2x + 1| = 7 را حل کنید. (جواب‌ها با کاما)", correctAnswer: "3, -4", answer: "قدر مطلق رو باز می‌کنیم.", solution: "2x + 1 = 7 → x = 3 یا 2x + 1 = -7 → x = -4" },
+          { id: "h4q5", difficulty: "سخت", question: "معادله |x² - 1| = 3 را حل کنید. (جواب‌ها با کاما)", correctAnswer: "2, -2", answer: "قدر مطلق رو باز می‌کنیم.", solution: "x²-1 = 3 → x² = 4 → x = 2 یا -2" },
+          { id: "h4q6", difficulty: "سخت", question: "معادله |x - 1| = |2x + 3| را حل کنید. (جواب‌ها با کاما)", correctAnswer: "-2/3, -4", answer: "از رابطه |A|=|B| استفاده می‌کنیم.", solution: "x-1 = 2x+3 → x = -4 یا x-1 = -(2x+3) → x = -2/3" }
+        ]
+      },
+      "hesaban-ch1-lesson-5": {
+        id: "hesaban-ch1-lesson-5", number: 5,
+        title: "آشنایی با هندسه تحلیلی",
+        description: "فاصله دو نقطه، معادله خط، فاصله نقطه از خط",
+        chapterId: "hesaban-chapter-1",
+        questions: [
+          { id: "h5q1", difficulty: "آسان", question: "فاصله دو نقطه A(1,2) و B(4,6) چقدر است؟", correctAnswer: "5", answer: "از فرمول فاصله دو نقطه استفاده می‌کنیم.", solution: "AB = √((4-1)² + (6-2)²) = √25 = 5" },
+          { id: "h5q2", difficulty: "آسان", question: "مختصات وسط پاره خط با نقاط A(2,4) و B(6,8) چقدر است؟ (به صورت x,y)", correctAnswer: "4,6", answer: "از فرمول وسط پاره خط استفاده می‌کنیم.", solution: "x = (2+6)/2 = 4، y = (4+8)/2 = 6" },
+          { id: "h5q3", difficulty: "متوسط", question: "شیب خطی که از نقاط A(1,2) و B(3,8) می‌گذرد چقدر است؟", correctAnswer: "3", answer: "از فرمول شیب استفاده می‌کنیم.", solution: "m = (8-2)/(3-1) = 3" },
+          { id: "h5q4", difficulty: "متوسط", question: "فاصله نقطه A(1,2) از خط 3x + 4y - 5 = 0 چقدر است؟", correctAnswer: "6/5", answer: "از فرمول فاصله نقطه از خط استفاده می‌کنیم.", solution: "d = |3+8-5| / 5 = 6/5" },
+          { id: "h5q5", difficulty: "متوسط", question: "معادله خطی که از نقطه A(2,3) می‌گذرد و شیب آن ۲ است را بنویسید. (به فرم y = mx + b)", correctAnswer: "y = 2x - 1", answer: "از فرمول y - y₁ = m(x - x₁) استفاده می‌کنیم.", solution: "y - 3 = 2(x - 2) → y = 2x - 1" },
+          { id: "h5q6", difficulty: "سخت", question: "دو خط y = 2x + 1 و y = -x + 4 در چه نقطه‌ای همدیگر را قطع می‌کنند؟ (به صورت x,y)", correctAnswer: "1,3", answer: "دو معادله را برابر قرار می‌دهیم.", solution: "2x + 1 = -x + 4 → x = 1، y = 3" },
+          { id: "h5q7", difficulty: "سخت", question: "شیب خط عمود بر خطی با شیب ۲/۳ چقدر است؟", correctAnswer: "-3/2", answer: "شیب دو خط عمود بر هم، منفی معکوس یکدیگرند.", solution: "m₁ × m₂ = -1 → m₂ = -3/2" }
+        ]
+      },
+      "hesaban-ch2-lesson-1": {
+        id: "hesaban-ch2-lesson-1", number: 1,
+        title: "آشنایی بیشتر با تابع",
+        description: "مفهوم تابع، دامنه و برد",
+        chapterId: "hesaban-chapter-2",
+        questions: [
+          { id: "b1q1", difficulty: "آسان", question: "دامنه تابع f(x) = √(x - 3) کدام است؟ (به صورت بازه)", correctAnswer: "[3, +∞)", answer: "عبارت زیر رادیکال باید نامنفی باشد.", solution: "x - 3 ≥ 0 → x ≥ 3" },
+          { id: "b1q2", difficulty: "آسان", question: "دامنه تابع f(x) = 1/(x - 2) کدام است؟", correctAnswer: "R - {2}", answer: "مخرج نباید صفر باشد.", solution: "x ≠ 2" },
+          { id: "b1q3", difficulty: "متوسط", question: "اگر f(x) = 2x + 1 باشد، حاصل f(3) چقدر است؟", correctAnswer: "7", answer: "x = 3 را جایگزین می‌کنیم.", solution: "f(3) = 7" },
+          { id: "b1q4", difficulty: "متوسط", question: "دامنه تابع f(x) = √(4 - x²) کدام است؟ (به صورت بازه)", correctAnswer: "[-2, 2]", answer: "عبارت زیر رادیکال باید نامنفی باشد.", solution: "4 - x² ≥ 0 → x² ≤ 4 → -2 ≤ x ≤ 2" },
+          { id: "b1q5", difficulty: "متوسط", question: "اگر f(x) = x² - 3x + 2 باشد، حاصل f(-1) چقدر است؟", correctAnswer: "6", answer: "x = -1 را جایگزین می‌کنیم.", solution: "f(-1) = 1 + 3 + 2 = 6" },
+          { id: "b1q6", difficulty: "سخت", question: "برد تابع f(x) = x² + 1 کدام است؟ (به صورت بازه)", correctAnswer: "[1, +∞)", answer: "کمترین مقدار x² صفر است.", solution: "x² ≥ 0 → x² + 1 ≥ 1" }
+        ]
+      },
+      "hesaban-ch2-lesson-2": {
+        id: "hesaban-ch2-lesson-2", number: 2,
+        title: "انواع توابع",
+        description: "توابع چندجمله‌ای، گویا، رادیکالی، جزء صحیح",
+        chapterId: "hesaban-chapter-2",
+        questions: [
+          { id: "b2q1", difficulty: "آسان", question: "تابع f(x) = 3x + 2 چه نوع تابعی است؟ (خطی/درجه دوم/رادیکالی)", correctAnswer: "خطی", answer: "درجه‌ی x برابر ۱ است.", solution: "تابع خطی" },
+          { id: "b2q2", difficulty: "آسان", question: "تابع f(x) = x² - 5x + 6 چه نوع تابعی است؟ (خطی/درجه دوم/رادیکالی)", correctAnswer: "درجه دوم", answer: "درجه‌ی x برابر ۲ است.", solution: "تابع درجه دوم" },
+          { id: "b2q3", difficulty: "متوسط", question: "حاصل [3/7] (جزء صحیح) چقدر است؟", correctAnswer: "3", answer: "جزء صحیح، بزرگ‌ترین عدد صحیح کوچک‌تر از عدد داده شده است.", solution: "[3/7] = 3" },
+          { id: "b2q4", difficulty: "متوسط", question: "حاصل [-2/3] (جزء صحیح) چقدر است؟", correctAnswer: "-3", answer: "جزء صحیح عدد منفی، به سمت پایین گرد می‌شود.", solution: "[-2/3] = -3" },
+          { id: "b2q5", difficulty: "متوسط", question: "تابع f(x) = 1/x چه نوع تابعی است؟ (خطی/گویا/رادیکالی/جزء صحیح)", correctAnswer: "گویا", answer: "x در مخرج قرار دارد.", solution: "تابع گویا" },
+          { id: "b2q6", difficulty: "سخت", question: "حاصل [√10] (جزء صحیح جذر ۱۰) چقدر است؟", correctAnswer: "3", answer: "√10 بین ۳ و ۴ قرار دارد.", solution: "3² = 9 < 10 < 16 = 4² → [√10] = 3" }
+        ]
+      },
+      "hesaban-ch2-lesson-3": {
+        id: "hesaban-ch2-lesson-3", number: 3,
+        title: "توابع وارون",
+        description: "تابع وارون و روش پیدا کردن آن",
+        chapterId: "hesaban-chapter-2",
+        questions: [
+          { id: "b3q1", difficulty: "آسان", question: "شرط لازم برای وارون‌پذیری یک تابع چیست؟ (یک‌به‌یک/پذیرفتنی/یکنوا)", correctAnswer: "یک‌به‌یک", answer: "تابع باید هر مقدار را فقط یک بار بگیرد.", solution: "یک‌به‌یک" },
+          { id: "b3q2", difficulty: "متوسط", question: "وارون تابع f(x) = 2x + 3 چقدر است؟", correctAnswer: "(x-3)/2", answer: "y = 2x + 3 را بر حسب x حل می‌کنیم.", solution: "f⁻¹(x) = (x-3)/2" },
+          { id: "b3q3", difficulty: "متوسط", question: "وارون تابع f(x) = x³ چقدر است؟", correctAnswer: "∛x", answer: "y = x³ را بر حسب x حل می‌کنیم.", solution: "f⁻¹(x) = ∛x" },
+          { id: "b3q4", difficulty: "سخت", question: "وارون تابع f(x) = √(x - 1) چقدر است؟", correctAnswer: "x²+1", answer: "y = √(x-1) را بر حسب x حل می‌کنیم.", solution: "f⁻¹(x) = x² + 1" }
+        ]
+      },
+      "hesaban-ch2-lesson-4": {
+        id: "hesaban-ch2-lesson-4", number: 4,
+        title: "عمل جبری روی توابع",
+        description: "جمع، تفریق، ضرب، تقسیم و ترکیب توابع",
+        chapterId: "hesaban-chapter-2",
+        questions: [
+          { id: "b4q1", difficulty: "آسان", question: "اگر f(x) = 2x و g(x) = x + 1 باشد، (f+g)(x) چقدر است؟", correctAnswer: "3x+1", answer: "دو تابع را با هم جمع می‌کنیم.", solution: "(f+g)(x) = 3x + 1" },
+          { id: "b4q2", difficulty: "آسان", question: "اگر f(x) = x² و g(x) = 3x باشد، (f·g)(x) چقدر است؟", correctAnswer: "3x³", answer: "دو تابع را در هم ضرب می‌کنیم.", solution: "(f·g)(x) = 3x³" },
+          { id: "b4q3", difficulty: "متوسط", question: "اگر f(x) = 2x+1 و g(x) = x² باشد، fog(x) چقدر است؟", correctAnswer: "2x²+1", answer: "ابتدا g را حساب می‌کنیم، بعد f.", solution: "fog(x) = 2x² + 1" },
+          { id: "b4q4", difficulty: "متوسط", question: "اگر f(x) = 3x و g(x) = x-2 باشد، gof(x) چقدر است؟", correctAnswer: "3x-2", answer: "ابتدا f را حساب می‌کنیم، بعد g.", solution: "gof(x) = 3x - 2" },
+          { id: "b4q5", difficulty: "سخت", question: "اگر f(x) = √x و g(x) = x+3 باشد، دامنه fog کدام است؟ (به صورت بازه)", correctAnswer: "[-3, +∞)", answer: "خروجی g باید در دامنه f باشد.", solution: "g(x) ≥ 0 → x ≥ -3" },
+          { id: "b4q6", difficulty: "سخت", question: "اگر f(x) = 2x+1 و g(x) = x² باشد، fog(2) چقدر است؟", correctAnswer: "9", answer: "ابتدا g(2) را حساب می‌کنیم.", solution: "g(2) = 4 → f(4) = 9" }
+        ]
+      },
+      "hesaban-ch3-lesson-1": {
+        id: "hesaban-ch3-lesson-1", number: 1,
+        title: "تابع نمایی", description: "تابع نمایی و ویژگی‌های آن",
+        chapterId: "hesaban-chapter-3",
+        questions: [
+          { id: "c1q1", difficulty: "آسان", question: "حاصل 2³ چقدر است؟", correctAnswer: "8", answer: "۲ را سه بار در خودش ضرب می‌کنیم.", solution: "2³ = 8" },
+          { id: "c1q2", difficulty: "آسان", question: "حاصل 2⁻² چقدر است؟", correctAnswer: "1/4", answer: "از خاصیت توان منفی استفاده می‌کنیم.", solution: "2⁻² = 1/4" },
+          { id: "c1q3", difficulty: "متوسط", question: "حاصل 2^(1/2) × 2^(1/2) چقدر است؟", correctAnswer: "2", answer: "از خاصیت ضرب توان‌های هم‌پایه استفاده می‌کنیم.", solution: "2^(1/2 + 1/2) = 2" },
+          { id: "c1q4", difficulty: "متوسط", question: "دامنه تابع f(x) = 3^x کدام است؟ (به صورت بازه)", correctAnswer: "(-∞, +∞)", answer: "تابع نمایی برای همه‌ی اعداد حقیقی تعریف شده است.", solution: "دامنه = R" },
+          { id: "c1q5", difficulty: "متوسط", question: "برد تابع f(x) = 2^x کدام است؟ (به صورت بازه)", correctAnswer: "(0, +∞)", answer: "تابع نمایی همیشه مثبت است.", solution: "برد = (0, +∞)" },
+          { id: "c1q6", difficulty: "سخت", question: "اگر 2^x = 32 باشد، مقدار x چقدر است؟", correctAnswer: "5", answer: "۳۲ را به صورت توان ۲ می‌نویسیم.", solution: "32 = 2^5 → x = 5" }
+        ]
+      },
+      "hesaban-ch3-lesson-2": {
+        id: "hesaban-ch3-lesson-2", number: 2,
+        title: "تابع لگاریتمی و ویژگی‌های آن", description: "لگاریتم و خواص آن",
+        chapterId: "hesaban-chapter-3",
+        questions: [
+          { id: "c2q1", difficulty: "آسان", question: "حاصل log₂ 8 چقدر است؟", correctAnswer: "3", answer: "می‌پرسیم ۲ به چه توانی برسد تا ۸ شود.", solution: "2³ = 8 → log₂ 8 = 3" },
+          { id: "c2q2", difficulty: "آسان", question: "حاصل log₁₀ 1 چقدر است؟", correctAnswer: "0", answer: "لگاریتم ۱ در هر پایه‌ای برابر صفر است.", solution: "log₁₀ 1 = 0" },
+          { id: "c2q3", difficulty: "متوسط", question: "حاصل log₂ 16 چقدر است؟", correctAnswer: "4", answer: "۱۶ را به صورت توان ۲ می‌نویسیم.", solution: "16 = 2⁴ → log₂ 16 = 4" },
+          { id: "c2q4", difficulty: "متوسط", question: "حاصل log₃ 81 چقدر است؟", correctAnswer: "4", answer: "۸۱ را به صورت توان ۳ می‌نویسیم.", solution: "81 = 3⁴ → log₃ 81 = 4" },
+          { id: "c2q5", difficulty: "متوسط", question: "حاصل log₂ 1/8 چقدر است؟", correctAnswer: "-3", answer: "۱/۸ را به صورت توان ۲ می‌نویسیم.", solution: "1/8 = 2⁻³ → log₂ 1/8 = -3" },
+          { id: "c2q6", difficulty: "سخت", question: "حاصل log₁₀ 10000 چقدر است؟", correctAnswer: "4", answer: "۱۰۰۰۰ = 10⁴", solution: "log₁₀ 10000 = 4" }
+        ]
+      },
+      "hesaban-ch3-lesson-3": {
+        id: "hesaban-ch3-lesson-3", number: 3,
+        title: "معادلات و نامعادله‌های لگاریتمی", description: "حل معادلات لگاریتمی",
+        chapterId: "hesaban-chapter-3",
+        questions: [
+          { id: "c3q1", difficulty: "آسان", question: "معادله log₂ x = 3 را حل کنید.", correctAnswer: "8", answer: "از تعریف لگاریتم استفاده می‌کنیم.", solution: "log₂ x = 3 → x = 2³ = 8" },
+          { id: "c3q2", difficulty: "متوسط", question: "معادله log₃ x = 2 را حل کنید.", correctAnswer: "9", answer: "از تعریف لگاریتم استفاده می‌کنیم.", solution: "x = 3² = 9" },
+          { id: "c3q3", difficulty: "متوسط", question: "معادله log x + log 2 = log 6 را حل کنید. (log در پایه ۱۰)", correctAnswer: "3", answer: "از خاصیت جمع لگاریتم‌ها استفاده می‌کنیم.", solution: "log(2x) = log 6 → 2x = 6 → x = 3" },
+          { id: "c3q4", difficulty: "سخت", question: "معادله log₂ (x + 1) = 4 را حل کنید.", correctAnswer: "15", answer: "از تعریف لگاریتم استفاده می‌کنیم.", solution: "x+1 = 2⁴ = 16 → x = 15" },
+          { id: "c3q5", difficulty: "سخت", question: "معادله log₃ (x - 2) = 2 را حل کنید.", correctAnswer: "11", answer: "از تعریف لگاریتم استفاده می‌کنیم.", solution: "x-2 = 3² = 9 → x = 11" }
+        ]
+      },
+      "hesaban-ch4-lesson-1": {
+        id: "hesaban-ch4-lesson-1", number: 1,
+        title: "رادیان", description: "اندازه‌گیری زاویه به رادیان",
+        chapterId: "hesaban-chapter-4",
+        questions: [
+          { id: "d1q1", difficulty: "آسان", question: "زاویه ۱۸۰ درجه چند رادیان است؟ (به صورت π)", correctAnswer: "π", answer: "از رابطه تبدیل استفاده می‌کنیم.", solution: "180° = π رادیان" },
+          { id: "d1q2", difficulty: "آسان", question: "زاویه ۹۰ درجه چند رادیان است؟ (به صورت π/...)", correctAnswer: "π/2", answer: "از رابطه تبدیل استفاده می‌کنیم.", solution: "90° = π/2" },
+          { id: "d1q3", difficulty: "متوسط", question: "زاویه ۶۰ درجه چند رادیان است؟ (به صورت π/...)", correctAnswer: "π/3", answer: "از رابطه تبدیل استفاده می‌کنیم.", solution: "60° = π/3" },
+          { id: "d1q4", difficulty: "متوسط", question: "زاویه π/4 رادیان چند درجه است؟", correctAnswer: "45", answer: "از رابطه تبدیل استفاده می‌کنیم.", solution: "π/4 = 45°" },
+          { id: "d1q5", difficulty: "متوسط", question: "زاویه ۳۰۰ درجه چند رادیان است؟ (به صورت π/...)", correctAnswer: "5π/3", answer: "از رابطه تبدیل استفاده می‌کنیم.", solution: "300 × π/180 = 5π/3" },
+          { id: "d1q6", difficulty: "سخت", question: "زاویه π/6 رادیان چند درجه است؟", correctAnswer: "30", answer: "از رابطه تبدیل استفاده می‌کنیم.", solution: "π/6 = 30°" }
+        ]
+      },
+      "hesaban-ch4-lesson-2": {
+        id: "hesaban-ch4-lesson-2", number: 2,
+        title: "نسبت‌های مثلثاتی برخی زوایا", description: "نسبت‌های مثلثاتی زوایای خاص",
+        chapterId: "hesaban-chapter-4",
+        questions: [
+          { id: "d2q1", difficulty: "آسان", question: "حاصل sin(30°) چقدر است؟", correctAnswer: "1/2", answer: "از مقادیر مثلثاتی زوایای خاص استفاده می‌کنیم.", solution: "sin 30° = 1/2" },
+          { id: "d2q2", difficulty: "آسان", question: "حاصل cos(60°) چقدر است؟", correctAnswer: "1/2", answer: "از مقادیر مثلثاتی زوایای خاص استفاده می‌کنیم.", solution: "cos 60° = 1/2" },
+          { id: "d2q3", difficulty: "متوسط", question: "حاصل sin(45°) چقدر است؟", correctAnswer: "√2/2", answer: "از مقادیر مثلثاتی زوایای خاص استفاده می‌کنیم.", solution: "sin 45° = √2/2" },
+          { id: "d2q4", difficulty: "متوسط", question: "حاصل tan(45°) چقدر است؟", correctAnswer: "1", answer: "از مقادیر مثلثاتی زوایای خاص استفاده می‌کنیم.", solution: "tan 45° = 1" },
+          { id: "d2q5", difficulty: "متوسط", question: "حاصل sin(150°) چقدر است؟", correctAnswer: "1/2", answer: "از رابطه مکمل استفاده می‌کنیم.", solution: "sin 150° = sin 30° = 1/2" },
+          { id: "d2q6", difficulty: "سخت", question: "حاصل cos(120°) چقدر است؟", correctAnswer: "-1/2", answer: "از رابطه مکمل استفاده می‌کنیم.", solution: "cos 120° = -cos 60° = -1/2" }
+        ]
+      },
+      "hesaban-ch4-lesson-3": {
+        id: "hesaban-ch4-lesson-3", number: 3,
+        title: "توابع مثلثاتی", description: "توابع سینوس، کسینوس، تانژانت",
+        chapterId: "hesaban-chapter-4",
+        questions: [
+          { id: "d3q1", difficulty: "آسان", question: "دوره تناوب تابع sin(x) چقدر است؟ (به صورت π)", correctAnswer: "2π", answer: "دوره تناوب توابع مثلثاتی پایه‌ای.", solution: "دوره تناوب sin x = 2π" },
+          { id: "d3q2", difficulty: "متوسط", question: "بیشترین مقدار تابع sin(x) چقدر است؟", correctAnswer: "1", answer: "برد تابع سینوس را در نظر بگیرید.", solution: "بیشترین = 1" },
+          { id: "d3q3", difficulty: "متوسط", question: "کمترین مقدار تابع cos(x) چقدر است؟", correctAnswer: "-1", answer: "برد تابع کسینوس را در نظر بگیرید.", solution: "کمترین = -1" },
+          { id: "d3q4", difficulty: "سخت", question: "دوره تناوب تابع tan(x) چقدر است؟ (به صورت π)", correctAnswer: "π", answer: "دوره تناوب تانژانت متفاوت است.", solution: "دوره تناوب tan x = π" },
+          { id: "d3q5", difficulty: "سخت", question: "حاصل sin(π/6) چقدر است؟", correctAnswer: "1/2", answer: "از مقادیر مثلثاتی استفاده می‌کنیم.", solution: "sin(π/6) = 1/2" }
+        ]
+      },
+      "hesaban-ch4-lesson-4": {
+        id: "hesaban-ch4-lesson-4", number: 4,
+        title: "روابط مجموع و تفاضل زوایا", description: "اتحادهای مثلثاتی",
+        chapterId: "hesaban-chapter-4",
+        questions: [
+          { id: "d4q1", difficulty: "آسان", question: "اتحاد sin(a+b) را بنویسید. (بدون فاصله)", correctAnswer: "sin(a)cos(b)+cos(a)sin(b)", answer: "اتحاد مجموع دو زاویه برای سینوس.", solution: "sin(a+b) = sin a cos b + cos a sin b" },
+          { id: "d4q2", difficulty: "آسان", question: "اتحاد cos(a+b) را بنویسید. (بدون فاصله)", correctAnswer: "cos(a)cos(b)-sin(a)sin(b)", answer: "اتحاد مجموع دو زاویه برای کسینوس.", solution: "cos(a+b) = cos a cos b - sin a sin b" },
+          { id: "d4q3", difficulty: "متوسط", question: "اتحاد cos(a-b) را بنویسید. (بدون فاصله)", correctAnswer: "cos(a)cos(b)+sin(a)sin(b)", answer: "اتحاد تفاضل دو زاویه.", solution: "cos(a-b) = cos a cos b + sin a sin b" },
+          { id: "d4q4", difficulty: "متوسط", question: "حاصل sin(75°) با استفاده از اتحادها چقدر است؟", correctAnswer: "(√6+√2)/4", answer: "sin(45°+30°) را بسط می‌دهیم.", solution: "sin75° = (√6+√2)/4" },
+          { id: "d4q5", difficulty: "سخت", question: "اتحاد sin(2a) را بنویسید. (بدون فاصله)", correctAnswer: "2sin(a)cos(a)", answer: "اتحاد زاویه دوبرابر.", solution: "sin 2a = 2 sin a cos a" }
+        ]
+      },
+      "hesaban-ch5-lesson-1": {
+        id: "hesaban-ch5-lesson-1", number: 1,
+        title: "مفهوم حد و فرایندهای حدی", description: "مفهوم حد و شهود آن",
+        chapterId: "hesaban-chapter-5",
+        questions: [
+          { id: "e1q1", difficulty: "آسان", question: "حاصل lim(x→2) (3x + 1) چقدر است؟", correctAnswer: "7", answer: "مقدار x = 2 را جایگزین می‌کنیم.", solution: "= 3(2) + 1 = 7" },
+          { id: "e1q2", difficulty: "آسان", question: "حاصل lim(x→1) (x² + 2x) چقدر است؟", correctAnswer: "3", answer: "x = 1 را جایگزین می‌کنیم.", solution: "= 1 + 2 = 3" },
+          { id: "e1q3", difficulty: "متوسط", question: "حاصل lim(x→3) (x²-9)/(x-3) چقدر است؟", correctAnswer: "6", answer: "صورت را تجزیه می‌کنیم.", solution: "= lim(x+3) = 6" },
+          { id: "e1q4", difficulty: "متوسط", question: "حاصل lim(x→0) (sin x)/x چقدر است؟", correctAnswer: "1", answer: "این یک حد معروف است.", solution: "= 1" },
+          { id: "e1q5", difficulty: "سخت", question: "حاصل lim(x→2) (x²-4)/(x-2) چقدر است؟", correctAnswer: "4", answer: "صورت را تجزیه می‌کنیم.", solution: "= lim(x+2) = 4" }
+        ]
+      },
+      "hesaban-ch5-lesson-2": {
+        id: "hesaban-ch5-lesson-2", number: 2,
+        title: "حدهای یک‌طرفه و حد در بی‌نهایت", description: "حد چپ، حد راست، حد در بی‌نهایت",
+        chapterId: "hesaban-chapter-5",
+        questions: [
+          { id: "e2q1", difficulty: "آسان", question: "حاصل lim(x→+∞) (1/x) چقدر است؟", correctAnswer: "0", answer: "1/x به صفر میل می‌کند.", solution: "= 0" },
+          { id: "e2q2", difficulty: "آسان", question: "حاصل lim(x→+∞) (3x+1)/(x) چقدر است؟", correctAnswer: "3", answer: "تقسیم بر x.", solution: "= 3" },
+          { id: "e2q3", difficulty: "متوسط", question: "حاصل lim(x→+∞) (2x²+3x)/(x²+1) چقدر است؟", correctAnswer: "2", answer: "تقسیم بر x².", solution: "= 2" },
+          { id: "e2q4", difficulty: "متوسط", question: "حاصل lim(x→0⁺) (1/x) چقدر است؟", correctAnswer: "+∞", answer: "از راست به صفر.", solution: "= +∞" },
+          { id: "e2q5", difficulty: "سخت", question: "حاصل lim(x→+∞) (x³+1)/(2x³+x) چقدر است؟", correctAnswer: "1/2", answer: "تقسیم بر x³.", solution: "= 1/2" }
+        ]
+      },
+      "hesaban-ch5-lesson-3": {
+        id: "hesaban-ch5-lesson-3", number: 3,
+        title: "قضایای حد", description: "قضایای حد و کاربردهایشان",
+        chapterId: "hesaban-chapter-5",
+        questions: [
+          { id: "e3q1", difficulty: "آسان", question: "اگر lim f = 3 و lim g = 5 باشد، حاصل lim (f+g) چقدر است؟", correctAnswer: "8", answer: "حد مجموع = مجموع حدود.", solution: "= 3 + 5 = 8" },
+          { id: "e3q2", difficulty: "آسان", question: "اگر lim f = 4 و lim g = 2 باشد، حاصل lim (f×g) چقدر است؟", correctAnswer: "8", answer: "حد حاصل‌ضرب.", solution: "= 4 × 2 = 8" },
+          { id: "e3q3", difficulty: "متوسط", question: "اگر lim f = 6 و lim g = 3 باشد، حاصل lim (f/g) چقدر است؟", correctAnswer: "2", answer: "حد تقسیم.", solution: "= 6/3 = 2" },
+          { id: "e3q4", difficulty: "متوسط", question: "حاصل lim(x→2) (x²+3x-1) چقدر است؟", correctAnswer: "9", answer: "جایگزینی.", solution: "= 4 + 6 - 1 = 9" },
+          { id: "e3q5", difficulty: "سخت", question: "حاصل lim(x→1) (x³-1)/(x-1) چقدر است؟", correctAnswer: "3", answer: "از اتحاد استفاده می‌کنیم.", solution: "x³-1 = (x-1)(x²+x+1) → lim = 3" }
+        ]
+      },
+      "hesaban-ch5-lesson-4": {
+        id: "hesaban-ch5-lesson-4", number: 4,
+        title: "محاسبه‌ی حد و رفع ابهام", description: "روش‌های محاسبه‌ی حد",
+        chapterId: "hesaban-chapter-5",
+        questions: [
+          { id: "e4q1", difficulty: "آسان", question: "حاصل lim(x→0) (sin 3x)/x چقدر است؟", correctAnswer: "3", answer: "از حد معروف استفاده می‌کنیم.", solution: "= 3" },
+          { id: "e4q2", difficulty: "متوسط", question: "حاصل lim(x→0) (sin 5x)/(2x) چقدر است؟", correctAnswer: "5/2", answer: "از حد معروف استفاده می‌کنیم.", solution: "= 5/2" },
+          { id: "e4q3", difficulty: "متوسط", question: "حاصل lim(x→4) (√x - 2)/(x-4) چقدر است؟", correctAnswer: "1/4", answer: "از اتحاد مزدوج استفاده می‌کنیم.", solution: "= 1/4" },
+          { id: "e4q4", difficulty: "سخت", question: "حاصل lim(x→0) (1-cos x)/x² چقدر است؟", correctAnswer: "1/2", answer: "از اتحاد 1-cos x = 2sin²(x/2) استفاده می‌کنیم.", solution: "= 1/2" },
+          { id: "e4q5", difficulty: "سخت", question: "حاصل lim(x→+∞) (√(x²+x) - x) چقدر است؟", correctAnswer: "1/2", answer: "از اتحاد مزدوج استفاده می‌کنیم.", solution: "= 1/2" }
+        ]
+      },
+      "hesaban-ch5-lesson-5": {
+        id: "hesaban-ch5-lesson-5", number: 5,
+        title: "پیوستگی", description: "تابع پیوسته و نقاط ناپیوستگی",
+        chapterId: "hesaban-chapter-5",
+        questions: [
+          { id: "e5q1", difficulty: "آسان", question: "تابع f(x) = 2x + 1 در چه نقاطی پیوسته است؟ (همه‌جا/هیچ‌جا)", correctAnswer: "همه‌جا", answer: "توابع چندجمله‌ای در همه‌جا پیوسته‌اند.", solution: "همه‌جا" },
+          { id: "e5q2", difficulty: "آسان", question: "تابع f(x) = 1/x در چه نقطه‌ای ناپیوسته است؟", correctAnswer: "0", answer: "مخرج صفر می‌شود.", solution: "x = 0" },
+          { id: "e5q3", difficulty: "متوسط", question: "تابع f(x) = (x²-4)/(x-2) در چه نقطه‌ای ناپیوسته است؟", correctAnswer: "2", answer: "مخرج صفر می‌شود.", solution: "x = 2" },
+          { id: "e5q4", difficulty: "متوسط", question: "تابع f(x) = √x در چه بازه‌ای پیوسته است؟ (به صورت بازه)", correctAnswer: "[0, +∞)", answer: "دامنه‌ی تابع را در نظر بگیرید.", solution: "[0, +∞)" },
+          { id: "e5q5", difficulty: "سخت", question: "تابع f(x) = [x] (جزء صحیح) در چه نقاطی ناپیوسته است؟ (اعداد صحیح/اعشاری)", correctAnswer: "اعداد صحیح", answer: "نمودار پله‌ای جزء صحیح.", solution: "اعداد صحیح" }
+        ]
+      },
+      "handese-ch1-lesson-1": {
+        id: "handese-ch1-lesson-1", number: 1,
+        title: "زاویه‌های مرکزی و محاطی", description: "رابطه بین زاویه مرکزی و محاطی",
+        chapterId: "handese-chapter-1",
+        questions: [
+          { id: "g1q1", difficulty: "آسان", question: "اندازه زاویه محاطی روبروی قطر دایره چند درجه است؟", correctAnswer: "90", answer: "قطر، کمانی به اندازه ۱۸۰ درجه می‌سازد.", solution: "= 90 درجه" },
+          { id: "g1q2", difficulty: "آسان", question: "اگر زاویه مرکزی ۱۰۰ درجه باشد، زاویه محاطی متناظر چقدر است؟", correctAnswer: "50", answer: "نصف زاویه مرکزی.", solution: "= 50 درجه" },
+          { id: "g1q3", difficulty: "متوسط", question: "اگر زاویه محاطی ۴۰ درجه باشد، کمان روبروی آن چند درجه است؟", correctAnswer: "80", answer: "کمان = دو برابر زاویه محاطی", solution: "= 80 درجه" },
+          { id: "g1q4", difficulty: "متوسط", question: "زاویه مرکزی متناظر با کمان ۱۲۰ درجه چقدر است؟", correctAnswer: "120", answer: "زاویه مرکزی برابر کمان روبروی آن است.", solution: "= 120 درجه" },
+          { id: "g1q5", difficulty: "سخت", question: "در یک دایره، دو زاویه محاطی روبروی یک کمان هستند. اگر یکی ۳۵ درجه باشد، دیگری چند درجه است؟", correctAnswer: "35", answer: "زاویه‌های محاطی روبروی یک کمان با هم برابرند.", solution: "= 35 درجه" }
+        ]
+      },
+      "handese-ch1-lesson-2": {
+        id: "handese-ch1-lesson-2", number: 2,
+        title: "وترها و قوس‌ها", description: "روابط وترها و قوس‌های دایره",
+        chapterId: "handese-chapter-1",
+        questions: [
+          { id: "g2q1", difficulty: "آسان", question: "وترهایی که از مرکز دایره به یک فاصله باشند، چه رابطه‌ای دارند؟", correctAnswer: "برابر", answer: "قضیه وترهای هم‌فاصله از مرکز.", solution: "با هم برابرند." },
+          { id: "g2q2", difficulty: "آسان", question: "عمود از مرکز دایره بر وتر، آن را به چند قسمت مساوی تقسیم می‌کند؟", correctAnswer: "2", answer: "عمود از مرکز، نیمساز وتر است.", solution: "به ۲ قسمت" },
+          { id: "g2q3", difficulty: "متوسط", question: "اگر شعاع دایره ۵ و فاصله مرکز از وتر ۳ باشد، نصف طول وتر چقدر است؟", correctAnswer: "4", answer: "از فیثاغورس استفاده می‌کنیم.", solution: "√(5²-3²) = 4" },
+          { id: "g2q4", difficulty: "متوسط", question: "اگر دو وتر در یک دایره برابر باشند، فاصله آن‌ها از مرکز چه رابطه‌ای دارند؟", correctAnswer: "برابر", answer: "عکس قضیه وترهای هم‌فاصله.", solution: "برابر است." },
+          { id: "g2q5", difficulty: "سخت", question: "در دایره‌ای به شعاع ۱۳، وتری به طول ۲۴ رسم شده. فاصله وتر از مرکز چقدر است؟", correctAnswer: "5", answer: "نصف وتر = ۱۲، از فیثاغورس استفاده می‌کنیم.", solution: "√(13² - 12²) = 5" }
+        ]
+      },
+      "handese-ch1-lesson-3": {
+        id: "handese-ch1-lesson-3", number: 3,
+        title: "مماس‌ها و خطوط مماس", description: "خط مماس بر دایره",
+        chapterId: "handese-chapter-1",
+        questions: [
+          { id: "g3q1", difficulty: "آسان", question: "خط مماس بر دایره با شعاع در نقطه تماس چه زاویه‌ای می‌سازد؟", correctAnswer: "90", answer: "ویژگی اصلی خط مماس.", solution: "= 90 درجه" },
+          { id: "g3q2", difficulty: "آسان", question: "از یک نقطه خارج دایره چند مماس می‌توان رسم کرد؟", correctAnswer: "2", answer: "از هر نقطه خارج، دو مماس.", solution: "۲ مماس" },
+          { id: "g3q3", difficulty: "متوسط", question: "دو مماس رسم شده از یک نقطه خارج دایره، چه رابطه‌ای با هم دارند؟", correctAnswer: "برابر", answer: "پاره‌های مماس از یک نقطه خارج برابرند.", solution: "برابرند." },
+          { id: "g3q4", difficulty: "متوسط", question: "خطی که در یک نقطه با دایره فقط یک نقطه مشترک دارد چه نامیده می‌شود؟", correctAnswer: "مماس", answer: "تعریف خط مماس.", solution: "مماس" },
+          { id: "g3q5", difficulty: "سخت", question: "دو دایره مماس خارجی، اگر شعاع‌هایشان ۳ و ۵ باشد، فاصله مرکزها چقدر است؟", correctAnswer: "8", answer: "در مماس خارجی، فاصله مرکزها برابر مجموع شعاع‌هاست.", solution: "3 + 5 = 8" }
+        ]
+      },
+      "handese-ch1-lesson-4": {
+        id: "handese-ch1-lesson-4", number: 4,
+        title: "زاویه‌های ظلی و خارجی", description: "زاویه‌های بین وتر و مماس",
+        chapterId: "handese-chapter-1",
+        questions: [
+          { id: "g4q1", difficulty: "آسان", question: "زاویه ظلی (بین وتر و مماس) با کمان روبرویش چه رابطه‌ای دارد؟", correctAnswer: "نصف", answer: "زاویه ظلی = نصف کمان.", solution: "نصف کمان" },
+          { id: "g4q2", difficulty: "متوسط", question: "اگر کمان روبروی زاویه ظلی ۱۰۰ درجه باشد، اندازه زاویه ظلی چقدر است؟", correctAnswer: "50", answer: "نصف کمان.", solution: "= 50 درجه" },
+          { id: "g4q3", difficulty: "متوسط", question: "زاویه بین دو مماس رسم شده از یک نقطه خارج دایره، با کمان بزرگتر چه رابطه‌ای دارد؟", correctAnswer: "نصف تفاضل", answer: "زاویه خارجی = نصف تفاضل دو کمان.", solution: "نصف تفاضل" },
+          { id: "g4q4", difficulty: "سخت", question: "زاویه بین دو مماس از نقطه‌ای خارج دایره ۶۰ درجه است. مجموع دو کمان چقدر است؟", correctAnswer: "360", answer: "مجموع دو کمان = ۳۶۰ درجه همیشه.", solution: "= 360" }
+        ]
+      },
+      "handese-ch2-lesson-1": {
+        id: "handese-ch2-lesson-1", number: 1,
+        title: "انتقال", description: "تبدیل انتقال و ویژگی‌های آن",
+        chapterId: "handese-chapter-2",
+        questions: [
+          { id: "h1q1", difficulty: "آسان", question: "در تبدیل انتقال، طول پاره‌خط‌ها چه تغییری می‌کند؟", correctAnswer: "تغییر نمی‌کند", answer: "انتقال یک ایزومتری است.", solution: "طول‌ها حفظ می‌شوند." },
+          { id: "h1q2", difficulty: "آسان", question: "در انتقال، جهت پاره‌خط‌ها چه تغییری می‌کند؟", correctAnswer: "تغییر نمی‌کند", answer: "انتقال جهت را حفظ می‌کند.", solution: "حفظ می‌شود." },
+          { id: "h1q3", difficulty: "متوسط", question: "اگر نقطه A(1,2) با بردار (3,4) انتقال یابد، مختصات جدید چقدر است؟ (x,y)", correctAnswer: "4,6", answer: "مختصات + بردار.", solution: "(4, 6)" },
+          { id: "h1q4", difficulty: "سخت", question: "انتقال‌ها چه نوع تبدیلی هستند؟ (ایزومتری/تشابه/تجانس)", correctAnswer: "ایزومتری", answer: "انتقال فاصله‌ها را حفظ می‌کند.", solution: "ایزومتری" }
+        ]
+      },
+      "handese-ch2-lesson-2": {
+        id: "handese-ch2-lesson-2", number: 2,
+        title: "تجانس", description: "تبدیل تجانس و مرکز تجانس",
+        chapterId: "handese-chapter-2",
+        questions: [
+          { id: "h2q1", difficulty: "آسان", question: "در تجانس با نسبت k، طول‌ها چند برابر می‌شوند؟", correctAnswer: "k", answer: "نسبت تجانس.", solution: "k برابر" },
+          { id: "h2q2", difficulty: "آسان", question: "در تجانس با نسبت ۲، مساحت چند برابر می‌شود؟", correctAnswer: "4", answer: "مساحت با مجذور نسبت.", solution: "2² = 4" },
+          { id: "h2q3", difficulty: "متوسط", question: "در تجانس با نسبت ۳، حجم چند برابر می‌شود؟", correctAnswer: "27", answer: "حجم با مکعب نسبت.", solution: "3³ = 27" },
+          { id: "h2q4", difficulty: "سخت", question: "اگر تجانس نسبت منفی داشته باشد، شکل چه تغییری می‌کند؟", correctAnswer: "برعکس", answer: "نسبت منفی، شکل را نسبت به مرکز برمی‌گرداند.", solution: "برعکس می‌شود." }
+        ]
+      },
+      "handese-ch2-lesson-3": {
+        id: "handese-ch2-lesson-3", number: 3,
+        title: "تشابه", description: "تبدیل تشابه و کاربردهای آن",
+        chapterId: "handese-chapter-2",
+        questions: [
+          { id: "h3q1", difficulty: "آسان", question: "تشابه ترکیب چه دو تبدیلی است؟ (با کاما)", correctAnswer: "تجانس,ایزومتری", answer: "تشابه = تجانس + ایزومتری", solution: "تشابه ترکیب تجانس و ایزومتری است." },
+          { id: "h3q2", difficulty: "متوسط", question: "در دو مثلث متشابه، اگر نسبت اضلاع ۲ باشد، نسبت مساحت‌ها چقدر است؟", correctAnswer: "4", answer: "نسبت مساحت = مجذور نسبت اضلاع.", solution: "2² = 4" },
+          { id: "h3q3", difficulty: "متوسط", question: "اگر دو مثلث متشابه باشند، زاویه‌های متناظر چه رابطه‌ای دارند؟", correctAnswer: "برابر", answer: "ویژگی اصلی تشابه.", solution: "برابرند." },
+          { id: "h3q4", difficulty: "سخت", question: "در دو مثلث متشابه، نسبت محیط‌ها با نسبت اضلاع چه رابطه‌ای دارد؟", correctAnswer: "برابر", answer: "محیط با توان یک تغییر می‌کند.", solution: "برابر" }
+        ]
+      },
+      "handese-ch3-lesson-1": {
+        id: "handese-ch3-lesson-1", number: 1,
+        title: "مساحت جانبی و کل", description: "مساحت سطوح جانبی و کل",
+        chapterId: "handese-chapter-3",
+        questions: [
+          { id: "i1q1", difficulty: "آسان", question: "مساحت جانبی استوانه با شعاع r و ارتفاع h چقدر است؟ (فرمول)", correctAnswer: "2πrh", answer: "محیط قاعده × ارتفاع", solution: "S = 2πrh" },
+          { id: "i1q2", difficulty: "آسان", question: "مساحت کل مکعب با ضلع a چقدر است؟ (فرمول)", correctAnswer: "6a²", answer: "مکعب ۶ وجه مربعی دارد.", solution: "S = 6a²" },
+          { id: "i1q3", difficulty: "متوسط", question: "مساحت جانبی منشور قائم با محیط قاعده P و ارتفاع h چقدر است؟ (فرمول)", correctAnswer: "Ph", answer: "محیط قاعده × ارتفاع", solution: "S = Ph" },
+          { id: "i1q4", difficulty: "متوسط", question: "مساحت کل کره با شعاع r چقدر است؟ (فرمول)", correctAnswer: "4πr²", answer: "فرمول مساحت کره.", solution: "S = 4πr²" },
+          { id: "i1q5", difficulty: "سخت", question: "مساحت جانبی مخروط با شعاع r و مولد l چقدر است؟ (فرمول)", correctAnswer: "πrl", answer: "فرمول مساحت جانبی مخروط.", solution: "S = πrl" }
+        ]
+      },
+      "handese-ch3-lesson-2": {
+        id: "handese-ch3-lesson-2", number: 2,
+        title: "حجم اجسام", description: "حجم منشور، هرم، استوانه، مخروط، کره",
+        chapterId: "handese-chapter-3",
+        questions: [
+          { id: "i2q1", difficulty: "آسان", question: "حجم مکعب با ضلع a چقدر است؟ (فرمول)", correctAnswer: "a³", answer: "فرمول حجم مکعب.", solution: "V = a³" },
+          { id: "i2q2", difficulty: "آسان", question: "حجم استوانه با شعاع r و ارتفاع h چقدر است؟ (فرمول)", correctAnswer: "πr²h", answer: "مساحت قاعده × ارتفاع.", solution: "V = πr²h" },
+          { id: "i2q3", difficulty: "متوسط", question: "حجم هرم با مساحت قاعده S و ارتفاع h چقدر است؟ (فرمول)", correctAnswer: "Sh/3", answer: "یک‌سوم حجم منشور.", solution: "V = Sh/3" },
+          { id: "i2q4", difficulty: "متوسط", question: "حجم کره با شعاع r چقدر است؟ (فرمول)", correctAnswer: "4πr³/3", answer: "فرمول حجم کره.", solution: "V = 4πr³/3" },
+          { id: "i2q5", difficulty: "سخت", question: "حجم مخروط با شعاع r و ارتفاع h چقدر است؟ (فرمول)", correctAnswer: "πr²h/3", answer: "یک‌سوم حجم استوانه.", solution: "V = πr²h/3" }
+        ]
+      },
       "fizik-ch1-lesson-1": {
         id: "fizik-ch1-lesson-1", number: 1,
-        title: "بار الکتریکی و قانون کولن",
-        description: "بار الکتریکی و نیروی بین بارها",
+        title: "بار الکتریکی و قانون کولن", description: "بار الکتریکی و نیروی بین بارها",
         chapterId: "fizik-chapter-1",
         questions: [
-          { id: "f1q1", difficulty: "آسان",
-            question: "واحد بار الکتریکی در SI چیست؟",
-            correctAnswer: "کولن",
-            answer: "واحد اصلی بار الکتریکی.",
-            solution: "کولن (C)" },
-          { id: "f1q2", difficulty: "آسان",
-            question: "بار الکترون چند کولن است؟ (به صورت 1.6×10^-19)",
-            correctAnswer: "1.6×10^-19",
-            answer: "بار پایه‌ای الکترون.",
-            solution: "e = 1.6 × 10⁻¹⁹ C" },
-          { id: "f1q3", difficulty: "متوسط",
-            question: "اگر فاصله دو بار نقطه‌ای ۳ برابر شود، نیروی کولن چند برابر می‌شود؟ (به صورت 1/9)",
-            correctAnswer: "1/9",
-            answer: "نیرو با مجذور فاصله نسبت عکس دارد.",
-            solution: "F ∝ 1/r² → با ۳ برابر شدن r، F به ۱/۹ می‌رسد" },
-          { id: "f1q4", difficulty: "متوسط",
-            question: "دو بار هم‌نام چه نیرویی به هم وارد می‌کنند؟ (رانش/کشش)",
-            correctAnswer: "رانش",
-            answer: "بارهای هم‌نام یکدیگر را می‌رانند.",
-            solution: "رانش" },
-          { id: "f1q5", difficulty: "سخت",
-            question: "دو بار هم‌نام چه نیرویی به هم وارد می‌کنند؟ (رانش/کشش)",
-            correctAnswer: "کشش",
-            answer: "بارهای ناهم‌نام یکدیگر را می‌کشند.",
-            solution: "کشش" }
+          { id: "f1q1", difficulty: "آسان", question: "واحد بار الکتریکی در SI چیست؟", correctAnswer: "کولن", answer: "واحد اصلی بار.", solution: "کولن (C)" },
+          { id: "f1q2", difficulty: "آسان", question: "بار الکترون چند کولن است؟ (1.6×10^-19)", correctAnswer: "1.6×10^-19", answer: "بار پایه‌ای الکترون.", solution: "e = 1.6 × 10⁻¹⁹ C" },
+          { id: "f1q3", difficulty: "متوسط", question: "اگر فاصله دو بار نقطه‌ای ۳ برابر شود، نیروی کولن چند برابر می‌شود؟", correctAnswer: "1/9", answer: "نیرو با مجذور فاصله نسبت عکس دارد.", solution: "1/9" },
+          { id: "f1q4", difficulty: "متوسط", question: "دو بار هم‌نام چه نیرویی به هم وارد می‌کنند؟ (رانش/کشش)", correctAnswer: "رانش", answer: "بارهای هم‌نام یکدیگر را می‌رانند.", solution: "رانش" },
+          { id: "f1q5", difficulty: "سخت", question: "دو بار ناهم‌نام چه نیرویی به هم وارد می‌کنند؟ (رانش/کشش)", correctAnswer: "کشش", answer: "بارهای ناهم‌نام یکدیگر را می‌کشند.", solution: "کشش" }
         ]
       },
       "fizik-ch1-lesson-2": {
         id: "fizik-ch1-lesson-2", number: 2,
-        title: "میدان الکتریکی",
-        description: "مفهوم میدان و خطوط میدان",
+        title: "میدان الکتریکی", description: "مفهوم میدان و خطوط میدان",
         chapterId: "fizik-chapter-1",
         questions: [
-          { id: "f2q1", difficulty: "آسان",
-            question: "واحد میدان الکتریکی چیست؟ (به صورت N/C)",
-            correctAnswer: "N/C",
-            answer: "نیرو بر بار.",
-            solution: "نیوتن بر کولن (N/C)" },
-          { id: "f2q2", difficulty: "آسان",
-            question: "جهت خطوط میدان الکتریکی برای بار مثبت چگونه است؟ (خارج/داخل)",
-            correctAnswer: "خارج",
-            answer: "خطوط از بار مثبت خارج می‌شوند.",
-            solution: "خارج از بار مثبت" },
-          { id: "f2q3", difficulty: "متوسط",
-            question: "اگر بار نقطه‌ای q = 2×10^-6 C باشد و میدان E = 5×10^4 N/C، نیروی وارد بر بار چقدر است؟ (به صورت 0.1)",
-            correctAnswer: "0.1",
-            answer: "F = qE",
-            solution: "F = 2×10⁻⁶ × 5×10⁴ = 10⁻¹ = 0.1 N" },
-          { id: "f2q4", difficulty: "سخت",
-            question: "برای بار منفی، جهت خطوط میدان الکتریکی چگونه است؟ (خارج/داخل)",
-            correctAnswer: "داخل",
-            answer: "خطوط به بار منفی وارد می‌شوند.",
-            solution: "داخل بار منفی" }
+          { id: "f2q1", difficulty: "آسان", question: "واحد میدان الکتریکی چیست؟ (N/C)", correctAnswer: "N/C", answer: "نیرو بر بار.", solution: "N/C" },
+          { id: "f2q2", difficulty: "آسان", question: "جهت خطوط میدان الکتریکی برای بار مثبت چگونه است؟ (خارج/داخل)", correctAnswer: "خارج", answer: "خطوط از بار مثبت خارج می‌شوند.", solution: "خارج" },
+          { id: "f2q3", difficulty: "متوسط", question: "اگر بار q=2×10^-6 C و میدان E=5×10^4 N/C باشد، نیرو چقدر است؟ (0.1)", correctAnswer: "0.1", answer: "F = qE", solution: "F = 0.1 N" },
+          { id: "f2q4", difficulty: "سخت", question: "برای بار منفی، جهت خطوط میدان الکتریکی چگونه است؟ (خارج/داخل)", correctAnswer: "داخل", answer: "خطوط به بار منفی وارد می‌شوند.", solution: "داخل" }
         ]
       },
       "fizik-ch1-lesson-3": {
         id: "fizik-ch1-lesson-3", number: 3,
-        title: "پتانسیل الکتریکی",
-        description: "پتانسیل و اختلاف پتانسیل",
+        title: "پتانسیل الکتریکی", description: "پتانسیل و اختلاف پتانسیل",
         chapterId: "fizik-chapter-1",
         questions: [
-          { id: "f3q1", difficulty: "آسان",
-            question: "واحد پتانسیل الکتریکی چیست؟",
-            correctAnswer: "ولت",
-            answer: "واحد اختلاف پتانسیل.",
-            solution: "ولت (V)" },
-          { id: "f3q2", difficulty: "متوسط",
-            question: "اختلاف پتانسیل بین دو نقطه ۱۲ ولت است. اگر بار ۲ کولن جابجا شود، کار چقدر است؟",
-            correctAnswer: "24",
-            answer: "W = qV",
-            solution: "W = 2 × 12 = 24 ژول" },
-          { id: "f3q3", difficulty: "سخت",
-            question: "پتانسیل الکتریکی در فاصله r از بار نقطه‌ای q با چه رابطه‌ای محاسبه می‌شود؟ (به صورت kq/r)",
-            correctAnswer: "kq/r",
-            answer: "فرمول پتانسیل.",
-            solution: "V = kq/r" }
+          { id: "f3q1", difficulty: "آسان", question: "واحد پتانسیل الکتریکی چیست؟", correctAnswer: "ولت", answer: "واحد اختلاف پتانسیل.", solution: "ولت (V)" },
+          { id: "f3q2", difficulty: "متوسط", question: "اختلاف پتانسیل ۱۲ ولت، بار ۲ کولن. کار چقدر است؟", correctAnswer: "24", answer: "W = qV", solution: "W = 24 ژول" },
+          { id: "f3q3", difficulty: "سخت", question: "پتانسیل الکتریکی در فاصله r از بار نقطه‌ای q با چه رابطه‌ای محاسبه می‌شود؟ (kq/r)", correctAnswer: "kq/r", answer: "فرمول پتانسیل.", solution: "V = kq/r" }
         ]
       },
       "fizik-ch2-lesson-1": {
         id: "fizik-ch2-lesson-1", number: 1,
-        title: "جریان الکتریکی و مقاومت",
-        description: "جریان، مقاومت و قانون اهم",
+        title: "جریان الکتریکی و مقاومت", description: "جریان، مقاومت و قانون اهم",
         chapterId: "fizik-chapter-2",
         questions: [
-          { id: "f4q1", difficulty: "آسان",
-            question: "واحد جریان الکتریکی چیست؟",
-            correctAnswer: "آمپر",
-            answer: "واحد اصلی جریان.",
-            solution: "آمپر (A)" },
-          { id: "f4q2", difficulty: "آسان",
-            question: "قانون اهم را بنویسید. (به صورت V=IR)",
-            correctAnswer: "V=IR",
-            answer: "رابطه بین ولتاژ، جریان و مقاومت.",
-            solution: "V = I × R" },
-          { id: "f4q3", difficulty: "متوسط",
-            question: "اگر V = ۱۲ ولت و R = ۴ اهم باشد، جریان چقدر است؟",
-            correctAnswer: "3",
-            answer: "از قانون اهم.",
-            solution: "I = V/R = 12/4 = 3 آمپر" },
-          { id: "f4q4", difficulty: "سخت",
-            question: "واحد مقاومت الکتریکی چیست؟",
-            correctAnswer: "اهم",
-            answer: "واحد مقاومت.",
-            solution: "اهم (Ω)" }
+          { id: "f4q1", difficulty: "آسان", question: "واحد جریان الکتریکی چیست؟", correctAnswer: "آمپر", answer: "واحد اصلی جریان.", solution: "آمپر (A)" },
+          { id: "f4q2", difficulty: "آسان", question: "قانون اهم را بنویسید. (V=IR)", correctAnswer: "V=IR", answer: "رابطه بین ولتاژ، جریان و مقاومت.", solution: "V = I × R" },
+          { id: "f4q3", difficulty: "متوسط", question: "اگر V=۱۲ ولت و R=۴ اهم باشد، جریان چقدر است؟", correctAnswer: "3", answer: "از قانون اهم.", solution: "I = 3 آمپر" },
+          { id: "f4q4", difficulty: "سخت", question: "واحد مقاومت الکتریکی چیست؟", correctAnswer: "اهم", answer: "واحد مقاومت.", solution: "اهم (Ω)" }
         ]
       },
       "fizik-ch2-lesson-2": {
         id: "fizik-ch2-lesson-2", number: 2,
-        title: "مدارهای الکتریکی",
-        description: "مدار سری و موازی",
+        title: "مدارهای الکتریکی", description: "مدار سری و موازی",
         chapterId: "fizik-chapter-2",
         questions: [
-          { id: "f5q1", difficulty: "آسان",
-            question: "در مدار سری، جریان در همه نقاط چگونه است؟ (برابر/متفاوت)",
-            correctAnswer: "برابر",
-            answer: "ویژگی مدار سری.",
-            solution: "برابر" },
-          { id: "f5q2", difficulty: "متوسط",
-            question: "دو مقاومت ۲ و ۴ اهم به صورت سری بسته شده‌اند. مقاومت کل چقدر است؟",
-            correctAnswer: "6",
-            answer: "مقاومت سری جمع می‌شود.",
-            solution: "R = 2 + 4 = 6 اهم" },
-          { id: "f5q3", difficulty: "متوسط",
-            question: "دو مقاومت ۶ و ۳ اهم به صورت موازی بسته شده‌اند. مقاومت کل چقدر است؟",
-            correctAnswer: "2",
-            answer: "مقاومت موازی: 1/R = 1/R₁ + 1/R₂",
-            solution: "1/R = 1/6 + 1/3 = 1/2 → R = 2 اهم" },
-          { id: "f5q4", difficulty: "سخت",
-            question: "در مدار موازی، ولتاژ دو سر مقاومت‌ها چگونه است؟ (برابر/متفاوت)",
-            correctAnswer: "برابر",
-            answer: "ویژگی مدار موازی.",
-            solution: "برابر" }
+          { id: "f5q1", difficulty: "آسان", question: "در مدار سری، جریان در همه نقاط چگونه است؟ (برابر/متفاوت)", correctAnswer: "برابر", answer: "ویژگی مدار سری.", solution: "برابر" },
+          { id: "f5q2", difficulty: "متوسط", question: "دو مقاومت ۲ و ۴ اهم سری. مقاومت کل چقدر است؟", correctAnswer: "6", answer: "مقاومت سری جمع می‌شود.", solution: "R = 6 اهم" },
+          { id: "f5q3", difficulty: "متوسط", question: "دو مقاومت ۶ و ۳ اهم موازی. مقاومت کل چقدر است؟", correctAnswer: "2", answer: "1/R = 1/R₁ + 1/R₂", solution: "R = 2 اهم" },
+          { id: "f5q4", difficulty: "سخت", question: "در مدار موازی، ولتاژ دو سر مقاومت‌ها چگونه است؟ (برابر/متفاوت)", correctAnswer: "برابر", answer: "ویژگی مدار موازی.", solution: "برابر" }
         ]
       },
       "fizik-ch3-lesson-1": {
         id: "fizik-ch3-lesson-1", number: 1,
-        title: "میدان مغناطیسی",
-        description: "میدان مغناطیسی و خطوط آن",
+        title: "میدان مغناطیسی", description: "میدان مغناطیسی و خطوط آن",
         chapterId: "fizik-chapter-3",
         questions: [
-          { id: "f6q1", difficulty: "آسان",
-            question: "واحد میدان مغناطیسی چیست؟",
-            correctAnswer: "تسلا",
-            answer: "واحد اصلی میدان مغناطیسی.",
-            solution: "تسلا (T)" },
-          { id: "f6q2", difficulty: "متوسط",
-            question: "میدان مغناطیسی اطراف سیم راست حامل جریان با فاصله چه رابطه‌ای دارد؟ (عکس/مستقیم)",
-            correctAnswer: "عکس",
-            answer: "B ∝ 1/r",
-            solution: "عکس با فاصله" },
-          { id: "f6q3", difficulty: "سخت",
-            question: "خطوط میدان مغناطیسی چه شکلی هستند؟ (بسته/باز)",
-            correctAnswer: "بسته",
-            answer: "خطوط میدان مغناطیسی همیشه بسته‌اند.",
-            solution: "بسته" }
+          { id: "f6q1", difficulty: "آسان", question: "واحد میدان مغناطیسی چیست؟", correctAnswer: "تسلا", answer: "واحد اصلی میدان مغناطیسی.", solution: "تسلا (T)" },
+          { id: "f6q2", difficulty: "متوسط", question: "میدان مغناطیسی اطراف سیم راست با فاصله چه رابطه‌ای دارد؟ (عکس/مستقیم)", correctAnswer: "عکس", answer: "B ∝ 1/r", solution: "عکس" },
+          { id: "f6q3", difficulty: "سخت", question: "خطوط میدان مغناطیسی چه شکلی هستند؟ (بسته/باز)", correctAnswer: "بسته", answer: "خطوط میدان مغناطیسی همیشه بسته‌اند.", solution: "بسته" }
         ]
       },
       "fizik-ch3-lesson-2": {
         id: "fizik-ch3-lesson-2", number: 2,
-        title: "القای الکترومغناطیسی",
-        description: "قانون فارادی و لنز",
+        title: "القای الکترومغناطیسی", description: "قانون فارادی و لنز",
         chapterId: "fizik-chapter-3",
         questions: [
-          { id: "f7q1", difficulty: "آسان",
-            question: "القای الکترومغناطیسی اولین بار توسط چه کسی کشف شد؟",
-            correctAnswer: "فارادی",
-            answer: "مایکل فارادی.",
-            solution: "فارادی" },
-          { id: "f7q2", difficulty: "متوسط",
-            question: "قانون لنز درباره چه چیزی است؟ (جهت/اندازه)",
-            correctAnswer: "جهت",
-            answer: "جهت جریان القایی.",
-            solution: "جهت جریان القایی" },
-          { id: "f7q3", difficulty: "سخت",
-            question: "واحد شار مغناطیسی چیست؟",
-            correctAnswer: "وبر",
-            answer: "واحد شار مغناطیسی.",
-            solution: "وبر (Wb)" }
+          { id: "f7q1", difficulty: "آسان", question: "القای الکترومغناطیسی اولین بار توسط چه کسی کشف شد؟", correctAnswer: "فارادی", answer: "مایکل فارادی.", solution: "فارادی" },
+          { id: "f7q2", difficulty: "متوسط", question: "قانون لنز درباره چه چیزی است؟ (جهت/اندازه)", correctAnswer: "جهت", answer: "جهت جریان القایی.", solution: "جهت" },
+          { id: "f7q3", difficulty: "سخت", question: "واحد شار مغناطیسی چیست؟", correctAnswer: "وبر", answer: "واحد شار.", solution: "وبر (Wb)" }
         ]
       },
       "shimi-ch1-lesson-1": {
         id: "shimi-ch1-lesson-1", number: 1,
-        title: "پیوندهای شیمیایی",
-        description: "انواع پیوند و قدرت آن‌ها",
+        title: "پیوندهای شیمیایی", description: "انواع پیوند و قدرت آن‌ها",
         chapterId: "shimi-chapter-1",
         questions: [
-          { id: "s1q1", difficulty: "آسان",
-            question: "پیوند بین فلز و نافلز چه نوع پیوندی است؟",
-            correctAnswer: "یونی",
-            answer: "انتقال الکترون از فلز به نافلز.",
-            solution: "پیوند یونی" },
-          { id: "s1q2", difficulty: "آسان",
-            question: "پیوند بین دو نافلز چه نوع پیوندی است؟",
-            correctAnswer: "کووالانسی",
-            answer: "اشتراک الکترون.",
-            solution: "پیوند کووالانسی" },
-          { id: "s1q3", difficulty: "متوسط",
-            question: "قوی‌ترین نوع پیوند شیمیایی کدام است؟ (یونی/کووالانسی/فلزی)",
-            correctAnswer: "کووالانسی",
-            answer: "پیوند کووالانسی معمولاً قوی‌ترین است.",
-            solution: "کووالانسی" },
-          { id: "s1q4", difficulty: "سخت",
-            question: "پیوند فلزی بین چه اتم‌هایی برقرار می‌شود؟",
-            correctAnswer: "فلزات",
-            answer: "بین اتم‌های فلزی.",
-            solution: "فلزات" }
+          { id: "s1q1", difficulty: "آسان", question: "پیوند بین فلز و نافلز چه نوع پیوندی است؟", correctAnswer: "یونی", answer: "انتقال الکترون از فلز به نافلز.", solution: "یونی" },
+          { id: "s1q2", difficulty: "آسان", question: "پیوند بین دو نافلز چه نوع پیوندی است؟", correctAnswer: "کووالانسی", answer: "اشتراک الکترون.", solution: "کووالانسی" },
+          { id: "s1q3", difficulty: "متوسط", question: "قوی‌ترین نوع پیوند شیمیایی کدام است؟ (یونی/کووالانسی/فلزی)", correctAnswer: "کووالانسی", answer: "کووالانسی قوی‌ترین است.", solution: "کووالانسی" },
+          { id: "s1q4", difficulty: "سخت", question: "پیوند فلزی بین چه اتم‌هایی برقرار می‌شود؟", correctAnswer: "فلزات", answer: "بین اتم‌های فلزی.", solution: "فلزات" }
         ]
       },
       "shimi-ch1-lesson-2": {
         id: "shimi-ch1-lesson-2", number: 2,
-        title: "ساختار لوویس",
-        description: "رسم ساختار لوویس مولکول‌ها",
+        title: "ساختار لوویس", description: "رسم ساختار لوویس مولکول‌ها",
         chapterId: "shimi-chapter-1",
         questions: [
-          { id: "s2q1", difficulty: "آسان",
-            question: "در ساختار لوویس، هر جفت الکترون مشترک با چه نمادی نشان داده می‌شود؟",
-            correctAnswer: "خط",
-            answer: "جفت الکترون مشترک با خط تیره.",
-            solution: "خط (-)" },
-          { id: "s2q2", difficulty: "متوسط",
-            question: "چند الکترون ظرفیتی در اتم کربن وجود دارد؟",
-            correctAnswer: "4",
-            answer: "گروه ۱۴ جدول تناوبی.",
-            solution: "4 الکترون" },
-          { id: "s2q3", difficulty: "سخت",
-            question: "ساختار لوویس آب (H₂O) چند جفت الکترون ناپیوندی دارد؟",
-            correctAnswer: "2",
-            answer: "اکسیژن دو جفت ناپیوندی دارد.",
-            solution: "2 جفت" }
+          { id: "s2q1", difficulty: "آسان", question: "در ساختار لوویس، هر جفت الکترون مشترک با چه نمادی نشان داده می‌شود؟", correctAnswer: "خط", answer: "جفت الکترون مشترک با خط.", solution: "خط (-)" },
+          { id: "s2q2", difficulty: "متوسط", question: "چند الکترون ظرفیتی در اتم کربن وجود دارد؟", correctAnswer: "4", answer: "گروه ۱۴.", solution: "4 الکترون" },
+          { id: "s2q3", difficulty: "سخت", question: "ساختار لوویس آب (H₂O) چند جفت الکترون ناپیوندی دارد؟", correctAnswer: "2", answer: "اکسیژن دو جفت ناپیوندی دارد.", solution: "2 جفت" }
         ]
       },
       "shimi-ch2-lesson-1": {
         id: "shimi-ch2-lesson-1", number: 1,
-        title: "استوکیومتری",
-        description: "محاسبات استوکیومتری",
+        title: "استوکیومتری", description: "محاسبات استوکیومتری",
         chapterId: "shimi-chapter-2",
         questions: [
-          { id: "s3q1", difficulty: "آسان",
-            question: "عدد آووگادرو چقدر است؟ (به صورت 6.02×10^23)",
-            correctAnswer: "6.02×10^23",
-            answer: "تعداد ذرات در یک مول.",
-            solution: "6.02 × 10²³" },
-          { id: "s3q2", difficulty: "متوسط",
-            question: "جرم مولی آب (H₂O) چقدر است؟ (H=1, O=16)",
-            correctAnswer: "18",
-            answer: "جمع جرم‌های اتمی.",
-            solution: "2(1) + 16 = 18 گرم بر مول" },
-          { id: "s3q3", difficulty: "سخت",
-            question: "چند مول در ۴۴ گرم CO₂ وجود دارد؟ (C=12, O=16)",
-            correctAnswer: "1",
-            answer: "n = m/M",
-            solution: "M(CO₂) = 44 → n = 44/44 = 1 مول" }
+          { id: "s3q1", difficulty: "آسان", question: "عدد آووگادرو چقدر است؟ (6.02×10^23)", correctAnswer: "6.02×10^23", answer: "تعداد ذرات در یک مول.", solution: "6.02 × 10²³" },
+          { id: "s3q2", difficulty: "متوسط", question: "جرم مولی آب (H₂O) چقدر است؟ (H=1, O=16)", correctAnswer: "18", answer: "جمع جرم‌های اتمی.", solution: "18 گرم بر مول" },
+          { id: "s3q3", difficulty: "سخت", question: "چند مول در ۴۴ گرم CO₂ وجود دارد؟ (C=12, O=16)", correctAnswer: "1", answer: "n = m/M", solution: "n = 1 مول" }
         ]
       },
       "shimi-ch2-lesson-2": {
         id: "shimi-ch2-lesson-2", number: 2,
-        title: "تعادل شیمیایی",
-        description: "تعادل و اصل لوشاتلیه",
+        title: "تعادل شیمیایی", description: "تعادل و اصل لوشاتلیه",
         chapterId: "shimi-chapter-2",
         questions: [
-          { id: "s4q1", difficulty: "آسان",
-            question: "در تعادل شیمیایی، سرعت واکنش رفت و برگشت چگونه است؟ (برابر/متفاوت)",
-            correctAnswer: "برابر",
-            answer: "ویژگی تعادل.",
-            solution: "برابر" },
-          { id: "s4q2", difficulty: "متوسط",
-            question: "اصل لوشاتلیه درباره چه چیزی است؟ (تعادل/سرعت)",
-            correctAnswer: "تعادل",
-            answer: "پاسخ تعادل به تغییر شرایط.",
-            solution: "تعادل شیمیایی" },
-          { id: "s4q3", difficulty: "سخت",
-            question: "افزایش دما در یک واکنش گرماده، تعادل را به کدام سمت می‌برد؟ (چپ/راست)",
-            correctAnswer: "چپ",
-            answer: "طبق اصل لوشاتلیه.",
-            solution: "به سمت واکنش برگشت (چپ)" }
+          { id: "s4q1", difficulty: "آسان", question: "در تعادل شیمیایی، سرعت واکنش رفت و برگشت چگونه است؟ (برابر/متفاوت)", correctAnswer: "برابر", answer: "ویژگی تعادل.", solution: "برابر" },
+          { id: "s4q2", difficulty: "متوسط", question: "اصل لوشاتلیه درباره چه چیزی است؟ (تعادل/سرعت)", correctAnswer: "تعادل", answer: "پاسخ تعادل به تغییر شرایط.", solution: "تعادل" },
+          { id: "s4q3", difficulty: "سخت", question: "افزایش دما در یک واکنش گرماده، تعادل را به کدام سمت می‌برد؟ (چپ/راست)", correctAnswer: "چپ", answer: "طبق اصل لوشاتلیه.", solution: "چپ" }
         ]
       },
       "shimi-ch3-lesson-1": {
         id: "shimi-ch3-lesson-1", number: 1,
-        title: "اسیدها و بازها",
-        description: "تعریف اسید و باز",
+        title: "اسیدها و بازها", description: "تعریف اسید و باز",
         chapterId: "shimi-chapter-3",
         questions: [
-          { id: "s5q1", difficulty: "آسان",
-            question: "طبق تعریف آرنیوس، اسید چیست؟ (تولید H+/تولید OH-)",
-            correctAnswer: "تولید H+",
-            answer: "اسید در آب یون هیدروژن تولید می‌کند.",
-            solution: "تولید H⁺" },
-          { id: "s5q2", difficulty: "متوسط",
-            question: "طبق تعریف برونستد، اسید چیست؟ (دهنده پروتون/گیرنده پروتون)",
-            correctAnswer: "دهنده پروتون",
-            answer: "اسید پروتون می‌دهد.",
-            solution: "دهنده پروتون (H⁺)" },
-          { id: "s5q3", difficulty: "سخت",
-            question: "pH یک محلول خنثی چقدر است؟",
-            correctAnswer: "7",
-            answer: "pH آب خالص.",
-            solution: "pH = 7" }
+          { id: "s5q1", difficulty: "آسان", question: "طبق تعریف آرنیوس، اسید چیست؟ (تولید H+/تولید OH-)", correctAnswer: "تولید H+", answer: "اسید یون هیدروژن تولید می‌کند.", solution: "تولید H⁺" },
+          { id: "s5q2", difficulty: "متوسط", question: "طبق تعریف برونستد، اسید چیست؟ (دهنده پروتون/گیرنده پروتون)", correctAnswer: "دهنده پروتون", answer: "اسید پروتون می‌دهد.", solution: "دهنده پروتون" },
+          { id: "s5q3", difficulty: "سخت", question: "pH یک محلول خنثی چقدر است؟", correctAnswer: "7", answer: "pH آب خالص.", solution: "pH = 7" }
         ]
       },
       "shimi-ch3-lesson-2": {
         id: "shimi-ch3-lesson-2", number: 2,
-        title: "pH و محاسبات آن",
-        description: "محاسبه pH محلول‌ها",
+        title: "pH و محاسبات آن", description: "محاسبه pH محلول‌ها",
         chapterId: "shimi-chapter-3",
         questions: [
-          { id: "s6q1", difficulty: "آسان",
-            question: "pH محلول اسیدی چه محدوده‌ای دارد؟ (کمتر از 7/بیشتر از 7)",
-            correctAnswer: "کمتر از 7",
-            answer: "اسید pH کمتر از ۷ دارد.",
-            solution: "کمتر از ۷" },
-          { id: "s6q2", difficulty: "متوسط",
-            question: "اگر [H⁺] = 10^-3 باشد، pH چقدر است؟",
-            correctAnswer: "3",
-            answer: "pH = -log[H⁺]",
-            solution: "pH = -log(10⁻³) = 3" },
-          { id: "s6q3", difficulty: "سخت",
-            question: "اگر pH = 11 باشد، محلول چه خاصیتی دارد؟ (اسیدی/بازی)",
-            correctAnswer: "بازی",
-            answer: "pH بیشتر از ۷ = بازی.",
-            solution: "بازی" }
+          { id: "s6q1", difficulty: "آسان", question: "pH محلول اسیدی چه محدوده‌ای دارد؟ (کمتر از 7/بیشتر از 7)", correctAnswer: "کمتر از 7", answer: "اسید pH کمتر از ۷ دارد.", solution: "کمتر از ۷" },
+          { id: "s6q2", difficulty: "متوسط", question: "اگر [H⁺] = 10^-3 باشد، pH چقدر است؟", correctAnswer: "3", answer: "pH = -log[H⁺]", solution: "pH = 3" },
+          { id: "s6q3", difficulty: "سخت", question: "اگر pH = 11 باشد، محلول چه خاصیتی دارد؟ (اسیدی/بازی)", correctAnswer: "بازی", answer: "pH بیشتر از ۷ = بازی.", solution: "بازی" }
         ]
       }
     };
