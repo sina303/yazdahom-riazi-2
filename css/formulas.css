@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* THEMES */
 :root,
 html[data-theme="green"] {
   --bg: #080a09; --surface: #0e1210; --card: #141916;
@@ -36,6 +35,12 @@ html[data-theme="light"] {
   --text: #2a2620; --muted: #6b6558; --particle-color: 58, 125, 68;
 }
 
+html[data-theme="persian"] {
+  --bg: #1a1208; --surface: #241a0e; --card: #2e2010;
+  --border: #4a361c; --green: #d4af37; --green-light: #f0d274;
+  --text: #f5ecd6; --muted: #b8a07a; --particle-color: 212, 175, 55;
+}
+
 html, body {
   font-family: Tahoma, Arial, sans-serif;
   background: var(--bg);
@@ -54,7 +59,13 @@ body {
   position: relative;
 }
 
-/* MATH BG */
+html[data-theme="persian"] body {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(212, 175, 55, 0.10), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(139, 111, 71, 0.08), transparent 45%),
+    var(--bg);
+}
+
 .math-bg {
   position: fixed;
   inset: 0;
@@ -86,16 +97,15 @@ body {
   background-image:
     radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.5), transparent),
     radial-gradient(1px 1px at 45% 65%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 75% 15%, rgba(255,255,255,0.45), transparent),
     radial-gradient(2px 2px at 30% 85%, rgba(var(--particle-color), 0.4), transparent);
   animation: twinkle 6s ease-in-out infinite alternate;
 }
 
-html[data-theme="light"] .math-bg::before {
+html[data-theme="persian"] .math-bg::before {
   background-image:
-    radial-gradient(1px 1px at 15% 25%, rgba(0,0,0,0.15), transparent),
-    radial-gradient(1px 1px at 45% 65%, rgba(0,0,0,0.1), transparent),
-    radial-gradient(2px 2px at 30% 85%, rgba(var(--particle-color), 0.3), transparent);
+    radial-gradient(1px 1px at 15% 25%, rgba(240, 210, 116, 0.6), transparent),
+    radial-gradient(1px 1px at 45% 65%, rgba(212, 175, 55, 0.5), transparent),
+    radial-gradient(2px 2px at 30% 85%, rgba(212, 175, 55, 0.5), transparent);
 }
 
 @keyframes twinkle {
@@ -103,13 +113,11 @@ html[data-theme="light"] .math-bg::before {
   100% { opacity: 1; }
 }
 
-.formulas-header,
-main {
+.formulas-header, main {
   position: relative;
   z-index: 1;
 }
 
-/* HEADER */
 .formulas-header {
   height: 72px;
   padding: 0 6%;
@@ -125,10 +133,7 @@ main {
   transition: background 0.4s;
 }
 
-html[data-theme="purple"] .formulas-header { background: rgba(10, 8, 18, 0.7); }
-html[data-theme="rose"] .formulas-header { background: rgba(18, 8, 14, 0.7); }
-html[data-theme="sepia"] .formulas-header { background: rgba(26, 21, 16, 0.7); }
-html[data-theme="light"] .formulas-header { background: rgba(245, 241, 232, 0.85); }
+html[data-theme="persian"] .formulas-header { background: rgba(26, 18, 8, 0.85); }
 
 .logo {
   color: var(--green);
@@ -137,10 +142,11 @@ html[data-theme="light"] .formulas-header { background: rgba(245, 241, 232, 0.85
   letter-spacing: 2px;
 }
 
-.formulas-header nav {
-  display: flex;
-  gap: 20px;
+html[data-theme="persian"] .logo {
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
 }
+
+.formulas-header nav { display: flex; gap: 20px; }
 
 .formulas-header nav a {
   color: var(--muted);
@@ -149,9 +155,7 @@ html[data-theme="light"] .formulas-header { background: rgba(245, 241, 232, 0.85
   transition: color 0.2s;
 }
 
-.formulas-header nav a:hover {
-  color: var(--green);
-}
+.formulas-header nav a:hover { color: var(--green); }
 
 .formulas-header .user {
   color: var(--muted);
@@ -159,18 +163,14 @@ html[data-theme="light"] .formulas-header { background: rgba(245, 241, 232, 0.85
   text-decoration: none;
 }
 
-.formulas-header .user:hover {
-  color: var(--green);
-}
+.formulas-header .user:hover { color: var(--green); }
 
-/* MAIN */
 main {
   width: min(900px, 92%);
   margin: auto;
   padding-bottom: 80px;
 }
 
-/* BREADCRUMB */
 .breadcrumb {
   padding: 25px 0;
   display: flex;
@@ -185,11 +185,8 @@ main {
   text-decoration: none;
 }
 
-.breadcrumb a:hover {
-  color: var(--green);
-}
+.breadcrumb a:hover { color: var(--green); }
 
-/* HERO */
 .formulas-hero {
   padding: 35px;
   background:
@@ -199,6 +196,11 @@ main {
   border-radius: 20px;
   margin-bottom: 40px;
   text-align: center;
+}
+
+html[data-theme="persian"] .formulas-hero {
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 60px rgba(212, 175, 55, 0.05);
 }
 
 .formulas-hero span {
@@ -219,7 +221,6 @@ main {
   line-height: 2;
 }
 
-/* FLASHCARD */
 .flashcard-section {
   display: flex;
   flex-direction: column;
@@ -243,9 +244,7 @@ main {
   transform-style: preserve-3d;
 }
 
-.flashcard-inner.flipped {
-  transform: rotateY(180deg);
-}
+.flashcard-inner.flipped { transform: rotateY(180deg); }
 
 .flashcard-face {
   position: absolute;
@@ -261,6 +260,10 @@ main {
   text-align: center;
 }
 
+html[data-theme="persian"] .flashcard-face {
+  border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
 .flashcard-front {
   background:
     radial-gradient(circle at 50% 50%, rgba(var(--particle-color), 0.15), transparent 70%),
@@ -273,6 +276,10 @@ main {
     var(--surface);
   transform: rotateY(180deg);
   border-color: var(--green);
+}
+
+html[data-theme="persian"] .flashcard-back {
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
 }
 
 .card-label {
@@ -308,7 +315,10 @@ main {
   padding: 0 10px;
 }
 
-/* CONTROLS */
+html[data-theme="persian"] .formula {
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
 .flashcard-controls {
   display: flex;
   align-items: center;
@@ -338,7 +348,8 @@ main {
 html[data-theme="green"] .nav-button,
 html[data-theme="purple"] .nav-button,
 html[data-theme="rose"] .nav-button,
-html[data-theme="sepia"] .nav-button { color: #071008; }
+html[data-theme="sepia"] .nav-button,
+html[data-theme="persian"] .nav-button { color: #1a1208; }
 
 .nav-button.secondary {
   background: transparent;
@@ -365,16 +376,12 @@ html[data-theme="sepia"] .nav-button { color: #071008; }
   border-color: var(--green);
 }
 
-/* MOBILE */
 @media (max-width: 600px) {
   .formulas-header nav { display: none; }
-
   .formulas-hero h1 { font-size: 26px; }
-
   .flashcard { height: 280px; }
   .flashcard-front h2 { font-size: 20px; }
   .formula { font-size: 18px; }
-
   .flashcard-controls {
     flex-wrap: wrap;
     justify-content: center;
