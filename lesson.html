@@ -1,633 +1,163 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>درس | AXIS</title>
-  <link rel="stylesheet" href="css/lesson.css" />
-  <script src="js/theme.js"></script>
-</head>
-<body>
-
-  <div class="math-bg" id="mathBg"></div>
-
-  <div class="focus-overlay" id="focusOverlay">
-    <button class="focus-exit" onclick="exitFocusMode()">✕ خروج از حالت مطالعه</button>
-    <div class="focus-timer-display" id="focusTimer">00:00</div>
-  </div>
-
-  <header class="lesson-header">
-    <div class="logo">AXIS</div>
-    <nav>
-      <a href="index.html">خانه</a>
-      <a href="subject.html">حسابان</a>
-      <a href="formulas.html">فرمول‌ها</a>
-      <a href="gpa.html">معدل</a>
-      <a href="about.html">درباره</a>
-    </nav>
-    <a href="profile.html" class="user">پروفایل</a>
-  </header>
-
-  <main>
-
-    <div class="breadcrumb">
-      <a href="subject.html">حسابان</a>
-      <span>←</span>
-      <a href="#" id="backToChapter">فصل</a>
-      <span>←</span>
-      <strong id="breadcrumbLesson">درس</strong>
-    </div>
-
-    <section class="lesson-hero">
-      <span id="lessonNumber">درس</span>
-      <h1 id="lessonTitle">در حال بارگذاری...</h1>
-      <p id="lessonDescription">محتوای درس در حال بارگذاری است.</p>
-      <div class="lesson-actions">
-        <button class="check-button" onclick="startPractice()">حالت تمرین</button>
-        <button class="solution-button" onclick="startExam()">حالت آزمون ⏱</button>
-        <button class="solution-button" onclick="enterFocusMode()">حالت مطالعه 🎯</button>
-      </div>
-    </section>
-
-    <section class="lesson-content">
-      <div class="lesson-info">
-        <span>راهنمای درس</span>
-        <h2>توضیحات</h2>
-        <p>در این بخش می‌توانی سوالات درس را یکی‌یکی پاسخ دهی و راه‌حل کامل را ببینی. هر پاسخ درست ۱۰ XP به تو می‌دهد.</p>
-      </div>
-
-      <div class="questions-header">
-        <div>
-          <span id="modeLabel">تمرین</span>
-          <h2 id="modeTitle">سوالات درس</h2>
-        </div>
-        <div id="questionCount">0 سوال</div>
-      </div>
-
-      <div id="examTimer" class="exam-timer hidden">
-        <span class="timer-icon">⏱</span>
-        <strong id="timerText">00:00</strong>
-      </div>
-
-      <div class="questions-list" id="questionsList">
-        <div class="loading">در حال بارگذاری...</div>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    function createMathBackground() {
-      const bg = document.getElementById("mathBg");
-      if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
-      for (let i = 0; i < 30; i++) {
-        const span = document.createElement("span");
-        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        span.style.fontSize = (14 + Math.random() * 34) + "px";
-        span.style.left = (Math.random() * 100) + "%";
-        span.style.animationDuration = (12 + Math.random() * 18) + "s";
-        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
-        bg.appendChild(span);
-      }
-    }
-
-    const LESSONS_DATA = {
-      "hesaban-ch5-lesson-1": {
-        id: "hesaban-ch5-lesson-1",
-        number: 1,
-        title: "مفهوم حد و فرایندهای حدی",
-        description: "مفهوم حد و شهود آن",
-        chapterId: "hesaban-chapter-5",
-        questions: [
-          { id: "e1q1", difficulty: "آسان",
-            question: "حاصل lim(x→2) (3x + 1) چقدر است؟",
-            correctAnswer: "7",
-            answer: "مقدار x = 2 را در ضابطه جایگزین می‌کنیم.",
-            solution: "lim(x→2) (3x+1) = 3(2) + 1 = 7" },
-          { id: "e1q2", difficulty: "آسان",
-            question: "حاصل lim(x→1) (x² + 2x) چقدر است؟",
-            correctAnswer: "3",
-            answer: "مقدار x = 1 را در ضابطه جایگزین می‌کنیم.",
-            solution: "lim(x→1) (x²+2x) = 1 + 2 = 3" },
-          { id: "e1q3", difficulty: "متوسط",
-            question: "حاصل lim(x→3) (x²-9)/(x-3) چقدر است؟",
-            correctAnswer: "6",
-            answer: "صورت را تجزیه می‌کنیم و ساده می‌کنیم.",
-            solution: "x²-9 = (x-3)(x+3) → lim(x→3) (x+3) = 6" },
-          { id: "e1q4", difficulty: "متوسط",
-            question: "حاصل lim(x→0) (sin x)/x چقدر است؟",
-            correctAnswer: "1",
-            answer: "این یک حد معروف است.",
-            solution: "lim(x→0) (sin x)/x = 1" },
-          { id: "e1q5", difficulty: "سخت",
-            question: "حاصل lim(x→2) (x²-4)/(x-2) چقدر است؟",
-            correctAnswer: "4",
-            answer: "صورت را تجزیه می‌کنیم.",
-            solution: "x²-4 = (x-2)(x+2) → lim(x→2) (x+2) = 4" }
-        ]
-      },
-      "hesaban-ch5-lesson-2": {
-        id: "hesaban-ch5-lesson-2",
-        number: 2,
-        title: "حدهای یک‌طرفه و حد در بی‌نهایت",
-        description: "حد چپ، حد راست، حد در بی‌نهایت",
-        chapterId: "hesaban-chapter-5",
-        questions: [
-          { id: "e2q1", difficulty: "آسان",
-            question: "حاصل lim(x→+∞) (1/x) چقدر است؟",
-            correctAnswer: "0",
-            answer: "وقتی x به بی‌نهایت می‌رود، 1/x به صفر میل می‌کند.",
-            solution: "lim(x→+∞) (1/x) = 0" },
-          { id: "e2q2", difficulty: "آسان",
-            question: "حاصل lim(x→+∞) (3x+1)/(x) چقدر است؟",
-            correctAnswer: "3",
-            answer: "صورت و مخرج را بر x تقسیم می‌کنیم.",
-            solution: "lim(x→+∞) (3x+1)/x = lim(x→+∞) (3 + 1/x) = 3" },
-          { id: "e2q3", difficulty: "متوسط",
-            question: "حاصل lim(x→+∞) (2x²+3x)/(x²+1) چقدر است؟",
-            correctAnswer: "2",
-            answer: "صورت و مخرج را بر x² تقسیم می‌کنیم.",
-            solution: "lim(x→+∞) (2 + 3/x)/(1 + 1/x²) = 2/1 = 2" },
-          { id: "e2q4", difficulty: "متوسط",
-            question: "حاصل lim(x→0⁺) (1/x) چقدر است؟",
-            correctAnswer: "+∞",
-            answer: "وقتی x از راست به صفر نزدیک شود.",
-            solution: "lim(x→0⁺) (1/x) = +∞" },
-          { id: "e2q5", difficulty: "سخت",
-            question: "حاصل lim(x→+∞) (x³+1)/(2x³+x) چقدر است؟",
-            correctAnswer: "1/2",
-            answer: "صورت و مخرج را بر x³ تقسیم می‌کنیم.",
-            solution: "lim(x→+∞) (1 + 1/x³)/(2 + 1/x²) = 1/2" }
-        ]
-      },
-      "hesaban-ch5-lesson-3": {
-        id: "hesaban-ch5-lesson-3",
-        number: 3,
-        title: "قضایای حد",
-        description: "قضایای حد و کاربردهایشان",
-        chapterId: "hesaban-chapter-5",
-        questions: [
-          { id: "e3q1", difficulty: "آسان",
-            question: "اگر lim f(x) = 3 و lim g(x) = 5 باشد، حاصل lim (f+g)(x) چقدر است؟",
-            correctAnswer: "8",
-            answer: "حد مجموع = مجموع حدود.",
-            solution: "lim(f+g) = lim f + lim g = 3 + 5 = 8" },
-          { id: "e3q2", difficulty: "آسان",
-            question: "اگر lim f(x) = 4 و lim g(x) = 2 باشد، حاصل lim (f×g)(x) چقدر است؟",
-            correctAnswer: "8",
-            answer: "حد حاصل‌ضرب = حاصل‌ضرب حدود.",
-            solution: "lim(f×g) = lim f × lim g = 4 × 2 = 8" },
-          { id: "e3q3", difficulty: "متوسط",
-            question: "اگر lim f(x) = 6 و lim g(x) = 3 باشد، حاصل lim (f/g)(x) چقدر است؟",
-            correctAnswer: "2",
-            answer: "حد تقسیم = تقسیم حدود (اگر مخرج صفر نباشد).",
-            solution: "lim(f/g) = 6/3 = 2" },
-          { id: "e3q4", difficulty: "متوسط",
-            question: "حاصل lim(x→2) (x²+3x-1) چقدر است؟",
-            correctAnswer: "9",
-            answer: "مقدار x=2 را جایگزین می‌کنیم.",
-            solution: "= 4 + 6 - 1 = 9" },
-          { id: "e3q5", difficulty: "سخت",
-            question: "حاصل lim(x→1) (x³-1)/(x-1) چقدر است؟",
-            correctAnswer: "3",
-            answer: "از اتحاد استفاده می‌کنیم.",
-            solution: "x³-1 = (x-1)(x²+x+1) → lim(x→1)(x²+x+1) = 3" }
-        ]
-      },
-      "hesaban-ch5-lesson-4": {
-        id: "hesaban-ch5-lesson-4",
-        number: 4,
-        title: "محاسبه‌ی حد و رفع ابهام",
-        description: "روش‌های محاسبه‌ی حد و رفع ابهام",
-        chapterId: "hesaban-chapter-5",
-        questions: [
-          { id: "e4q1", difficulty: "آسان",
-            question: "حاصل lim(x→0) (sin 3x)/x چقدر است؟",
-            correctAnswer: "3",
-            answer: "از حد معروف (sin x)/x استفاده می‌کنیم.",
-            solution: "lim(x→0) (sin 3x)/x = 3 × lim(3x→0) (sin 3x)/(3x) = 3 × 1 = 3" },
-          { id: "e4q2", difficulty: "متوسط",
-            question: "حاصل lim(x→0) (sin 5x)/(2x) چقدر است؟",
-            correctAnswer: "5/2",
-            answer: "از حد معروف استفاده می‌کنیم.",
-            solution: "= (5/2) × lim (sin 5x)/(5x) = 5/2" },
-          { id: "e4q3", difficulty: "متوسط",
-            question: "حاصل lim(x→4) (√x - 2)/(x-4) چقدر است؟",
-            correctAnswer: "1/4",
-            answer: "از اتحاد مزدوج استفاده می‌کنیم.",
-            solution: "صورت را در (√x+2) ضرب و تقسیم می‌کنیم → lim 1/(√x+2) = 1/4" },
-          { id: "e4q4", difficulty: "سخت",
-            question: "حاصل lim(x→0) (1-cos x)/x² چقدر است؟",
-            correctAnswer: "1/2",
-            answer: "از اتحاد 1-cos x = 2sin²(x/2) استفاده می‌کنیم.",
-            solution: "lim (2sin²(x/2))/x² = 2 × (1/4) = 1/2" },
-          { id: "e4q5", difficulty: "سخت",
-            question: "حاصل lim(x→+∞) (√(x²+x) - x) چقدر است؟",
-            correctAnswer: "1/2",
-            answer: "از اتحاد مزدوج استفاده می‌کنیم.",
-            solution: "= lim x/(√(x²+x)+x) = lim 1/(√(1+1/x)+1) = 1/2" }
-        ]
-      },
-      "hesaban-ch5-lesson-5": {
-        id: "hesaban-ch5-lesson-5",
-        number: 5,
-        title: "پیوستگی",
-        description: "تابع پیوسته و نقاط ناپیوستگی",
-        chapterId: "hesaban-chapter-5",
-        questions: [
-          { id: "e5q1", difficulty: "آسان",
-            question: "تابع f(x) = 2x + 1 در چه نقاطی پیوسته است؟ (به صورت: همه‌جا/هیچ‌جا)",
-            correctAnswer: "همه‌جا",
-            answer: "توابع چندجمله‌ای در همه‌جا پیوسته‌اند.",
-            solution: "توابع چندجمله‌ای در همه اعداد حقیقی پیوسته‌اند." },
-          { id: "e5q2", difficulty: "آسان",
-            question: "تابع f(x) = 1/x در چه نقطه‌ای ناپیوسته است؟",
-            correctAnswer: "0",
-            answer: "مخرج نباید صفر باشد.",
-            solution: "در x=0 تابع تعریف نشده، پس ناپیوسته است." },
-          { id: "e5q3", difficulty: "متوسط",
-            question: "تابع f(x) = (x²-4)/(x-2) در چه نقطه‌ای ناپیوسته است؟",
-            correctAnswer: "2",
-            answer: "مخرج صفر می‌شود.",
-            solution: "در x=2 تابع تعریف نشده، پس ناپیوسته است." },
-          { id: "e5q4", difficulty: "متوسط",
-            question: "تابع f(x) = √x در چه بازه‌ای پیوسته است؟ (به صورت بازه)",
-            correctAnswer: "[0, +∞)",
-            answer: "دامنه‌ی تابع را در نظر بگیرید.",
-            solution: "دامنه = [0, +∞) و تابع در آن پیوسته است." },
-          { id: "e5q5", difficulty: "سخت",
-            question: "تابع f(x) = [x] (جزء صحیح) در چه نقاطی ناپیوسته است؟ (به صورت: اعداد صحیح/اعشاری)",
-            correctAnswer: "اعداد صحیح",
-            answer: "نمودار پله‌ای جزء صحیح را در نظر بگیرید.",
-            solution: "تابع جزء صحیح در همه اعداد صحیح ناپیوسته است." }
-        ]
-      }
-    };
-
-    let currentLesson = null;
-    let currentQuestionIndex = 0;
-    let sessionScore = 0;
-    let mode = "practice";
-    let examQuestions = [];
-    let examAnswers = [];
-    let timerInterval = null;
-    let timerSeconds = 0;
-    let focusInterval = null;
-    let focusSeconds = 0;
-
-    const USER_KEY = "y11_math_user";
-
-    function getUser() {
-      const raw = localStorage.getItem(USER_KEY);
-      if (!raw) return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null };
-      try {
-        const u = JSON.parse(raw);
-        return {
-          username: u.username || "Sina",
-          xp: u.xp || 0, solved: u.solved || 0,
-          correct: u.correct || 0, wrong: u.wrong || 0,
-          solvedQuestions: u.solvedQuestions || [],
-          mistakes: u.mistakes || [],
-          dailyActivity: u.dailyActivity || {},
-          totalMinutes: u.totalMinutes || 0,
-          streak: u.streak || 0,
-          lastVisit: u.lastVisit || null
-        };
-      } catch (e) {
-        return { username:"Sina", xp:0, solved:0, correct:0, wrong:0, solvedQuestions:[], mistakes:[], dailyActivity:{}, totalMinutes:0, streak:0, lastVisit:null };
-      }
-    }
-
-    function saveUser(user) {
-      localStorage.setItem(USER_KEY, JSON.stringify(user));
-    }
-
-    function todayKey() {
-      return new Date().toISOString().split("T")[0];
-    }
-
-    function registerAnswer(questionId, isCorrect, questionData) {
-      const user = getUser();
-      const today = todayKey();
-      const alreadySolved = user.solvedQuestions.includes(questionId);
-
-      user.dailyActivity[today] = (user.dailyActivity[today] || 0) + 1;
-
-      if (!alreadySolved) {
-        user.solvedQuestions.push(questionId);
-        user.solved += 1;
-        if (isCorrect) { user.correct += 1; user.xp += 10; }
-        else { user.wrong += 1; }
-      }
-
-      if (!isCorrect && questionData) {
-        const exists = user.mistakes.some((m) => m.id === questionId);
-        if (!exists) {
-          user.mistakes.push({
-            id: questionId,
-            question: questionData.question,
-            correctAnswer: questionData.correctAnswer,
-            solution: questionData.solution
-          });
+{
+  "subjects": [
+    {
+      "id": "hesaban",
+      "name": "حسابان",
+      "icon": "∫",
+      "description": "حساب دیفرانسیل و انتگرال",
+      "chapters": [
+        {
+          "id": "hesaban-chapter-1",
+          "number": 1,
+          "title": "جبر و معادله",
+          "description": "دنباله‌ها، معادلات، قدر مطلق، هندسه تحلیلی",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/",
+          "lessons": [
+            { "id": "hesaban-ch1-lesson-1", "number": 1, "title": "مجموع جملات دنباله‌های حسابی و هندسی", "description": "دنباله‌های حسابی و هندسی و فرمول مجموع", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-2", "number": 2, "title": "معادلات درجه دوم", "description": "حل معادلات درجه دوم و روابط ریشه‌ها", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-3", "number": 3, "title": "معادلات گویا و رادیکالی", "description": "حل معادلات کسری و رادیکالی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-4", "number": 4, "title": "قدر مطلق و ویژگی‌های آن", "description": "قدر مطلق و معادلات قدر مطلقی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" },
+            { "id": "hesaban-ch1-lesson-5", "number": 5, "title": "آشنایی با هندسه تحلیلی", "description": "فاصله دو نقطه، معادله خط، فاصله نقطه از خط", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/1/" }
+          ]
+        },
+        {
+          "id": "hesaban-chapter-2",
+          "number": 2,
+          "title": "تابع",
+          "description": "تابع، انواع توابع، وارون، عمل جبری",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/",
+          "lessons": [
+            { "id": "hesaban-ch2-lesson-1", "number": 1, "title": "آشنایی بیشتر با تابع", "description": "مفهوم تابع، دامنه و برد", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" },
+            { "id": "hesaban-ch2-lesson-2", "number": 2, "title": "انواع توابع", "description": "توابع چندجمله‌ای، گویا، رادیکالی، جزء صحیح", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" },
+            { "id": "hesaban-ch2-lesson-3", "number": 3, "title": "توابع وارون", "description": "تابع وارون و روش پیدا کردن آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" },
+            { "id": "hesaban-ch2-lesson-4", "number": 4, "title": "عمل جبری روی توابع", "description": "جمع، تفریق، ضرب، تقسیم و ترکیب توابع", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/2/" }
+          ]
+        },
+        {
+          "id": "hesaban-chapter-3",
+          "number": 3,
+          "title": "توابع نمایی و لگاریتمی",
+          "description": "تابع نمایی، لگاریتم، معادلات",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/",
+          "lessons": [
+            { "id": "hesaban-ch3-lesson-1", "number": 1, "title": "تابع نمایی", "description": "تابع نمایی و ویژگی‌های آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/" },
+            { "id": "hesaban-ch3-lesson-2", "number": 2, "title": "تابع لگاریتمی و ویژگی‌های آن", "description": "لگاریتم و خواص آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/" },
+            { "id": "hesaban-ch3-lesson-3", "number": 3, "title": "معادلات و نامعادله‌های لگاریتمی", "description": "حل معادلات لگاریتمی و نامعادله‌ها", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/3/" }
+          ]
+        },
+        {
+          "id": "hesaban-chapter-4",
+          "number": 4,
+          "title": "مثلثات",
+          "description": "رادیان، توابع مثلثاتی، روابط",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/",
+          "lessons": [
+            { "id": "hesaban-ch4-lesson-1", "number": 1, "title": "رادیان", "description": "اندازه‌گیری زاویه به رادیان", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" },
+            { "id": "hesaban-ch4-lesson-2", "number": 2, "title": "نسبت‌های مثلثاتی برخی زوایا", "description": "نسبت‌های مثلثاتی زوایای خاص", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" },
+            { "id": "hesaban-ch4-lesson-3", "number": 3, "title": "توابع مثلثاتی", "description": "توابع سینوس، کسینوس، تانژانت", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" },
+            { "id": "hesaban-ch4-lesson-4", "number": 4, "title": "روابط مجموع و تفاضل زوایا", "description": "اتحادهای مثلثاتی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/4/" }
+          ]
+        },
+        {
+          "id": "hesaban-chapter-5",
+          "number": 5,
+          "title": "حد و پیوستگی",
+          "description": "مفهوم حد، محاسبه، پیوستگی",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/",
+          "lessons": [
+            { "id": "hesaban-ch5-lesson-1", "number": 1, "title": "مفهوم حد و فرایندهای حدی", "description": "مفهوم حد و شهود آن", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-2", "number": 2, "title": "حدهای یک‌طرفه و حد در بی‌نهایت", "description": "حد چپ، حد راست، حد در بی‌نهایت", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-3", "number": 3, "title": "قضایای حد", "description": "قضایای حد و کاربردهایشان", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-4", "number": 4, "title": "محاسبه‌ی حد و رفع ابهام", "description": "روش‌های محاسبه‌ی حد و رفع ابهام", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" },
+            { "id": "hesaban-ch5-lesson-5", "number": 5, "title": "پیوستگی", "description": "تابع پیوسته و نقاط ناپیوستگی", "solutionUrl": "https://paadars.com/class-11/hesaban11/exercises/5/" }
+          ]
         }
-      }
-
-      saveUser(user);
-      return user;
+      ]
+    },
+    {
+      "id": "handese",
+      "name": "هندسه",
+      "icon": "△",
+      "description": "هندسه ۲ — دایره، تبدیل‌ها، تشابه",
+      "chapters": [
+        {
+          "id": "handese-chapter-1",
+          "number": 1,
+          "title": "دایره",
+          "description": "زاویه‌ها، وترها، مماس‌ها",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/",
+          "lessons": [
+            { "id": "handese-ch1-lesson-1", "number": 1, "title": "زاویه‌های مرکزی و محاطی", "description": "رابطه بین زاویه مرکزی و محاطی", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" },
+            { "id": "handese-ch1-lesson-2", "number": 2, "title": "وترها و قوس‌ها", "description": "روابط وترها و قوس‌های دایره", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" },
+            { "id": "handese-ch1-lesson-3", "number": 3, "title": "مماس‌ها و خطوط مماس", "description": "خط مماس بر دایره و ویژگی‌های آن", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" },
+            { "id": "handese-ch1-lesson-4", "number": 4, "title": "زاویه‌های ظلی و خارجی", "description": "زاویه‌های بین وتر و مماس", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/1/" }
+          ]
+        },
+        {
+          "id": "handese-chapter-2",
+          "number": 2,
+          "title": "تبدیل‌های هندسی",
+          "description": "انتقال، تجانس، تشابه",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/",
+          "lessons": [
+            { "id": "handese-ch2-lesson-1", "number": 1, "title": "انتقال", "description": "تبدیل انتقال و ویژگی‌های آن", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/" },
+            { "id": "handese-ch2-lesson-2", "number": 2, "title": "تجانس", "description": "تبدیل تجانس و مرکز تجانس", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/" },
+            { "id": "handese-ch2-lesson-3", "number": 3, "title": "تشابه", "description": "تبدیل تشابه و کاربردهای آن", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/2/" }
+          ]
+        },
+        {
+          "id": "handese-chapter-3",
+          "number": 3,
+          "title": "مساحت و حجم",
+          "description": "مساحت و حجم اجسام",
+          "progress": 0,
+          "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/3/",
+          "lessons": [
+            { "id": "handese-ch3-lesson-1", "number": 1, "title": "مساحت جانبی و کل", "description": "مساحت سطوح جانبی و کل اجسام", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/3/" },
+            { "id": "handese-ch3-lesson-2", "number": 2, "title": "حجم اجسام", "description": "حجم منشور، هرم، استوانه، مخروط و کره", "solutionUrl": "https://paadars.com/class-11/hendese11/exercises/3/" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gosite",
+      "name": "گسسته",
+      "icon": "∞",
+      "description": "ریاضیات گسسته — گراف، ترکیبات",
+      "chapters": [
+        { "id": "gosite-chapter-1", "number": 1, "title": "آشنایی با نظریه گراف", "description": "گراف، درجه، مسیر، دور", "progress": 0, "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/1/", "lessons": [] },
+        { "id": "gosite-chapter-2", "number": 2, "title": "احتمال", "description": "احتمال و ترکیبات", "progress": 0, "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/2/", "lessons": [] },
+        { "id": "gosite-chapter-3", "number": 3, "title": "ترکیبیات", "description": "اصل ضرب، جایگشت، ترکیب", "progress": 0, "solutionUrl": "https://paadars.com/class-11/gosite11/exercises/3/", "lessons": [] }
+      ]
+    },
+    {
+      "id": "fizik",
+      "name": "فیزیک",
+      "icon": "Φ",
+      "description": "فیزیک ۲ — الکتریسیته، مغناطیس",
+      "chapters": [
+        { "id": "fizik-chapter-1", "number": 1, "title": "الکتریسیته ساکن", "description": "بار الکتریکی، میدان، پتانسیل", "progress": 0, "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/", "lessons": [] },
+        { "id": "fizik-chapter-2", "number": 2, "title": "جریان الکتریکی", "description": "جریان، مقاومت، مدار", "progress": 0, "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/", "lessons": [] },
+        { "id": "fizik-chapter-3", "number": 3, "title": "مغناطیس", "description": "میدان مغناطیسی و القا", "progress": 0, "solutionUrl": "https://paadars.com/class-11/physic11/samples/finaltwo/", "lessons": [] }
+      ]
+    },
+    {
+      "id": "shimi",
+      "name": "شیمی",
+      "icon": "⚗",
+      "description": "شیمی ۲ — ساختار، واکنش‌ها",
+      "chapters": [
+        { "id": "shimi-chapter-1", "number": 1, "title": "قدرت پیوند و ساختار", "description": "پیوند شیمیایی و ساختار مولکول", "progress": 0, "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/", "lessons": [] },
+        { "id": "shimi-chapter-2", "number": 2, "title": "واکنش‌های شیمیایی", "description": "استوکیومتری و تعادل", "progress": 0, "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/", "lessons": [] },
+        { "id": "shimi-chapter-3", "number": 3, "title": "اسیدها و بازها", "description": "pH، اسید، باز", "progress": 0, "solutionUrl": "https://paadars.com/class-11/chemistry11/exercises/", "lessons": [] }
+      ]
     }
-
-    let pageStartTime = Date.now();
-
-    function saveStudyMinutes() {
-      const minutes = Math.round((Date.now() - pageStartTime) / 60000);
-      if (minutes > 0) {
-        const user = getUser();
-        user.totalMinutes = (user.totalMinutes || 0) + minutes;
-        saveUser(user);
-        pageStartTime = Date.now();
-      }
-    }
-
-    window.addEventListener("beforeunload", saveStudyMinutes);
-    window.addEventListener("pagehide", saveStudyMinutes);
-
-    function loadLesson() {
-      const container = document.getElementById("questionsList");
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const lessonId = params.get("lesson");
-        if (!lessonId) throw new Error("شناسه درس در آدرس نیست");
-        const lesson = LESSONS_DATA[lessonId];
-        if (!lesson) throw new Error("درس پیدا نشد");
-        currentLesson = lesson;
-
-        document.getElementById("lessonNumber").textContent = "درس " + lesson.number;
-        document.getElementById("lessonTitle").textContent = lesson.title;
-        document.getElementById("lessonDescription").textContent = lesson.description;
-        document.getElementById("breadcrumbLesson").textContent = lesson.title;
-        document.getElementById("backToChapter").href = "chapter.html?chapter=" + lesson.chapterId;
-        document.getElementById("questionCount").textContent = lesson.questions.length + " سوال";
-
-        startPractice();
-      } catch (err) {
-        console.error(err);
-        if (container) container.innerHTML = '<div class="loading" style="color:#e05252;">خطا: ' + err.message + '</div>';
-      }
-    }
-
-    function startPractice() {
-      mode = "practice";
-      currentQuestionIndex = 0;
-      sessionScore = 0;
-      examQuestions = currentLesson.questions;
-      examAnswers = [];
-
-      document.getElementById("modeLabel").textContent = "تمرین";
-      document.getElementById("modeTitle").textContent = "سوالات درس";
-      document.getElementById("examTimer").classList.add("hidden");
-
-      if (timerInterval) clearInterval(timerInterval);
-      renderCurrentQuestion();
-    }
-
-    function startExam() {
-      mode = "exam";
-      currentQuestionIndex = 0;
-      sessionScore = 0;
-      examQuestions = [...currentLesson.questions].sort(() => Math.random() - 0.5);
-      examAnswers = [];
-
-      document.getElementById("modeLabel").textContent = "آزمون";
-      document.getElementById("modeTitle").textContent = "آزمون درس";
-      document.getElementById("examTimer").classList.remove("hidden");
-
-      timerSeconds = 0;
-      updateTimerText();
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timerSeconds++;
-        updateTimerText();
-      }, 1000);
-
-      renderCurrentQuestion();
-    }
-
-    function updateTimerText() {
-      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
-      const s = String(timerSeconds % 60).padStart(2, "0");
-      const el = document.getElementById("timerText");
-      if (el) el.textContent = m + ":" + s;
-    }
-
-    function enterFocusMode() {
-      document.body.classList.add("focus-mode");
-      focusSeconds = 0;
-      updateFocusTimer();
-
-      if (focusInterval) clearInterval(focusInterval);
-      focusInterval = setInterval(() => {
-        focusSeconds++;
-        updateFocusTimer();
-      }, 1000);
-    }
-
-    function exitFocusMode() {
-      document.body.classList.remove("focus-mode");
-      if (focusInterval) clearInterval(focusInterval);
-    }
-
-    function updateFocusTimer() {
-      const m = String(Math.floor(focusSeconds / 60)).padStart(2, "0");
-      const s = String(focusSeconds % 60).padStart(2, "0");
-      const el = document.getElementById("focusTimer");
-      if (el) el.textContent = m + ":" + s;
-    }
-
-    function renderCurrentQuestion() {
-      const container = document.getElementById("questionsList");
-      const questions = examQuestions;
-      if (!questions.length) {
-        container.innerHTML = '<div class="loading">سوالی موجود نیست.</div>';
-        return;
-      }
-
-      const q = questions[currentQuestionIndex];
-      const progress = Math.round(((currentQuestionIndex + 1) / questions.length) * 100);
-
-      container.innerHTML = `
-        <article class="question-card">
-          <div class="question-top">
-            <span class="question-number">سوال ${currentQuestionIndex + 1} از ${questions.length}</span>
-            <span class="difficulty">${q.difficulty}</span>
-          </div>
-          <div class="question-progress">
-            <div><i style="width: ${progress}%"></i></div>
-          </div>
-          <div class="question-text">${q.question}</div>
-          <div class="answer-input-area">
-            <label for="userAnswer">پاسخ خود را وارد کنید</label>
-            <input type="text" id="userAnswer" placeholder="پاسخ..." autocomplete="off">
-          </div>
-          <div id="resultArea" class="result-area hidden"></div>
-          <div class="question-actions">
-            <button class="check-button" id="checkButton" onclick="checkAnswer()">بررسی پاسخ</button>
-            <button class="solution-button hidden" id="solutionButton" onclick="showSolution()">مشاهده راه‌حل</button>
-          </div>
-          <div id="navigationArea" class="navigation-area hidden">
-            <button onclick="previousQuestion()" class="nav-button secondary">← قبلی</button>
-            <button onclick="nextQuestion()" class="nav-button">بعدی →</button>
-          </div>
-        </article>
-      `;
-
-      const input = document.getElementById("userAnswer");
-      if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") checkAnswer(); });
-    }
-
-    function checkAnswer() {
-      const input = document.getElementById("userAnswer");
-      const resultArea = document.getElementById("resultArea");
-      const checkButton = document.getElementById("checkButton");
-      const solutionButton = document.getElementById("solutionButton");
-      const navigationArea = document.getElementById("navigationArea");
-
-      const userAnswer = input.value.trim();
-      if (!userAnswer) {
-        resultArea.className = "result-area wrong";
-        resultArea.innerHTML = "لطفاً یک پاسخ وارد کنید.";
-        return;
-      }
-
-      const q = examQuestions[currentQuestionIndex];
-      const correct = normalizeAnswer(q.correctAnswer);
-      const user = normalizeAnswer(userAnswer);
-      const isCorrect = user === correct;
-      const userData = registerAnswer(q.id, isCorrect, q);
-
-      examAnswers.push({ id: q.id, isCorrect: isCorrect });
-
-      if (isCorrect) {
-        sessionScore += 10;
-        resultArea.className = "result-area correct";
-        resultArea.innerHTML = "<strong>آفرین!</strong><span>+10 XP</span><span>XP کل: " + userData.xp + "</span>";
-      } else {
-        resultArea.className = "result-area wrong";
-        resultArea.innerHTML = "<strong>پاسخ درست نیست.</strong><span>پاسخ درست: " + q.correctAnswer + "</span><span>به غلط‌نامه اضافه شد</span>";
-      }
-
-      input.disabled = true;
-      checkButton.disabled = true;
-      solutionButton.classList.remove("hidden");
-      navigationArea.classList.remove("hidden");
-    }
-
-    function showSolution() {
-      const q = examQuestions[currentQuestionIndex];
-      const resultArea = document.getElementById("resultArea");
-      resultArea.innerHTML += `
-        <div class="solution-box">
-          <div class="solution-title">راه‌حل</div>
-          <p>${q.answer}</p>
-          <p class="solution-text">${q.solution}</p>
-        </div>
-      `;
-      document.getElementById("solutionButton").disabled = true;
-    }
-
-    function nextQuestion() {
-      if (currentQuestionIndex < examQuestions.length - 1) {
-        currentQuestionIndex++;
-        renderCurrentQuestion();
-      } else {
-        if (mode === "exam") showExamResult();
-        else showLessonResult();
-      }
-    }
-
-    function previousQuestion() {
-      if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        renderCurrentQuestion();
-      }
-    }
-
-    function showLessonResult() {
-      saveStudyMinutes();
-      const container = document.getElementById("questionsList");
-      container.innerHTML = `
-        <div class="lesson-result">
-          <div class="result-icon">✓</div>
-          <h2>درس تمام شد!</h2>
-          <p>امتیاز این جلسه</p>
-          <strong>${sessionScore} XP</strong>
-          <button onclick="restartLesson()">شروع دوباره</button>
-        </div>
-      `;
-    }
-
-    function showExamResult() {
-      if (timerInterval) clearInterval(timerInterval);
-      saveStudyMinutes();
-      const container = document.getElementById("questionsList");
-      const total = examQuestions.length;
-      const correctCount = examAnswers.filter((a) => a.isCorrect).length;
-      const percent = Math.round((correctCount / total) * 100);
-
-      let message = "";
-      if (percent === 100) message = "بی‌نقص! 🎉";
-      else if (percent >= 80) message = "عالی بود! 🔥";
-      else if (percent >= 60) message = "خوب بود، ادامه بده!";
-      else if (percent >= 40) message = "باز نیاز به تمرین داری.";
-      else message = "بیا دوباره مرور کنیم.";
-
-      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
-      const s = String(timerSeconds % 60).padStart(2, "0");
-
-      container.innerHTML = `
-        <div class="exam-card">
-          <h2>${percent}%</h2>
-          <p>${message}</p>
-          <div class="exam-stat">
-            <div><span>درست</span><strong>${correctCount}</strong></div>
-            <div><span>غلط</span><strong>${total - correctCount}</strong></div>
-            <div><span>زمان</span><strong>${m}:${s}</strong></div>
-          </div>
-          <button onclick="startExam()">آزمون دوباره</button>
-          <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
-        </div>
-      `;
-    }
-
-    function restartLesson() { startPractice(); }
-
-    function normalizeAnswer(answer) {
-      return String(answer)
-        .trim()
-        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
-        .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
-        .replace(/\s+/g, "")
-        .toLowerCase();
-    }
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && document.body.classList.contains("focus-mode")) {
-        exitFocusMode();
-      }
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      createMathBackground();
-      loadLesson();
-    });
-  </script>
-
-</body>
-</html>
+  ]
+}
