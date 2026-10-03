@@ -710,4 +710,40 @@
       container.innerHTML = `
         <div class="exam-card">
           <h2>${percent}%</h2>
-          <p>${message}</
+          <p>${message}</p>
+          <div class="exam-stat">
+            <div><span>درست</span><strong>${correctCount}</strong></div>
+            <div><span>غلط</span><strong>${total - correctCount}</strong></div>
+            <div><span>زمان</span><strong>${m}:${s}</strong></div>
+          </div>
+          <button onclick="startExam()">آزمون دوباره</button>
+          <button onclick="startPractice()" style="background:transparent;color:var(--text);border:1px solid var(--border);">حالت تمرین</button>
+        </div>
+      `;
+    }
+
+    function restartLesson() { startPractice(); }
+
+    function normalizeAnswer(answer) {
+      return String(answer)
+        .trim()
+        .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+        .replace(/\s+/g, "")
+        .toLowerCase();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && document.body.classList.contains("focus-mode")) {
+        exitFocusMode();
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      loadLesson();
+    });
+  </script>
+
+</body>
+</html>
