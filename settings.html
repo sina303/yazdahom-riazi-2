@@ -41,6 +41,7 @@
       <p>پروفایل، ظاهر، و داده‌های خود را از اینجا مدیریت کن.</p>
     </section>
 
+    <!-- PROFILE -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Profile</span>
@@ -58,6 +59,7 @@
       </div>
     </section>
 
+    <!-- THEMES -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Appearance</span>
@@ -110,9 +112,19 @@
           </div>
           <div class="theme-check">✓</div>
         </div>
+
+        <div class="theme-card" data-theme="persian" onclick="selectTheme('persian')">
+          <div class="theme-preview" style="background: linear-gradient(135deg, #241a0e, #d4af37);"></div>
+          <div class="theme-info">
+            <h3>🏛️ پارسی</h3>
+            <p>هخامنشی و کویر</p>
+          </div>
+          <div class="theme-check">✓</div>
+        </div>
       </div>
     </section>
 
+    <!-- BACKGROUND -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Background</span>
@@ -121,7 +133,7 @@
       <div class="setting-item">
         <div class="setting-info">
           <h3>پس‌زمینه‌ی متحرک</h3>
-          <p>اعداد ریاضی که در پس‌زمینه میان بالا.</p>
+          <p>نمادها و اعداد که در پس‌زمینه میان بالا.</p>
         </div>
         <div class="setting-action">
           <label class="switch">
@@ -132,6 +144,7 @@
       </div>
     </section>
 
+    <!-- DATA -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">Data</span>
@@ -170,6 +183,7 @@
       </div>
     </section>
 
+    <!-- ABOUT -->
     <section class="settings-section">
       <div class="section-head">
         <span class="section-label">About</span>
@@ -193,13 +207,27 @@
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
+
+      const theme = localStorage.getItem("y11_theme") || "green";
+      let symbols;
+
+      if (theme === "persian") {
+        /* حروف میخی و نمادهای هخامنشی */
+        symbols = [
+          "𒀭", "𒆠", "𒌋", "𒀀", "𒁹", "𒂍", "𒃲", "𒄑", "𒅆", "𒆳",
+          "☫", "𐎠", "𐎡", "𐎢", "𐎣", "𐎤", "𐎥", "𐎦", "𐎧", "𐎨",
+          "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "𐏐", "𐏑", "𐏒", "𐏓", "𐏔"
+        ];
+      } else {
+        symbols = [
+          "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+          "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+          "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+          "+", "−", "×", "÷", "=", "%", "e", "i",
+          "1", "2", "3", "7", "9", "0", "½", "¼"
+        ];
+      }
+
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -216,6 +244,10 @@
       document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("y11_theme", theme);
       updateThemeSelection(theme);
+
+      /* پس‌زمینه رو دوباره بساز */
+      const bg = document.getElementById("mathBg");
+      if (bg) { bg.innerHTML = ""; createMathBackground(); }
     }
 
     function updateThemeSelection(theme) {
@@ -247,14 +279,12 @@
     function saveUsername() {
       const input = document.getElementById("usernameInput");
       const name = input.value.trim();
-
       if (!name) { alert("نام کاربری نمی‌تونه خالی باشه."); return; }
       if (name.length < 3) { alert("نام کاربری حداقل باید ۳ حرف باشه."); return; }
 
       const raw = localStorage.getItem("y11_math_user");
       let user;
       try { user = raw ? JSON.parse(raw) : {}; } catch (e) { user = {}; }
-
       user.username = name;
       localStorage.setItem("y11_math_user", JSON.stringify(user));
 
