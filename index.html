@@ -47,7 +47,7 @@
         </div>
         <div class="stat-box">
           <span class="label">Status</span>
-          <div class="value" style="font-size:16px;color:#6ee787;" id="heroStatus">Active</div>
+          <div class="value" style="font-size:16px;color:var(--green-light);" id="heroStatus">Active</div>
         </div>
       </div>
     </section>
@@ -141,13 +141,27 @@
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
+
+      const theme = localStorage.getItem("y11_theme") || "green";
+      let symbols;
+
+      if (theme === "persian") {
+        /* حروف میخی و نمادهای هخامنشی */
+        symbols = [
+          "𒀭", "𒆠", "𒌋", "𒀀", "𒁹", "𒂍", "𒃲", "𒄑", "𒅆", "𒆳",
+          "☫", "𐎠", "𐎡", "𐎢", "𐎣", "𐎤", "𐎥", "𐎦", "𐎧", "𐎨",
+          "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "𐏐", "𐏑", "𐏒", "𐏓", "𐏔"
+        ];
+      } else {
+        symbols = [
+          "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
+          "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
+          "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
+          "+", "−", "×", "÷", "=", "%", "e", "i",
+          "1", "2", "3", "7", "9", "0", "½", "¼"
+        ];
+      }
+
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
