@@ -1,49 +1,51 @@
 /* =========================================
-THEME + AUTH + MOBILE MENU + MEMORIAL
+AXIS — THEME + AUTH + MOBILE MENU + MEMORIAL
 ========================================= */
 (async function() {
+  console.log("🚀 AXIS loading...");
+
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  console.log("📄 Current page:", currentPage);
 
   /* صفحات عمومی */
   const publicPages = ["lock.html", "signup.html"];
   if (publicPages.includes(currentPage)) {
+    console.log("✅ Public page, no auth needed");
     const theme = localStorage.getItem("y11_theme") || "green";
     document.documentElement.setAttribute("data-theme", theme);
     return;
   }
 
   /* =========================================
-  چک احراز هویت — Supabase
+  چک احراز هویت
   ========================================= */
   let isAuth = false;
-  let currentUser = null;
 
-  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+  /* اول از localStorage (axis_auth) */
+  if (localStorage.getItem("axis_auth") === "true") {
+    console.log("✅ axis_auth found in localStorage");
+    isAuth = true;
+  }
+
+  /* بعد از Supabase */
+  if (!isAuth && typeof supabaseClient !== 'undefined' && supabaseClient) {
     try {
-      /* از getSession استفاده می‌کنیم (سریع‌تر و مطمئن‌تر) */
       const { data: { session }, error } = await supabaseClient.auth.getSession();
+      console.log("🔍 getSession result:", session ? "HAS SESSION" : "NO SESSION", error);
 
       if (session && session.user) {
         isAuth = true;
-        currentUser = session.user;
-        console.log("✅ Supabase session:", session.user.email);
-
-        localStorage.setItem("axis_user", JSON.stringify({
-          id: session.user.id,
-          email: session.user.email,
-          username: session.user.user_metadata?.username || "کاربر"
-        }));
-      } else {
-        console.log("❌ No session:", error?.message || "empty");
+        console.log("✅ Supabase user:", session.user.email);
+        localStorage.setItem("axis_auth", "true");
       }
     } catch (e) {
-      console.log("⚠️ Supabase auth failed:", e.message);
+      console.log("⚠️ Supabase auth error:", e.message);
     }
   }
 
-  /* اگه لاگین نکرده، بفرست به signup */
+  /* اگه لاگین نکرده */
   if (!isAuth) {
-    console.log("🔒 Not authenticated, redirecting to signup");
+    console.log("🔒 Not authenticated → redirecting to signup");
     window.location.replace("signup.html");
     return;
   }
@@ -91,7 +93,7 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
   }
 
   /* =========================================
-  MEMORIAL
+  MEMORIAL — شمع
   ========================================= */
   function setupMemorialStar() {
     if (document.getElementById("memorialStar")) return;
@@ -99,6 +101,7 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
     const star = document.createElement("div");
     star.className = "memorial-star";
     star.id = "memorialStar";
+    star.setAttribute("aria-label", "یادبود");
     star.innerHTML = `
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
@@ -179,9 +182,6 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
     }
   });
 
-  /* =========================================
-  START
-  ========================================= */
   function init() {
     setupMobileMenu();
     setupMemorialStar();
