@@ -7,7 +7,6 @@ AXIS — THEME + AUTH + MOBILE MENU + MEMORIAL
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
   console.log("📄 Current page:", currentPage);
 
-  /* صفحات عمومی */
   const publicPages = ["lock.html", "signup.html"];
   if (publicPages.includes(currentPage)) {
     console.log("✅ Public page, no auth needed");
@@ -17,40 +16,38 @@ AXIS — THEME + AUTH + MOBILE MENU + MEMORIAL
   }
 
   /* =========================================
-  چک احراز هویت
+  چک احراز هویت — اول localStorage
   ========================================= */
   let isAuth = false;
 
-  /* اول از localStorage (axis_auth) */
+  /* اول axis_auth */
   if (localStorage.getItem("axis_auth") === "true") {
-    console.log("✅ axis_auth found in localStorage");
+    console.log("✅ axis_auth found");
     isAuth = true;
   }
 
-  /* بعد از Supabase */
+  /* بعد Supabase */
   if (!isAuth && typeof supabaseClient !== 'undefined' && supabaseClient) {
     try {
-      const { data: { session }, error } = await supabaseClient.auth.getSession();
-      console.log("🔍 getSession result:", session ? "HAS SESSION" : "NO SESSION", error);
-
+      const { data: { session } } = await supabaseClient.auth.getSession();
       if (session && session.user) {
         isAuth = true;
         console.log("✅ Supabase user:", session.user.email);
         localStorage.setItem("axis_auth", "true");
       }
     } catch (e) {
-      console.log("⚠️ Supabase auth error:", e.message);
+      console.log("⚠️ Supabase error:", e.message);
     }
   }
 
   /* اگه لاگین نکرده */
   if (!isAuth) {
-    console.log("🔒 Not authenticated → redirecting to signup");
+    console.log("🔒 Not authenticated → signup");
     window.location.replace("signup.html");
     return;
   }
 
-  console.log("✅ Authenticated! Loading site...");
+  console.log("✅ Authenticated!");
 
   /* =========================================
   تم
@@ -74,7 +71,6 @@ AXIS — THEME + AUTH + MOBILE MENU + MEMORIAL
       const btn = document.createElement("button");
       btn.className = "mobile-menu-btn";
       btn.innerHTML = "☰";
-      btn.setAttribute("aria-label", "منو");
 
       btn.addEventListener("click", () => {
         nav.classList.toggle("open");
@@ -101,7 +97,6 @@ AXIS — THEME + AUTH + MOBILE MENU + MEMORIAL
     const star = document.createElement("div");
     star.className = "memorial-star";
     star.id = "memorialStar";
-    star.setAttribute("aria-label", "یادبود");
     star.innerHTML = `
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
