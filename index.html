@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AXIS | یازدهم ریاضی</title>
   <link rel="stylesheet" href="css/style.css" />
-  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -15,7 +14,7 @@
     <div class="site-logo">AXIS</div>
     <nav class="site-nav">
       <a href="index.html" class="active">خانه</a>
-      <a href="subject.html">حسابان</a>
+      <a href="subject.html">درس‌ها</a>
       <a href="formulas.html">فرمول‌ها</a>
       <a href="gpa.html">معدل</a>
       <a href="about.html">درباره</a>
@@ -25,30 +24,20 @@
   </header>
 
   <main>
-
     <section class="home-hero">
       <div class="hero-text">
         <span class="hero-tag">یازدهم ریاضی</span>
         <h1>یادگیری <span>هوشمند</span><br>برای یازدهم ریاضی</h1>
-        <p>AXIS یک پلتفرم آموزشی برای دانش‌آموزان یازدهم رشته ریاضی است. درس‌ها، تمرین‌ها، آزمون‌ها و دستیار هوشمند — همه در یک‌جا.</p>
+        <p>AXIS یک پلتفرم آموزشی برای دانش‌آموزان یازدهم رشته ریاضی است.</p>
         <div class="hero-buttons">
           <a href="subject.html" class="btn-primary">شروع حسابان</a>
           <a href="#subjects" class="btn-secondary">مشاهده دروس</a>
         </div>
       </div>
       <div class="hero-stats">
-        <div class="stat-box">
-          <span class="label">Level</span>
-          <div class="value" id="heroLevel">1</div>
-        </div>
-        <div class="stat-box">
-          <span class="label">XP</span>
-          <div class="value" id="heroXp">0</div>
-        </div>
-        <div class="stat-box">
-          <span class="label">Status</span>
-          <div class="value" style="font-size:16px;color:var(--green-light);" id="heroStatus">Active</div>
-        </div>
+        <div class="stat-box"><span class="label">Level</span><div class="value" id="heroLevel">1</div></div>
+        <div class="stat-box"><span class="label">XP</span><div class="value" id="heroXp">0</div></div>
+        <div class="stat-box"><span class="label">Status</span><div class="value" style="font-size:16px;color:var(--green-light);" id="heroStatus">Active</div></div>
       </div>
     </section>
 
@@ -58,7 +47,6 @@
         <h2>مسیر یادگیری</h2>
         <p>درس‌های یازدهم ریاضی.</p>
       </div>
-
       <div class="subjects-grid">
         <a href="subject.html" class="subject-card">
           <div class="subject-number">01</div>
@@ -74,48 +62,33 @@
           </div>
           <div class="subject-action">Start →</div>
         </a>
-
         <a href="subject.html?subject=handese" class="subject-card">
           <div class="subject-number">02</div>
           <div class="subject-icon">△</div>
           <div class="subject-info">
             <h3>هندسه</h3>
             <p>هندسه ۲ — دایره، تبدیل‌ها، تشابه</p>
-            <div class="subject-meta">
-              <span>3 Chapters</span>
-              <span>9 Lessons</span>
-              <span>Ready</span>
-            </div>
+            <div class="subject-meta"><span>3 Chapters</span><span>9 Lessons</span><span>Ready</span></div>
           </div>
           <div class="subject-action">Start →</div>
         </a>
-
         <a href="subject.html?subject=fizik" class="subject-card">
           <div class="subject-number">03</div>
           <div class="subject-icon">Φ</div>
           <div class="subject-info">
             <h3>فیزیک</h3>
             <p>فیزیک ۲ — الکتریسیته، مغناطیس</p>
-            <div class="subject-meta">
-              <span>3 Chapters</span>
-              <span>7 Lessons</span>
-              <span>Ready</span>
-            </div>
+            <div class="subject-meta"><span>3 Chapters</span><span>7 Lessons</span><span>Ready</span></div>
           </div>
           <div class="subject-action">Start →</div>
         </a>
-
         <a href="subject.html?subject=shimi" class="subject-card">
           <div class="subject-number">04</div>
           <div class="subject-icon">⚗</div>
           <div class="subject-info">
             <h3>شیمی</h3>
             <p>شیمی ۲ — ساختار، واکنش‌ها</p>
-            <div class="subject-meta">
-              <span>3 Chapters</span>
-              <span>6 Lessons</span>
-              <span>Ready</span>
-            </div>
+            <div class="subject-meta"><span>3 Chapters</span><span>6 Lessons</span><span>Ready</span></div>
           </div>
           <div class="subject-action">Start →</div>
         </a>
@@ -130,101 +103,14 @@
       </div>
       <a href="subject.html" class="btn-primary">امتحان کن</a>
     </section>
-
   </main>
 
   <footer class="site-footer">
     <strong>AXIS</strong> — Learn beyond the formula
   </footer>
 
-  <script>
-    function createMathBackground() {
-      const bg = document.getElementById("mathBg");
-      if (!bg) return;
-
-      const theme = localStorage.getItem("y11_theme") || "green";
-      let symbols;
-
-      if (theme === "persian") {
-        /* حروف میخی و نمادهای هخامنشی */
-        symbols = [
-          "𒀭", "𒆠", "𒌋", "𒀀", "𒁹", "𒂍", "𒃲", "𒄑", "𒅆", "𒆳",
-          "☫", "𐎠", "𐎡", "𐎢", "𐎣", "𐎤", "𐎥", "𐎦", "𐎧", "𐎨",
-          "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ", "𐏐", "𐏑", "𐏒", "𐏓", "𐏔"
-        ];
-      } else {
-        symbols = [
-          "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-          "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-          "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-          "+", "−", "×", "÷", "=", "%", "e", "i",
-          "1", "2", "3", "7", "9", "0", "½", "¼"
-        ];
-      }
-
-      for (let i = 0; i < 30; i++) {
-        const span = document.createElement("span");
-        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        span.style.fontSize = (14 + Math.random() * 34) + "px";
-        span.style.left = (Math.random() * 100) + "%";
-        span.style.animationDuration = (12 + Math.random() * 18) + "s";
-        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
-        span.style.color = "rgba(var(--particle-color), " + (0.08 + Math.random() * 0.18) + ")";
-        bg.appendChild(span);
-      }
-    }
-
-    function getUser() {
-      const raw = localStorage.getItem("y11_math_user");
-      if (!raw) return { username:"Sina", xp:0, solved:0 };
-      try {
-        const u = JSON.parse(raw);
-        return { username: u.username || "Sina", xp: u.xp || 0, solved: u.solved || 0 };
-      } catch (e) { return { username:"Sina", xp:0, solved:0 }; }
-    }
-
-    function getLevel(xp) {
-      if (xp >= 700) return 5;
-      if (xp >= 450) return 4;
-      if (xp >= 250) return 3;
-      if (xp >= 100) return 2;
-      return 1;
-    }
-
-    function renderHeroStats() {
-      const user = getUser();
-      const level = getLevel(user.xp);
-      document.getElementById("heroXp").textContent = user.xp;
-      document.getElementById("heroLevel").textContent = level;
-
-      const statusEl = document.getElementById("heroStatus");
-      if (user.solved === 0) {
-        statusEl.textContent = "New";
-        statusEl.style.color = "var(--muted)";
-      } else if (level >= 4) {
-        statusEl.textContent = "Expert";
-        statusEl.style.color = "var(--green-light)";
-      } else if (level >= 2) {
-        statusEl.textContent = "Active";
-        statusEl.style.color = "var(--green-light)";
-      } else {
-        statusEl.textContent = "Beginner";
-        statusEl.style.color = "var(--text)";
-      }
-
-      const totalQ = 213;
-      const percent = Math.min(100, Math.round((user.solved / totalQ) * 100));
-      const cardProgress = document.getElementById("hesabanCardProgress");
-      if (cardProgress) cardProgress.textContent = percent + "% Progress";
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      createMathBackground();
-      renderHeroStats();
-    });
-
-    window.addEventListener("pageshow", renderHeroStats);
-  </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>
