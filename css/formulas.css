@@ -10,31 +10,26 @@ html[data-theme="green"] {
   --border: #222a24; --green: #35d35a; --green-light: #6ee787;
   --text: #eef2ef; --muted: #8d9690; --particle-color: 53, 211, 90;
 }
-
 html[data-theme="purple"] {
   --bg: #0a0812; --surface: #100c1c; --card: #161022;
   --border: #2a1f3d; --green: #8b5cf6; --green-light: #a78bfa;
   --text: #e5e7eb; --muted: #8d8598; --particle-color: 167, 139, 250;
 }
-
 html[data-theme="rose"] {
   --bg: #12080e; --surface: #1a0d15; --card: #22111c;
   --border: #3d1f2f; --green: #e879a8; --green-light: #f9a8d4;
   --text: #f5e5ec; --muted: #9d8590; --particle-color: 249, 168, 212;
 }
-
 html[data-theme="sepia"] {
   --bg: #1a1510; --surface: #221c15; --card: #2a231a;
   --border: #3d3325; --green: #d4a574; --green-light: #e6c19a;
   --text: #f0e6d6; --muted: #a89880; --particle-color: 212, 165, 116;
 }
-
 html[data-theme="light"] {
   --bg: #f5f1e8; --surface: #ffffff; --card: #fdfaf3;
   --border: #e0d9c8; --green: #3a7d44; --green-light: #5a9d64;
   --text: #2a2620; --muted: #6b6558; --particle-color: 58, 125, 68;
 }
-
 html[data-theme="persian"] {
   --bg: #1a1208; --surface: #241a0e; --card: #2e2010;
   --border: #4a361c; --green: #d4af37; --green-light: #f0d274;
@@ -104,7 +99,6 @@ html[data-theme="persian"] body {
 html[data-theme="persian"] .math-bg::before {
   background-image:
     radial-gradient(1px 1px at 15% 25%, rgba(240, 210, 116, 0.6), transparent),
-    radial-gradient(1px 1px at 45% 65%, rgba(212, 175, 55, 0.5), transparent),
     radial-gradient(2px 2px at 30% 85%, rgba(212, 175, 55, 0.5), transparent);
 }
 
@@ -140,6 +134,7 @@ html[data-theme="persian"] .formulas-header { background: rgba(26, 18, 8, 0.85);
   font-weight: bold;
   font-size: 20px;
   letter-spacing: 2px;
+  flex-shrink: 0;
 }
 
 html[data-theme="persian"] .logo {
@@ -161,6 +156,7 @@ html[data-theme="persian"] .logo {
   color: var(--muted);
   font-size: 13px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .formulas-header .user:hover { color: var(--green); }
@@ -178,6 +174,7 @@ main {
   color: var(--muted);
   font-size: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .breadcrumb a {
@@ -278,10 +275,6 @@ html[data-theme="persian"] .flashcard-face {
   border-color: var(--green);
 }
 
-html[data-theme="persian"] .flashcard-back {
-  box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
-}
-
 .card-label {
   position: absolute;
   top: 20px;
@@ -313,10 +306,6 @@ html[data-theme="persian"] .flashcard-back {
   direction: ltr;
   line-height: 1.8;
   padding: 0 10px;
-}
-
-html[data-theme="persian"] .formula {
-  text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
 }
 
 .flashcard-controls {
@@ -376,14 +365,101 @@ html[data-theme="persian"] .nav-button { color: #1a1208; }
   border-color: var(--green);
 }
 
+/* =========================================
+MOBILE
+========================================= */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--green);
+  font-size: 26px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 100;
+}
+
+@media (max-width: 900px) {
+  .mobile-menu-btn { display: block; }
+
+  .formulas-header nav {
+    display: none;
+    position: fixed;
+    top: 72px;
+    right: 0;
+    left: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    z-index: 60;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .formulas-header nav.open { display: flex; }
+
+  .formulas-header nav a {
+    font-size: 15px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .formulas-header nav a:hover {
+    background: rgba(var(--particle-color), 0.15);
+    border-color: var(--green);
+  }
+}
+
 @media (max-width: 600px) {
-  .formulas-header nav { display: none; }
-  .formulas-hero h1 { font-size: 26px; }
-  .flashcard { height: 280px; }
-  .flashcard-front h2 { font-size: 20px; }
-  .formula { font-size: 18px; }
+  .formulas-header { padding: 0 4%; height: 64px; }
+  .logo { font-size: 18px; }
+  .formulas-header .user { font-size: 12px; }
+
+  .formulas-hero {
+    padding: 25px 20px;
+    margin-bottom: 25px;
+  }
+
+  .formulas-hero h1 { font-size: 24px; }
+  .formulas-hero p { font-size: 13px; }
+
+  .flashcard {
+    height: 340px;
+  }
+
+  .flashcard-face { padding: 30px 20px; }
+
+  .flashcard-front h2 {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .formula {
+    font-size: 17px;
+    line-height: 1.9;
+  }
+
+  .card-label { font-size: 10px; top: 15px; right: 18px; }
+  .card-hint { font-size: 11px; bottom: 15px; }
+
   .flashcard-controls {
     flex-wrap: wrap;
     justify-content: center;
+    gap: 12px;
   }
+
+  .nav-button { padding: 11px 18px; font-size: 12px; }
+  .card-counter { font-size: 13px; min-width: 60px; }
+  .shuffle-button { padding: 10px 18px; font-size: 12px; }
+}
+
+@media (max-width: 400px) {
+  .formulas-hero h1 { font-size: 20px; }
+  .flashcard { height: 320px; }
+  .formula { font-size: 15px; }
+  .flashcard-front h2 { font-size: 16px; }
 }
