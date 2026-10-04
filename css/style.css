@@ -62,7 +62,6 @@ html[data-theme="persian"] body {
     var(--bg);
 }
 
-/* MATH BG */
 .math-bg {
   position: fixed;
   inset: 0;
@@ -102,7 +101,6 @@ html[data-theme="persian"] body {
   100% { opacity: 1; }
 }
 
-/* CONTENT */
 .site-header, main, .site-footer {
   position: relative;
   z-index: 1;
@@ -408,16 +406,16 @@ EASTER EGG — MEMORIAL STAR
 }
 
 /* =========================================
-MEMORIAL MODAL — طراحی قشنگ‌تر
+MEMORIAL MODAL — گزینه A: شمع و کهکشان
 ========================================= */
 .memorial-modal {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 50%, rgba(30, 20, 60, 0.6), transparent 70%),
-    radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.08), transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.06), transparent 50%),
-    #000000;
+    radial-gradient(circle at 50% 50%, rgba(30, 20, 60, 0.5), transparent 70%),
+    radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.06), transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.04), transparent 50%),
+    #050510;
   z-index: 9999;
   display: none;
   align-items: center;
@@ -431,6 +429,7 @@ MEMORIAL MODAL — طراحی قشنگ‌تر
 .memorial-modal.open { display: flex; opacity: 1; }
 .memorial-modal.closing { opacity: 0; }
 
+/* ستاره‌های ریز */
 .memorial-stars {
   position: absolute;
   inset: 0;
@@ -446,27 +445,28 @@ MEMORIAL MODAL — طراحی قشنگ‌تر
 }
 
 @keyframes memorialTwinkle {
-  0%, 100% { opacity: 0.1; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.5); }
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.9; }
 }
 
-/* هاله طلایی */
+/* هاله شمع */
 .memorial-glow {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 40%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent 65%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(255, 180, 50, 0.12), transparent 65%);
   pointer-events: none;
-  animation: glowPulse 8s ease-in-out infinite;
+  animation: candleGlow 5s ease-in-out infinite;
 }
 
-@keyframes glowPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+@keyframes candleGlow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
 }
 
-/* محتوا */
 .memorial-content {
   position: relative;
   text-align: center;
@@ -475,91 +475,162 @@ MEMORIAL MODAL — طراحی قشنگ‌تر
   max-width: 700px;
 }
 
-/* ستاره بزرگ */
-.memorial-big-star {
+/* =========================================
+شمع
+========================================= */
+.memorial-candle {
+  position: relative;
+  width: 40px;
+  height: 120px;
+  margin: 0 auto 50px;
+  opacity: 0;
+  animation: fadeInCandle 2s ease 0.3s forwards;
+}
+
+@keyframes fadeInCandle {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* بدنه شمع */
+.candle-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 80px;
+  background: linear-gradient(180deg, #f5e6c8, #d4b88a);
+  border-radius: 6px;
+  box-shadow:
+    inset -4px 0 8px rgba(0,0,0,0.2),
+    inset 4px 0 8px rgba(255,255,255,0.3),
+    0 0 20px rgba(255, 180, 50, 0.3);
+}
+
+/* فتیله */
+.candle-wick {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 12px;
+  background: #2a1a0a;
+  border-radius: 2px;
+}
+
+/* شعله */
+.candle-flame {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 40px;
+  background: radial-gradient(ellipse at 50% 80%,
+    #fff8d0 0%,
+    #ffcc33 25%,
+    #ff8c00 55%,
+    rgba(255, 100, 0, 0.4) 80%,
+    transparent 100%
+  );
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  filter: blur(1px);
+  animation: flameFlicker 0.3s ease-in-out infinite alternate;
+  box-shadow: 0 0 30px rgba(255, 180, 50, 0.8), 0 0 60px rgba(255, 140, 0, 0.5);
+}
+
+@keyframes flameFlicker {
+  0% {
+    transform: translateX(-50%) scale(1, 1) rotate(-2deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.05, 1.1) rotate(2deg);
+    opacity: 1;
+  }
+}
+
+/* هاله دور شعله */
+.candle-halo {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100px;
   height: 100px;
-  color: #FFD700;
-  margin: 0 auto 35px;
-  filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.8));
-  animation: bigStarSpin 25s linear infinite, bigStarPulse 3s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255, 180, 50, 0.3), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: haloPulse 2s ease-in-out infinite;
 }
 
-.memorial-big-star svg { width: 100%; height: 100%; fill: currentColor; }
-
-@keyframes bigStarSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes haloPulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+  50% { transform: translateX(-50%) scale(1.3); opacity: 0.9; }
 }
 
-@keyframes bigStarPulse {
-  0%, 100% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.8)); }
-  50% { filter: drop-shadow(0 0 70px rgba(255, 215, 0, 1)); }
-}
-
-/* تیتر — با فونت درشت */
+/* تیتر */
 .memorial-title {
   font-family: "Georgia", "Times New Roman", serif;
-  font-size: 48px;
+  font-size: 42px;
   color: #FFD700;
-  letter-spacing: 10px;
-  margin-bottom: 45px;
+  letter-spacing: 8px;
+  margin-bottom: 40px;
   font-weight: bold;
   opacity: 0;
-  animation: fadeInText 1.2s ease 0.3s forwards;
+  animation: fadeInText 1.2s ease 0.8s forwards;
   text-shadow:
     0 0 20px rgba(255, 215, 0, 0.6),
-    0 0 40px rgba(255, 215, 0, 0.4),
-    0 0 80px rgba(255, 215, 0, 0.2);
+    0 0 40px rgba(255, 215, 0, 0.3);
+}
+
+/* خط تزئینی */
+.memorial-title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+  margin: 20px auto 0;
+  opacity: 0;
+  animation: fadeInText 1s ease 1.5s forwards;
 }
 
 /* متن‌ها */
 .memorial-text {
-  font-size: 20px;
+  font-size: 19px;
   line-height: 2.6;
   color: #e8e0d0;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   opacity: 0;
   animation: fadeInText 1.4s ease forwards;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
-.memorial-text:nth-child(2) { animation-delay: 1s; }
 .memorial-text:nth-child(3) { animation-delay: 2s; }
 .memorial-text:nth-child(4) { animation-delay: 3s; }
 .memorial-text:nth-child(5) { animation-delay: 4s; }
+.memorial-text:nth-child(6) { animation-delay: 5s; }
 
 @keyframes fadeInText {
   0% { opacity: 0; transform: translateY(30px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* گل سرخ */
-.memorial-rose {
-  font-size: 48px;
-  margin: 35px 0;
-  opacity: 0;
-  animation: fadeInText 1s ease 5s forwards, roseBeat 2.5s ease-in-out 6s infinite;
-  filter: drop-shadow(0 0 20px rgba(220, 50, 80, 0.6));
-}
-
-@keyframes roseBeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-}
-
 /* دکمه بازگشت */
 .memorial-close {
-  margin-top: 25px;
-  padding: 16px 50px;
+  margin-top: 35px;
+  padding: 14px 45px;
   background: transparent;
   color: #FFD700;
-  border: 2px solid #FFD700;
+  border: 1.5px solid #FFD700;
   border-radius: 40px;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   cursor: pointer;
   transition: all 0.4s;
   opacity: 0;
@@ -679,11 +750,13 @@ MOBILE
   .memorial-star { width: 38px; height: 38px; bottom: 18px; right: 18px; }
 
   .memorial-content { padding: 30px 20px; }
-  .memorial-title { font-size: 30px; letter-spacing: 6px; margin-bottom: 30px; }
-  .memorial-text { font-size: 16px; line-height: 2.2; }
-  .memorial-big-star { width: 70px; height: 70px; margin-bottom: 25px; }
-  .memorial-rose { font-size: 36px; margin: 25px 0; }
-  .memorial-close { padding: 13px 35px; font-size: 14px; letter-spacing: 2px; }
+  .memorial-title { font-size: 28px; letter-spacing: 5px; margin-bottom: 30px; }
+  .memorial-text { font-size: 15px; line-height: 2.2; }
+  .memorial-candle { width: 35px; height: 100px; margin-bottom: 35px; }
+  .candle-body { width: 26px; height: 65px; }
+  .candle-flame { width: 15px; height: 33px; bottom: 75px; }
+  .candle-halo { width: 80px; height: 80px; bottom: 68px; }
+  .memorial-close { padding: 12px 32px; font-size: 14px; }
   .memorial-glow { width: 400px; height: 400px; }
 }
 
