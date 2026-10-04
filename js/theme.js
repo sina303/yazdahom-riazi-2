@@ -1,5 +1,5 @@
 /* =========================================
-THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
+THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (GLORY)
 ========================================= */
 (function() {
   /* =========================================
@@ -62,7 +62,7 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
   }
 
   /* =========================================
-  MEMORIAL — Easter Egg با شمع
+  MEMORIAL — Easter Egg با ستاره (Glory)
   ========================================= */
   function setupMemorialStar() {
     /* اگه قبلاً هست، رد کن */
@@ -88,11 +88,10 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
       <div class="memorial-stars" id="memorialStars"></div>
       <div class="memorial-glow"></div>
       <div class="memorial-content">
-        <div class="memorial-candle">
-          <div class="candle-flame"></div>
-          <div class="candle-halo"></div>
-          <div class="candle-wick"></div>
-          <div class="candle-body"></div>
+        <div class="memorial-big-star">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
+          </svg>
         </div>
         <h1 class="memorial-title">جاویدنامان</h1>
         <p class="memorial-text">اینجا اسمی گفته نمی‌شه.</p>
@@ -113,7 +112,7 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
     if (!container) return;
     container.innerHTML = "";
 
-    /* ۴۰ ستاره‌ی ریز (نه ۲۰۰ تا) */
+    /* ۴۰ ستاره‌ی ریز */
     for (let i = 0; i < 40; i++) {
       const s = document.createElement("span");
       s.style.left = Math.random() * 100 + "%";
