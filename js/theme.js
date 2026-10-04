@@ -1,5 +1,5 @@
 /* =========================================
-THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL STAR
+THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
 ========================================= */
 (function() {
   /* =========================================
@@ -62,13 +62,13 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL STAR
   }
 
   /* =========================================
-  MEMORIAL STAR — Easter Egg
+  MEMORIAL — Easter Egg با شمع
   ========================================= */
   function setupMemorialStar() {
     /* اگه قبلاً هست، رد کن */
     if (document.getElementById("memorialStar")) return;
 
-    /* ستاره رو بساز */
+    /* ستاره‌ی کوچیک (دکمه‌ی باز کردن) */
     const star = document.createElement("div");
     star.className = "memorial-star";
     star.id = "memorialStar";
@@ -80,7 +80,7 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL STAR
     `;
     document.body.appendChild(star);
 
-    /* مودال رو بساز */
+    /* مودال */
     const modal = document.createElement("div");
     modal.className = "memorial-modal";
     modal.id = "memorialModal";
@@ -88,17 +88,17 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL STAR
       <div class="memorial-stars" id="memorialStars"></div>
       <div class="memorial-glow"></div>
       <div class="memorial-content">
-        <div class="memorial-big-star">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
-          </svg>
+        <div class="memorial-candle">
+          <div class="candle-flame"></div>
+          <div class="candle-halo"></div>
+          <div class="candle-wick"></div>
+          <div class="candle-body"></div>
         </div>
         <h1 class="memorial-title">جاویدنامان</h1>
         <p class="memorial-text">اینجا اسمی گفته نمی‌شه.</p>
         <p class="memorial-text">فقط سکوت می‌کنیم.</p>
         <p class="memorial-text">برای آن‌ها که رفتند،</p>
         <p class="memorial-text">تا ما بمانیم.</p>
-        <div class="memorial-rose">🌹</div>
         <button class="memorial-close" onclick="closeMemorial()">بازگشت</button>
       </div>
     `;
@@ -112,15 +112,18 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL STAR
     const container = document.getElementById("memorialStars");
     if (!container) return;
     container.innerHTML = "";
-    for (let i = 0; i < 200; i++) {
+
+    /* ۴۰ ستاره‌ی ریز (نه ۲۰۰ تا) */
+    for (let i = 0; i < 40; i++) {
       const s = document.createElement("span");
       s.style.left = Math.random() * 100 + "%";
       s.style.top = Math.random() * 100 + "%";
       s.style.animationDelay = (Math.random() * 4) + "s";
-      s.style.animationDuration = (2 + Math.random() * 4) + "s";
-      const size = 1 + Math.random() * 2.5;
+      s.style.animationDuration = (3 + Math.random() * 4) + "s";
+      const size = 1 + Math.random() * 1.5;
       s.style.width = size + "px";
       s.style.height = size + "px";
+      s.style.opacity = (0.3 + Math.random() * 0.5);
       container.appendChild(s);
     }
   }
@@ -141,7 +144,7 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL STAR
     setTimeout(() => {
       modal.classList.remove("open", "closing");
       document.body.style.overflow = "";
-    }, 600);
+    }, 700);
   }
 
   /* توی window بذار که از onclick صدا زده بشه */
