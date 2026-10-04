@@ -27,6 +27,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .math-bg {
@@ -56,7 +57,7 @@ body {
 main {
   position: relative;
   z-index: 1;
-  width: min(450px, 90%);
+  width: min(450px, 100%);
 }
 
 .lock-box {
@@ -69,6 +70,7 @@ main {
   text-align: center;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 40px rgba(53, 211, 90, 0.1);
 }
 
 .lock-box::before {
@@ -182,9 +184,43 @@ main {
   75% { transform: translateX(10px); }
 }
 
+/* =========================================
+MOBILE
+========================================= */
 @media (max-width: 500px) {
-  .lock-box { padding: 40px 25px; }
-  .lock-box h1 { font-size: 22px; }
-  .lock-icon { font-size: 50px; }
-  .lock-form { flex-direction: column; }
+  body { padding: 15px; }
+
+  .lock-box {
+    padding: 35px 22px;
+    border-radius: 18px;
+  }
+
+  .lock-logo { font-size: 20px; margin-bottom: 22px; }
+  .lock-icon { font-size: 50px; margin-bottom: 18px; }
+  .lock-box h1 { font-size: 21px; margin-bottom: 10px; }
+  .lock-box p { font-size: 13px; margin-bottom: 22px; }
+
+  .lock-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lock-form input {
+    padding: 13px 16px;
+    font-size: 15px;
+  }
+
+  .lock-form button {
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .lock-hint { font-size: 11px; }
+}
+
+@media (max-width: 360px) {
+  .lock-box { padding: 28px 18px; }
+  .lock-icon { font-size: 42px; }
+  .lock-box h1 { font-size: 19px; }
 }
