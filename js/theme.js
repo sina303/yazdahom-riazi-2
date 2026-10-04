@@ -1,21 +1,37 @@
 /* =========================================
-THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
+THEME + AUTH + MOBILE MENU + MEMORIAL
 ========================================= */
-(function() {
-  /* =========================================
-  چک رمز — اول از همه
-  ========================================= */
+(async function() {
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  /* اگه توی lock.html هستیم، فقط تم رو لود کن */
+  /* توی lock.html فقط تم */
   if (currentPage === "lock.html") {
     const theme = localStorage.getItem("y11_theme") || "green";
     document.documentElement.setAttribute("data-theme", theme);
     return;
   }
 
+  /* چک احراز هویت — اول Supabase */
+  let isAuth = false;
+
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    try {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (user) {
+        isAuth = true;
+        console.log("✅ Supabase user:", user.email);
+      }
+    } catch (e) {
+      console.log("⚠️ Supabase auth failed:", e.message);
+    }
+  }
+
+  /* اگه Supabase نبود، از localStorage چک کن */
+  if (!isAuth) {
+    isAuth = localStorage.getItem("axis_auth") === "true";
+  }
+
   /* اگه رمز وارد نشده، بفرست به lock */
-  const isAuth = localStorage.getItem("axis_auth") === "true";
   if (!isAuth) {
     window.location.replace("lock.html");
     return;
@@ -65,7 +81,6 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
   MEMORIAL — Easter Egg با شمع
   ========================================= */
   function setupMemorialStar() {
-    /* اگه قبلاً هست، رد کن */
     if (document.getElementById("memorialStar")) return;
 
     /* ستاره‌ی کوچیک (دکمه‌ی باز کردن) */
@@ -104,7 +119,6 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
     `;
     document.body.appendChild(modal);
 
-    /* کلیک روی ستاره */
     star.addEventListener("click", openMemorial);
   }
 
@@ -112,8 +126,6 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
     const container = document.getElementById("memorialStars");
     if (!container) return;
     container.innerHTML = "";
-
-    /* ۴۰ ستاره‌ی ریز */
     for (let i = 0; i < 40; i++) {
       const s = document.createElement("span");
       s.style.left = Math.random() * 100 + "%";
@@ -147,11 +159,9 @@ THEME LOADER + AUTH CHECK + MOBILE MENU + MEMORIAL (CANDLE)
     }, 700);
   }
 
-  /* توی window بذار که از onclick صدا زده بشه */
   window.openMemorial = openMemorial;
   window.closeMemorial = closeMemorial;
 
-  /* ESC برای بستن */
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       const modal = document.getElementById("memorialModal");
