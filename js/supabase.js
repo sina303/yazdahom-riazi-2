@@ -1,7 +1,7 @@
 /* =========================================
 SUPABASE — AXIS Database
 ========================================= */
-const SUPABASE_URL = "https://lmszsfjzvqsxcbzvycbq.supabase.co";
+const SUPABASE_URL = "https://lmzsvfjzvqsxcbzvycbq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_uAlu-PlpA820kFxz91XTYw_N3jaVQkC";
 
 let supabaseClient = null;
