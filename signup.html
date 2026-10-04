@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ثبت‌نام | AXIS</title>
+  <link rel="stylesheet" href="css/lock.css" />
+</head>
+<body>
+
+  <div class="math-bg" id="mathBg"></div>
+
+  <main>
+    <div class="lock-box">
+      <div class="lock-logo">AXIS</div>
+      <div class="lock-icon">✍️</div>
+
+      <h1 id="formTitle">ثبت‌نام</h1>
+      <p id="formSubtitle">برای شروع، یه حساب بساز.</p>
+
+      <div class="lock-form" style="flex-direction: column;">
+        <input type="email" id="emailInput" placeholder="ایمیل..." autocomplete="email" autofocus>
+        <input type="text" id="usernameInput" placeholder="اسم..." autocomplete="username" maxlength="20">
+        <input type="password" id="passwordInput" placeholder="رمز (حداقل ۶ حرف)..." autocomplete="new-password">
+        <button id="submitBtn" onclick="handleSubmit()">ثبت‌نام</button>
+      </div>
+
+      <div class="lock-error hidden" id="errorBox"></div>
+      <div class="lock-error hidden" id="successBox" style="background: rgba(53,211,90,0.1); border-color: rgba(53,211,90,0.3); color: var(--green);"></div>
+
+      <div class="lock-hint" style="margin-top: 20px;">
+        <span id="switchText">حساب داری؟</span>
+        <a href="#" onclick="toggleMode(event)" id="switchBtn" style="color: var(--green); text-decoration: none; font-weight: bold;">ورود</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+
+  <script>
+    let mode = "signup"; /* signup | login */
+
+    function toggleMode(e) {
+      if (e) e.preventDefault();
+      const title = document.getElementById("formTitle");
+      const subtitle = document.getElementById("formSubtitle");
+      const submitBtn = document.getElementById("submitBtn");
+      const switchText = document.getElementById("switchText");
+      const switchBtn = document.getElementById("switchBtn");
+      const usernameInput = document.getElementById("usernameInput");
+
+      if (mode === "signup") {
+        mode = "login";
+        title.textContent = "ورود";
+        subtitle.textContent = "خوش برگشتی! وارد شو.";
+        submitBtn.textContent = "ورود";
+        switchText.textContent = "حساب نداری؟";
+        switchBtn.textContent = "ثبت‌نام";
+        usernameInput.style.display = "none";
+      } else {
+        mode = "signup";
+        title.textContent = "ثبت‌نام";
+        subtitle.textContent = "برای شروع، یه حساب بساز.";
+        submitBtn.textContent = "ثبت‌نام";
+        switchText.textContent = "حساب داری؟";
+        switchBtn.textContent = "ورود";
+        usernameInput.style.display = "block";
+      }
+      hideMessages();
+    }
+
+    function showError(msg) {
+      const el = document.getElementById("errorBox");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      document.getElementById("successBox").classList.add("hidden");
+    }
+
+    function showSuccess(msg) {
+      const el = document.getElementById("successBox");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      document.getElementById("errorBox").classList.add("hidden");
+    }
+
+    function hideMessages() {
+      document.getElementById("errorBox").classList.add("hidden");
+      document.getElementById("successBox").classList.add("hidden");
+    }
+
+    async function handleSubmit() {
+      hideMessages();
+
+      const email = document.getElementById("emailInput").value.trim();
+      const password = document.getElementById("passwordInput").value.trim();
+      const username = document.getElementById("usernameInput").value.trim();
+      const submitBtn = document.getElementById("submitBtn");
+
+      /* اعتبارسنجی */
+      if (!email || !password) {
+        showError("ایمیل و رمز رو وارد کن.");
+        return;
+      }
+
+      if (!email.includes("@")) {
+        showError("ایمیل معتبر نیست.");
+        return;
+      }
+
+      if (mode === "signup") {
+        if (!username) {
+          showError("اسم رو وارد کن.");
+          return;
+        }
+        if (username.length < 3) {
+          showError("اسم حداقل باید ۳ حرف باشه.");
+          return;
+        }
+        if (password.length < 6) {
+          showError("رمز حداقل باید ۶ حرف باشه.");
+          return;
+        }
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "لطفاً صبر کن...";
+
+      try {
+        if (mode === "signup") {
+          const { data, error } = await signUp(email, password, username);
+
+          if (error) {
+            showError("خطا: " + error.message);
+          } else if (data.user) {
+            showSuccess("✅ حساب ساخته شد! در حال انتقال...");
+            setTimeout(() => { window.location.href = "index.html"; }, 1500);
+          }
+        } else {
+          const { data, error } = await signIn(email, password);
+
+          if (error) {
+            showError("خطا: " + error.message);
+          } else if (data.user) {
+            showSuccess("✅ خوش آمدی! در حال انتقال...");
+            localStorage.setItem("axis_auth", "true");
+            setTimeout(() => { window.location.href = "index.html"; }, 1000);
+          }
+        }
+      } catch (e) {
+        showError("خطای غیرمنتظره: " + e.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = mode === "signup" ? "ثبت‌نام" : "ورود";
+      }
+    }
+
+    /* Enter برای ثبت‌نام/ورود */
+    document.addEventListener("DOMContentLoaded", () => {
+      createMathBackground();
+      const inputs = ["emailInput", "usernameInput", "passwordInput"];
+      inputs.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("keydown", (e) => { if (e.key === "Enter") handleSubmit(); });
+      });
+    });
+
+    function createMathBackground() {
+      const bg = document.getElementById("mathBg");
+      if (!bg) return;
+      const symbols = ["∫","∑","π","√","∞","Δ","θ","λ","x²","aⁿ","f(x)","sin","cos","tan","∂","≈","≠","≤","≥","α","β","γ","+","−","×","÷","=","%","e","i","1","2","3","7","9","0","½","¼"];
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.fontSize = (14 + Math.random() * 34) + "px";
+        span.style.left = (Math.random() * 100) + "%";
+        span.style.animationDuration = (12 + Math.random() * 18) + "s";
+        span.style.animationDelay = "-" + (Math.random() * 15) + "s";
+        span.style.color = "rgba(53, 211, 90, " + (0.08 + Math.random() * 0.18) + ")";
+        bg.appendChild(span);
+      }
+    }
+  </script>
+
+</body>
+</html>
