@@ -4,9 +4,8 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
 (async function() {
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  /* صفحات عمومی — نیازی به لاگین نیست */
+  /* صفحات عمومی */
   const publicPages = ["lock.html", "signup.html"];
-
   if (publicPages.includes(currentPage)) {
     const theme = localStorage.getItem("y11_theme") || "green";
     document.documentElement.setAttribute("data-theme", theme);
@@ -21,18 +20,21 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
 
   if (typeof supabaseClient !== 'undefined' && supabaseClient) {
     try {
-      const { data: { user } } = await supabaseClient.auth.getUser();
-      if (user) {
-        isAuth = true;
-        currentUser = user;
-        console.log("✅ Supabase user:", user.email);
+      /* از getSession استفاده می‌کنیم (سریع‌تر و مطمئن‌تر) */
+      const { data: { session }, error } = await supabaseClient.auth.getSession();
 
-        /* ذخیره‌ی اطلاعات کاربر توی localStorage (برای دسترسی سریع) */
+      if (session && session.user) {
+        isAuth = true;
+        currentUser = session.user;
+        console.log("✅ Supabase session:", session.user.email);
+
         localStorage.setItem("axis_user", JSON.stringify({
-          id: user.id,
-          email: user.email,
-          username: user.user_metadata?.username || "کاربر"
+          id: session.user.id,
+          email: session.user.email,
+          username: session.user.user_metadata?.username || "کاربر"
         }));
+      } else {
+        console.log("❌ No session:", error?.message || "empty");
       }
     } catch (e) {
       console.log("⚠️ Supabase auth failed:", e.message);
@@ -41,9 +43,12 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
 
   /* اگه لاگین نکرده، بفرست به signup */
   if (!isAuth) {
+    console.log("🔒 Not authenticated, redirecting to signup");
     window.location.replace("signup.html");
     return;
   }
+
+  console.log("✅ Authenticated! Loading site...");
 
   /* =========================================
   تم
@@ -86,7 +91,7 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
   }
 
   /* =========================================
-  MEMORIAL — Easter Egg با شمع
+  MEMORIAL
   ========================================= */
   function setupMemorialStar() {
     if (document.getElementById("memorialStar")) return;
@@ -94,7 +99,6 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
     const star = document.createElement("div");
     star.className = "memorial-star";
     star.id = "memorialStar";
-    star.setAttribute("aria-label", "یادبود");
     star.innerHTML = `
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2 L14.09 8.26 L20.5 8.74 L15.54 12.97 L17.34 19.5 L12 15.77 L6.66 19.5 L8.46 12.97 L3.5 8.74 L9.91 8.26 Z"/>
