@@ -2,13 +2,17 @@
 THEME LOADER + AUTH CHECK + MOBILE MENU
 ========================================= */
 (function() {
-  /* تم */
-  const theme = localStorage.getItem("y11_theme") || "green";
-  document.documentElement.setAttribute("data-theme", theme);
-
-  /* چک رمز — اگه صفحه، صفحه‌ی lock هست، کاری نکن */
+  /* =========================================
+  چک رمز — اول از همه
+  ========================================= */
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  if (currentPage === "lock.html") return;
+
+  /* اگه توی lock.html هستیم، فقط تم رو لود کن و کاری به منو نداشته باش */
+  if (currentPage === "lock.html") {
+    const theme = localStorage.getItem("y11_theme") || "green";
+    document.documentElement.setAttribute("data-theme", theme);
+    return;
+  }
 
   /* اگه رمز وارد نشده، بفرست به lock */
   const isAuth = localStorage.getItem("axis_auth") === "true";
@@ -18,7 +22,13 @@ THEME LOADER + AUTH CHECK + MOBILE MENU
   }
 
   /* =========================================
-  MOBILE MENU — اضافه کردن خودکار دکمه همبرگری
+  تم
+  ========================================= */
+  const theme = localStorage.getItem("y11_theme") || "green";
+  document.documentElement.setAttribute("data-theme", theme);
+
+  /* =========================================
+  MOBILE MENU — فقط اگه هدر داشته باشیم
   ========================================= */
   function setupMobileMenu() {
     const headers = document.querySelectorAll(
@@ -26,7 +36,6 @@ THEME LOADER + AUTH CHECK + MOBILE MENU
     );
 
     headers.forEach((header) => {
-      /* ناوبری رو پیدا کن */
       const nav = header.querySelector("nav");
       if (!nav) return;
 
@@ -44,7 +53,7 @@ THEME LOADER + AUTH CHECK + MOBILE MENU
         btn.innerHTML = nav.classList.contains("open") ? "✕" : "☰";
       });
 
-      /* دکمه رو قبل از nav اضافه کن (سمت چپ) */
+      /* دکمه رو قبل از nav اضافه کن */
       header.insertBefore(btn, nav);
 
       /* کلیک روی لینک‌ها، منو رو ببنده */
@@ -57,7 +66,6 @@ THEME LOADER + AUTH CHECK + MOBILE MENU
     });
   }
 
-  /* اجرا وقتی صفحه لود شد */
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", setupMobileMenu);
   } else {
