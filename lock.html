@@ -11,43 +11,26 @@
   <div class="math-bg" id="mathBg"></div>
 
   <main>
-
     <div class="lock-box">
       <div class="lock-logo">AXIS</div>
-
       <div class="lock-icon">🔐</div>
-
       <h1>دسترسی محدود</h1>
       <p>این سایت خصوصیه. برای ورود، رمز عبور رو وارد کن.</p>
 
       <div class="lock-form">
-        <input
-          type="password"
-          id="passwordInput"
-          placeholder="رمز عبور..."
-          autocomplete="off"
-          autofocus
-        >
+        <input type="password" id="passwordInput" placeholder="رمز عبور..." autocomplete="off" autofocus>
         <button onclick="checkPassword()">ورود</button>
       </div>
 
-      <div class="lock-error hidden" id="lockError">
-        رمز اشتباهه. دوباره تلاش کن.
-      </div>
-
-      <div class="lock-hint">
-        رمز رو از سازنده بگیر
-      </div>
+      <div class="lock-error hidden" id="lockError">رمز اشتباهه. دوباره تلاش کن.</div>
+      <div class="lock-hint">رمز رو از سازنده بگیر</div>
     </div>
-
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+
   <script>
-    /* =========================================
-    هش SHA-256 رمز عبور
-    =========================================
-    رمز اصلی: axis1404
-    ========================================= */
     const CORRECT_HASH = "b2037689163b56f40c842aab61b5cb9e08c61baae5a38ea20dde2a634502345d";
     const STORAGE_KEY = "axis_auth";
 
@@ -55,8 +38,7 @@
       const msgBuffer = new TextEncoder().encode(message);
       const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-      return hashHex;
+      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
     }
 
     async function checkPassword() {
@@ -80,7 +62,6 @@
         errorEl.classList.remove("hidden");
         input.value = "";
         input.focus();
-
         input.style.animation = "shake 0.5s";
         setTimeout(() => { input.style.animation = ""; }, 500);
       }
@@ -88,24 +69,14 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("passwordInput");
-      if (input) {
-        input.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") checkPassword();
-        });
-      }
+      if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") checkPassword(); });
       createMathBackground();
     });
 
     function createMathBackground() {
       const bg = document.getElementById("mathBg");
       if (!bg) return;
-      const symbols = [
-        "∫", "∑", "π", "√", "∞", "Δ", "θ", "λ",
-        "x²", "aⁿ", "f(x)", "sin", "cos", "tan",
-        "∂", "≈", "≠", "≤", "≥", "α", "β", "γ",
-        "+", "−", "×", "÷", "=", "%", "e", "i",
-        "1", "2", "3", "7", "9", "0", "½", "¼"
-      ];
+      const symbols = ["∫","∑","π","√","∞","Δ","θ","λ","x²","aⁿ","f(x)","sin","cos","tan","∂","≈","≠","≤","≥","α","β","γ","+","−","×","÷","=","%","e","i","1","2","3","7","9","0","½","¼"];
       for (let i = 0; i < 30; i++) {
         const span = document.createElement("span");
         span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -118,6 +89,5 @@
       }
     }
   </script>
-
 </body>
 </html>
