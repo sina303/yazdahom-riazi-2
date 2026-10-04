@@ -10,31 +10,26 @@ html[data-theme="green"] {
   --border: #222a24; --green: #35d35a; --green-light: #6ee787;
   --text: #eef2ef; --muted: #8d9690; --particle-color: 53, 211, 90;
 }
-
 html[data-theme="purple"] {
   --bg: #0a0812; --surface: #100c1c; --card: #161022;
   --border: #2a1f3d; --green: #8b5cf6; --green-light: #a78bfa;
   --text: #e5e7eb; --muted: #8d8598; --particle-color: 167, 139, 250;
 }
-
 html[data-theme="rose"] {
   --bg: #12080e; --surface: #1a0d15; --card: #22111c;
   --border: #3d1f2f; --green: #e879a8; --green-light: #f9a8d4;
   --text: #f5e5ec; --muted: #9d8590; --particle-color: 249, 168, 212;
 }
-
 html[data-theme="sepia"] {
   --bg: #1a1510; --surface: #221c15; --card: #2a231a;
   --border: #3d3325; --green: #d4a574; --green-light: #e6c19a;
   --text: #f0e6d6; --muted: #a89880; --particle-color: 212, 165, 116;
 }
-
 html[data-theme="light"] {
   --bg: #f5f1e8; --surface: #ffffff; --card: #fdfaf3;
   --border: #e0d9c8; --green: #3a7d44; --green-light: #5a9d64;
   --text: #2a2620; --muted: #6b6558; --particle-color: 58, 125, 68;
 }
-
 html[data-theme="persian"] {
   --bg: #1a1208; --surface: #241a0e; --card: #2e2010;
   --border: #4a361c; --green: #d4af37; --green-light: #f0d274;
@@ -104,7 +99,6 @@ html[data-theme="persian"] body {
 html[data-theme="persian"] .math-bg::before {
   background-image:
     radial-gradient(1px 1px at 15% 25%, rgba(240, 210, 116, 0.6), transparent),
-    radial-gradient(1px 1px at 45% 65%, rgba(212, 175, 55, 0.5), transparent),
     radial-gradient(2px 2px at 30% 85%, rgba(212, 175, 55, 0.5), transparent);
 }
 
@@ -140,6 +134,7 @@ html[data-theme="persian"] .chapter-header { background: rgba(26, 18, 8, 0.85); 
   font-weight: bold;
   font-size: 20px;
   letter-spacing: 2px;
+  flex-shrink: 0;
 }
 
 html[data-theme="persian"] .brand {
@@ -161,6 +156,7 @@ html[data-theme="persian"] .brand {
   color: var(--muted);
   font-size: 13px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .chapter-header .user:hover { color: var(--green); }
@@ -178,6 +174,7 @@ main {
   color: var(--muted);
   font-size: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .breadcrumb a {
@@ -267,8 +264,6 @@ html[data-theme="persian"] .chapter-hero {
   border-color: var(--green);
   color: var(--green);
 }
-
-.external-link-btn:active { transform: scale(0.98); }
 
 .chapter-progress-card {
   padding: 25px;
@@ -390,15 +385,8 @@ html[data-theme="persian"] .chapter-sidebar {
   margin-bottom: 8px;
 }
 
-.content-header h2 {
-  font-size: 26px;
-  margin-bottom: 8px;
-}
-
-.content-header p {
-  color: var(--muted);
-  font-size: 13px;
-}
+.content-header h2 { font-size: 26px; margin-bottom: 8px; }
+.content-header p { color: var(--muted); font-size: 13px; }
 
 .lesson-grid { display: grid; gap: 12px; }
 
@@ -421,10 +409,6 @@ html[data-theme="persian"] .lesson-card {
 .lesson-card:hover {
   border-color: var(--green);
   transform: translateX(-3px);
-}
-
-html[data-theme="persian"] .lesson-card:hover {
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
 }
 
 .lesson-icon {
@@ -557,24 +541,127 @@ html[data-theme="persian"] .ai-box button { color: #1a1208; }
   border-radius: 14px;
 }
 
+/* =========================================
+MOBILE
+========================================= */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--green);
+  font-size: 26px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 100;
+}
+
 @media (max-width: 900px) {
-  .chapter-hero {
-    grid-template-columns: 1fr;
-    padding: 30px;
+  .mobile-menu-btn { display: block; }
+
+  .chapter-header nav {
+    display: none;
+    position: fixed;
+    top: 72px;
+    right: 0;
+    left: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    z-index: 60;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
-  .chapter-hero h1 { font-size: 30px; }
+
+  .chapter-header nav.open { display: flex; }
+
+  .chapter-header nav a {
+    font-size: 15px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .chapter-header nav a:hover {
+    background: rgba(var(--particle-color), 0.15);
+    border-color: var(--green);
+  }
+
   .content-layout { grid-template-columns: 1fr; }
   .chapter-sidebar { position: static; }
-  .lesson-card {
-    grid-template-columns: 45px 1fr;
-    gap: 15px;
-    padding: 18px;
+
+  .chapter-sidebar {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 12px;
+    gap: 8px;
   }
-  .lesson-actions-group { grid-column: 1 / -1; }
-  .lesson-card button { flex: 1; }
+
+  .chapter-sidebar h3 { display: none; }
+
+  .sidebar-item {
+    white-space: nowrap;
+    padding: 10px 14px;
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .chapter-header { padding: 0 4%; height: 64px; }
+  .brand { font-size: 18px; }
+  .chapter-header .user { font-size: 12px; }
+
+  .chapter-hero {
+    grid-template-columns: 1fr;
+    padding: 30px 22px;
+    margin-bottom: 25px;
+  }
+
+  .chapter-hero h1 { font-size: 28px; }
+  .chapter-hero p { font-size: 13px; }
+
+  .chapter-progress-card { padding: 18px; }
+  .chapter-progress-card strong { font-size: 32px; }
+
+  .external-link-btn { width: 100%; text-align: center; }
+
+  .content-header h2 { font-size: 20px; }
+
+  .lesson-card {
+    grid-template-columns: 42px 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .lesson-icon { font-size: 18px; }
+  .lesson-card h3 { font-size: 15px; }
+  .lesson-card p { font-size: 11px; }
+
+  .lesson-actions-group {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+  }
+
+  .lesson-card button {
+    flex: 1;
+    padding: 10px;
+    font-size: 12px;
+  }
+
   .ai-box {
     flex-direction: column;
     text-align: center;
+    padding: 20px;
+    gap: 12px;
   }
-  .chapter-header nav { display: none; }
+
+  .ai-box button { width: 100%; }
+}
+
+@media (max-width: 400px) {
+  .chapter-hero h1 { font-size: 24px; }
+  .content-header h2 { font-size: 18px; }
 }
