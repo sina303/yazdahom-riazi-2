@@ -4,36 +4,44 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
 (async function() {
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  /* توی lock.html فقط تم */
-  if (currentPage === "lock.html") {
+  /* صفحات عمومی — نیازی به لاگین نیست */
+  const publicPages = ["lock.html", "signup.html"];
+
+  if (publicPages.includes(currentPage)) {
     const theme = localStorage.getItem("y11_theme") || "green";
     document.documentElement.setAttribute("data-theme", theme);
     return;
   }
 
-  /* چک احراز هویت — اول Supabase */
+  /* =========================================
+  چک احراز هویت — Supabase
+  ========================================= */
   let isAuth = false;
+  let currentUser = null;
 
   if (typeof supabaseClient !== 'undefined' && supabaseClient) {
     try {
       const { data: { user } } = await supabaseClient.auth.getUser();
       if (user) {
         isAuth = true;
+        currentUser = user;
         console.log("✅ Supabase user:", user.email);
+
+        /* ذخیره‌ی اطلاعات کاربر توی localStorage (برای دسترسی سریع) */
+        localStorage.setItem("axis_user", JSON.stringify({
+          id: user.id,
+          email: user.email,
+          username: user.user_metadata?.username || "کاربر"
+        }));
       }
     } catch (e) {
       console.log("⚠️ Supabase auth failed:", e.message);
     }
   }
 
-  /* اگه Supabase نبود، از localStorage چک کن */
+  /* اگه لاگین نکرده، بفرست به signup */
   if (!isAuth) {
-    isAuth = localStorage.getItem("axis_auth") === "true";
-  }
-
-  /* اگه رمز وارد نشده، بفرست به lock */
-  if (!isAuth) {
-    window.location.replace("lock.html");
+    window.location.replace("signup.html");
     return;
   }
 
@@ -83,7 +91,6 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
   function setupMemorialStar() {
     if (document.getElementById("memorialStar")) return;
 
-    /* ستاره‌ی کوچیک (دکمه‌ی باز کردن) */
     const star = document.createElement("div");
     star.className = "memorial-star";
     star.id = "memorialStar";
@@ -95,7 +102,6 @@ THEME + AUTH + MOBILE MENU + MEMORIAL
     `;
     document.body.appendChild(star);
 
-    /* مودال — با شمع */
     const modal = document.createElement("div");
     modal.className = "memorial-modal";
     modal.id = "memorialModal";
