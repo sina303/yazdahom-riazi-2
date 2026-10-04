@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* THEMES */
 :root,
 html[data-theme="green"] {
   --bg: #080a09; --surface: #0e1210; --card: #141916;
@@ -406,7 +405,7 @@ EASTER EGG — MEMORIAL STAR
 }
 
 /* =========================================
-MEMORIAL MODAL — گزینه A: شمع
+MEMORIAL MODAL — شمع
 ========================================= */
 .memorial-modal {
   position: fixed;
